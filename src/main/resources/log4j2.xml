@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Properties>
+		<Property name="fileLogDir">/var/log/repair-lab</Property>
+		<Property name="logPattern">%d [%t] %-5p %c - %m%n</Property>
+		<Property name="fileLogTriggerSize">5 MB</Property>
+		<Property name="fileLogRolloverMax">10</Property>
+	</Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${logPattern}" />
+		</Console>
+		<RollingFile name="File" fileName="${fileLogDir}/application.log"
+			filePattern="${fileLogDir}/application-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout pattern="${logPattern}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="${fileLogTriggerSize}" />
+			</Policies>
+			<DefaultRolloverStrategy max="${fileLogRolloverMax}" />
+		</RollingFile>
+		<!-- Add a RollingFile for each route -->
+	</Appenders>
+
+	<Loggers>
+		<Logger name="org.springframework" level="info" />
+		<Logger name="org.hibernate" level="info" />
+		<Logger name="net.sf.ehcache" level="warn" />
+		<Logger name="org.springframework.web" level="INFO" />
+		<Logger name="org.springframework.jms" level="info" />
+		<Logger name="org.springframework.messaging" level="info" />
+		<Logger name="com.mangofactory.swagger" level="info" />
+		<Logger name="org.springframework.security" level="info" />
+		<Root level="debug">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="File" />
+		</Root>
+
+		<!-- Add a Logger for each route -->
+	</Loggers>
+</Configuration>

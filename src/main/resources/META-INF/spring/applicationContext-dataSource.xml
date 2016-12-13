@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <beans profile="default">
+
+        <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+            <property name="initialPoolSize" value="${default.dataSource.initialPoolSize}"/>
+            <property name="minPoolSize" value="${default.dataSource.minPoolSize}"/>
+            <property name="maxPoolSize" value="${default.dataSource.maxPoolSize}"/>
+            <property name="acquireIncrement" value="${default.dataSource.acquireIncrement}"/>
+
+            <!-- slow jdbc operations are passed to helpers, defaults to 3,
+                  setting 20 to improve performance as we have enough RAM :) -->
+            <property name="numHelperThreads" value="${default.dataSource.numHelperThreads}"/>
+
+            <!-- clear out connections not used for 5 minutes -->
+            <property name="maxIdleTime" value="${default.dataSource.maxIdleTime}"/>
+
+            <!-- milliseconds to wait for a new connection if all connections are full -->
+            <!-- 0 sets the wait time to infinity that is till a connection is released for use. -->
+            <property name="checkoutTimeout" value="${default.dataSource.checkoutTimeout}"/>
+            <!-- 60 seconds -->
+            <!-- maximum connections across all pools.
+                ( maxPoolSize * preparedStatements per pool, assuming 20 statements per pool as max) -->
+            <property name="maxStatements" value="${default.dataSource.maxStatements}"/>
+
+            <!-- release any connections not returned for 30 minutes -->
+            <!-- usually for webapps its 90 seconds -->
+            <property name="unreturnedConnectionTimeout" value="90"/>
+
+            <property name="debugUnreturnedConnectionStackTraces" value="true"/>
+
+            <!-- runs an idle test ever 5 minutes with the preferred query to test if connections are active and cleanup -->
+            <property name="idleConnectionTestPeriod" value="${default.dataSource.idleConnectionTestPeriod}"/>
+
+            <!-- seconds -->
+            <property name="preferredTestQuery" value="${default.dataSource.preferredTestQuery}"/>
+
+            <!-- expensive, and disabled, only enable on testing transactions -->
+            <property name="testConnectionOnCheckout" value="${default.dataSource.testConnectionOnCheckout}"/>
+
+            <property name="driverClass" value="${default.dataSource.driverClass}"/>
+            <property name="jdbcUrl"
+                      value="jdbc:mysql://127.0.0.1:3306/default"/>
+            <property name="user" value="root"/>
+            <property name="password" value="root"/>
+
+            <!--Production Database URl-->
+            <!--Production Database URl-->
+            <!--<property name="jdbcUrl"
+                      value="jdbc:mysql://hookedontalent.cohperec9yxo.us-east-1.rds.amazonaws.com:3306/default"/>
+            <property name="user" value="rootroot"/>
+            <property name="password" value="rootroot"/>
+            -->
+        </bean>
+    </beans>
+
+   <!-- <beans profile="development">
+        <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+
+            <property name="initialPoolSize" value="${development.dataSource.initialPoolSize}"/>
+            <property name="minPoolSize" value="${development.dataSource.minPoolSize}"/>
+            <property name="maxPoolSize" value="${development.dataSource.maxPoolSize}"/>
+            <property name="acquireIncrement" value="${development.dataSource.acquireIncrement}"/>
+
+            &lt;!&ndash; slow jdbc operations are passed to helpers, defaults to 3,
+                  setting 20 to improve performance as we have enough RAM :) &ndash;&gt;
+            <property name="numHelperThreads" value="${development.dataSource.numHelperThreads}"/>
+
+            &lt;!&ndash; clear out connections not used for 5 minutes &ndash;&gt;
+            <property name="maxIdleTime" value="${development.dataSource.maxIdleTime}"/>
+
+            &lt;!&ndash; milliseconds to wait for a new connection if all connections are full &ndash;&gt;
+            &lt;!&ndash; 0 sets the wait time to infinity that is till a connection is released for use. &ndash;&gt;
+            <property name="checkoutTimeout" value="${development.dataSource.checkoutTimeout}"/>
+            &lt;!&ndash; 60 seconds &ndash;&gt;
+            &lt;!&ndash; maximum connections across all pools.
+                ( maxPoolSize * preparedStatements per pool, assuming 20 statements per pool as max) &ndash;&gt;
+            <property name="maxStatements" value="${development.dataSource.maxStatements}"/>
+
+            &lt;!&ndash; release any connections not returned for 30 minutes &ndash;&gt;
+            &lt;!&ndash; usually for webapps its 90 seconds &ndash;&gt;
+            <property name="unreturnedConnectionTimeout" value="90"/>
+
+            <property name="debugUnreturnedConnectionStackTraces" value="true"/>
+
+            &lt;!&ndash; runs an idle test ever 5 minutes with the preferred query to test if connections are active and cleanup &ndash;&gt;
+            <property name="idleConnectionTestPeriod" value="${development.dataSource.idleConnectionTestPeriod}"/>
+
+            &lt;!&ndash; seconds &ndash;&gt;
+            <property name="preferredTestQuery" value="${development.dataSource.preferredTestQuery}"/>
+
+            &lt;!&ndash; expensive, and disabled, only enable on testing transactions &ndash;&gt;
+            <property name="testConnectionOnCheckout" value="${development.dataSource.testConnectionOnCheckout}"/>
+
+            <property name="driverClass" value="${development.dataSource.driverClass}"/>
+            <property name="jdbcUrl"
+                      value="${development.dataSource.url}${development.dataSource.hostname}:${development.dataSource.portNumber}/${development.dataSource.database}${development.dataSource.extraParam}"/>
+            <property name="user" value="${development.dataSource.username}"/>
+            <property name="password" value="${development.dataSource.password}"/>
+        </bean>
+    </beans>
+-->
+
+</beans>

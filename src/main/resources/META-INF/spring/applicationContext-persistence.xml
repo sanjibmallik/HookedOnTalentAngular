@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       default-init-method="init" default-destroy-method="destroy"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/tx
+                            http://www.springframework.org/schema/tx/spring-tx.xsd
+                            http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context.xsd
+                            http://www.springframework.org/schema/util
+                            http://www.springframework.org/schema/util/spring-util-2.0.xsd
+                            http://www.springframework.org/schema/jdbc
+                            http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+
+    <!-- <jdbc:initialize-database data-source="dataSource" enabled="true" ignore-failures="ALL">
+         <jdbc:script location="classpath*:/sql/sqlScript.sql" separator="$" execution="INIT"/>
+     </jdbc:initialize-database>-->
+
+
+    <context:component-scan base-package="com.accion.recruitment.dao.impl">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+    </context:component-scan>
+
+    <util:list id="hibernatePackagesToScan">
+        <value>com.recruitment.persistence.entity.impl</value>
+    </util:list>
+
+
+    <bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+          scope="prototype">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" ref="hibernatePackagesToScan"/>
+        <property name="hibernateProperties" ref="defaultHibernateProperties"/>
+    </bean>
+
+
+    <bean id="defaultHibernateProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="properties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">
+                    create
+                </prop>
+                <prop key="hibernate.max_fetch_depth">
+                    1
+                </prop>
+                <prop key="hibernate.jdbc.batch_size">
+                    100
+                </prop>
+                <prop key="hibernate.jdbc.use_scrollable_resultset">
+                    true
+                </prop>
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.MySQL5InnoDBDialect
+                </prop>
+
+                <!-- caching -->
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+
+                 <prop key="hibernate.cache.use_query_cache">true</prop>
+
+                <!--  logging & stats -->
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">false</prop>
+                <prop key="hibernate.generate_statistics">false</prop>
+
+                <!--<prop key="hibernate.bytecode.use_reflection_optimizer">false</prop>-->
+                <!-- Uncomment the following two properties for JBoss only -->
+                <prop key="hibernate.validator.apply_to_ddl">false</prop>
+                <!--<prop key="hibernate.validator.autoregister_listeners">false</prop>-->
+                <!-- this property is ignored as we use coy to handle transactions -->
+                <!--<prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</prop>-->
+            </props>
+        </property>
+    </bean>
+
+    <!-- DAO declarations -->
+    <!-- we are using org.springframework.stereotype.Repository to register all our Repositories -->
+    <bean id="repositoryImpl" class="com.accion.recruitment.dao.impl.TechnicalScreenerDAOImpl"
+          abstract="true">
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+    </bean>
+
+    <!-- ========= Transactions =========-->
+    <!-- == TRANSACTIONS == -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" mode="proxy"/>
+
+</beans>
