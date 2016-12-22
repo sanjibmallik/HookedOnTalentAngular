@@ -1,0 +1,109 @@
+<div id="loginField" ng-controller="loginCtrl">
+
+
+
+<title>login | HookedOn Talent</title>
+
+
+<div id="loginField">
+ <div class="page-body login-page login-form-fall">
+
+
+   
+    <div class="login-container">
+
+        <div class="login-header login-caret">
+
+            <div class="login-content" style="width:100%;">
+
+                <a href="http://www.accionlabs.com" target="_blank" class="logo">
+                    <img src="https://d2ue829my6ap69.cloudfront.net/images/accionlogo.jpg" height="60" alt="" />
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="login-progressbar">
+            <div></div>
+        </div>
+
+        <div class="login-form">
+
+            <div class="login-content">
+
+                <div id="div1">
+
+                   <form id="login" role="form" name="userLoginForm" ng-model="userLoginForm">
+
+                    <div class="form-group" ng-show="errorMessageShow">
+
+                            
+                       {{errorMessage}}        
+
+                    </div>
+
+
+                          <div class="form-group">
+
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="entypo-user"></i>
+                                </div>
+
+                                <input type="text" ng-model="loginUser.userName" class="form-control" placeholder="User Name" autocomplete="off" data-mask="email" />
+                               
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="entypo-key"></i>
+                                </div>
+
+                                <input type="password" ng-model="loginUser.password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off" />
+                               
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <button type="submit" ng-click="userLoginFormSubmit()"  class="btn btn-primary btn-block btn-login" name="commit" value="Log-In">
+                                <i class="entypo-login"></i>
+                                Login
+                            </button>
+                        </div>
+                       
+                       
+                    </form>
+
+
+                   
+
+                    <div style=" margin-top: 270px;">
+                        <p></p><p></p><p></p>
+                    </div>
+                </div>
+
+                
+                <style>
+                    td {
+                        border: 1px solid rgba(204, 204, 204, 0.1) !important;
+                    }
+                    th {
+                        border: 1px solid rgba(204, 204, 204, 0.1) !important;
+                        background-color:rgba(235, 235, 235, 0) !important;
+                    }
+                    .icon-hover { cursor:pointer;}
+                </style>
+
+            </div>
+        </div>
+     </div>
+    </div>
+    </div>
+    </div>
