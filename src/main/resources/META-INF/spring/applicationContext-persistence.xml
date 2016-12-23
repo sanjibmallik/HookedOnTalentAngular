@@ -28,7 +28,7 @@
     </context:component-scan>
 
     <util:list id="hibernatePackagesToScan">
-        <value>com.recruitment.persistence.entity.impl</value>
+        <value>com.accion.recruitment.jpa.entities</value>
     </util:list>
 
 
@@ -83,7 +83,7 @@
 
     <!-- DAO declarations -->
     <!-- we are using org.springframework.stereotype.Repository to register all our Repositories -->
-    <bean id="repositoryImpl" class="com.accion.recruitment.dao.impl.TechnicalScreenerDAOImpl"
+    <bean id="repositoryImpl" class="com.accion.recruitment.dao.impl.UserServiceDAOImpl"
           abstract="true">
         <property name="sessionFactory" ref="hibernateSessionFactory"/>
     </bean>
