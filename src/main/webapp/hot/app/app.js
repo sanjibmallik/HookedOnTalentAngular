@@ -12,8 +12,6 @@ var app = angular.module('xenon-app', [
 	'xenon.directives',
 	'xenon.factory',
 	'xenon.services',
-
-	// Added in v1.3
 	'FBAngular'
 ]);
 
@@ -55,14 +53,14 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
 				resources: function($ocLazyLoad){
 					return $ocLazyLoad.load([
 						ASSETS.charts.dxGlobalize,
-						ASSETS.extra.toastr,
+						ASSETS.extra.toastr
 					]);
 				},
 				dxCharts: function($ocLazyLoad){
 					return $ocLazyLoad.load([
-						ASSETS.charts.dxCharts,
+						ASSETS.charts.dxCharts
 					]);
-				},
+				}
 			}
 		}).
 		
@@ -81,14 +79,14 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
 						ASSETS.forms.multiSelect,
 						ASSETS.forms.datepicker,
 						ASSETS.forms.selectboxit,
-						ASSETS.forms.formWizard,
+						ASSETS.forms.formWizard
 					]);
 				},
 				dxCharts: function($ocLazyLoad){
 					return $ocLazyLoad.load([
-						ASSETS.charts.dxCharts,
+						ASSETS.charts.dxCharts
 					]);
-				},
+				}
 			}
 		}).
 		
@@ -99,14 +97,14 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
 				resources: function($ocLazyLoad){
 					return $ocLazyLoad.load([
 						ASSETS.charts.dxGlobalize,
-						ASSETS.extra.toastr,
+						ASSETS.extra.toastr
 					]);
 				},
 				dxCharts: function($ocLazyLoad){
 					return $ocLazyLoad.load([
-						ASSETS.charts.dxCharts,
+						ASSETS.charts.dxCharts
 					]);
-				},
+				}
 			}
 		});
 });
@@ -118,7 +116,7 @@ app.constant('ASSETS', {
 
 		'jQueryUI': [
 			appHelper.assetPath('js/jquery-ui/jquery-ui.min.js'),
-			appHelper.assetPath('js/jquery-ui/jquery-ui.structure.min.css'),
+			appHelper.assetPath('js/jquery-ui/jquery-ui.structure.min.css')
 		],
 
 		'moment': appHelper.assetPath('js/moment.min.js'),
@@ -130,11 +128,11 @@ app.constant('ASSETS', {
 
 		'dxGlobalize': appHelper.assetPath('js/devexpress-web-14.1/js/globalize.min.js'),
 		'dxCharts': appHelper.assetPath('js/devexpress-web-14.1/js/dx.chartjs.js'),
-		'dxVMWorld': appHelper.assetPath('js/devexpress-web-14.1/js/vectormap-data/world.js'),
+		'dxVMWorld': appHelper.assetPath('js/devexpress-web-14.1/js/vectormap-data/world.js')
 	},
 
 	'xenonLib': {
-		notes: appHelper.assetPath('js/xenon-notes.js'),
+		notes: appHelper.assetPath('js/xenon-notes.js')
 	},
 
 	'maps': {
@@ -142,13 +140,13 @@ app.constant('ASSETS', {
 		'vectorMaps': [
 			appHelper.assetPath('js/jvectormap/jquery-jvectormap-1.2.2.min.js'),
 			appHelper.assetPath('js/jvectormap/regions/jquery-jvectormap-world-mill-en.js'),
-			appHelper.assetPath('js/jvectormap/regions/jquery-jvectormap-it-mill-en.js'),
-		],
+			appHelper.assetPath('js/jvectormap/regions/jquery-jvectormap-it-mill-en.js')
+		]
 	},
 
 	'icons': {
 		'meteocons': appHelper.assetPath('css/fonts/meteocons/css/meteocons.css'),
-		'elusive': appHelper.assetPath('css/fonts/elusive/css/elusive.css'),
+		'elusive': appHelper.assetPath('css/fonts/elusive/css/elusive.css')
 	},
 
 	'tables': {
@@ -156,8 +154,8 @@ app.constant('ASSETS', {
 
 		'datatables': [
 			appHelper.assetPath('js/datatables/dataTables.bootstrap.css'),
-			appHelper.assetPath('js/datatables/datatables-angular.js'),
-		],
+			appHelper.assetPath('js/datatables/datatables-angular.js')
+		]
 
 	},
 
@@ -167,12 +165,12 @@ app.constant('ASSETS', {
 			appHelper.assetPath('js/select2/select2.css'),
 			appHelper.assetPath('js/select2/select2-bootstrap.css'),
 
-			appHelper.assetPath('js/select2/select2.min.js'),
+			appHelper.assetPath('js/select2/select2.min.js')
 		],
 
 		'daterangepicker': [
 			appHelper.assetPath('js/daterangepicker/daterangepicker-bs3.css'),
-			appHelper.assetPath('js/daterangepicker/daterangepicker.js'),
+			appHelper.assetPath('js/daterangepicker/daterangepicker.js')
 		],
 
 		'colorpicker': appHelper.assetPath('js/colorpicker/bootstrap-colorpicker.min.js'),
@@ -193,45 +191,45 @@ app.constant('ASSETS', {
 
 		'dropzone': [
 			appHelper.assetPath('js/dropzone/css/dropzone.css'),
-			appHelper.assetPath('js/dropzone/dropzone.min.js'),
+			appHelper.assetPath('js/dropzone/dropzone.min.js')
 		],
 
 		'typeahead': [
 			appHelper.assetPath('js/typeahead.bundle.js'),
-			appHelper.assetPath('js/handlebars.min.js'),
+			appHelper.assetPath('js/handlebars.min.js')
 		],
 
 		'multiSelect': [
 			appHelper.assetPath('js/multiselect/css/multi-select.css'),
-			appHelper.assetPath('js/multiselect/js/jquery.multi-select.js'),
+			appHelper.assetPath('js/multiselect/js/jquery.multi-select.js')
 		],
 
 		'icheck': [
 			appHelper.assetPath('js/icheck/skins/all.css'),
-			appHelper.assetPath('js/icheck/icheck.min.js'),
+			appHelper.assetPath('js/icheck/icheck.min.js')
 		],
 
 		'bootstrapWysihtml5': [
 			appHelper.assetPath('js/wysihtml5/src/bootstrap-wysihtml5.css'),
 			appHelper.assetPath('js/wysihtml5/wysihtml5-angular.js')
-		],
+		]
 	},
 
 	'uikit': {
 		'base': [
 			appHelper.assetPath('js/uikit/uikit.css'),
 			appHelper.assetPath('js/uikit/css/addons/uikit.almost-flat.addons.min.css'),
-			appHelper.assetPath('js/uikit/js/uikit.min.js'),
+			appHelper.assetPath('js/uikit/js/uikit.min.js')
 		],
 
 		'codemirror': [
 			appHelper.assetPath('js/uikit/vendor/codemirror/codemirror.js'),
-			appHelper.assetPath('js/uikit/vendor/codemirror/codemirror.css'),
+			appHelper.assetPath('js/uikit/vendor/codemirror/codemirror.css')
 		],
 
 		'marked': appHelper.assetPath('js/uikit/vendor/marked.js'),
 		'htmleditor': appHelper.assetPath('js/uikit/js/addons/htmleditor.min.js'),
-		'nestable': appHelper.assetPath('js/uikit/js/addons/nestable.min.js'),
+		'nestable': appHelper.assetPath('js/uikit/js/addons/nestable.min.js')
 	},
 
 	'extra': {
@@ -241,12 +239,12 @@ app.constant('ASSETS', {
 
 		'fullCalendar': [
 			appHelper.assetPath('js/fullcalendar/fullcalendar.min.css'),
-			appHelper.assetPath('js/fullcalendar/fullcalendar.min.js'),
+			appHelper.assetPath('js/fullcalendar/fullcalendar.min.js')
 		],
 
 		'cropper': [
 			appHelper.assetPath('js/cropper/cropper.min.js'),
-			appHelper.assetPath('js/cropper/cropper.min.css'),
+			appHelper.assetPath('js/cropper/cropper.min.css')
 		]
 	}
 });
