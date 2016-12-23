@@ -11,7 +11,14 @@ hotMainModule.config(function($stateProvider, $urlRouterProvider){
            /* controller: 'loginCtrl'*/
             
            
-        });
+        })
+    .state('dashboard', {
+        url:'/dashboard',
+        templateUrl: 'app/components/login/dashboard.html'
+        /* controller: 'loginCtrl'*/
+
+
+    });
        
 });
 
