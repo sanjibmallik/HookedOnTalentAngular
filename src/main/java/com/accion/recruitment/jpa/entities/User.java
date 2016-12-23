@@ -61,6 +61,9 @@ public class User  {
     @Column(name = "userImage",length = 20971520,  columnDefinition = "mediumblob")
     private byte[] userImage;
 
+    @Transient
+    private String errorMessage;
+
     public Integer getId() {
         return id;
     }
@@ -173,8 +176,14 @@ public class User  {
         this.userImage = userImage;
     }
 
+    public String getErrorMessage() {
+        return errorMessage;
+    }
 
-    /* @Override
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+/* @Override
     public String toString() {
         return "User{" +
                 "userName='" + userName + '\'' +

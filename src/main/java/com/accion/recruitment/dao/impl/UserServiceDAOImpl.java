@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author Mudassir Hussain
@@ -21,6 +22,7 @@ import java.util.List;
 public class UserServiceDAOImpl implements UserServiceDAO {
 
 
+    protected Logger logger;
     @Autowired(required = true)
     protected SessionFactory sessionFactory;
 
@@ -34,10 +36,35 @@ public class UserServiceDAOImpl implements UserServiceDAO {
 
     @Override
     public User getLoginUserByUserNameAndPassword(final String userName,final String password){
+
         final Session session = getSession();
-        final String loginQuery="select * from default.users where userName='"+userName+"' and password='"+password+"'";
-        final Query resultSet = session.createSQLQuery(loginQuery).addEntity(User.class);
-        final User userObject=(User)resultSet.uniqueResult();
+        User userObject=new User();
+
+        /*final String checkUserNameOrEmailExistQuery="select id,userName,firstName,LastName,record_Active,CREATED_BY,CREATED_DATE,UPDATED_BY,UPDATED_DATE,dob from default.users where userName='"+userName+"' or email='"+userName+"'";*/
+
+        final String checkUserNameOrEmailExistQuery="select * from default.users where userName='"+userName+"' or email='"+userName+"'";
+        final Query checkUserNameOrEmail = session.createSQLQuery(checkUserNameOrEmailExistQuery).addEntity(User.class);
+        if(checkUserNameOrEmail.list().isEmpty()){
+            userObject.setErrorMessage("userName/emailId is wrong");
+            return userObject;
+        }
+
+        final String checkUserNameAndPasswordExistQuery="select * from default.users where (userName='"+userName+"' or email='"+userName+"') and password='"+password+"'";
+        final Query  checkUserNameAndPassword = session.createSQLQuery(checkUserNameAndPasswordExistQuery).addEntity(User.class);
+        if(checkUserNameAndPassword.list().isEmpty()){
+            userObject.setErrorMessage("userName and password is wrong");
+            return userObject;
+        }
+
+        final String checkUserIsDisabledExistQuery="select * from default.users where enabled=1 and (userName='"+userName+"' or email='"+userName+"') and password='"+password+"'";
+        final Query  checkUserIsDisabled = session.createSQLQuery(checkUserIsDisabledExistQuery).addEntity(User.class);
+        if(checkUserIsDisabled.list().isEmpty()){
+            userObject.setErrorMessage("user is disabled");
+            return userObject;
+        }else{
+            userObject=(User)checkUserIsDisabled.uniqueResult();
+        }
+
         return userObject;
     }
 

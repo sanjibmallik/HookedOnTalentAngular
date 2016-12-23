@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,21 +23,19 @@ import java.util.List;
 @Controller
 public class LoginController {
 
-
     @Autowired
     private LoginService loginService;
 
-
-
-
-    @RequestMapping(value = "hot/loginAuthentication", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = "hot/loginAuthentication/{userName}/{password}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public User userAuthentication() {
-        final String userName="admin";
-        String password="admin";
+    public User userAuthentication(@PathVariable("userName") final String userName,
+                                   @PathVariable("password") final String password) {
+
         final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
-        password=encoder.encodePassword(password,null);
-        User userObject=this.loginService.getLoginUser(userName,password);
+        final String encodedPassword=encoder.encodePassword(password,null);
+        final User userObject=this.loginService.getLoginUser(userName,encodedPassword);
         return userObject;
     }
+
+
 }
