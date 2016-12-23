@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('xenon.services', []).
+angular.module('hot.services', []).
 	service('$menuItems', function()
 	{
 		this.menuItems = [];

@@ -1,4 +1,4 @@
-angular.module('xenon.directives', []).
+angular.module('hot.directives', []).
 
 	// Layout Related Directives
 	directive('settingsPane', function(){

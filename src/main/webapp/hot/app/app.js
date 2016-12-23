@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('xenon-app', [
+var app = angular.module('hot-app', [
 	'ngCookies',
 
 	'ui.router',
@@ -8,10 +8,10 @@ var app = angular.module('xenon-app', [
 
 	'oc.lazyLoad',
 
-	'xenon.controllers',
-	'xenon.directives',
-	'xenon.factory',
-	'xenon.services',
+	'hot.controllers',
+	'hot.directives',
+	'hot.factory',
+	'hot.services',
 	'FBAngular'
 ]);
 
