@@ -8,8 +8,7 @@ import javax.persistence.Table;
 /**
  * Created by AL1451 on 5/9/16.
  */
-@Entity
-@Table(name = "technicalscreener")
+
 public class TechnicalScreener {
 
    /* public TechnicalScreener() {

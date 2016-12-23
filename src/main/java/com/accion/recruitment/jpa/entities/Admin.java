@@ -7,7 +7,7 @@ import javax.persistence.Table;
  * @author Manas
  *
  */
-@Entity
+
 //@Table(name = "admin")
 public class Admin implements BaseEntity {
 
