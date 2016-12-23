@@ -1,8 +1,11 @@
 
-var hotMainModule = angular.module('hotMainModule',['ui.router']);
-
-
-hotMainModule.controller("testCtrl",function($scope){
-	$scope.test="hookedontalent";
-
-});
+var hotMainModule = angular.module('hotMainModule',[
+'ngCookies',
+'ui.router',
+'ui.bootstrap',
+'oc.lazyLoad',
+'xenon.controllers',
+'xenon.directives',
+'xenon.factory',
+'xenon.services',
+'FBAngular']);
