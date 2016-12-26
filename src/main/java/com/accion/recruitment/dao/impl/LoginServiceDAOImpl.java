@@ -5,6 +5,7 @@ import com.accion.recruitment.dao.LoginServiceDAO;
 import com.accion.recruitment.dao.UserServiceDAO;
 import com.accion.recruitment.jpa.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,10 +14,11 @@ import org.springframework.stereotype.Repository;
  * $Date:: 12/26/16 00:11 AM#$
  */
 
-@Repository
+@Repository(value = "loginServiceDAOImpl")
 public class LoginServiceDAOImpl implements LoginServiceDAO {
 
     @Autowired
+    @Qualifier(value = "userServiceDAOImpl")
     private UserServiceDAO userServiceDAO;
 
     private final String userNameOREmailIdErrorMsg="UserName/EmailId Is Wrong";

@@ -50,5 +50,4 @@ public interface UserServiceDAO {
      */
     public User getUserByUserNameOREmailIdAndPasswordAndDisabledOREnabled(final String userNameOREmailId,final String password,final Boolean bolValue);
 
-
 }

@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  * @version $Revision: 0001 $, $Date:: 12/23/16 00:11 AM#$
  */
 
-@Repository
+@Repository(value = "userServiceDAOImpl")
 public class UserServiceDAOImpl implements UserServiceDAO {
 
 

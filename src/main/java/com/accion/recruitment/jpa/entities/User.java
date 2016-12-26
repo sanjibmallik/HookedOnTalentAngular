@@ -43,6 +43,8 @@ public class User extends BaseEntity {
     @Column(name = "userImage",length = 20971520,  columnDefinition = "mediumblob")
     private byte[] userImage;
 
+    private String role;
+
     @Transient
     private String errorMessage;
 
@@ -118,6 +120,14 @@ public class User extends BaseEntity {
 
     public void setUserImage(byte[] userImage) {
         this.userImage = userImage;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getErrorMessage() {

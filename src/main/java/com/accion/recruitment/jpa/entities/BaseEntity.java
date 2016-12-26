@@ -30,6 +30,8 @@ public class BaseEntity  {
     @Column(name = "record_active", nullable = false)
     protected Integer active = 1;
 
+
+
     public Date getCreatedDate() {
         return createdDate;
     }
