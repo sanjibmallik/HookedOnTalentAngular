@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author Mudassir Hussain
  * @author $LastChangedBy: Mudassir Hussain $
- * @version $Revision: 0001 $, $Date:: 12/23/16 00:11 AM#$
+ * $Date:: 12/23/16 00:11 AM#$
  */
 @Controller
 public class LoginController {
@@ -26,7 +26,7 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @RequestMapping(value = "hot/loginAuthentication/{userName}/{password}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = "hot/userAuthentication/{userName}/{password}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
     public User userAuthentication(@PathVariable("userName") final String userName,
                                    @PathVariable("password") final String password) {

@@ -2,12 +2,17 @@ package com.accion.recruitment.dao.impl;
 
 import com.accion.recruitment.dao.UserServiceDAO;
 import com.accion.recruitment.jpa.entities.User;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -23,6 +28,7 @@ public class UserServiceDAOImpl implements UserServiceDAO {
 
 
     protected Logger logger;
+
     @Autowired(required = true)
     protected SessionFactory sessionFactory;
 
@@ -34,38 +40,62 @@ public class UserServiceDAOImpl implements UserServiceDAO {
         this.sessionFactory = sessionFactory;
     }
 
+
     @Override
-    public User getLoginUserByUserNameAndPassword(final String userName,final String password){
-
+    public User getUserByUserNameOREmailId(final String userNameOREmailID) {
         final Session session = getSession();
-        User userObject=new User();
-
-        /*final String checkUserNameOrEmailExistQuery="select id,userName,firstName,LastName,record_Active,CREATED_BY,CREATED_DATE,UPDATED_BY,UPDATED_DATE,dob from default.users where userName='"+userName+"' or email='"+userName+"'";*/
-
-        final String checkUserNameOrEmailExistQuery="select * from default.users where userName='"+userName+"' or email='"+userName+"'";
-        final Query checkUserNameOrEmail = session.createSQLQuery(checkUserNameOrEmailExistQuery).addEntity(User.class);
-        if(checkUserNameOrEmail.list().isEmpty()){
-            userObject.setErrorMessage("userName/emailId is wrong");
-            return userObject;
-        }
-
-        final String checkUserNameAndPasswordExistQuery="select * from default.users where (userName='"+userName+"' or email='"+userName+"') and password='"+password+"'";
-        final Query  checkUserNameAndPassword = session.createSQLQuery(checkUserNameAndPasswordExistQuery).addEntity(User.class);
-        if(checkUserNameAndPassword.list().isEmpty()){
-            userObject.setErrorMessage("userName and password is wrong");
-            return userObject;
-        }
-
-        final String checkUserIsDisabledExistQuery="select * from default.users where enabled=1 and (userName='"+userName+"' or email='"+userName+"') and password='"+password+"'";
-        final Query  checkUserIsDisabled = session.createSQLQuery(checkUserIsDisabledExistQuery).addEntity(User.class);
-        if(checkUserIsDisabled.list().isEmpty()){
-            userObject.setErrorMessage("user is disabled");
-            return userObject;
-        }else{
-            userObject=(User)checkUserIsDisabled.uniqueResult();
-        }
-
-        return userObject;
+        final Criteria criteria = session.createCriteria(User.class);
+        Criterion userNameCriteria= Restrictions.eq("userName", userNameOREmailID);
+        Criterion emailIDCriteria=Restrictions.eq("email", userNameOREmailID);
+        criteria.add(Restrictions.or(userNameCriteria, emailIDCriteria));
+        final User user = (User) criteria.uniqueResult();
+        return user;
     }
 
+
+    @Override
+    public User getUserByUserNameOREmailIdAndPassword(final String userNameOREmailId,final String password) {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(User.class);
+        Criterion userNameCriteria= Restrictions.eq("userName", userNameOREmailId);
+        Criterion emailIDCriteria=Restrictions.eq("email", userNameOREmailId);
+        criteria.add(Restrictions.or(userNameCriteria, emailIDCriteria));
+        criteria.add(Restrictions.eq("password", password));
+        final User user = (User) criteria.uniqueResult();
+        return user;
+    }
+
+
+    @Override
+    public User getUserByUserNameOREmailIdAndPasswordIsDisabled(final String userNameOREmailId,final String password) {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(User.class);
+        Criterion userNameCriteria= Restrictions.eq("userName", userNameOREmailId);
+        Criterion emailIDCriteria=Restrictions.eq("email", userNameOREmailId);
+        criteria.add(Restrictions.or(userNameCriteria, emailIDCriteria));
+        criteria.add(Restrictions.eq("password", password));
+        criteria.add(Restrictions.eq("enabled", true));
+        final User user = (User) criteria.uniqueResult();
+        return user;
+    }
+
+
+
+
+
+
+
+
+
+
+
+/*
+    @Override
+    public R getEntityByPropertyName(String propName, Object propValue) {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(entityClass);
+        criteria.add(Restrictions.eq(propName, propValue));
+        final R entity = (R) criteria.uniqueResult();
+        return entity;
+    }*/
 }

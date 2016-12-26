@@ -11,6 +11,11 @@ import com.accion.recruitment.jpa.entities.User;
  */
 public interface UserServiceDAO {
 
-    public User getLoginUserByUserNameAndPassword(final String userName,final String password);
+    public User getUserByUserNameOREmailId(final String userNameOREmailId);
+
+    public User getUserByUserNameOREmailIdAndPassword(final String userNameOREmailId,final String password);
+
+    public User getUserByUserNameOREmailIdAndPasswordIsDisabled(final String userNameOREmailId,final String password);
+
 
 }

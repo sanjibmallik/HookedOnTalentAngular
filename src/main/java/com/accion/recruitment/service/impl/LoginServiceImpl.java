@@ -1,5 +1,6 @@
 package com.accion.recruitment.service.impl;
 
+import com.accion.recruitment.dao.LoginServiceDAO;
 import com.accion.recruitment.dao.TechnicalScreenerDAO;
 import com.accion.recruitment.dao.UserServiceDAO;
 import com.accion.recruitment.jpa.entities.TechnicalScreener;
@@ -21,17 +22,18 @@ import java.util.List;
 public class LoginServiceImpl implements LoginService {
 
 
-    private UserServiceDAO userServiceDAO;
+    @Autowired
+    private LoginServiceDAO loginServiceDAO;
 
     @Autowired
-    public LoginServiceImpl(final UserServiceDAO userServiceDAO) {
-        this.userServiceDAO = userServiceDAO;
+    public LoginServiceImpl(final LoginServiceDAO loginServiceDAO) {
+        this.loginServiceDAO = loginServiceDAO;
     }
 
     @Override
     public User getLoginUser(final String userName,final String password) {
 
-        User user=this.userServiceDAO.getLoginUserByUserNameAndPassword(userName, password);
+        User user=this.loginServiceDAO.getLoginUserByUserNameOREmailIdAndPassword(userName, password);
         return user;
     }
 
