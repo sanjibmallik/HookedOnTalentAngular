@@ -31,9 +31,9 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public User getLoginUser(final String userName,final String password) {
+    public User getLoginUserByUserNameOREmailIdAndPassword(final String userNameOREmailId,final String password) {
 
-        User user=this.loginServiceDAO.getLoginUserByUserNameOREmailIdAndPassword(userName, password);
+        User user=this.loginServiceDAO.getLoginUserByUserNameOREmailIdAndPassword(userNameOREmailId, password);
         return user;
     }
 

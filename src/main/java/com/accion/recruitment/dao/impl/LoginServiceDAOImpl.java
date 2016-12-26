@@ -22,29 +22,29 @@ public class LoginServiceDAOImpl implements LoginServiceDAO {
     @Override
     public User getLoginUserByUserNameOREmailIdAndPassword(final String userNameOREmailId,final String password){
 
-        User userObject=new User();
+        User loginUserObject=new User();
 
         User checkUserNameOREmailId=this.userServiceDAO.getUserByUserNameOREmailId(userNameOREmailId);
         if(checkUserNameOREmailId==null){
-            userObject.setErrorMessage("userName/emailId is wrong");
-            return userObject;
+            loginUserObject.setErrorMessage("userName/emailId is wrong");
+            return loginUserObject;
         }
 
-        User checkUserNameOrEmailId=this.userServiceDAO.getUserByUserNameOREmailIdAndPassword(userNameOREmailId, password);
-        if(checkUserNameOrEmailId==null){
-            userObject.setErrorMessage("userName/password is wrong");
-            return userObject;
+        User checkUserNameOREmailIdAndPassword=this.userServiceDAO.getUserByUserNameOREmailIdAndPassword(userNameOREmailId, password);
+        if(checkUserNameOREmailIdAndPassword==null){
+            loginUserObject.setErrorMessage("userName/password is wrong");
+            return loginUserObject;
         }
 
-        User checkUserIsDisabled=this.userServiceDAO.getUserByUserNameOREmailIdAndPasswordIsDisabled(userNameOREmailId, password);
-        if(checkUserIsDisabled==null){
-            userObject.setErrorMessage("user is disabled");
-            return userObject;
+        User checkUserNameOREmailIdAndPasswordAndDisabled=this.userServiceDAO.getUserByUserNameOREmailIdAndPasswordIsDisabled(userNameOREmailId, password);
+        if(checkUserNameOREmailIdAndPasswordAndDisabled==null){
+            loginUserObject.setErrorMessage("user is disabled");
+            return loginUserObject;
         }else{
-            userObject=(User)checkUserIsDisabled;
+            loginUserObject=(User)checkUserNameOREmailIdAndPasswordAndDisabled;
         }
 
-        return userObject;
+        return loginUserObject;
     }
 
 }

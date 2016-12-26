@@ -1,4 +1,4 @@
-package com.accion.recruitment.web.controller;
+package com.accion.recruitment.web.controller.impl;
 
 import java.util.List;
 

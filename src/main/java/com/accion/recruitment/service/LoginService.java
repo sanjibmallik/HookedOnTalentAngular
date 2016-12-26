@@ -8,9 +8,9 @@ import java.util.List;
 /**
  * @author Mudassir Hussain
  * @author $LastChangedBy: Mudassir Hussain $
- * @version $Revision: 0001 $, $Date:: 12/23/16 00:11 AM#$
+ * $Date:: 12/23/16 00:11 AM#$
  */
 public interface LoginService {
 
-    public User getLoginUser(final String UserName,final String password);
+    public User getLoginUserByUserNameOREmailIdAndPassword(final String UserNameOREmailId,final String password);
 }

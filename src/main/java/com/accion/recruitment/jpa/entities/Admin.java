@@ -9,7 +9,7 @@ import javax.persistence.Table;
  */
 
 //@Table(name = "admin")
-public class Admin implements BaseEntity {
+public class Admin  {
 
 	private static final long serialVersionUID = -5778963590024982356L;
 	private Long id;
@@ -23,10 +23,6 @@ public class Admin implements BaseEntity {
 		this.secondName = secondName;
 	}
 
-	@Override
-	public Long getId() {
-		return id;
-	}
 
 	public void setId(Long id) {
 		this.id = id;
