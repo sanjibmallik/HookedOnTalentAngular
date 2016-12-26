@@ -19,6 +19,10 @@ public class LoginServiceDAOImpl implements LoginServiceDAO {
     @Autowired
     private UserServiceDAO userServiceDAO;
 
+    private final String checkUserNameOREmailIdErrorMsg="userName/emailId is wrong";
+    private final String checkUserNameOREmailIdAndPasswordErrorMsg="userName/password is wrong";
+    private final String checkUserNameOREmailIdAndPasswordAndEnabledErrorMsg="user is disabled";
+
     @Override
     public User getLoginUserByUserNameOREmailIdAndPassword(final String userNameOREmailId,final String password){
 
@@ -26,22 +30,22 @@ public class LoginServiceDAOImpl implements LoginServiceDAO {
 
         User checkUserNameOREmailId=this.userServiceDAO.getUserByUserNameOREmailId(userNameOREmailId);
         if(checkUserNameOREmailId==null){
-            loginUserObject.setErrorMessage("userName/emailId is wrong");
+            loginUserObject.setErrorMessage(checkUserNameOREmailIdErrorMsg);
             return loginUserObject;
         }
 
         User checkUserNameOREmailIdAndPassword=this.userServiceDAO.getUserByUserNameOREmailIdAndPassword(userNameOREmailId, password);
         if(checkUserNameOREmailIdAndPassword==null){
-            loginUserObject.setErrorMessage("userName/password is wrong");
+            loginUserObject.setErrorMessage(checkUserNameOREmailIdAndPasswordErrorMsg);
             return loginUserObject;
         }
 
-        User checkUserNameOREmailIdAndPasswordAndDisabled=this.userServiceDAO.getUserByUserNameOREmailIdAndPasswordIsDisabled(userNameOREmailId, password);
-        if(checkUserNameOREmailIdAndPasswordAndDisabled==null){
-            loginUserObject.setErrorMessage("user is disabled");
+        User checkUserNameOREmailIdAndPasswordAndEnabled=this.userServiceDAO.getUserByUserNameOREmailIdAndPasswordAndDisabledOREnabled(userNameOREmailId, password, true);
+        if(checkUserNameOREmailIdAndPasswordAndEnabled==null){
+            loginUserObject.setErrorMessage(checkUserNameOREmailIdAndPasswordAndEnabledErrorMsg);
             return loginUserObject;
         }else{
-            loginUserObject=(User)checkUserNameOREmailIdAndPasswordAndDisabled;
+            loginUserObject=(User)checkUserNameOREmailIdAndPasswordAndEnabled;
         }
 
         return loginUserObject;

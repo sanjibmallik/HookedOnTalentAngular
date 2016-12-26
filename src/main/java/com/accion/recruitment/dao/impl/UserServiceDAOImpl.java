@@ -67,14 +67,14 @@ public class UserServiceDAOImpl implements UserServiceDAO {
 
 
     @Override
-    public User getUserByUserNameOREmailIdAndPasswordIsDisabled(final String userNameOREmailId,final String password) {
+    public User getUserByUserNameOREmailIdAndPasswordAndDisabledOREnabled(final String userNameOREmailId,final String password,final Boolean bolValue) {
         final Session session = getSession();
         final Criteria criteria = session.createCriteria(User.class);
         Criterion userNameCriteria= Restrictions.eq("userName", userNameOREmailId);
         Criterion emailIDCriteria=Restrictions.eq("email", userNameOREmailId);
         criteria.add(Restrictions.or(userNameCriteria, emailIDCriteria));
         criteria.add(Restrictions.eq("password", password));
-        criteria.add(Restrictions.eq("enabled", true));
+        criteria.add(Restrictions.eq("enabled", bolValue));
         final User user = (User) criteria.uniqueResult();
         return user;
     }

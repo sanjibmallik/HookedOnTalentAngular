@@ -29,12 +29,12 @@ public class LoginController{
 
     @RequestMapping(value = "hot/userLoginAuthentication/{userName}/{password}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public User userLoginAuthentication(@PathVariable("userName") final String userName,
+    public User userLoginAuthentication(@PathVariable("userName") final String userNameOREmailId,
                                         @PathVariable("password") final String password) {
 
         final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
         final String encodedPassword=encoder.encodePassword(password, null);
-        final User userObject=this.loginService.getLoginUserByUserNameOREmailIdAndPassword(userName, encodedPassword);
+        final User userObject=this.loginService.getLoginUserByUserNameOREmailIdAndPassword(userNameOREmailId, encodedPassword);
         return userObject;
     }
 

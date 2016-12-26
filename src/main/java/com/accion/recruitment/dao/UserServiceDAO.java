@@ -43,10 +43,12 @@ public interface UserServiceDAO {
      *                  which is having UserName OR EmailId value .
      * @param password  accept the java.lang.String type of userNameOREmailId
      *                  which is having password value .
+     * @param bolValue  accept the java.lang.Boolean type of bolValue
+     *                  which is having true or false value .
      * @return instance of User having persisting state otherwise
      *         it return null.
      */
-    public User getUserByUserNameOREmailIdAndPasswordIsDisabled(final String userNameOREmailId,final String password);
+    public User getUserByUserNameOREmailIdAndPasswordAndDisabledOREnabled(final String userNameOREmailId,final String password,final Boolean bolValue);
 
 
 }
