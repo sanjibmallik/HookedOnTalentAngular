@@ -29,7 +29,7 @@ app.run(function()
 
 app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASSETS){
 
-	$urlRouterProvider.otherwise('/app/dashboard');
+	$urlRouterProvider.otherwise('/login');
 
 	$stateProvider.
 		// Main Layout Structure
@@ -63,6 +63,23 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
 				}
 			}
 		}).
+        state('login', {
+            url: '/login',
+            templateUrl: 'app/views/common/login.html'
+            /*resolve: {
+                resources: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.charts.dxGlobalize,
+                        ASSETS.extra.toastr
+                    ]);
+                },
+                dxCharts: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.charts.dxCharts
+                    ]);
+                }
+            }*/
+        }).
 		
 		state('app.users-Create-User', {
 			url: '/users-Create-User',

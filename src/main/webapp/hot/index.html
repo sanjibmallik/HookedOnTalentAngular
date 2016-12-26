@@ -25,6 +25,7 @@
 	var appHelper = {
 		// Vars (paths without trailing slash)
 		templatesDir: 'app/views',
+        templateBase:'app/common',
 		assetsDir: 'assets',
 
 		// Methods
@@ -32,6 +33,10 @@
 		{
 			return this.templatesDir + '/' + view_name + '.html';
 		},
+        templateBasePath: function(view_name)
+        {
+            return this.templatesDir + '/' + view_name + '.html';
+        },
 
 		assetPath: function(file_path)
 		{
