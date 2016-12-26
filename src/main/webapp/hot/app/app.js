@@ -110,19 +110,13 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
 		state('app.users-Display-Users', {
 			url: '/users-Display-Users',
 			templateUrl: appHelper.templatePath('users/Display-Users'),
-			resolve: {
-				resources: function($ocLazyLoad){
-					return $ocLazyLoad.load([
-						ASSETS.charts.dxGlobalize,
-						ASSETS.extra.toastr
-					]);
-				},
-				dxCharts: function($ocLazyLoad){
-					return $ocLazyLoad.load([
-						ASSETS.charts.dxCharts
-					]);
-				}
-			}
+            resolve: {
+                deps: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.tables.datatables
+                    ]);
+                }
+            }
 		});
 });
 

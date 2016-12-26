@@ -1,1 +1,105 @@
-<h1>Display Users</h1>
+
+
+<page-title ng-if="layoutOptions.pageTitles" title="Users" description=""></page-title>
+
+
+
+
+
+<!-- Custom column filtering -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Showing All Users</h3>
+
+        <div class="panel-options">
+            <a href="" data-toggle="panel">
+                <span class="collapse-icon">&ndash;</span>
+                <span class="expand-icon">+</span>
+            </a>
+            <a href="" data-toggle="remove">
+                &times;
+            </a>
+        </div>
+    </div>
+    <div class="panel-body">
+
+        <script type="text/javascript">
+            jQuery(document).ready(function($)
+            {
+                $("#example-3").dataTable().yadcf([
+                    {column_number : 0, filter_type: 'text'},
+                    {column_number : 1, filter_type: 'text'},
+                    {column_number : 2, filter_type: 'text'},
+                    {column_number : 3, filter_type: 'text'},
+                    {column_number : 4, filter_type: 'text'},
+                ]);
+            });
+        </script>
+
+        <table class="table table-striped table-bordered" id="example-3">
+            <thead>
+            <tr class="replace-inputs">
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>User Name(s)</th>
+                <th>email Id</th>
+                <th>Phone No</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Azhar</td>
+                <td>Liaquat</td>
+                <td>azhar</td>
+                <td>azhar.liaquat@accionlabs.com</td>
+                <td>9844580058</td>
+            </tr>
+            <tr>
+                <td>Mudassir</td>
+                <td>Hussain</td>
+                <td>mudassir</td>
+                <td>mudassir.h@accionlabs.com</td>
+                <td>9865465324</td>
+            </tr>
+            <tr>
+                <td>Sanjib</td>
+                <td>Mallik</td>
+                <td>sanjib</td>
+                <td>Sanjib.mallik@accionlabs.com</td>
+                <td>98875630058</td>
+            </tr>
+            <tr>
+                <td>Nitish</td>
+                <td>Kumar</td>
+                <td>nitish</td>
+                <td>nitish.kumar@accionlabs.com</td>
+                <td>8767880058</td>
+            </tr>
+            <tr>
+                <td>Revathi</td>
+                <td>Murali</td>
+                <td>revathi</td>
+                <td>revathi.murali@accionlabs.com</td>
+                <td>9235460058</td>
+            </tr>
+            <tr>
+                <td>Raj</td>
+                <td>Kumar</td>
+                <td>raj</td>
+                <td>raj.kumar@accionlabs.com</td>
+                <td>8844453258</td>
+            </tr>
+            <tr>
+                <td>Sachin</td>
+                <td>Tendulkar</td>
+                <td>sachin</td>
+                <td>sachin.t@accionlabs.com</td>
+                <td>8767545432</td>
+            </tr>
+
+
+            </tfoot>
+        </table>
+
+    </div>
+</div>
