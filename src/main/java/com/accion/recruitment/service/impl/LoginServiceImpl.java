@@ -7,6 +7,7 @@ import com.accion.recruitment.jpa.entities.TechnicalScreener;
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,12 +24,8 @@ public class LoginServiceImpl implements LoginService {
 
 
     @Autowired
+    @Qualifier(value = "loginServiceDAOImpl")
     private LoginServiceDAO loginServiceDAO;
-
-    @Autowired
-    public LoginServiceImpl(final LoginServiceDAO loginServiceDAO) {
-        this.loginServiceDAO = loginServiceDAO;
-    }
 
     @Override
     public User getLoginUserByUserNameOREmailIdAndPassword(final String userNameOREmailId,final String password) {
