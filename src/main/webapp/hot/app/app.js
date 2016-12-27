@@ -9,7 +9,8 @@ var app = angular.module('hot-app', [
 	'hot.directives',
 	'hot.factory',
 	'hot.services',
-    'hot.userController',
+    'hot.userControllers',
+    'hot.userFactory',
 	'FBAngular'
 ]);
 
@@ -64,19 +65,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
         state('login', {
             url: '/login',
             templateUrl: 'app/views/common/login.html'
-            /*resolve: {
-                resources: function($ocLazyLoad){
-                    return $ocLazyLoad.load([
-                        ASSETS.charts.dxGlobalize,
-                        ASSETS.extra.toastr
-                    ]);
-                },
-                dxCharts: function($ocLazyLoad){
-                    return $ocLazyLoad.load([
-                        ASSETS.charts.dxCharts
-                    ]);
-                }
-            }*/
+
         }).
 		
 		state('app.users-Create-User', {

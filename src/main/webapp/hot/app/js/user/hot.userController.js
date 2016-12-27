@@ -1,6 +1,6 @@
 'use strict'
 
-var userModule = angular.module('hot.userController',[])
+var userModule = angular.module('hot.userControllers',[])
     .controller('createNewUserCtrl',function($scope,$http){
 
  $scope.newUser = {};
