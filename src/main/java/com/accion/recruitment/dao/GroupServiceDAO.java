@@ -3,12 +3,14 @@ package com.accion.recruitment.dao;
 import com.accion.recruitment.jpa.entities.Groups;
 import com.accion.recruitment.jpa.entities.User;
 
+import java.util.List;
+
 /**
  * @author Mudassir Hussain
  * @author $LastChangedBy: Mudassir Hussain $
  * $Date:: 12/26/16 00:11 AM#$
  */
-public interface GroupServiceDAO {
+public interface GroupServiceDAO<E> {
 
     /**
      * saveUser() provide the specification for persisting
@@ -31,4 +33,15 @@ public interface GroupServiceDAO {
      *         it return null.
      */
     public Groups getGroupByGroupName(final String groupName);
+
+    /**
+     * getAllGroups() provide the specification
+     * for getting all the Groups form database
+     * for particular user.
+     *
+     * @return the instance of the java.util.List containing
+     *         the Groups for the particular Groups.
+     */
+    public List<E> getAllGroups();
+
 }
