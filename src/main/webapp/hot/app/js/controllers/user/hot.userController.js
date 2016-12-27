@@ -2,12 +2,27 @@
 
 var userModule = angular.module('hot.userController',[])
     .controller('createNewUserCtrl',function($scope,$http){
-      $scope.test="test";
+
+
+
+
+        $http({
+            method : 'GET',
+            url : 'getGroupsName/'
+        }).then(function successCallback(response) {
+
+                $scope.roles=response.data;
+                console.log($scope.roles);
+
+            },function errorCallback(response) {
+              /* console.log(response.statusText);*/
+            });
+
+
         $scope.showTSDetailsDiv=false;
 
-        $scope.selectRoles = [ {code: 1, name: 'Admin'}, {code: 2, name: 'Recruiter'},{code: 3, name: 'Technical Screener'},{code: 4, name: 'Client'}];
-        $scope.update = function() {
-            if($scope.item.code==3){
+            $scope.update = function() {
+            if($scope.selectRoles=="TechnicalScreener"){
 
                 $scope.showTSDetailsDiv=true;
             }else{
