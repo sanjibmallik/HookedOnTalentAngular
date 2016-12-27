@@ -2,6 +2,7 @@ package com.accion.recruitment.dao;
 
 import com.accion.recruitment.jpa.entities.User;
 
+import java.util.List;
 
 
 /**
@@ -9,7 +10,7 @@ import com.accion.recruitment.jpa.entities.User;
  * @author $LastChangedBy: Mudassir Hussain $
  * $Date:: 12/23/16 00:11 AM#$
  */
-public interface UserServiceDAO {
+public interface UserServiceDAO<E> {
 
     /**
      * getUserByUserNameOREmailId() provide the specification for retrieval of the
@@ -50,4 +51,12 @@ public interface UserServiceDAO {
      */
     public User getUserByUserNameOREmailIdAndPasswordAndDisabledOREnabled(final String userNameOREmailId,final String password,final Boolean bolValue);
 
+    /**
+     * getAllUser() provide the specification for getting all the
+     * User objects from the database.
+     *
+     * @return instance of the java.util.List containing the
+     *         User object of the persisting state.
+     */
+    public List<E> getAllUser();
 }

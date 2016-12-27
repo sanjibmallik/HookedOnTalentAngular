@@ -36,9 +36,9 @@ public class GroupController {
         List<Groups> groupsList=this.groupService.getAllGroups();
 
         for(Groups groups:groupsList){
-            if(!(groups.getGroupName().equals("Client")))
-                 groupsSet.add(groups.getGroupName());
+            groupsSet.add(groups.getGroupName());
         }
+        groupsSet.remove("Client");
         return  groupsSet;
 
     }

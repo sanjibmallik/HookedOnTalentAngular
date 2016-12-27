@@ -27,13 +27,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public List<Groups> getAllGroups() {
-        final List<Groups> uniqueGroupsList = new ArrayList<>();
-        final List<Groups> fetchList = this.groupServiceDAO.getAllGroups();
-        for (Groups groups : fetchList) {
-            if (!uniqueGroupsList.contains(groups)) {
-                uniqueGroupsList.add(groups);
-            }
-        }
-        return uniqueGroupsList;
+        final List<Groups> groupsList =this.groupServiceDAO.getAllGroups();
+        return groupsList;
     }
 }

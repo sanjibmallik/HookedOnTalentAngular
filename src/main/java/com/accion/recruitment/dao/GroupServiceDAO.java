@@ -13,7 +13,7 @@ import java.util.List;
 public interface GroupServiceDAO<E> {
 
     /**
-     * saveUser() provide the specification for persisting
+     * saveUserGroups() provide the specification for persisting
      * the User object in the database.
      *
      * @param user accept the instance of the User class

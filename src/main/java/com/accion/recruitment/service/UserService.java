@@ -2,6 +2,9 @@ package com.accion.recruitment.service;
 
 import com.accion.recruitment.jpa.entities.User;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * @author Mudassir Hussain
  * @author $LastChangedBy: Mudassir Hussain $
@@ -19,4 +22,14 @@ public interface UserService {
      */
 
     public Boolean saveUser(final User user);
+
+    /**
+     * getAllUser() provide the specification for getting all the
+     * User objects from the database.
+     *
+     * @return instance of the java.util.List containing the
+     *         User object of the persisting state.
+     */
+
+    public List<User> getAllUser();
 }

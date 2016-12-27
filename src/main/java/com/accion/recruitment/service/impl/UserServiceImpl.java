@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author Mudassir Hussain
  * @author $LastChangedBy: Mudassir Hussain $
@@ -34,6 +36,11 @@ public class UserServiceImpl implements UserService{
         return bolValue;
     }
 
+    @Override
+    public List<User> getAllUser(){
+        List<User> userList=this.userServiceDAO.getAllUser();
 
+        return  userList;
+    }
 
 }

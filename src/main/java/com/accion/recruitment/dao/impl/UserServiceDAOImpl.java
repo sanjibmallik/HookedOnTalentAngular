@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Entity;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -24,7 +25,7 @@ import java.util.logging.Logger;
  */
 
 @Repository(value = "userServiceDAOImpl")
-public class UserServiceDAOImpl implements UserServiceDAO {
+public class UserServiceDAOImpl<R> implements UserServiceDAO {
 
 
     protected Logger logger;
@@ -79,23 +80,14 @@ public class UserServiceDAOImpl implements UserServiceDAO {
         return user;
     }
 
-
-
-
-
-
-
-
-
-
-
-/*
     @Override
-    public R getEntityByPropertyName(String propName, Object propValue) {
+    public List<R> getAllUser() {
         final Session session = getSession();
-        final Criteria criteria = session.createCriteria(entityClass);
-        criteria.add(Restrictions.eq(propName, propValue));
-        final R entity = (R) criteria.uniqueResult();
-        return entity;
-    }*/
+        List<R> rList = session.createCriteria(User.class).list();
+        return rList;
+    }
+
+
+
+
 }

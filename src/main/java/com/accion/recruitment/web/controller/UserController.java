@@ -15,8 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.security.Principal;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author Mudassir Hussain
@@ -73,5 +72,13 @@ public class UserController {
         Boolean bolValue=this.userService.saveUser(user);
 
         return bolValue;
+    }
+
+
+    @RequestMapping(value = "hot/getAllUsers", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public List<User> getAllUsers() {
+        List<User> userList=this.userService.getAllUser();
+        return  userList;
     }
 }
