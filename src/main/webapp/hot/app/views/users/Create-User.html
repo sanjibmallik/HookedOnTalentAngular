@@ -1,5 +1,5 @@
 <page-title ng-if="layoutOptions.pageTitles" title="Create New User" description=""></page-title>
-
+<div ng-controller="createUserController">
 <div class="row">
 	<div class="col-sm-12">
 		<div class="panel panel-default">
@@ -116,11 +116,34 @@
 								<option>Admin</option>
 								<option>Account Manager</option>
 								<option>Recruiter</option>
-								<option>Technical Screener</option>
+								<option ng-click="showTs = !showTs">Technical Screener</option>
 								
 							</select>
 						</div>
 					</div>
+
+
+                    <script type="text/ng-template" id="loading.tpl.html">
+                        <h1>
+                            ng-hide with ng-include don't work!
+                        </h1>
+                    </script>
+
+                    <div ng-controller="appCtrl">
+                        <button ng-click="showTs = !showTs">Toggle Loading</button>
+                        <br/>
+                        Loading = <span ng-bind="showTs"></span>
+
+                        <div ng-hide="!showTs" ng-include=" 'loading.tpl.html' "></div>
+                        <div ng-hide="!showTs">I hide when I'm supposed to</div>
+
+                    </div>
+
+                    <br/><br/>
+                    btw...
+                    This used to work in 1.1.5<br/>
+
+
                 </form>
 			</div>
 		</div>
@@ -255,7 +278,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row" ng-hide="!showTs">
     <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -340,4 +363,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>
