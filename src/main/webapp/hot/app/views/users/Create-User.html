@@ -1,10 +1,11 @@
 <page-title ng-if="layoutOptions.pageTitles" title="Create New User" description=""></page-title>
-<div ng-controller="createUserController">
+<div ng-controller="createNewUserCtrl">
 <div class="row">
 	<div class="col-sm-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">Enter User Details</h3>
+
 				<div class="panel-options">
 					<a href="" data-toggle="panel">
 						<span class="collapse-icon">&ndash;</span>
@@ -25,7 +26,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-							<input type="text" class="form-control" id="field-1" placeholder="First Name">
+							<input type="text" class="form-control"  placeholder="First Name">
 						</div>
 						</div>
 					</div>
@@ -112,11 +113,11 @@
 						<label class="col-sm-3 control-label">Select Role</label>
 
 						<div class="col-sm-5">
-							<select class="form-control">
-								<option>Admin</option>
-								<option>Account Manager</option>
-								<option>Recruiter</option>
-								<option ng-click="showTs = !showTs">Technical Screener</option>
+							<select class="form-control" ng-model="selectRole">
+								<option ng-value="selectRole.admin">Admin</option>
+								<option ng-value="selectRole.accountManager">Account Manager</option>
+								<option ng-value="selectRole.recruiter">Recruiter</option>
+								<option ng-value="selectRole.technicalScreener">Technical Screener</option>
 								
 							</select>
 						</div>
@@ -129,7 +130,7 @@
                         </h1>
                     </script>
 
-                    <div ng-controller="appCtrl">
+                    <div>
                         <button ng-click="showTs = !showTs">Toggle Loading</button>
                         <br/>
                         Loading = <span ng-bind="showTs"></span>

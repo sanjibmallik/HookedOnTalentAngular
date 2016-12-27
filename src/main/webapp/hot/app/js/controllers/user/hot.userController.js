@@ -2,7 +2,7 @@
 
 var userModule = angular.module('hot.userController',[])
     .controller('createNewUserCtrl',function($scope,$http){
-
+      $scope.test="test";
 
         var createNewUser = function(){
             var newUser= {
@@ -15,6 +15,7 @@ var userModule = angular.module('hot.userController',[])
             $scope.getSelectRole = function(){
 
         }
+        $scope.selectRole.technicalScreener
 
         $scope.showTs = true;
 
