@@ -7,9 +7,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * The Interface BaseEntity.
- *
- * @author Manas
+ * @author Mudassir Hussain
+ * @author $LastChangedBy: Mudassir Hussain $
+ * $Date:: 12/26/16 00:11 AM#$
  */
 public class BaseEntity  {
 

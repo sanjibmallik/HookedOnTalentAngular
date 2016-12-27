@@ -1,8 +1,15 @@
 package com.accion.recruitment.jpa.entities;
 
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * @author Mudassir Hussain
  * @author $LastChangedBy: Mudassir Hussain $
@@ -47,6 +54,15 @@ public class User extends BaseEntity {
 
     @Transient
     private String errorMessage;
+
+
+    @ManyToMany(mappedBy = "userSet"
+            , targetEntity = Groups.class
+            , fetch = FetchType.EAGER
+            , cascade = {CascadeType.PERSIST, CascadeType.MERGE })
+    @org.hibernate.annotations.Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Groups> groupsSet=new HashSet<>();
+
 
     public Integer getId() {
         return id;
@@ -137,7 +153,16 @@ public class User extends BaseEntity {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
-/* @Override
+
+    public Set<Groups> getGroupsSet() {
+        return groupsSet;
+    }
+
+    public void setGroupsSet(Set<Groups> groupsSet) {
+        this.groupsSet = groupsSet;
+    }
+
+    /* @Override
     public String toString() {
         return "User{" +
                 "userName='" + userName + '\'' +

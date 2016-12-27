@@ -38,10 +38,17 @@ public class GroupServiceDAOImpl implements GroupServiceDAO{
     }
 
     public Boolean saveUserGroups(User user){
+        try{
+
+
         final Session session = getSession();
         Groups groups=this.getGroupByGroupName(user.getRole());
+        System.out.println(groups.getGroupName());
         groups.setUser(user);
-        session.save(groups);
+        session.saveOrUpdate(user);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return true;
     }
 

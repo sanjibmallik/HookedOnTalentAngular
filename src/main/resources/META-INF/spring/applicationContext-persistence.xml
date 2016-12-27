@@ -44,7 +44,7 @@
         <property name="properties">
             <props>
                 <prop key="hibernate.hbm2ddl.auto">
-                    create
+                    update
                 </prop>
                 <prop key="hibernate.max_fetch_depth">
                     1
@@ -88,6 +88,10 @@
         <property name="sessionFactory" ref="hibernateSessionFactory"/>
     </bean>
 
+    <bean id="groupServiceDAO" class="com.accion.recruitment.dao.impl.GroupServiceDAOImpl"
+          abstract="true">
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+    </bean>
     <!-- ========= Transactions =========-->
     <!-- == TRANSACTIONS == -->
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">

@@ -42,6 +42,11 @@ public class UserController {
                            final @ModelAttribute("user") User user) {
 
 
+        try{
+            System.out.println(user.getUserName());
+        }catch (Exception e){e.printStackTrace();}
+
+
         if (user != null && file != null && !file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();

@@ -21,8 +21,21 @@ import java.util.Set;
 @Table(name = "groups")
 public class Groups extends BaseEntity{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="id" ,insertable = true, nullable = false, unique = true, updatable = true)
+    protected Integer id;
+
     @Column(length = 100, nullable = false)
     private String groupName;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getGroupName() {
         return groupName;

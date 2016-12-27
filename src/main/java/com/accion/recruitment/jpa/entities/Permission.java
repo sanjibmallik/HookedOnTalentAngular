@@ -21,8 +21,22 @@ import java.util.Set;
 @Table(name="permission")
 public class Permission extends BaseEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="id" ,insertable = true, nullable = false, unique = true, updatable = true)
+    protected Integer id;
+
     @Column(name = "permissionName")
     private String permissionName;
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getPermissionName() {
         return permissionName;
