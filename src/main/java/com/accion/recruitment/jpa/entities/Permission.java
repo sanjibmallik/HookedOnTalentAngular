@@ -52,7 +52,7 @@ public class Permission extends BaseEntity {
             , fetch = FetchType.EAGER
             , cascade = {CascadeType.PERSIST, CascadeType.MERGE })
     @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
-    private Set<Groups> groupsSet=new HashSet<>();
+    private Set<Groups> groupsSet=new HashSet<Groups>();
 
     public Set<Groups> getGroupsSet() {
         return groupsSet;

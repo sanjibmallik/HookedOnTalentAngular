@@ -51,7 +51,7 @@ public class Groups extends BaseEntity{
     @CollectionId(columns = @Column(name="permissionGroupId"),
             type=@Type(type="long"),generator = "increment"
     )
-    private Collection<Permission> permissionSet=new HashSet<>();
+    private Collection<Permission> permissionSet=new HashSet<Permission>();
 
     public Collection<Permission> getPermissionSet() {
         return permissionSet;
@@ -68,7 +68,7 @@ public class Groups extends BaseEntity{
     @CollectionId(columns = @Column(name="userGroupId"),
             type=@Type(type="long"),generator = "increment"
     )
-    private Collection<User> userSet=new HashSet<>();
+    private Collection<User> userSet=new HashSet<User>();
 
     public Collection<User> getUserSet() {
         return userSet;
