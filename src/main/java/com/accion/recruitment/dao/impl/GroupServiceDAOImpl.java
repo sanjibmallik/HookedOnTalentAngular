@@ -11,6 +11,7 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,7 +25,7 @@ import java.util.Set;
  */
 
 @Repository(value = "groupServiceDAOImpl")
-public class GroupServiceDAOImpl implements GroupServiceDAO{
+public class GroupServiceDAOImpl<R> implements GroupServiceDAO{
 
     @Autowired(required = true)
     protected SessionFactory sessionFactory;
@@ -38,20 +39,12 @@ public class GroupServiceDAOImpl implements GroupServiceDAO{
     }
 
     public Boolean saveUserGroups(User user){
-        try{
-
-
         final Session session = getSession();
         Groups groups=this.getGroupByGroupName(user.getRole());
-        System.out.println(groups.getGroupName());
         groups.setUser(user);
         session.saveOrUpdate(user);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
         return true;
     }
-
 
     @Override
     public Groups getGroupByGroupName(final String groupName) {
@@ -62,5 +55,11 @@ public class GroupServiceDAOImpl implements GroupServiceDAO{
         return groups;
     }
 
+    @Override
+    public List<R> getAllGroups() {
+        final Session session = getSession();
+        List<R> rList = session.createCriteria(Groups.class).list();
+        return rList;
+    }
 
 }

@@ -12,7 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -22,6 +25,9 @@ import java.util.Random;
  */
 @Controller
 public class UserController {
+
+    @Autowired
+    private UserService userService;
 
     private final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 
@@ -33,18 +39,15 @@ public class UserController {
 
     private String password;
 
-    @Autowired
-    private UserService userService;
+    private final Date currentDate = new Date();
+    private final String dateFormat = "yyyy/MM/dd hh:mm:ss";
+    private final SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+
 
     @RequestMapping(value = "hot/createUser", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public Boolean createUser(final @RequestParam(required = false, value = "userImage") MultipartFile file,
-                           final @ModelAttribute("user") User user) {
-
-
-        try{
-            System.out.println(user.getUserName());
-        }catch (Exception e){e.printStackTrace();}
+                           final @ModelAttribute("user") User user,Principal principal) {
 
 
         if (user != null && file != null && !file.isEmpty()) {
@@ -63,6 +66,10 @@ public class UserController {
         }
 
         user.setPassword(this.encoder.encodePassword(password, null));
+        user.setCreatedBy(principal.getName());
+        user.setCreatedDate(new Date(sdf.format(currentDate)));
+        user.setUpdatedBy(principal.getName());
+        user.setUpdatedDate(new Date(sdf.format(currentDate)));
         Boolean bolValue=this.userService.saveUser(user);
 
         return bolValue;
