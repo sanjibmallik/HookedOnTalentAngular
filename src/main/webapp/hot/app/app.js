@@ -9,6 +9,7 @@ var app = angular.module('hot-app', [
 	'hot.directives',
 	'hot.factory',
 	'hot.services',
+    'hot.userModule',
 	'FBAngular'
 ]);
 

@@ -1,11 +1,7 @@
 <page-title ng-if="layoutOptions.pageTitles" title="Create New User" description=""></page-title>
 
-				
-				
-				
-				<div class="row">
+<div class="row">
 	<div class="col-sm-12">
-
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">Enter User Details</h3>
@@ -20,10 +16,8 @@
 				</div>
 			</div>
 			<div class="panel-body">
-
 				<form role="form" class="form-horizontal" role="form">
-
-					<div class="form-group">
+    				<div class="form-group">
 						<label class="col-sm-3 control-label" for="field-1">First Name</label>
 
 						<div class="col-sm-5">
@@ -51,7 +45,20 @@
 						</div>
 					</div>
 
-				
+                    <div class="form-group-separator"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="field-1">User Name</label>
+
+                        <div class="col-sm-5">
+                            <div class="input-group input-group-sm input-group-minimal">
+							<span class="input-group-addon">
+								<i class="linecons-user"></i>
+							</span>
+                                <input type="text" class="form-control" id="" placeholder="User Name">
+                            </div>
+                        </div>
+                    </div>
 					
 
 					<div class="form-group-separator"></div>
@@ -87,25 +94,12 @@
 						</div>
 					</div>
 
-					<div class="form-group-separator"></div>
-					
-					<div class="form-group">
-						<label class="col-sm-3 control-label" for="field-3">Alternate Contact</label>
 
-						<div class="col-sm-5">
-						<div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-mobile"></i>
-							</span>
-							<input type="text" class="form-control" inputmask data-mask="phone" />
-						</div>
-						</div>
-					</div>
 
 					<div class="form-group-separator"></div>
 
 					<div class="form-group">
-						<label class="col-sm-3 control-label" for="field-4">Upload Profile</label>
+						<label class="col-sm-3 control-label" for="">Upload Profile</label>
 
 						<div class="col-sm-5">
 							<input type="file" class="form-control" id="field-4">
@@ -113,10 +107,6 @@
 					</div>
 
 					<div class="form-group-separator"></div>
-
-					
-
-					
 
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Select Role</label>
@@ -131,15 +121,223 @@
 							</select>
 						</div>
 					</div>
-
-					
-					</div>
-
-
-				</form>
-
+                </form>
 			</div>
 		</div>
-
 	</div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Address (Optional)</h3>
+                <div class="panel-options">
+                    <a href="" data-toggle="panel">
+                        <span class="collapse-icon">&ndash;</span>
+                        <span class="expand-icon">+</span>
+                    </a>
+                    <a href="" data-toggle="remove">
+                        &times;
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form role="form" class="form-horizontal" role="form">
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="field-3">Alternate Contact</label>
+
+                        <div class="col-sm-5">
+                            <div class="input-group input-group-sm input-group-minimal">
+							<span class="input-group-addon">
+								<i class="linecons-mobile"></i>
+							</span>
+                                <input type="text" class="form-control" inputmask data-mask="phone" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-separator"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="field-1">Address Line 1</label>
+
+                        <div class="col-sm-5">
+                            <div class="input-group input-group-sm input-group-minimal">
+							<span class="input-group-addon">
+								<i class="linecons-user"></i>
+							</span>
+                                <input type="text" class="form-control" id="" placeholder="Street Address, P.O.Box, Company Name, C/o">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-separator"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="field-1">Address Line 2</label>
+
+                        <div class="col-sm-5">
+                            <div class="input-group input-group-sm input-group-minimal">
+							<span class="input-group-addon">
+								<i class="linecons-user"></i>
+							</span>
+                                <input type="text" class="form-control" id="" placeholder="Apartment, Suit, Unit, Building, Floor, etc">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-separator"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="field-1">Zip Code</label>
+
+                        <div class="col-sm-5">
+                            <div class="input-group input-group-sm input-group-minimal">
+							<span class="input-group-addon">
+								<i class="linecons-user"></i>
+							</span>
+                                <input type="text" class="form-control" id="" placeholder="Zipcode">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-separator"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="field-1">City</label>
+
+                        <div class="col-sm-5">
+                            <div class="input-group input-group-sm input-group-minimal">
+							<span class="input-group-addon">
+								<i class="linecons-user"></i>
+							</span>
+                                <input type="text" class="form-control" id="" placeholder="City">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-separator"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="field-1">State</label>
+
+                        <div class="col-sm-5">
+                            <div class="input-group input-group-sm input-group-minimal">
+							<span class="input-group-addon">
+								<i class="linecons-user"></i>
+							</span>
+                                <input type="text" class="form-control" id="" placeholder="State">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-separator"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="field-1">Country</label>
+
+                        <div class="col-sm-5">
+                            <div class="input-group input-group-sm input-group-minimal">
+							<span class="input-group-addon">
+								<i class="linecons-user"></i>
+							</span>
+                                <input type="text" class="form-control" id="" placeholder="Country">
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Enter Screener Details</h3>
+                <div class="panel-options">
+                    <a href="" data-toggle="panel">
+                        <span class="collapse-icon">&ndash;</span>
+                        <span class="expand-icon">+</span>
+                    </a>
+                    <a href="" data-toggle="remove">
+                        &times;
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form role="form" class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="field-1">Primary skills</label>
+
+                        <div class="col-sm-5">
+                            <div class="input-group input-group-sm input-group-minimal">
+							<span class="input-group-addon">
+								<i class="linecons-user"></i>
+							</span>
+                                <input type="text" class="form-control" id="" placeholder="Primary Skills">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-separator"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="field-1">Secondary Skills</label>
+
+                        <div class="col-sm-5">
+                            <div class="input-group input-group-sm input-group-minimal">
+							<span class="input-group-addon">
+								<i class="linecons-user"></i>
+							</span>
+                                <input type="text" class="form-control" id="" placeholder="Secondary Skills">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-separator"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="field-1">Expected Pay Range</label>
+
+                        <div class="col-sm-5">
+                            <div class="input-group input-group-sm input-group-minimal">
+							<span class="input-group-addon">
+								<i class="linecons-user"></i>
+							</span>
+                                <input type="text" class="form-control" id="" placeholder="Pay Range">
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+
+            <div class="panel-body" style="text-align: center;">
+                <button class="btn btn-info btn-icon">
+                    <i class="fa-rocket"></i>
+                    <span>Submit</span>
+                </button>
+
+                <button class="btn btn-warning btn-icon">
+                    <i class="fa-rocket"></i>
+                    <span>ReSet</span>
+                </button>
+
+
+            </div>
+        </div>
+    </div>
 </div>
