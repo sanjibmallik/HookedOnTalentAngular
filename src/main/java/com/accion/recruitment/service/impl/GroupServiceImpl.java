@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Mudassir Hussain
@@ -26,8 +28,13 @@ public class GroupServiceImpl implements GroupService {
     private GroupServiceDAO groupServiceDAO;
 
     @Override
-    public List<Groups> getAllGroups() {
+    public Set<String> getGroupsName() {
+        Set<String> groupsSet=new HashSet<String>();
         final List<Groups> groupsList =this.groupServiceDAO.getAllGroups();
-        return groupsList;
+        for(Groups groups:groupsList){
+            groupsSet.add(groups.getGroupName());
+        }
+        groupsSet.remove("Client");
+        return groupsSet;
     }
 }

@@ -3,6 +3,7 @@ package com.accion.recruitment.service;
 import com.accion.recruitment.jpa.entities.Groups;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Mudassir Hussain
@@ -14,11 +15,10 @@ public interface GroupService {
 
     /**
      * getAllGroups() provide the specification
-     * for getting all the Groups form database
-     * for particular user.
+     * for getting all the Group Names
      *
      * @return the instance of the java.util.List containing
-     *         the Groups for the particular Groups.
+     *         the Group Names.
      */
-    public List<Groups> getAllGroups() ;
+    public Set<String> getGroupsName() ;
 }

@@ -45,13 +45,13 @@ public class UserController {
 
     @RequestMapping(value = "hot/createUser", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
-    public Boolean createUser(final @RequestParam(required = false, value = "userImage") MultipartFile file,
+    public Boolean createUser(final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
                            final @ModelAttribute("user") User user,Principal principal) {
 
 
-        if (user != null && file != null && !file.isEmpty()) {
+        if (user != null && userImage != null && !userImage.isEmpty()) {
             try {
-                byte[] bytes = file.getBytes();
+                byte[] bytes = userImage.getBytes();
                 user.setUserImage(bytes);
             } catch (Exception e) {
                 e.printStackTrace();

@@ -28,19 +28,11 @@ public class GroupController {
     private GroupService groupService;
 
 
-    @RequestMapping(value = "hot/getAllGroups", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = "hot/getGroupsName", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public Set<String> getAllGroups() {
-
-        Set<String> groupsSet=new HashSet<String>();
-        List<Groups> groupsList=this.groupService.getAllGroups();
-
-        for(Groups groups:groupsList){
-            groupsSet.add(groups.getGroupName());
-        }
-        groupsSet.remove("Client");
+    public Set<String> getGroupsName() {
+        Set<String> groupsSet=this.groupService.getGroupsName();
         return  groupsSet;
-
     }
 
 
