@@ -3,7 +3,7 @@
 var userModule = angular.module('hot.userController',[])
     .controller('createNewUserCtrl',function($scope,$http){
 
-
+ $scope.newUser = {};
 
 
         $http({
@@ -22,7 +22,7 @@ var userModule = angular.module('hot.userController',[])
         $scope.showTSDetailsDiv=false;
 
             $scope.update = function() {
-            if($scope.selectRoles=="TechnicalScreener"){
+            if($scope.newUser.selectRoles=="TechnicalScreener"){
 
                 $scope.showTSDetailsDiv=true;
             }else{
