@@ -59,4 +59,14 @@ public interface UserServiceDAO<E> {
      *         User object of the persisting state.
      */
     public List<E> getAllUser();
+
+    /**
+     * size() provide the specification for getting the
+     * number of entity having persisting state in
+     * database table.
+     *
+     * @return java.lang.Long object containing the size of
+     *         the records in the database table.
+     */
+    public Long size();
 }

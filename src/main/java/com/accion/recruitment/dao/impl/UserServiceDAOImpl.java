@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -87,6 +88,14 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
         return rList;
     }
 
+    @Override
+    public Long size() {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(User.class);
+        criteria.setProjection(Projections.rowCount()).uniqueResult();
+        final Long size = (Long) criteria.uniqueResult();
+        return size;
+    }
 
 
 
