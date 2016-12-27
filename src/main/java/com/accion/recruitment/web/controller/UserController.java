@@ -46,7 +46,8 @@ public class UserController {
     @RequestMapping(value = "hot/createUser", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public Boolean createUser(final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
-                           final @ModelAttribute("user") User user,Principal principal) {
+                              final @ModelAttribute("user") User user,
+                              final Principal principal) {
 
 
         if (user != null && userImage != null && !userImage.isEmpty()) {
