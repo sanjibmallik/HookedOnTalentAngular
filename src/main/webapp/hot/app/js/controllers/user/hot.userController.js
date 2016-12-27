@@ -33,11 +33,16 @@ var userModule = angular.module('hot.userController',[])
         }
 
 
-
-
         $scope.submitNewUser = function(){
             console.log($scope.newUser);
         }
+
+
+    })
+
+
+    .controller('viewAllUserCtrl',function($scope,$http){
+        $scope.test='test';
 
 
     });

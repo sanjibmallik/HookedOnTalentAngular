@@ -2,15 +2,11 @@
 
 <page-title ng-if="layoutOptions.pageTitles" title="Users" description=""></page-title>
 
-
-
-
-
-
 <!-- Custom column filtering -->
-<div class="panel panel-default">
+<div class="panel panel-default" ng-controller="viewAllUserCtrl">
     <div class="panel-heading">
         <h3 class="panel-title">Showing All Users</h3>
+
 
         <div class="panel-options">
             <a href="" data-toggle="panel">
@@ -99,7 +95,7 @@
             </tr>
 
 
-            </tfoot>
+            </tbody>
         </table>
 
     </div>
