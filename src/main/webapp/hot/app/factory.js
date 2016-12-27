@@ -410,4 +410,23 @@ angular.module('hot.factory', []).
 				return arr;
 			}
 		};
-	});
+	}).
+    factory('loginServices',function($http,$scope){
+         var dataFactory={};
+        dataFactory.getLoginDetails = function(userName,password){
+            $http.get('hot/userLoginAuthentication/'+userName+'/'+password)
+                .success(function (data, status, headers, config) {
+                    $scope.Details = data;
+                })
+                .error(function (data, status, header, config) {
+                    $scope.ResponseDetails = "Data: " + data +
+                        "<br />status: " + status +
+                        "<br />headers: " + jsonFilter(header) +
+                        "<br />config: " + jsonFilter(config);
+                });
+        };
+        return dataFactory;
+
+
+
+    });

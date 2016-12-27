@@ -2,12 +2,9 @@
 
 var app = angular.module('hot-app', [
 	'ngCookies',
-
 	'ui.router',
 	'ui.bootstrap',
-
 	'oc.lazyLoad',
-
 	'hot.controllers',
 	'hot.directives',
 	'hot.factory',

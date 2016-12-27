@@ -107,13 +107,6 @@ angular.module('hot.services', []).
 		this.prepareHorizontalMenu = function()
 		{
 			var dashboard    = this.addItem('Dashboard', 		'/app/dashboard', 			'linecons-cog');
-			
-
-
-				
-				
-
-			
 			return this;
 		}
 

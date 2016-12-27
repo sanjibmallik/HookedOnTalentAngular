@@ -1,7 +1,8 @@
 
 
 
-    <title>login | HookedOn Talent</title>
+ <div ng-controller="LoginCtrl">
+
 
     <link rel="stylesheet" href="https://d2ue829my6ap69.cloudfront.net/css/jquery-ui-1.10.3.custom.min.css">
     <link rel="stylesheet" href="https://d2ue829my6ap69.cloudfront.net/css/entypo.css">
@@ -23,7 +24,6 @@
     <script src="https://d2ue829my6ap69.cloudfront.net/js/neon-custom.js"></script>
     <script src="https://d2ue829my6ap69.cloudfront.net/js/neon-demo.js"></script>
 
-    <!-- ANGULAR SCRIPTS-->
 
 
 <div id="loginField">
@@ -55,7 +55,7 @@
 
                     <div id="div1">
 
-                        <form id="login" ng-submit="userLoginFormSubmit()" role="form" name="userLoginForm" ng-model="userLoginForm">
+                        <form id="login" role="form" name="userLoginForm" ng-model="userLoginForm">
 
                             <div class="form-group" ng-show="errorMessageShow">
 
@@ -72,7 +72,7 @@
                                         <i class="entypo-user"></i>
                                     </div>
 
-                                    <input type="text" ng-model="loginUser.userName" class="form-control" placeholder="User Name" autocomplete="off" data-mask="email" />
+                                    <input type="text" ng-model="userName" class="form-control" placeholder="User Name" autocomplete="off" data-mask="email" />
 
                                 </div>
 
@@ -85,7 +85,7 @@
                                         <i class="entypo-key"></i>
                                     </div>
 
-                                    <input type="password" ng-model="loginUser.password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off" />
+                                    <input type="password" ng-model="password" class="form-control"  placeholder="Password" autocomplete="off" />
 
                                 </div>
 
@@ -94,17 +94,14 @@
 
 
                             <div class="form-group">
-                                <button type="submit"  class="btn btn-primary btn-block btn-login" name="commit" value="Log-In">
+                                <input type="button" ng-click="submitUserLoginForm();"  class="btn btn-primary btn-block btn-login" name="commit" value="Log-In">
                                     <i class="entypo-login"></i>
-                                    Login
+
                                 </button>
                             </div>
 
 
                         </form>
-
-
-
 
                         <div style=" margin-top: 270px;">
                             <p></p><p></p><p></p>
@@ -127,5 +124,6 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 

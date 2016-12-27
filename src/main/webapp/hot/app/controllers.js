@@ -1,27 +1,54 @@
 'use strict';
 
 angular.module('hot.controllers', []).
-	controller('LoginCtrl', function($scope, $rootScope)
+	controller('LoginCtrl', function($scope, $rootScope,$http,$state)
 	{
-		$rootScope.isLoginPage        = true;
+		/*$rootScope.isLoginPage        = true;
 		$rootScope.isLightLoginPage   = false;
 		$rootScope.isLockscreenPage   = false;
-		$rootScope.isMainPage         = false;
+		$rootScope.isMainPage         = false;*/
+        $scope.errorMessageShow = false;
+        $scope.errorMessage = "";
+
+        $scope.userName="";
+        $scope.password="";
+
+        $scope.submitUserLoginForm = function(){
+
+            $http({
+                method : 'GET',
+                url : 'userLoginAuthentication/'+$scope.userName+'/'+$scope.password
+            }).then(function successCallback(response) {
+                  console.log(response.data.errorMessage);
+                    if(null==response.data.errorMessage){
+                        $state.go('app.dashboard', {});
+                    }
+                    else{
+                        $scope.errorMessageShow = true;
+                        $scope.errorMessage = response.data.errorMessage;
+                    }
+
+
+
+                }, function errorCallback(response) {
+                    console.log(response.statusText);
+                });
+
+        }
+
+       /* $http.get('userLoginAuthentication/'+'admin'+'/'+'admin')
+            .success(function (data, status, headers, config) {
+                $scope.Details = data;
+            })
+            .error(function (data, status, header, config) {
+                $scope.ResponseDetails = "Data: " + data +
+                    "<br />status: " + status +
+                    "<br />headers: " + jsonFilter(header) +
+                    "<br />config: " + jsonFilter(config);
+            });*/
+
 	}).
-	controller('LoginLightCtrl', function($scope, $rootScope)
-	{
-		$rootScope.isLoginPage        = true;
-		$rootScope.isLightLoginPage   = true;
-		$rootScope.isLockscreenPage   = false;
-		$rootScope.isMainPage         = false;
-	}).
-	controller('LockscreenCtrl', function($scope, $rootScope)
-	{
-		$rootScope.isLoginPage        = false;
-		$rootScope.isLightLoginPage   = false;
-		$rootScope.isLockscreenPage   = true;
-		$rootScope.isMainPage         = false;
-	}).
+
 	controller('MainCtrl', function($scope, $rootScope, $location, $layout, $layoutToggles, $pageLoadingBar, Fullscreen)
 	{
 		$rootScope.isLoginPage        = false;
