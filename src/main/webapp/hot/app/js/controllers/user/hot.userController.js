@@ -37,6 +37,10 @@ var userModule = angular.module('hot.userController',[])
             console.log($scope.newUser);
         }
 
+        $scope.resetUserForm = function(){
+            $scope.newUser={};
+        }
+
 
     })
 
