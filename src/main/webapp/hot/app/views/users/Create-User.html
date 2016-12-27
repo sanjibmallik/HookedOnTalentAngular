@@ -184,7 +184,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o">
+                                <input type="text" ng-model="newUser.address1" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o">
                             </div>
                         </div>
                     </div>
@@ -199,7 +199,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc">
+                                <input type="text" ng-model="newUser.address2" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc">
                             </div>
                         </div>
                     </div>
@@ -214,7 +214,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" class="form-control"  placeholder="Zipcode">
+                                <input type="text" ng-model="newUser.zipCode" class="form-control"  placeholder="Zipcode">
                             </div>
                         </div>
                     </div>
@@ -229,7 +229,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" class="form-control" placeholder="City">
+                                <input ng-model="newUser.city" type="text" class="form-control" placeholder="City">
                             </div>
                         </div>
                     </div>
@@ -244,7 +244,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" class="form-control" placeholder="State">
+                                <input ng-model="newUser.state" type="text" class="form-control" placeholder="State">
                             </div>
                         </div>
                     </div>
@@ -259,7 +259,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" class="form-control"  placeholder="Country">
+                                <input type="text" ng-model="newUser.country" class="form-control"  placeholder="Country">
                             </div>
                         </div>
                     </div>
@@ -341,12 +341,12 @@
         <div class="panel panel-default">
 
             <div class="panel-body" style="text-align: center;">
-                <button class="btn btn-info btn-icon">
+                <button class="btn btn-info btn-icon" ng-click="submitNewUser();">
                     <i class="fa-rocket"></i>
                     <span>Submit</span>
                 </button>
 
-                <button class="btn btn-warning btn-icon">
+                <button class="btn btn-warning btn-icon" ng-click="resetUserForm();">
                     <i class="fa-rocket"></i>
                     <span>Reset</span>
                 </button>

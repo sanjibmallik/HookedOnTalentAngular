@@ -33,4 +33,11 @@ var userModule = angular.module('hot.userController',[])
         }
 
 
+
+
+        $scope.submitNewUser = function(){
+            console.log($scope.newUser);
+        }
+
+
     });

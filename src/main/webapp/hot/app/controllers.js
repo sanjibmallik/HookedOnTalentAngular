@@ -3,10 +3,7 @@
 angular.module('hot.controllers', []).
 	controller('LoginCtrl', function($scope, $rootScope,$http,$state)
 	{
-		/*$rootScope.isLoginPage        = true;
-		$rootScope.isLightLoginPage   = false;
-		$rootScope.isLockscreenPage   = false;
-		$rootScope.isMainPage         = false;*/
+
         $scope.errorMessageShow = false;
         $scope.errorMessage = "";
 
@@ -36,16 +33,7 @@ angular.module('hot.controllers', []).
 
         }
 
-       /* $http.get('userLoginAuthentication/'+'admin'+'/'+'admin')
-            .success(function (data, status, headers, config) {
-                $scope.Details = data;
-            })
-            .error(function (data, status, header, config) {
-                $scope.ResponseDetails = "Data: " + data +
-                    "<br />status: " + status +
-                    "<br />headers: " + jsonFilter(header) +
-                    "<br />config: " + jsonFilter(config);
-            });*/
+
 
 	}).
 
