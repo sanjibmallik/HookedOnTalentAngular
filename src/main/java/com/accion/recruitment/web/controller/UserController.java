@@ -6,6 +6,9 @@ import com.accion.recruitment.jpa.entities.TechnicalScreenerSkills;
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.LoginService;
 import com.accion.recruitment.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -67,6 +70,14 @@ public class UserController {
                 e.printStackTrace();
             }
         }
+        if (user != null && userProfile != null && !userProfile.isEmpty()) {
+            try {
+                byte[] bytes = userProfile.getBytes();
+                user.setUserProfile(bytes);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         user.setPassword(this.encoder.encodePassword(this.generatePassword(), null));
         user.setCreatedBy(principal.getName());
@@ -101,22 +112,21 @@ public class UserController {
 
     @RequestMapping(value = "hot/userNameExist/{userName}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public User userNameExist(@PathVariable("userName") final String userName) {
+    public String userNameExist(@PathVariable("userName") final String userName) throws JSONException {
 
         User user=new User();
+        JSONObject jsonObject=new JSONObject();
+
         try{
             user=this.userService.checkUserNameExist(userName);
-
             if(user==null)
-                return user;
-
+               return "{}";
         }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            user.setErrorMessage("User already Exist");
+            user.setErrorMessage("UserName Already Exist");
         }
-
-        return  user;
+        user.setErrorMessage("UserName Already Exist");
+        jsonObject.put("user",user.toString());
+        return  jsonObject.toString();
     }
 
 

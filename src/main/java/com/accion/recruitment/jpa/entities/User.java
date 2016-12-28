@@ -285,15 +285,14 @@ public class User extends BaseEntity {
 
     @Override
     public String toString() {
-        return "User{" +
-                "userName='" + userName + '\'' +
-                ", email='" + emailId + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", role=" + role +
-                ", groupsSet=" + groupsSet +
+        return "{" +
+                "userName:'" + userName + '\'' +
+                ", email:'" + emailId + '\'' +
+                ", enabled:'" + enabled + '\'' +
+                ", firstName:'" + firstName + '\'' +
+                ", lastName:'" + lastName + '\'' +
+                ", role:'" + role + '\'' +
+                ", errorMessage:'" + errorMessage + '\'' +
                 '}';
     }
 
