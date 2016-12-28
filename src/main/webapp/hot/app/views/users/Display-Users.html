@@ -44,21 +44,21 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <tr ng-click="toggleDetail($index)">
                 <td>Azhar</td>
                 <td>Liaquat</td>
                 <td>azhar</td>
                 <td>azhar.liaquat@accionlabs.com</td>
                 <td>9844580058</td>
             </tr>
-            <tr>
+            <tr ng-click="toggleDetail($index)">
                 <td>Mudassir</td>
                 <td>Hussain</td>
                 <td>mudassir</td>
                 <td>mudassir.h@accionlabs.com</td>
                 <td>9865465324</td>
             </tr>
-            <tr>
+            <tr ng-click="toggleDetail($index)">
                 <td>Sanjib</td>
                 <td>Mallik</td>
                 <td>sanjib</td>
@@ -92,6 +92,11 @@
                 <td>sachin</td>
                 <td>sachin.t@accionlabs.com</td>
                 <td>8767545432</td>
+            </tr>
+
+
+            <tr class="extra-row" ng-show="activePosition == $index">
+                <td colspan="5" >Details are here... dfdsf sdf s dfg dfg dfdfg gdfgdf</td>
             </tr>
 
 

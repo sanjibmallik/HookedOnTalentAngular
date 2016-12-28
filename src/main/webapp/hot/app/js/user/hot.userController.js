@@ -48,5 +48,9 @@ var userModule = angular.module('hot.userControllers',[])
     .controller('viewAllUserCtrl',function($scope,$http){
         $scope.test='test';
 
+        $scope.toggleDetail = function($index) {
+            //$scope.isVisible = $scope.isVisible == 0 ? true : false;
+            $scope.activePosition = $scope.activePosition == $index ? -1 : $index;
+        };
 
     });
