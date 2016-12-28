@@ -26,7 +26,8 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-							<input type="text" class="form-control" ng-model="newUser.firstName" placeholder="First Name">
+							<input type="text" class="form-control" ng-model="newUser.firstName" placeholder="First Name"
+                                   inputmask data-mask="[a-zA-Z][a-zA-Z]+" data-is-regex="true" maxlength="35">
 						</div>
 						</div>
 					</div>
@@ -41,7 +42,8 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-							<input type="text" class="form-control" ng-model="newUser.lastName" placeholder="Last Name">
+							<input type="text" class="form-control" ng-model="newUser.lastName" placeholder="Last Name"
+                                   inputmask data-mask="[a-zA-Z][a-zA-Z ]+" data-is-regex="true" maxlength="35">
 						</div>
 						</div>
 					</div>
@@ -56,7 +58,8 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" class="form-control" ng-model="newUser.userName" placeholder="User Name">
+                                <input type="text" class="form-control" ng-model="newUser.userName" placeholder="User Name"
+                                       inputmask data-mask="[a-zA-Z][a-zA-Z ]+" data-is-regex="true" maxlength="35">
                             </div>
                         </div>
                     </div>
