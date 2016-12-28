@@ -102,7 +102,7 @@ public class User extends BaseEntity {
     @CollectionId(columns = @Column(name="ts_skill_details_id"),
             type=@Type(type="long"),generator = "increment"
     )
-    private Collection<TechnicalScreenerSkills> technicalScreenerDetailsDSkillsSet=new HashSet<>();
+    private Collection<TechnicalScreenerSkills> technicalScreenerDetailsDSkillsSet=new HashSet<TechnicalScreenerSkills>();
 
 
     public Integer getId() {

@@ -48,7 +48,7 @@ public class TechnicalScreenerSkills extends BaseEntity {
             , fetch = FetchType.EAGER
             , cascade = {CascadeType.PERSIST, CascadeType.MERGE })
     @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
-    private Collection<User> technicalScreenerDetailsSet=new HashSet<>();
+    private Collection<User> technicalScreenerDetailsSet=new HashSet<User>();
 
 
     public String getPrimarySkills() {

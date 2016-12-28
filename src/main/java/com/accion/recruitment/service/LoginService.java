@@ -1,6 +1,6 @@
 package com.accion.recruitment.service;
 
-import com.accion.recruitment.jpa.entities.TechnicalScreener;
+
 import com.accion.recruitment.jpa.entities.User;
 
 import java.util.List;

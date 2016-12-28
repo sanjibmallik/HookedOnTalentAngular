@@ -3,7 +3,7 @@ package com.accion.recruitment.service.impl;
 import com.accion.recruitment.dao.LoginServiceDAO;
 import com.accion.recruitment.dao.TechnicalScreenerDAO;
 import com.accion.recruitment.dao.UserServiceDAO;
-import com.accion.recruitment.jpa.entities.TechnicalScreener;
+
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
