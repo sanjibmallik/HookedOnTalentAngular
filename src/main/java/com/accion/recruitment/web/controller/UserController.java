@@ -1,6 +1,7 @@
 package com.accion.recruitment.web.controller;
 
 import com.accion.recruitment.jpa.entities.Groups;
+import com.accion.recruitment.jpa.entities.TechnicalScreenerSkills;
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.LoginService;
 import com.accion.recruitment.service.UserService;
@@ -25,6 +26,13 @@ import java.util.*;
 @Controller
 public class UserController {
 
+    enum Status{
+        TechnicalScreener,
+        PrimarySkill,
+        SecondarySkill
+
+
+    }
     @Autowired
     private UserService userService;
 
@@ -36,7 +44,9 @@ public class UserController {
 
     private final Integer PASSWORD_LENGTH = 6;
 
-    private String password;
+    private final String defaultPassword = "hot123";
+
+
 
     private final Date currentDate = new Date();
     private final String dateFormat = "yyyy/MM/dd hh:mm:ss";
@@ -47,8 +57,10 @@ public class UserController {
     @ResponseBody
     public Boolean createUser(final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
                               final @ModelAttribute("user") User user,
+                              final @ModelAttribute("technicalScreenerSkills") TechnicalScreenerSkills technicalScreenerSkills,
                               final Principal principal) {
 
+        List<TechnicalScreenerSkills> technicalScreenerSkillsList=new ArrayList<TechnicalScreenerSkills>();
 
         if (user != null && userImage != null && !userImage.isEmpty()) {
             try {
@@ -58,22 +70,27 @@ public class UserController {
                 e.printStackTrace();
             }
         }
-
-        for (int i=0; i<PASSWORD_LENGTH; i++)
-        {
-            int index = (int)(this.random.nextDouble()*letters.length());
-            password += letters.substring(index, index+1);
-        }
-
-        user.setPassword(this.encoder.encodePassword(password, null));
+        user.setPassword(this.encoder.encodePassword(this.generatePassword(), null));
         user.setCreatedBy(principal.getName());
         user.setCreatedDate(new Date(sdf.format(currentDate)));
         user.setUpdatedBy(principal.getName());
         user.setUpdatedDate(new Date(sdf.format(currentDate)));
-        Boolean bolValue=this.userService.saveUser(user);
 
-        return bolValue;
+
+
+        if(user.getRole().equalsIgnoreCase(Status.TechnicalScreener.toString())){
+            technicalScreenerSkillsList=this.getSkillsList(technicalScreenerSkills);
+            user.getTechnicalScreenerDetailsDSkillsSet().addAll(technicalScreenerSkillsList);
+            this.userService.saveUser(user);
+        }else{
+            this.userService.saveUser(user);
+        }
+
+
+        return null;
     }
+
+
 
 
     @RequestMapping(value = "hot/getAllUsers", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
@@ -81,5 +98,75 @@ public class UserController {
     public List<User> getAllUsers() {
         List<User> userList=this.userService.getAllUser();
         return  userList;
+    }
+
+    public final String generatePassword(){
+        String password="";
+        try{
+            for (int i=0; i<PASSWORD_LENGTH; i++)
+            {
+                int index = (int)(this.random.nextDouble()*letters.length());
+                password += letters.substring(index, index+1);
+            }
+        }catch (Exception e){
+            password=defaultPassword;
+        }
+        return password;
+
+    }
+
+    public final List<TechnicalScreenerSkills> getSkillsList(TechnicalScreenerSkills technicalScreenerSkills){
+
+        String primarySkillsArray[],secondarySkillsArray[],primarySkillsYearsArray[],secondarySkillsYearsArray[],primarySkillsMonthsArray[],secondarySkillsMonthsArray[];
+        int length,count=0;
+        Long years,months;
+        String primarySkills,secondarySkills;
+
+        TechnicalScreenerSkills technicalScreenerSkillsArray[];
+        List<TechnicalScreenerSkills> technicalScreenerSkillsList=new ArrayList<TechnicalScreenerSkills>();
+
+        primarySkillsArray=technicalScreenerSkills.getPrimarySkills().split(",");
+        secondarySkillsArray=technicalScreenerSkills.getSecondarySkills().split(",");
+
+        primarySkillsYearsArray=technicalScreenerSkills.getPrimarySkillsYears().split(",");
+        secondarySkillsYearsArray=technicalScreenerSkills.getSecondarySkillsYears().split(",");
+
+        primarySkillsMonthsArray=technicalScreenerSkills.getPrimarySkillsMonths().split(",");
+        secondarySkillsMonthsArray=technicalScreenerSkills.getSecondarySkillsMonths().split(",");
+
+        length=(primarySkillsArray.length+secondarySkillsArray.length*primarySkillsYearsArray.length+secondarySkillsYearsArray.length+primarySkillsMonthsArray.length+secondarySkillsMonthsArray.length);
+
+        technicalScreenerSkillsArray=new TechnicalScreenerSkills[length];
+
+
+        for(int i=0;i<primarySkillsArray.length;i++){
+            primarySkills=primarySkillsArray[i];
+            years= Long.valueOf(primarySkillsYearsArray[i]);
+            months= Long.valueOf(primarySkillsMonthsArray[i]);
+            technicalScreenerSkillsArray[i]=new TechnicalScreenerSkills();
+            technicalScreenerSkillsArray[i].setSkills(primarySkills);
+            technicalScreenerSkillsArray[i].setYears(years);
+            technicalScreenerSkillsArray[i].setMonths(months);
+            technicalScreenerSkillsArray[i].setSkillType(Status.PrimarySkill.toString());
+            count=count+1;
+        }
+
+        for(int i=0;i<secondarySkillsArray.length;i++){
+            secondarySkills=secondarySkillsArray[i];
+            years= Long.valueOf(secondarySkillsYearsArray[i]);
+            months= Long.valueOf(secondarySkillsMonthsArray[i]);
+            technicalScreenerSkillsArray[count+i]=new TechnicalScreenerSkills();
+            technicalScreenerSkillsArray[count+i].setSkills(secondarySkills);
+            technicalScreenerSkillsArray[count+i].setYears(years);
+            technicalScreenerSkillsArray[count+i].setYears(months);
+            technicalScreenerSkillsArray[count+i].setSkillType(Status.SecondarySkill.toString());
+            count=count+1;
+        }
+
+        for (int i = 0; i < technicalScreenerSkillsArray.length; i++){
+            technicalScreenerSkillsList.add(technicalScreenerSkillsArray[i]);
+        }
+
+        return  technicalScreenerSkillsList;
     }
 }
