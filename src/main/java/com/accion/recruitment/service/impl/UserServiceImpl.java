@@ -42,4 +42,13 @@ public class UserServiceImpl implements UserService{
         return  userList;
     }
 
+    @Override
+    public User checkUserNameExist(final String userName){
+        User user=new User();
+        user.setUserName(userName);
+        user=this.userServiceDAO.getUserByUserName(user);
+
+
+        return  user;
+    }
 }

@@ -69,4 +69,16 @@ public interface UserServiceDAO<E> {
      *         the records in the database table.
      */
     public Long size();
+
+    /**
+     * getUserByUserName() provide the specification for retrieval of the
+     * User object from the database based on the User name.
+     *
+     * @param user accept the instance of the User containing the
+     *             User Name for selection from the database.
+     * @return instance of User having persisting state otherwise
+     *         it return null.
+     */
+
+    public User getUserByUserName(User user);
 }

@@ -1,10 +1,8 @@
 package com.accion.recruitment.web.controller;
 
-import com.accion.recruitment.jpa.entities.TechnicalScreener;
+
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.LoginService;
-import com.accion.recruitment.web.controller.LoginController;
-import com.wordnik.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;

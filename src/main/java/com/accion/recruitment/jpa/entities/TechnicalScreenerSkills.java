@@ -5,7 +5,11 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
-
+/**
+ * @author Mudassir Hussain
+ * @author $LastChangedBy: Mudassir Hussain $
+ * $Date:: 12/28/16 00:11 AM#$
+ */
 @Entity
 @Table(name = "technicalscreener_skills")
 public class TechnicalScreenerSkills extends BaseEntity {

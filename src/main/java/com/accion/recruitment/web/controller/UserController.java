@@ -1,5 +1,6 @@
 package com.accion.recruitment.web.controller;
 
+import com.accion.recruitment.common.enums.UserEnums;
 import com.accion.recruitment.jpa.entities.Groups;
 import com.accion.recruitment.jpa.entities.TechnicalScreenerSkills;
 import com.accion.recruitment.jpa.entities.User;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.security.SecureRandom;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -26,13 +28,7 @@ import java.util.*;
 @Controller
 public class UserController {
 
-    enum Status{
-        TechnicalScreener,
-        PrimarySkill,
-        SecondarySkill
 
-
-    }
     @Autowired
     private UserService userService;
 
@@ -55,9 +51,10 @@ public class UserController {
 
     @RequestMapping(value = "hot/createUser", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
-    public Boolean createUser(final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
-                              final @ModelAttribute("user") User user,
+    public Boolean createUser(final @ModelAttribute("user") User user,
                               final @ModelAttribute("technicalScreenerSkills") TechnicalScreenerSkills technicalScreenerSkills,
+                              final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
+                              final @RequestParam(required = false, value = "userProfile") MultipartFile userProfile,
                               final Principal principal) {
 
         List<TechnicalScreenerSkills> technicalScreenerSkillsList=new ArrayList<TechnicalScreenerSkills>();
@@ -70,6 +67,7 @@ public class UserController {
                 e.printStackTrace();
             }
         }
+
         user.setPassword(this.encoder.encodePassword(this.generatePassword(), null));
         user.setCreatedBy(principal.getName());
         user.setCreatedDate(new Date(sdf.format(currentDate)));
@@ -78,8 +76,8 @@ public class UserController {
 
 
 
-        if(user.getRole().equalsIgnoreCase(Status.TechnicalScreener.toString())){
-            technicalScreenerSkillsList=this.getSkillsList(technicalScreenerSkills);
+        if(user.getRole().equalsIgnoreCase(UserEnums.TechnicalScreener.toString())){
+            technicalScreenerSkillsList=this.getTechnicalSkillsObjectList(technicalScreenerSkills);
             user.getTechnicalScreenerDetailsDSkillsSet().addAll(technicalScreenerSkillsList);
             this.userService.saveUser(user);
         }else{
@@ -100,6 +98,28 @@ public class UserController {
         return  userList;
     }
 
+
+    @RequestMapping(value = "hot/userNameExist/{userName}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public User userNameExist(@PathVariable("userName") final String userName) {
+
+        User user=new User();
+        try{
+            user=this.userService.checkUserNameExist(userName);
+
+            if(user==null)
+                return user;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            user.setErrorMessage("User already Exist");
+        }
+
+        return  user;
+    }
+
+
     public final String generatePassword(){
         String password="";
         try{
@@ -115,7 +135,7 @@ public class UserController {
 
     }
 
-    public final List<TechnicalScreenerSkills> getSkillsList(TechnicalScreenerSkills technicalScreenerSkills){
+    public final List<TechnicalScreenerSkills> getTechnicalSkillsObjectList(TechnicalScreenerSkills technicalScreenerSkills){
 
         String primarySkillsArray[],secondarySkillsArray[],primarySkillsYearsArray[],secondarySkillsYearsArray[],primarySkillsMonthsArray[],secondarySkillsMonthsArray[];
         int length,count=0;
@@ -147,7 +167,7 @@ public class UserController {
             technicalScreenerSkillsArray[i].setSkills(primarySkills);
             technicalScreenerSkillsArray[i].setYears(years);
             technicalScreenerSkillsArray[i].setMonths(months);
-            technicalScreenerSkillsArray[i].setSkillType(Status.PrimarySkill.toString());
+            technicalScreenerSkillsArray[i].setSkillType(UserEnums.PrimarySkill.toString());
             count=count+1;
         }
 
@@ -158,8 +178,8 @@ public class UserController {
             technicalScreenerSkillsArray[count+i]=new TechnicalScreenerSkills();
             technicalScreenerSkillsArray[count+i].setSkills(secondarySkills);
             technicalScreenerSkillsArray[count+i].setYears(years);
-            technicalScreenerSkillsArray[count+i].setYears(months);
-            technicalScreenerSkillsArray[count+i].setSkillType(Status.SecondarySkill.toString());
+            technicalScreenerSkillsArray[count+i].setMonths(months);
+            technicalScreenerSkillsArray[count+i].setSkillType(UserEnums.SecondarySkill.toString());
             count=count+1;
         }
 

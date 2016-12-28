@@ -32,4 +32,15 @@ public interface UserService {
      */
 
     public List<User> getAllUser();
+
+    /**
+     * checkUserNameExist() provide the specification for retrieval of the
+     * User object from the database based on the User name.
+     *
+     * @param userName accept the java.lang.String type of userName
+     *                  which is having User Name value .
+     * @return instance of User having persisting state otherwise
+     *         it return null.
+     */
+    public User checkUserNameExist(final String userName);
 }

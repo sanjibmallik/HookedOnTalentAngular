@@ -97,6 +97,15 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
         return size;
     }
 
+    @Override
+    @Transactional
+    public User getUserByUserName(User user) {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(User.class);
+        criteria.add(Restrictions.eq("userName", user.getUserName()));
+        return (User) criteria.uniqueResult();
+    }
+
 
 
 }
