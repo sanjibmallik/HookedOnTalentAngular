@@ -187,7 +187,8 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" ng-model="newUser.address1" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o">
+                                <input type="text" ng-model="newUser.address1" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"
+                                       inputmask data-mask="[a-zA-Z][a-zA-Z ][0-9]*" data-is-regex="true" maxlength="35">
                             </div>
                         </div>
                     </div>
@@ -202,7 +203,8 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" ng-model="newUser.address2" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc">
+                                <input type="text" ng-model="newUser.address2" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc"
+                                       inputmask data-mask="[a-zA-Z][a-zA-Z ][0-9]*" data-is-regex="true" maxlength="35">
                             </div>
                         </div>
                     </div>
@@ -217,7 +219,8 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" ng-model="newUser.zipCode" class="form-control"  placeholder="Zipcode">
+                                <input type="text" ng-model="newUser.zipCode" class="form-control"  placeholder="Zipcode"
+                                       inputmask data-mask="[0-9]*" data-is-regex="true" maxlength="35">
                             </div>
                         </div>
                     </div>
@@ -232,7 +235,8 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input ng-model="newUser.city" type="text" class="form-control" placeholder="City">
+                                <input ng-model="newUser.city" type="text" class="form-control" placeholder="City"
+                                       inputmask data-mask="[a-zA-Z]*" data-is-regex="true" maxlength="35">
                             </div>
                         </div>
                     </div>
@@ -247,7 +251,8 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input ng-model="newUser.state" type="text" class="form-control" placeholder="State">
+                                <input ng-model="newUser.state" type="text" class="form-control" placeholder="State"
+                                       inputmask data-mask="[a-zA-Z]*" data-is-regex="true" maxlength="35">
                             </div>
                         </div>
                     </div>
@@ -262,7 +267,8 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" ng-model="newUser.country" class="form-control"  placeholder="Country">
+                                <input type="text" ng-model="newUser.country" class="form-control"  placeholder="Country"
+                                       inputmask data-mask="[a-zA-Z]*" data-is-regex="true" maxlength="35">
                             </div>
                         </div>
                     </div>
@@ -328,7 +334,8 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" class="form-control" placeholder="Pay Range">
+                                <input type="text" class="form-control" placeholder="Pay Range"
+                                       inputmask data-mask="[0-9]*" data-is-regex="true" maxlength="35">
                             </div>
                         </div>
                     </div>
