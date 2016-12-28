@@ -11,6 +11,4 @@ public enum UserEnums {
         PrimarySkill,
         SecondarySkill
 
-
-
 }

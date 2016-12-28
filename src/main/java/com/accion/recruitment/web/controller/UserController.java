@@ -45,12 +45,17 @@ public class UserController {
 
     private final String defaultPassword = "hot123";
 
-
-
     private final Date currentDate = new Date();
+
     private final String dateFormat = "yyyy/MM/dd hh:mm:ss";
+
     private final SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 
+    private final String emailIdExist="EmailId Already Exist";
+
+    private final String contactNumberExist="Contact Number Already Exist";
+
+    private final String userNameExist="UserName Already Exist";
 
     @RequestMapping(value = "hot/createUser", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
@@ -122,13 +127,50 @@ public class UserController {
             if(user==null)
                return "{}";
         }catch (Exception e){
-            user.setErrorMessage("UserName Already Exist");
+            user.setErrorMessage(userNameExist);
         }
-        user.setErrorMessage("UserName Already Exist");
-        jsonObject.put("user",user.toString());
+        user.setErrorMessage(userNameExist);
+        jsonObject.put("user", user.toString());
         return  jsonObject.toString();
     }
 
+    @RequestMapping(value = "hot/emailIdExist/{emailId}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public String emailIdExist(@PathVariable("emailId") final String emailId) throws JSONException {
+
+        User user=new User();
+        JSONObject jsonObject=new JSONObject();
+
+        try{
+            user=this.userService.checkEmailIdExist(emailId);
+            if(user==null)
+                return "{}";
+        }catch (Exception e){
+            user.setErrorMessage(emailIdExist);
+        }
+        user.setErrorMessage(emailIdExist);
+        jsonObject.put("user", user.toString());
+        return  jsonObject.toString();
+    }
+
+    @RequestMapping(value = "hot/contactNumberExist/{contactNumber}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public String contactNumberExist(@PathVariable("contactNumber") final Long contactNumber) throws JSONException {
+
+        User user=new User();
+        JSONObject jsonObject=new JSONObject();
+
+        try{
+            user=this.userService.checkContactNumberExist(contactNumber);
+            if(user==null)
+                return "{}";
+        }catch (Exception e){
+            user.setErrorMessage(contactNumberExist);
+        }
+        user.setErrorMessage(contactNumberExist);
+        jsonObject.put("user", user.toString());
+        return  jsonObject.toString();
+    }
 
     public final String generatePassword(){
         String password="";

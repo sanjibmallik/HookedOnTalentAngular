@@ -41,12 +41,28 @@ public class UserServiceImpl implements UserService{
         List<User> userList=this.userServiceDAO.getAllUser();
         return  userList;
     }
+
     @Override
     public User checkUserNameExist(final String userName){
         User user=new User();
         user.setUserName(userName);
         user=this.userServiceDAO.getUserByUserName(user);
+        return  user;
+    }
 
+    @Override
+    public User checkEmailIdExist(final String emailId){
+        User user=new User();
+        user.setEmailId(emailId);
+        user=this.userServiceDAO.getUserByEmailId(user);
+        return  user;
+    }
+
+    @Override
+    public User checkContactNumberExist(final Long contactNumber){
+        User user=new User();
+        user.setContactNumber(contactNumber);
+        user=this.userServiceDAO.getUserByContactNumber(user);
         return  user;
     }
 }
