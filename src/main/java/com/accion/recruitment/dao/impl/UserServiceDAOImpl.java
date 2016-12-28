@@ -48,7 +48,7 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
         final Session session = getSession();
         final Criteria criteria = session.createCriteria(User.class);
         Criterion userNameCriteria= Restrictions.eq("userName", userNameOREmailID);
-        Criterion emailIDCriteria=Restrictions.eq("email", userNameOREmailID);
+        Criterion emailIDCriteria=Restrictions.eq("emailId", userNameOREmailID);
         criteria.add(Restrictions.or(userNameCriteria, emailIDCriteria));
         final User user = (User) criteria.uniqueResult();
         return user;
@@ -60,7 +60,7 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
         final Session session = getSession();
         final Criteria criteria = session.createCriteria(User.class);
         Criterion userNameCriteria= Restrictions.eq("userName", userNameOREmailId);
-        Criterion emailIDCriteria=Restrictions.eq("email", userNameOREmailId);
+        Criterion emailIDCriteria=Restrictions.eq("emailId", userNameOREmailId);
         criteria.add(Restrictions.or(userNameCriteria, emailIDCriteria));
         criteria.add(Restrictions.eq("password", password));
         final User user = (User) criteria.uniqueResult();
@@ -73,7 +73,7 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
         final Session session = getSession();
         final Criteria criteria = session.createCriteria(User.class);
         Criterion userNameCriteria= Restrictions.eq("userName", userNameOREmailId);
-        Criterion emailIDCriteria=Restrictions.eq("email", userNameOREmailId);
+        Criterion emailIDCriteria=Restrictions.eq("emailId", userNameOREmailId);
         criteria.add(Restrictions.or(userNameCriteria, emailIDCriteria));
         criteria.add(Restrictions.eq("password", password));
         criteria.add(Restrictions.eq("enabled", bolValue));
