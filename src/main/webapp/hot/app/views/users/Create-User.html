@@ -28,6 +28,8 @@
 							</span>
 							<input type="text" class="form-control" ng-model="newUser.firstName" placeholder="First Name"
                                    inputmask data-mask="[a-zA-Z][a-zA-Z]*" data-is-regex="true" maxlength="35">
+                            <div ng-messages="exampleForm.userFirstName.$error">
+                                <div ng-message="required">This field is required</div>
 						</div>
 						</div>
 					</div>
@@ -59,8 +61,10 @@
 								<i class="linecons-user"></i>
 							</span>
                                 <input type="text" class="form-control" ng-model="newUser.userName" placeholder="User Name"
-                                       inputmask data-mask="^[a-zA-Z0-9]*$" data-is-regex="true" maxlength="35">
+                                       inputmask data-mask="^[a-zA-Z0-9]*$" data-is-regex="true" maxlength="35"  ng-blur="checkUserExist(newUser.userName)">
                             </div>
+                            <br>
+                            <span ng-show="emailExist" style="color: red;">{{emailErrorMessage}}</span>
                         </div>
                     </div>
 					
@@ -75,7 +79,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-mail"></i>
 							</span>
-							<input type="email" class="form-control" ng-model="newUser.email" placeholder="Enter your email Id" data-ng-click="checkEmailExist(newUser.email)">
+							<input type="email" class="form-control" ng-model="newUser.email" placeholder="Enter your email Id">
 						</div>
 
 						</div>

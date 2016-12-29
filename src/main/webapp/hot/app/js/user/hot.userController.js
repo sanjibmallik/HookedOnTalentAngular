@@ -4,6 +4,15 @@ var userModule = angular.module('hot.userControllers',['ui.bootstrap'])
     .controller('createNewUserCtrl',function($scope,$http){
 
  $scope.newUser = {};
+        //Error messages
+        $scope.emailErrorMessage = "That emailId is taken. Try another";
+        $scope.userNameErrorMessage = "That username is taken. Try another";
+        $scope.contactErrorMessage = "That contact number is taken. Try another";
+
+        //show hides
+        $scope.emailExist = false;
+        $scope.userNameExist = false;
+        $scope.contactNumberExist = false;
 
 
 
@@ -19,6 +28,7 @@ var userModule = angular.module('hot.userControllers',['ui.bootstrap'])
 
                 $scope.roles=response.data;
                 console.log($scope.roles);
+
 
             },function errorCallback(response) {
               /* console.log(response.statusText);*/
@@ -62,6 +72,24 @@ var userModule = angular.module('hot.userControllers',['ui.bootstrap'])
             $scope.newUser={};
         }
 
+
+
+
+        $scope.checkUserExist = function(userName){
+
+            $http.get('userNameExist/'+ userName)
+                .success(function (data, status, headers, config) {
+                    $scope.PostDataResponse = data;
+                    console.log(data);
+                    $scope.emailExist = true;
+                })
+                .error(function (data, status, header, config){
+                    $scope.ResponseDetails = "Data: " + data +
+                        "<hr />status: " + status +
+                        "<hr />headers: " + header +
+                        "<hr />config: " + config;
+                });
+        };
 
     })
 
@@ -320,6 +348,7 @@ var userModule = angular.module('hot.userControllers',['ui.bootstrap'])
         };
 
 */
+
 
 
 
