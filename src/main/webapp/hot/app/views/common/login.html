@@ -123,6 +123,9 @@
                 <!-- Add class "fade-in-effect" for login form effect -->
                 <form method="post" role="form" id="login" class="login-form fade-in-effect">
 
+                    <div class="form-group" ng-show="errorMessageShow">
+                        {{errorMessage}}
+                    </div>
 
 
                     <div class="form-group">
