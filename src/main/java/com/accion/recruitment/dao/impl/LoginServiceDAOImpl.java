@@ -30,19 +30,19 @@ public class LoginServiceDAOImpl implements LoginServiceDAO {
 
         User loginUserObject=new User();
 
-        User checkUserNameOREmailId=this.userServiceDAO.getUserByUserNameOREmailId(userNameOREmailId);
+        User checkUserNameOREmailId=this.userServiceDAO.findUserByUserNameOREmailId(userNameOREmailId);
         if(checkUserNameOREmailId==null){
             loginUserObject.setErrorMessage(userNameOREmailIdErrorMsg);
             return loginUserObject;
         }
 
-        User checkUserNameOREmailIdAndPassword=this.userServiceDAO.getUserByUserNameOREmailIdAndPassword(userNameOREmailId, password);
+        User checkUserNameOREmailIdAndPassword=this.userServiceDAO.findUserByUserNameOREmailIdAndPassword(userNameOREmailId, password);
         if(checkUserNameOREmailIdAndPassword==null){
             loginUserObject.setErrorMessage(userNameOREmailIdAndPasswordErrorMsg);
             return loginUserObject;
         }
 
-        User checkUserNameOREmailIdAndPasswordAndEnabled=this.userServiceDAO.getUserByUserNameOREmailIdAndPasswordAndDisabledOREnabled(userNameOREmailId, password, true);
+        User checkUserNameOREmailIdAndPasswordAndEnabled=this.userServiceDAO.findUserByUserNameOREmailIdAndPasswordAndDisabledOREnabled(userNameOREmailId, password, true);
         if(checkUserNameOREmailIdAndPasswordAndEnabled==null){
             loginUserObject.setErrorMessage(userDisabledErrorMsg);
             return loginUserObject;

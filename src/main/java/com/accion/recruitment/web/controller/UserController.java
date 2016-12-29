@@ -1,26 +1,23 @@
 package com.accion.recruitment.web.controller;
 
+import com.accion.recruitment.common.constants.UserControllerConstants;
+import com.accion.recruitment.common.constants.UserRestURIConstants;
 import com.accion.recruitment.common.enums.UserEnums;
-import com.accion.recruitment.jpa.entities.Groups;
 import com.accion.recruitment.jpa.entities.TechnicalScreenerSkills;
 import com.accion.recruitment.jpa.entities.User;
-import com.accion.recruitment.service.LoginService;
 import com.accion.recruitment.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.xml.ws.Response;
 import java.security.Principal;
 import java.security.SecureRandom;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -38,29 +35,15 @@ public class UserController {
 
     private final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 
-    private final Random random = new SecureRandom();
-
-    private final String letters = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789+@";
-
-    private final Integer PASSWORD_LENGTH = 6;
-
-    private final String defaultPassword = "hot123";
+    final Random random = new SecureRandom();
 
     private final Date currentDate = new Date();
 
-    private final String dateFormat = "yyyy/MM/dd hh:mm:ss";
+    private final SimpleDateFormat sdf = new SimpleDateFormat(UserControllerConstants.DATE_FORMAT);
 
-    private final SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 
-    private final String emailIdExist="EmailId Already Exist";
-
-    private final String contactNumberExist="Contact Number Already Exist";
-
-    private final String userNameExist="UserName Already Exist";
-
-    @RequestMapping(value = "hot/createUser",consumes ="application/json", produces = "application/json",method = RequestMethod.POST)
-    @ResponseBody
-    public String createUser(final @RequestBody User user,
+    @RequestMapping(value = UserRestURIConstants.CREATE_USER, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.POST)
+    public @ResponseBody String createUser(final @RequestBody User user,
                               final @RequestBody TechnicalScreenerSkills technicalScreenerSkills,
                               final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
                               final @RequestParam(required = false, value = "userProfile") MultipartFile userProfile,
@@ -85,6 +68,7 @@ public class UserController {
             }
         }
 
+
         user.setPassword(this.encoder.encodePassword(this.generatePassword(), null));
         user.setCreatedBy(principal.getName());
         user.setCreatedDate(new Date(sdf.format(currentDate)));
@@ -108,80 +92,89 @@ public class UserController {
 
 
 
-    @RequestMapping(value = "hot/getAllUsers", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = UserRestURIConstants.GET_ALL_USER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
     public List<User> getAllUsers() {
-        List<User> userList=this.userService.getAllUser();
+        List<User> userList=this.userService.findAllUser();
         return  userList;
     }
 
 
-    @RequestMapping(value = "hot/userNameExist/{userName}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = UserRestURIConstants.GET_USER_NAME, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public String userNameExist(@PathVariable("userName") final String userName) throws JSONException {
-
-        User user=new User();
+    public String userNameExist(@PathVariable("userName") final String userName)  {
+        User user;
         JSONObject jsonObject=new JSONObject();
-
         try{
-            user=this.userService.getUserByPropertyName("userName",userName);
+            user=this.userService.findUserByPropertyName("userName",userName);
             if(user==null)
-               return null;
+               return String.valueOf(HttpStatus.NOT_FOUND);
         }catch (Exception e){
-            user.setErrorMessage(userNameExist);
+            return String.valueOf(HttpStatus.NOT_FOUND);
         }
-        user.setErrorMessage(userNameExist);
-        jsonObject.put("user", user.toString());
+        try {
+            jsonObject.put("user", user.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return  jsonObject.toString();
     }
 
-    @RequestMapping(value = "hot/emailIdExist/{emailId}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public String emailIdExist(@PathVariable("emailId") final String emailId) throws JSONException {
+    @RequestMapping(value = UserRestURIConstants.GET_EMAIL_ID, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public String emailIdExist(@PathVariable("emailId") final String emailId) {
 
-        User user=new User();
+        User user;
         JSONObject jsonObject=new JSONObject();
 
         try{
-            user=this.userService.getUserByPropertyName("emailId",emailId);
+            user=this.userService.findUserByPropertyName("emailId", emailId);
             if(user==null)
-                return "{}";
+                return String.valueOf(HttpStatus.NOT_FOUND);
         }catch (Exception e){
-            user.setErrorMessage(emailIdExist);
+            return String.valueOf(HttpStatus.NOT_FOUND);
         }
-        user.setErrorMessage(emailIdExist);
-        jsonObject.put("user", user.toString());
+        try {
+            jsonObject.put("user", user.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return  jsonObject.toString();
     }
 
-    @RequestMapping(value = "hot/contactNumberExist/{contactNumber}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = UserRestURIConstants.GET_CONTACT_NUMBER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public String contactNumberExist(@PathVariable("contactNumber") final Long contactNumber) throws JSONException {
+    public String contactNumberExist(@PathVariable("contactNumber") final Long contactNumber){
 
-        User user=new User();
+        User user;
         JSONObject jsonObject=new JSONObject();
 
         try{
-            user=this.userService.getUserByPropertyName("contactNumber",contactNumber);
+            user=this.userService.findUserByPropertyName("contactNumber", contactNumber);
             if(user==null)
-                return "{}";
+                return String.valueOf(HttpStatus.NOT_FOUND);
         }catch (Exception e){
-            user.setErrorMessage(contactNumberExist);
+            return String.valueOf(HttpStatus.NOT_FOUND);
         }
-        user.setErrorMessage(contactNumberExist);
-        jsonObject.put("user", user.toString());
+
+        try {
+            jsonObject.put("user", user.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return  jsonObject.toString();
     }
 
     public final String generatePassword(){
         String password="";
         try{
-            for (int i=0; i<PASSWORD_LENGTH; i++)
+            for (int i=0; i<UserControllerConstants.PASSWORD_LENGTH; i++)
             {
-                int index = (int)(this.random.nextDouble()*letters.length());
-                password += letters.substring(index, index+1);
+                int index = (int)(this.random.nextDouble()*UserControllerConstants.LETTERS.length());
+                password += UserControllerConstants.LETTERS.substring(index, index+1);
             }
         }catch (Exception e){
-            password=defaultPassword;
+            password=UserControllerConstants.DEFAULT_PASSWORD;
         }
         return password;
 

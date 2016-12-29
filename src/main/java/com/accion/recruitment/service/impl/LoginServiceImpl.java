@@ -1,9 +1,6 @@
 package com.accion.recruitment.service.impl;
 
 import com.accion.recruitment.dao.LoginServiceDAO;
-import com.accion.recruitment.dao.TechnicalScreenerDAO;
-import com.accion.recruitment.dao.UserServiceDAO;
-
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +8,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 /**
  * @author Mudassir Hussain
  * @author $LastChangedBy: Mudassir Hussain $
  * $Date:: 12/23/16 00:11 AM#$
  */
+
 @Service("loginService")
 @Transactional
 public class LoginServiceImpl implements LoginService {

@@ -24,17 +24,17 @@ public interface UserService {
     public Boolean saveUser(final User user);
 
     /**
-     * getAllUser() provide the specification for getting all the
+     * findAllUser() provide the specification for getting all the
      * User objects from the database.
      *
      * @return instance of the java.util.List containing the
      *         User object of the persisting state.
      */
 
-    public List<User> getAllUser();
+    public List<User> findAllUser();
 
     /**
-     * checkUserNameExist() provide the specification for retrieval of the
+     * findUserByPropertyName() provide the specification for retrieval of the
      * User object from the database based on the User name.
      *
      * @param propName accept the java.lang.String type of propName
@@ -45,7 +45,7 @@ public interface UserService {
      * @return instance of User having persisting state otherwise
      *         it return null.
      */
-    public User getUserByPropertyName(final String propName,final Object propValue);
+    public User findUserByPropertyName(final String propName,final Object propValue);
 
 
 }

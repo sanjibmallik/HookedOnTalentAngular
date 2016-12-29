@@ -37,14 +37,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> getAllUser(){
-        List<User> userList=this.userServiceDAO.getAllUser();
+    public List<User> findAllUser(){
+        List<User> userList=this.userServiceDAO.findAllUser();
         return  userList;
     }
 
     @Override
-    public User getUserByPropertyName(final String propName,final Object propValue){
-        return (User) this.userServiceDAO.getUserByPropertyName(propName, propValue);
+    public User findUserByPropertyName(final String propName,final Object propValue){
+        return (User) this.userServiceDAO.findUserByPropertyName(propName, propValue);
     }
 
 

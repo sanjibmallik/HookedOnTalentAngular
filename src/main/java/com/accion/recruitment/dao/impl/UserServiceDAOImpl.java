@@ -44,7 +44,7 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
 
 
     @Override
-    public User getUserByUserNameOREmailId(final String userNameOREmailID) {
+    public User findUserByUserNameOREmailId(final String userNameOREmailID) {
         final Session session = getSession();
         final Criteria criteria = session.createCriteria(User.class);
         Criterion userNameCriteria= Restrictions.eq("userName", userNameOREmailID);
@@ -56,7 +56,7 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
 
 
     @Override
-    public User getUserByUserNameOREmailIdAndPassword(final String userNameOREmailId,final String password) {
+    public User findUserByUserNameOREmailIdAndPassword(final String userNameOREmailId,final String password) {
         final Session session = getSession();
         final Criteria criteria = session.createCriteria(User.class);
         Criterion userNameCriteria= Restrictions.eq("userName", userNameOREmailId);
@@ -69,7 +69,7 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
 
 
     @Override
-    public User getUserByUserNameOREmailIdAndPasswordAndDisabledOREnabled(final String userNameOREmailId,final String password,final Boolean bolValue) {
+    public User findUserByUserNameOREmailIdAndPasswordAndDisabledOREnabled(final String userNameOREmailId,final String password,final Boolean bolValue) {
         final Session session = getSession();
         final Criteria criteria = session.createCriteria(User.class);
         Criterion userNameCriteria= Restrictions.eq("userName", userNameOREmailId);
@@ -82,7 +82,7 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
     }
 
     @Override
-    public List<R> getAllUser() {
+    public List<R> findAllUser() {
         final Session session = getSession();
         List<R> rList = session.createCriteria(User.class).list();
         return rList;
@@ -98,7 +98,7 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
     }
 
     @Override
-    public User getUserByPropertyName(final String propName,final Object propValue) {
+    public User findUserByPropertyName(final String propName,final Object propValue) {
         final Session session = getSession();
         final Criteria criteria = session.createCriteria(User.class);
         criteria.add(Restrictions.eq(propName,propValue));

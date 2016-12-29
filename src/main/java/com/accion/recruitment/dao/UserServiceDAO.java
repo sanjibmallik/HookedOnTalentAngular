@@ -13,7 +13,7 @@ import java.util.List;
 public interface UserServiceDAO<E> {
 
     /**
-     * getUserByUserNameOREmailId() provide the specification for retrieval of the
+     * findUserByUserNameOREmailId() provide the specification for retrieval of the
      * User object from the database based on the UserName OR EmailId.
      *
      * @param userNameOREmailId  accept the java.lang.String type of userNameOREmailId
@@ -21,10 +21,10 @@ public interface UserServiceDAO<E> {
      * @return instance of User having persisting state otherwise
      *         it return null.
      */
-    public User getUserByUserNameOREmailId(final String userNameOREmailId);
+    public User findUserByUserNameOREmailId(final String userNameOREmailId);
 
     /**
-     * getUserByUserNameOREmailIdAndPassword() provide the specification for retrieval of the
+     * findUserByUserNameOREmailIdAndPassword() provide the specification for retrieval of the
      * User object from the database based on the UserName OR EmailId And Password.
      *
      * @param userNameOREmailId  accept the java.lang.String type of userNameOREmailId
@@ -34,10 +34,10 @@ public interface UserServiceDAO<E> {
      * @return instance of User having persisting state otherwise
      *         it return null.
      */
-    public User getUserByUserNameOREmailIdAndPassword(final String userNameOREmailId,final String password);
+    public User findUserByUserNameOREmailIdAndPassword(final String userNameOREmailId,final String password);
 
     /**
-     * getUserByUserNameOREmailIdAndPasswordIsDisabled() provide the specification for retrieval of the
+     * findUserByUserNameOREmailIdAndPasswordAndDisabledOREnabled() provide the specification for retrieval of the
      * User object from the database based on the UserName OR EmailId, Password And User Enabled .
      *
      * @param userNameOREmailId  accept the java.lang.String type of userNameOREmailId
@@ -49,16 +49,16 @@ public interface UserServiceDAO<E> {
      * @return instance of User having persisting state otherwise
      *         it return null.
      */
-    public User getUserByUserNameOREmailIdAndPasswordAndDisabledOREnabled(final String userNameOREmailId,final String password,final Boolean bolValue);
+    public User findUserByUserNameOREmailIdAndPasswordAndDisabledOREnabled(final String userNameOREmailId,final String password,final Boolean bolValue);
 
     /**
-     * getAllUser() provide the specification for getting all the
+     * findAllUser() provide the specification for getting all the
      * User objects from the database.
      *
      * @return instance of the java.util.List containing the
      *         User object of the persisting state.
      */
-    public List<E> getAllUser();
+    public List<E> findAllUser();
 
     /**
      * size() provide the specification for getting the
@@ -71,7 +71,7 @@ public interface UserServiceDAO<E> {
     public Long size();
 
     /**
-     * getUserByPropertyName() provide the specification for retrieval of the
+     * findUserByPropertyName() provide the specification for retrieval of the
      * User object from the database based on the table column name.
      *
      * @param propName accept the java.lang.String type of propName
@@ -82,7 +82,7 @@ public interface UserServiceDAO<E> {
      *         it return null.
      */
 
-    public User getUserByPropertyName(final String propName,final Object propValue);
+    public User findUserByPropertyName(final String propName,final Object propValue);
 
 
 }
