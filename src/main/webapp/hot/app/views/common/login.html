@@ -1,129 +1,162 @@
 
+<div class="login-header" style="text-align: center;">
+    <a href="" class="logo">
+        <img src="assets/images/logo@2x.jpg" alt="" width="280" />
+        <!-- <span>log in</span>-->
+    </a>
 
+    <!-- <p>Please enter your credentials</p>-->
+</div>
 
- <div ng-controller="LoginCtrl">
-
-
-    <link rel="stylesheet" href="https://d2ue829my6ap69.cloudfront.net/css/jquery-ui-1.10.3.custom.min.css">
-    <link rel="stylesheet" href="https://d2ue829my6ap69.cloudfront.net/css/entypo.css">
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
-    <link rel="stylesheet" href="https://d2ue829my6ap69.cloudfront.net/css/bootstrap.css">
-    <link rel="stylesheet" href="https://d2ue829my6ap69.cloudfront.net/css/neon-core.css">
-    <link rel="stylesheet" href="https://d2ue829my6ap69.cloudfront.net/css/neon-theme.css">
-    <link rel="stylesheet" href="https://d2ue829my6ap69.cloudfront.net/css/neon-forms.css">
-    <link rel="stylesheet" href="https://d2ue829my6ap69.cloudfront.net/css/custom.css">
-    <script src="https://d2ue829my6ap69.cloudfront.net/js/jquery-1.11.0.min.js"></script>
-    <script src="https://d2ue829my6ap69.cloudfront.net/js/main-gsap.js"></script>
-    <script src="https://d2ue829my6ap69.cloudfront.net/js/jquery-ui-1.10.3.minimal.min.js"></script>
-    <script src="https://d2ue829my6ap69.cloudfront.net/js/bootstrap.js"></script>
-    <script src="https://d2ue829my6ap69.cloudfront.net/js/joinable.js"></script>
-    <script src="https://d2ue829my6ap69.cloudfront.net/js/resizeable.js"></script>
-    <script src="https://d2ue829my6ap69.cloudfront.net/js/neon-api.js"></script>
-    <script src="https://d2ue829my6ap69.cloudfront.net/js/jquery.validate.min.js"></script>
-    <script src="https://d2ue829my6ap69.cloudfront.net/js/neon-login.js"></script>
-    <script src="https://d2ue829my6ap69.cloudfront.net/js/neon-custom.js"></script>
-    <script src="https://d2ue829my6ap69.cloudfront.net/js/neon-demo.js"></script>
+<div ng-controller="LoginCtrl">
 
 
 
-<div id="loginField">
-    <div class="page-body login-page login-form-fall">
 
 
 
-        <div class="login-container">
+    <div class="login-container">
 
-            <div class="login-header login-caret">
+        <div class="row">
 
-                <div class="login-content" style="width:100%;">
 
-                    <a href="http://www.accionlabs.com" target="_blank" class="logo">
-                        <img src="https://d2ue829my6ap69.cloudfront.net/images/accionlogo.jpg" height="60" alt="" />
-                    </a>
+
+
+            <div class="col-sm-6" style="margin-left: 250px;">
+
+                <script type="text/javascript">
+                    jQuery(document).ready(function($)
+                    {
+                        // Reveal Login form
+                        setTimeout(function(){ $(".fade-in-effect").addClass('in'); }, 1);
+
+
+                        // Validation and Ajax action
+                        $("form#login").validate({
+                            rules: {
+                                username: {
+                                    required: true
+                                },
+
+                                passwd: {
+                                    required: true
+                                }
+                            },
+
+                            messages: {
+                                username: {
+                                    required: 'Please enter your username.'
+                                },
+
+                                passwd: {
+                                    required: 'Please enter your password.'
+                                }
+                            },
+
+                            // Form Processing via AJAX
+                            submitHandler: function(form)
+                            {
+                                showLoadingBar(70); // Fill progress bar to 70% (just a given value)
+
+                                var opts = {
+                                    "closeButton": true,
+                                    "debug": false,
+                                    "positionClass": "toast-top-full-width",
+                                    "onclick": null,
+                                    "showDuration": "300",
+                                    "hideDuration": "1000",
+                                    "timeOut": "5000",
+                                    "extendedTimeOut": "1000",
+                                    "showEasing": "swing",
+                                    "hideEasing": "linear",
+                                    "showMethod": "fadeIn",
+                                    "hideMethod": "fadeOut"
+                                };
+
+                                $.ajax({
+                                    url: "data/login-check.php",
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    data: {
+                                        do_login: true,
+                                        username: $(form).find('#username').val(),
+                                        passwd: $(form).find('#passwd').val(),
+                                    },
+                                    success: function(resp)
+                                    {
+                                        showLoadingBar({
+                                            delay: .5,
+                                            pct: 100,
+                                            finish: function(){
+
+                                                // Redirect after successful login page (when progress bar reaches 100%)
+                                                if(resp.accessGranted)
+                                                {
+                                                    window.location.hash = '#/app/dashboard-variant-1';
+                                                    //$('body').removeClass('login-page login-light lockscreen-page');
+                                                }
+                                                else
+                                                {
+                                                    toastr.error("You have entered wrong password, please try again. User and password is <strong>demo/demo</strong> :)", "Invalid Login!", opts);
+                                                    $(form).find('#passwd').select();
+                                                }
+                                            }
+                                        });
+
+                                    }
+                                });
+
+                            }
+                        });
+
+                        // Set Form focus
+                        $("form#login .form-group:has(.form-control):first .form-control").focus();
+                    });
+                </script>
+
+                <!-- Errors container -->
+                <div class="errors-container">
+
 
                 </div>
 
-            </div>
-
-            <div class="login-progressbar">
-                <div></div>
-            </div>
-
-            <div class="login-form">
-
-                <div class="login-content">
-
-                    <div id="div1">
-
-                        <form id="login" role="form" name="userLoginForm" ng-model="userLoginForm">
-
-                            <div class="form-group" ng-show="errorMessageShow">
-
-
-                                {{errorMessage}}
-
-                            </div>
-
-
-                            <div class="form-group">
-
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="entypo-user"></i>
-                                    </div>
-
-                                    <input type="text" ng-model="userName" class="form-control" placeholder="User Name" autocomplete="off" data-mask="email" />
-
-                                </div>
-
-                            </div>
-
-                            <div class="form-group">
-
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="entypo-key"></i>
-                                    </div>
-
-                                    <input type="password" ng-model="password" class="form-control"  placeholder="Password" autocomplete="off" />
-
-                                </div>
-
-                            </div>
+                <!-- Add class "fade-in-effect" for login form effect -->
+                <form method="post" role="form" id="login" class="login-form fade-in-effect">
 
 
 
-                            <div class="form-group">
-                                <input type="button" ng-click="submitUserLoginForm();"  class="btn btn-primary btn-block btn-login" name="commit" value="Log-In">
-                                    <i class="entypo-login"></i>
-
-                                </button>
-                            </div>
-
-
-                        </form>
-
-                        <div style=" margin-top: 270px;">
-                            <p></p><p></p><p></p>
-                        </div>
+                    <div class="form-group">
+                        <label class="control-label" for="username">Username</label>
+                        <input type="text" class="form-control input-dark" name="username" id="username" autocomplete="off" />
                     </div>
 
+                    <div class="form-group">
+                        <label class="control-label" for="passwd">Password</label>
+                        <input type="password" class="form-control input-dark" name="passwd" id="passwd" autocomplete="off" />
+                    </div>
 
-                    <style>
-                        td {
-                            border: 1px solid rgba(204, 204, 204, 0.1) !important;
-                        }
-                        th {
-                            border: 1px solid rgba(204, 204, 204, 0.1) !important;
-                            background-color:rgba(235, 235, 235, 0) !important;
-                        }
-                        .icon-hover { cursor:pointer;}
-                    </style>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-dark  btn-block text-left">
+                            <i class="fa-lock"></i>
+                            Log In
+                        </button>
+                    </div>
 
-                </div>
+                    <div class="login-footer">
+                        <a href="">Forgot your password?</a>
+
+
+
+                    </div>
+
+                </form>
+
+
+
             </div>
+
         </div>
+
     </div>
-</div>
 </div>
 

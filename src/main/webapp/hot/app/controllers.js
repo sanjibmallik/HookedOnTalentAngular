@@ -3,6 +3,10 @@
 angular.module('hot.controllers', []).
 	controller('LoginCtrl', function($scope, $rootScope,$http,$state)
 	{
+        $rootScope.isLoginPage        = true;
+        $rootScope.isLightLoginPage   = false;
+        $rootScope.isLockscreenPage   = false;
+        $rootScope.isMainPage         = false;
 
         $scope.errorMessageShow = false;
         $scope.errorMessage = "";

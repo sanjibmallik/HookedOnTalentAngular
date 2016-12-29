@@ -65,8 +65,16 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
 		}).
         state('login', {
             url: '/login',
-            templateUrl: 'app/views/common/login.html'
-
+            templateUrl: 'app/views/common/login.html',
+            controller: 'LoginCtrl',
+            resolve: {
+                resources: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.forms.jQueryValidate,
+                        ASSETS.extra.toastr
+                    ]);
+                }
+            }
         }).
 		
 		state('app.users-Create-User', {
