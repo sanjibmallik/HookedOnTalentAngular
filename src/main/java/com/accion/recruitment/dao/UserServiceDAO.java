@@ -81,4 +81,28 @@ public interface UserServiceDAO<E> {
      */
 
     public User getUserByUserName(User user);
+
+    /**
+     * getUserByEmailId() provide the specification for retrieval of the
+     * User object from the database based on the Email Id.
+     *
+     * @param user accept the instance of the User containing the
+     *             User Name for selection from the database.
+     * @return instance of User having persisting state otherwise
+     *         it return null.
+     */
+
+    public User getUserByEmailId(User user);
+
+    /**
+     * getUserByContactNumber() provide the specification for retrieval of the
+     * User object from the database based on the Email Id.
+     *
+     * @param user accept the instance of the User containing the
+     *             Contact Number for selection from the database.
+     * @return instance of User having persisting state otherwise
+     *         it return null.
+     */
+
+    public User getUserByContactNumber(User user);
 }

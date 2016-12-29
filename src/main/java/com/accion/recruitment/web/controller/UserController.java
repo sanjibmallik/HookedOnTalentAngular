@@ -6,6 +6,9 @@ import com.accion.recruitment.jpa.entities.TechnicalScreenerSkills;
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.LoginService;
 import com.accion.recruitment.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -42,12 +45,17 @@ public class UserController {
 
     private final String defaultPassword = "hot123";
 
-
-
     private final Date currentDate = new Date();
+
     private final String dateFormat = "yyyy/MM/dd hh:mm:ss";
+
     private final SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 
+    private final String emailIdExist="EmailId Already Exist";
+
+    private final String contactNumberExist="Contact Number Already Exist";
+
+    private final String userNameExist="UserName Already Exist";
 
     @RequestMapping(value = "hot/createUser", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
@@ -63,6 +71,14 @@ public class UserController {
             try {
                 byte[] bytes = userImage.getBytes();
                 user.setUserImage(bytes);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (user != null && userProfile != null && !userProfile.isEmpty()) {
+            try {
+                byte[] bytes = userProfile.getBytes();
+                user.setUserProfile(bytes);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -101,24 +117,60 @@ public class UserController {
 
     @RequestMapping(value = "hot/userNameExist/{userName}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public User userNameExist(@PathVariable("userName") final String userName) {
+    public String userNameExist(@PathVariable("userName") final String userName) throws JSONException {
 
         User user=new User();
+        JSONObject jsonObject=new JSONObject();
+
         try{
             user=this.userService.checkUserNameExist(userName);
-
             if(user==null)
-                return user;
-
+               return "{}";
         }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            user.setErrorMessage("User already Exist");
+            user.setErrorMessage(userNameExist);
         }
-
-        return  user;
+        user.setErrorMessage(userNameExist);
+        jsonObject.put("user", user.toString());
+        return  jsonObject.toString();
     }
 
+    @RequestMapping(value = "hot/emailIdExist/{emailId}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public String emailIdExist(@PathVariable("emailId") final String emailId) throws JSONException {
+
+        User user=new User();
+        JSONObject jsonObject=new JSONObject();
+
+        try{
+            user=this.userService.checkEmailIdExist(emailId);
+            if(user==null)
+                return "{}";
+        }catch (Exception e){
+            user.setErrorMessage(emailIdExist);
+        }
+        user.setErrorMessage(emailIdExist);
+        jsonObject.put("user", user.toString());
+        return  jsonObject.toString();
+    }
+
+    @RequestMapping(value = "hot/contactNumberExist/{contactNumber}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public String contactNumberExist(@PathVariable("contactNumber") final Long contactNumber) throws JSONException {
+
+        User user=new User();
+        JSONObject jsonObject=new JSONObject();
+
+        try{
+            user=this.userService.checkContactNumberExist(contactNumber);
+            if(user==null)
+                return "{}";
+        }catch (Exception e){
+            user.setErrorMessage(contactNumberExist);
+        }
+        user.setErrorMessage(contactNumberExist);
+        jsonObject.put("user", user.toString());
+        return  jsonObject.toString();
+    }
 
     public final String generatePassword(){
         String password="";

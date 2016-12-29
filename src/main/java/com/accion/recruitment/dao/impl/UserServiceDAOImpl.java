@@ -98,7 +98,6 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
     }
 
     @Override
-    @Transactional
     public User getUserByUserName(User user) {
         final Session session = getSession();
         final Criteria criteria = session.createCriteria(User.class);
@@ -106,6 +105,20 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
         return (User) criteria.uniqueResult();
     }
 
+    @Override
+    public User getUserByEmailId(User user) {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(User.class);
+        criteria.add(Restrictions.eq("emailId", user.getEmailId()));
+        return (User) criteria.uniqueResult();
+    }
 
+    @Override
+    public User getUserByContactNumber(User user) {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(User.class);
+        criteria.add(Restrictions.eq("contactNumber", user.getContactNumber()));
+        return (User) criteria.uniqueResult();
+    }
 
 }

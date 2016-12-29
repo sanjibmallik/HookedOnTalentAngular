@@ -5,5 +5,5 @@ package com.accion.recruitment.common.constants;
  */
 public class HookedonConstants {
 
-    public static String CLIENT="Client";
+    public static final String CLIENT="Client";
 }
