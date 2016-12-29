@@ -37,32 +37,15 @@ public interface UserService {
      * checkUserNameExist() provide the specification for retrieval of the
      * User object from the database based on the User name.
      *
-     * @param userName accept the java.lang.String type of userName
-     *                  which is having User Name value .
-     * @return instance of User having persisting state otherwise
-     *         it return null.
-     */
-    public User checkUserNameExist(final String userName);
-
-    /**
-     * checkEmailIdExist() provide the specification for retrieval of the
-     * User object from the database based on the User name.
+     * @param propName accept the java.lang.String type of propName
+     *                  which is having column name value .
+     * @param propValue accept the java.lang.String type of propValue
+     *                  which is having column value .
      *
-     * @param emailId accept the java.lang.String type of email Id
-     *                  which is having Email ID value .
      * @return instance of User having persisting state otherwise
      *         it return null.
      */
-    public User checkEmailIdExist(final String emailId);
+    public User getUserByPropertyName(final String propName,final Object propValue);
 
-    /**
-     * checkContactNumberExist() provide the specification for retrieval of the
-     * User object from the database based on the User name.
-     *
-     * @param contactNumber accept the java.lang.Long type of ContactNumber
-     *                  which is having contact number value .
-     * @return instance of User having persisting state otherwise
-     *         it return null.
-     */
-    public User checkContactNumberExist(final Long contactNumber);
+
 }

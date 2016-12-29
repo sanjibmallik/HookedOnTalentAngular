@@ -43,26 +43,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User checkUserNameExist(final String userName){
-        User user=new User();
-        user.setUserName(userName);
-        user=this.userServiceDAO.getUserByUserName(user);
-        return  user;
+    public User getUserByPropertyName(final String propName,final Object propValue){
+        return (User) this.userServiceDAO.getUserByPropertyName(propName, propValue);
     }
 
-    @Override
-    public User checkEmailIdExist(final String emailId){
-        User user=new User();
-        user.setEmailId(emailId);
-        user=this.userServiceDAO.getUserByEmailId(user);
-        return  user;
-    }
 
-    @Override
-    public User checkContactNumberExist(final Long contactNumber){
-        User user=new User();
-        user.setContactNumber(contactNumber);
-        user=this.userServiceDAO.getUserByContactNumber(user);
-        return  user;
-    }
 }

@@ -98,27 +98,13 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
     }
 
     @Override
-    public User getUserByUserName(User user) {
+    public User getUserByPropertyName(final String propName,final Object propValue) {
         final Session session = getSession();
         final Criteria criteria = session.createCriteria(User.class);
-        criteria.add(Restrictions.eq("userName", user.getUserName()));
+        criteria.add(Restrictions.eq(propName,propValue));
         return (User) criteria.uniqueResult();
     }
 
-    @Override
-    public User getUserByEmailId(User user) {
-        final Session session = getSession();
-        final Criteria criteria = session.createCriteria(User.class);
-        criteria.add(Restrictions.eq("emailId", user.getEmailId()));
-        return (User) criteria.uniqueResult();
-    }
 
-    @Override
-    public User getUserByContactNumber(User user) {
-        final Session session = getSession();
-        final Criteria criteria = session.createCriteria(User.class);
-        criteria.add(Restrictions.eq("contactNumber", user.getContactNumber()));
-        return (User) criteria.uniqueResult();
-    }
 
 }

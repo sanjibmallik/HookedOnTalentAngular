@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.xml.ws.Response;
 import java.security.Principal;
 import java.security.SecureRandom;
 import java.sql.SQLException;
@@ -57,10 +58,10 @@ public class UserController {
 
     private final String userNameExist="UserName Already Exist";
 
-    @RequestMapping(value = "hot/createUser", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @RequestMapping(value = "hot/createUser",consumes ="application/json", produces = "application/json",method = RequestMethod.POST)
     @ResponseBody
-    public Boolean createUser(final @ModelAttribute("user") User user,
-                              final @ModelAttribute("technicalScreenerSkills") TechnicalScreenerSkills technicalScreenerSkills,
+    public String createUser(final @RequestBody User user,
+                              final @RequestBody TechnicalScreenerSkills technicalScreenerSkills,
                               final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
                               final @RequestParam(required = false, value = "userProfile") MultipartFile userProfile,
                               final Principal principal) {
@@ -123,9 +124,9 @@ public class UserController {
         JSONObject jsonObject=new JSONObject();
 
         try{
-            user=this.userService.checkUserNameExist(userName);
+            user=this.userService.getUserByPropertyName("userName",userName);
             if(user==null)
-               return "{}";
+               return null;
         }catch (Exception e){
             user.setErrorMessage(userNameExist);
         }
@@ -135,14 +136,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "hot/emailIdExist/{emailId}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    @ResponseBody
     public String emailIdExist(@PathVariable("emailId") final String emailId) throws JSONException {
 
         User user=new User();
         JSONObject jsonObject=new JSONObject();
 
         try{
-            user=this.userService.checkEmailIdExist(emailId);
+            user=this.userService.getUserByPropertyName("emailId",emailId);
             if(user==null)
                 return "{}";
         }catch (Exception e){
@@ -161,7 +161,7 @@ public class UserController {
         JSONObject jsonObject=new JSONObject();
 
         try{
-            user=this.userService.checkContactNumberExist(contactNumber);
+            user=this.userService.getUserByPropertyName("contactNumber",contactNumber);
             if(user==null)
                 return "{}";
         }catch (Exception e){

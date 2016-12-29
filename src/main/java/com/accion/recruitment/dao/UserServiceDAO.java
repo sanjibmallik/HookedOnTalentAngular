@@ -71,38 +71,18 @@ public interface UserServiceDAO<E> {
     public Long size();
 
     /**
-     * getUserByUserName() provide the specification for retrieval of the
-     * User object from the database based on the User name.
+     * getUserByPropertyName() provide the specification for retrieval of the
+     * User object from the database based on the table column name.
      *
-     * @param user accept the instance of the User containing the
-     *             User Name for selection from the database.
+     * @param propName accept the java.lang.String type of propName
+     *                  which is having column name value .
+     * @param propValue accept the java.lang.String type of propValue
+     *                  which is having column value .
      * @return instance of User having persisting state otherwise
      *         it return null.
      */
 
-    public User getUserByUserName(User user);
+    public User getUserByPropertyName(final String propName,final Object propValue);
 
-    /**
-     * getUserByEmailId() provide the specification for retrieval of the
-     * User object from the database based on the Email Id.
-     *
-     * @param user accept the instance of the User containing the
-     *             User Name for selection from the database.
-     * @return instance of User having persisting state otherwise
-     *         it return null.
-     */
 
-    public User getUserByEmailId(User user);
-
-    /**
-     * getUserByContactNumber() provide the specification for retrieval of the
-     * User object from the database based on the Email Id.
-     *
-     * @param user accept the instance of the User containing the
-     *             Contact Number for selection from the database.
-     * @return instance of User having persisting state otherwise
-     *         it return null.
-     */
-
-    public User getUserByContactNumber(User user);
 }
