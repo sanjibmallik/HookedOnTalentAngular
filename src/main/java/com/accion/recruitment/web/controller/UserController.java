@@ -2,6 +2,7 @@ package com.accion.recruitment.web.controller;
 
 import com.accion.recruitment.common.constants.UserControllerConstants;
 import com.accion.recruitment.common.constants.UserRestURIConstants;
+import com.accion.recruitment.common.enums.HttpStatusEnums;
 import com.accion.recruitment.common.enums.UserEnums;
 import com.accion.recruitment.jpa.entities.TechnicalScreenerSkills;
 import com.accion.recruitment.jpa.entities.User;
@@ -16,8 +17,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.security.SecureRandom;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -35,7 +38,7 @@ public class UserController {
 
     private final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 
-    final Random random = new SecureRandom();
+    private final Random random = new SecureRandom();
 
     private final Date currentDate = new Date();
 
@@ -51,23 +54,59 @@ public class UserController {
 
         List<TechnicalScreenerSkills> technicalScreenerSkillsList=new ArrayList<TechnicalScreenerSkills>();
 
+        if(user != null && user.getUserName() != null && user.getUserName().isEmpty()){
+            try{
+                User userObject=this.userService.findUserByPropertyName(UserControllerConstants.USER_NAME,user.getUserName());
+                if(userObject != null)
+                    return String.valueOf(HttpStatusEnums.USER_NAME_EXIST.ResponseMsg());
+            }catch (SQLException e){
+                return String.valueOf(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+            }catch (Exception e){
+                return String.valueOf(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg());
+            }
+        }
+        if(user != null && user.getEmailId() != null && user.getEmailId().isEmpty()){
+            try{
+                User userObject=this.userService.findUserByPropertyName(UserControllerConstants.EMAIL_ID,user.getEmailId());
+                if(userObject != null)
+                    return String.valueOf(HttpStatusEnums.EMAIlID_EXIST.ResponseMsg());
+            }catch (SQLException e){
+                return String.valueOf(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+            }catch (Exception e){
+                return String.valueOf(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg());
+            }
+        }
+        if(user != null && user.getContactNumber() != null){
+            try{
+                User userObject=this.userService.findUserByPropertyName(UserControllerConstants.CONTACT_NUMBER,user.getContactNumber());
+                if(userObject != null)
+                    return String.valueOf(HttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg());
+            }catch (SQLException e){
+                return String.valueOf(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+            }catch (Exception e){
+                return String.valueOf(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg());
+            }
+        }
         if (user != null && userImage != null && !userImage.isEmpty()) {
             try {
                 byte[] bytes = userImage.getBytes();
                 user.setUserImage(bytes);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (IOException e) {
+                return String.valueOf(HttpStatusEnums.USER_IMAGE_EXCEPTION.ResponseMsg());
+            }catch (Exception e){
+                return String.valueOf(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg());
             }
         }
         if (user != null && userProfile != null && !userProfile.isEmpty()) {
             try {
                 byte[] bytes = userProfile.getBytes();
                 user.setUserProfile(bytes);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (IOException e) {
+                return String.valueOf(HttpStatusEnums.USER_PROFILE_EXCEPTION.ResponseMsg());
+            }catch (Exception e){
+                return String.valueOf(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg());
             }
         }
-
 
         user.setPassword(this.encoder.encodePassword(this.generatePassword(), null));
         user.setCreatedBy(principal.getName());
@@ -78,15 +117,28 @@ public class UserController {
 
 
         if(user.getRole().equalsIgnoreCase(UserEnums.TechnicalScreener.toString())){
-            technicalScreenerSkillsList=this.getTechnicalSkillsObjectList(technicalScreenerSkills);
-            user.getTechnicalScreenerDetailsDSkillsSet().addAll(technicalScreenerSkillsList);
-            this.userService.saveUser(user);
+            try{
+                technicalScreenerSkillsList=this.getTechnicalSkillsObjectList(technicalScreenerSkills);
+                user.getTechnicalScreenerDetailsDSkillsSet().addAll(technicalScreenerSkillsList);
+                this.userService.saveUser(user);
+            }catch (ArrayIndexOutOfBoundsException e){
+                return String.valueOf(HttpStatusEnums.USER_SKILLS_EXCEPTION.ResponseMsg());
+            }catch (SQLException e){
+                return String.valueOf(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+            }catch (Exception e){
+                return String.valueOf(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg());
+            }
         }else{
-            this.userService.saveUser(user);
+            try{
+                this.userService.saveUser(user);
+            }catch (SQLException e){
+                return String.valueOf(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+            }catch (Exception e){
+                return String.valueOf(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg());
+            }
         }
 
-
-        return null;
+        return String.valueOf(HttpStatus.CREATED);
     }
 
 
@@ -102,65 +154,57 @@ public class UserController {
 
     @RequestMapping(value = UserRestURIConstants.GET_USER_NAME, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public String userNameExist(@PathVariable("userName") final String userName)  {
+    public String userNameExist(@PathVariable(UserControllerConstants.USER_NAME) final String userName)  {
         User user;
         JSONObject jsonObject=new JSONObject();
         try{
-            user=this.userService.findUserByPropertyName("userName",userName);
-            if(user==null)
-               return String.valueOf(HttpStatus.NOT_FOUND);
+            user=this.userService.findUserByPropertyName(UserControllerConstants.USER_NAME,userName);
+            if(user != null){
+                jsonObject.put("user", user.toString());
+                return jsonObject.toString();
+            }
+        }catch (SQLException e){
+            return String.valueOf(HttpStatus.FOUND);
         }catch (Exception e){
-            return String.valueOf(HttpStatus.NOT_FOUND);
-        }
-        try {
-            jsonObject.put("user", user.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
+            return String.valueOf(HttpStatus.FOUND);
         }
         return  jsonObject.toString();
     }
 
     @RequestMapping(value = UserRestURIConstants.GET_EMAIL_ID, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public String emailIdExist(@PathVariable("emailId") final String emailId) {
-
+    public String emailIdExist(@PathVariable(UserControllerConstants.EMAIL_ID) final String emailId) {
         User user;
         JSONObject jsonObject=new JSONObject();
-
         try{
-            user=this.userService.findUserByPropertyName("emailId", emailId);
-            if(user==null)
-                return String.valueOf(HttpStatus.NOT_FOUND);
+            user=this.userService.findUserByPropertyName(UserControllerConstants.EMAIL_ID, emailId);
+            if(user != null){
+                jsonObject.put("user", user.toString());
+                return jsonObject.toString();
+            }
+        }catch (SQLException e){
+            return String.valueOf(HttpStatus.FOUND);
         }catch (Exception e){
-            return String.valueOf(HttpStatus.NOT_FOUND);
-        }
-        try {
-            jsonObject.put("user", user.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
+            return String.valueOf(HttpStatus.FOUND);
         }
         return  jsonObject.toString();
     }
 
     @RequestMapping(value = UserRestURIConstants.GET_CONTACT_NUMBER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public String contactNumberExist(@PathVariable("contactNumber") final Long contactNumber){
-
+    public String contactNumberExist(@PathVariable(UserControllerConstants.CONTACT_NUMBER) final Long contactNumber){
         User user;
         JSONObject jsonObject=new JSONObject();
-
         try{
-            user=this.userService.findUserByPropertyName("contactNumber", contactNumber);
-            if(user==null)
-                return String.valueOf(HttpStatus.NOT_FOUND);
+            user=this.userService.findUserByPropertyName(UserControllerConstants.CONTACT_NUMBER, contactNumber);
+            if(user != null){
+                jsonObject.put("user", user.toString());
+                return jsonObject.toString();
+            }
+        }catch (SQLException e){
+            return String.valueOf(HttpStatus.FOUND);
         }catch (Exception e){
-            return String.valueOf(HttpStatus.NOT_FOUND);
-        }
-
-        try {
-            jsonObject.put("user", user.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
+            return String.valueOf(HttpStatus.FOUND);
         }
         return  jsonObject.toString();
     }
@@ -180,7 +224,7 @@ public class UserController {
 
     }
 
-    public final List<TechnicalScreenerSkills> getTechnicalSkillsObjectList(TechnicalScreenerSkills technicalScreenerSkills){
+    public final List<TechnicalScreenerSkills> getTechnicalSkillsObjectList(TechnicalScreenerSkills technicalScreenerSkills) throws ArrayIndexOutOfBoundsException{
 
         String primarySkillsArray[],secondarySkillsArray[],primarySkillsYearsArray[],secondarySkillsYearsArray[],primarySkillsMonthsArray[],secondarySkillsMonthsArray[];
         int length,count=0;
@@ -202,7 +246,6 @@ public class UserController {
         length=(primarySkillsArray.length+secondarySkillsArray.length*primarySkillsYearsArray.length+secondarySkillsYearsArray.length+primarySkillsMonthsArray.length+secondarySkillsMonthsArray.length);
 
         technicalScreenerSkillsArray=new TechnicalScreenerSkills[length];
-
 
         for(int i=0;i<primarySkillsArray.length;i++){
             primarySkills=primarySkillsArray[i];

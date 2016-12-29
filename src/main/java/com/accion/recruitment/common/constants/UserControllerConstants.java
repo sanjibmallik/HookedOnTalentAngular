@@ -11,6 +11,11 @@ public class UserControllerConstants {
     public static final Integer PASSWORD_LENGTH = 6;
     public static final String DEFAULT_PASSWORD = "hot123";
     public static final String DATE_FORMAT = "yyyy/MM/dd hh:mm:ss";
+    public static final String USER_NAME = "userName";
+    public static final String EMAIL_ID = "emailId";
+    public static final String CONTACT_NUMBER = "contactNumber";
+
+
     /*public static final String EMAIL_ID_EXIST="That emailId is taken. Try another.";
     public static final String CONTACT_NUMBER_EXIST="That contact number is taken. Try another.";
     public static final String USER_NAME_EXIST="That username is taken. Try another.";*/
