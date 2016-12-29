@@ -75,7 +75,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-mail"></i>
 							</span>
-							<input type="email" class="form-control" ng-model="newUser.email" placeholder="Enter your email Id">
+							<input type="email" class="form-control" ng-model="newUser.email" placeholder="Enter your email Id" data-ng-click="checkEmailExist(newUser.email)">
 						</div>
 
 						</div>
@@ -131,7 +131,7 @@
 
 						<div class="col-sm-5">
 
-                            <select class="form-control" ng-options="role as role for role in roles" ng-model="newUser.selectRoles" ng-change="update();"></select>
+                            <select class="form-control" ng-options="role as role for role in roles" ng-model="newUser.role" ng-change="update();"></select>
 
 						</div>
 					</div>
@@ -304,7 +304,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" class="form-control"  placeholder="Primary Skills">
+                                <input type="text" ng-model="newUser.primarySkills" class="form-control"  placeholder="Primary Skills">
                             </div>
                         </div>
                     </div>
@@ -319,7 +319,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" class="form-control"  placeholder="Secondary Skills">
+                                <input type="text" class="form-control" ng-model="newUser.secondarySkills" placeholder="Secondary Skills">
                             </div>
                         </div>
                     </div>
@@ -334,7 +334,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" class="form-control" placeholder="Pay Range"
+                                <input type="text" ng-model="newUser.expectedPayRange" class="form-control" placeholder="Pay Range"
                                        inputmask data-mask="[0-9]*" data-is-regex="true" maxlength="35">
                             </div>
                         </div>
@@ -360,7 +360,6 @@
                     <i class="fa-rocket"></i>
                     <span>Reset</span>
                 </button>
-
 
             </div>
         </div>

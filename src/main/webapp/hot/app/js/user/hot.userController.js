@@ -6,6 +6,12 @@ var userModule = angular.module('hot.userControllers',['ui.bootstrap'])
  $scope.newUser = {};
 
 
+
+        $scope.checkEmailExist = function(emailId){
+           console.log(emailId);
+
+        }
+
         $http({
             method : 'GET',
             url : 'getGroupsName/'
@@ -22,7 +28,7 @@ var userModule = angular.module('hot.userControllers',['ui.bootstrap'])
         $scope.showTSDetailsDiv=false;
 
             $scope.update = function() {
-            if($scope.newUser.selectRoles=="TechnicalScreener"){
+            if($scope.newUser.role=="TechnicalScreener"){
 
                 $scope.showTSDetailsDiv=true;
             }else{
@@ -34,8 +40,23 @@ var userModule = angular.module('hot.userControllers',['ui.bootstrap'])
 
 
         $scope.submitNewUser = function(){
-            console.log($scope.newUser);
-        }
+
+           var data = $scope.newUser;
+            console.log(data);
+
+            $http.post('createUser/', data)
+                .success(function (data, status, headers, config) {
+                    $scope.PostDataResponse = data;
+                })
+                .error(function (data, status, header, config){
+                    $scope.ResponseDetails = "Data: " + data +
+                        "<hr />status: " + status +
+                        "<hr />headers: " + header +
+                        "<hr />config: " + config;
+                });
+        };
+
+
 
         $scope.resetUserForm = function(){
             $scope.newUser={};
@@ -48,12 +69,8 @@ var userModule = angular.module('hot.userControllers',['ui.bootstrap'])
     .controller('viewAllUserCtrl',function($scope,$http){
         $scope.test='test';
 
-      /*  $scope.toggleDetail = function($index) {
-            //$scope.isVisible = $scope.isVisible == 0 ? true : false;
-            $scope.activePosition = $scope.activePosition == $index ? -1 : $index;
-        };*/
 
-
+/*
 
         $scope.tableRowExpanded = false;
         $scope.tableRowIndexCurrExpanded = "";
@@ -302,6 +319,7 @@ var userModule = angular.module('hot.userControllers',['ui.bootstrap'])
             }
         };
 
+*/
 
 
 
