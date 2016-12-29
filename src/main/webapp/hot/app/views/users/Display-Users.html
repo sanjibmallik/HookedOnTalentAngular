@@ -1,115 +1,29 @@
 
 
 <page-title ng-if="layoutOptions.pageTitles" title="Users" description=""></page-title>
-       <!-- <style>
-            body {
-                width: 98%;
-            }
-            .clickableRow {
-                cursor: pointer;
-            }
-            p, textarea {
-                font-variant: small-caps !important;
-                text-rendering: auto;
-            }
-            td, th {
-                font-size: 8pt;
-            }
-            table {
-                padding: 0px;
+<style>
+    body {
+        width: 98%;
+    }
+    .clickableRow {
+        cursor: pointer;
+    }
+    p, textarea {
+        font-variant: small-caps !important;
+        text-rendering: auto;
+    }
+    td, th {
+        font-size: 8pt;
+    }
+    table {
+        padding: 0px;
 
-            }
-        </style>-->
+    }
+</style>
 
 <!-- Custom column filtering -->
 <div class="panel panel-default" ng-controller="viewAllUserCtrl">
 
-    <!--<div class="span12 well well-small">
-        <div class="span5">
-            <p class="nav-header">collapse/expand tableRow</p>
-            <p class="small-caps">tableRowExpanded: <b>{{tableRowExpanded}}</b>
-
-            </p>
-            <p class="small-caps">tableRowIndexCurrExpanded: <b>{{tableRowIndexCurrExpanded}}</b>
-
-            </p>
-            <p class="small-caps">storeIdExpanded: <b>{{storeIdExpanded}}</b>
-
-            </p>
-        </div>
-        <div class="span7">
-            <p class="nav-header">dayDataCollapse</p>{{dayDataCollapse}}</div>
-    </div>-->
-    <!-- END $scope.[model] updates -->
-    <!-- START TABLE -->
-   <!-- <div class="span12">
-        <table class="table table-hover table-condensed table-striped">
-            <thead>
-            <tr>
-                <th>Store ID</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>City</th>
-                <th>Cost</th>
-                <th>Sales</th>
-                <th>Revenue</th>
-                <th>Employees</th>
-                <th>Employees H-sum</th>
-            </tr>
-            </thead>
-            <tbody data-ng-repeat="storedata in storeDataModel.storedata">
-            <tr id="storedata.store.storeId" class="clickableRow" title="Click to toggle collapse/expand day summaries for this store." data-ng-click="selectTableRow($index, storedata.store.storeId)">
-                <td>{{storedata.store.storeId}}</td>
-                <td>{{storedata.store.storeName}}</td>
-                <td>{{storedata.store.storeAddress}}</td>
-                <td>{{storedata.store.storeCity}}</td>
-                <td>{{storedata.data.costTotal}}</td>
-                <td>{{storedata.data.salesTotal}}</td>
-                <td>{{storedata.data.revenueTotal}}</td>
-                <td>{{storedata.data.averageEmployees}}</td>
-                <td>{{storedata.data.averageEmployeesHours}}</td>
-            </tr>
-            <tr>
-                <td colspan="2">&nbsp;</td>
-                <td colspan="7">
-                    <div collapse="dayDataCollapse[$index]">
-                        <div class="span12 pull-right">
-                            <table class="table table-hover table-condensed table-striped">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Date [YYYY-MM-dd]</th>
-                                    <th>Cost</th>
-                                    <th>Sales</th>
-                                    <th>Revenue</th>
-                                    <th>Employees</th>
-                                    <th>Employees H-sum</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr data-ng-repeat="dayData in storeDataModel.storedata[$index].data.dayData">
-                                    <td class="pullright">
-                                        <button type="btn btn-small" title="Click to show transactions for this specific day..." data-ng-click=""><i class="icon-list"></i>
-                                        </button>
-                                    </td>
-                                    <td>{{dayData.date}}</td>
-                                    <td>{{dayData.cost}}</td>
-                                    <td>{{dayData.sales}}</td>
-                                    <td>{{dayData.revenue}}</td>
-                                    <td>{{dayData.employees}}</td>
-                                    <td>{{dayData.employeesHoursSum}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
--->
 
     <!--panel started here-->
     <div class="panel-heading">
@@ -137,6 +51,7 @@
                     {column_number : 2, filter_type: 'text'},
                     {column_number : 3, filter_type: 'text'},
                     {column_number : 4, filter_type: 'text'},
+                    {column_number : 5}
                 ]);
             });
         </script>
@@ -149,6 +64,8 @@
                 <th>User Name(s)</th>
                 <th>email Id</th>
                 <th>Phone No</th>
+                <th>Role</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -158,6 +75,8 @@
                 <td>azhar</td>
                 <td>azhar.liaquat@accionlabs.com</td>
                 <td>9844580058</td>
+                <td>Admin</td>
+                <td></td>
             </tr>
             <tr ng-click="toggleDetail($index)">
                 <td>Mudassir</td>
@@ -165,6 +84,8 @@
                 <td>mudassir</td>
                 <td>mudassir.h@accionlabs.com</td>
                 <td>9865465324</td>
+                <td>Admin</td>
+                <td></td>
             </tr>
             <tr ng-click="toggleDetail($index)">
                 <td>Sanjib</td>
@@ -172,6 +93,8 @@
                 <td>sanjib</td>
                 <td>Sanjib.mallik@accionlabs.com</td>
                 <td>98875630058</td>
+                <td>Admin</td>
+                <td></td>
             </tr>
             <tr>
                 <td>Nitish</td>
@@ -179,6 +102,8 @@
                 <td>nitish</td>
                 <td>nitish.kumar@accionlabs.com</td>
                 <td>8767880058</td>
+                <td>Recruiter</td>
+                <td></td>
             </tr>
             <tr>
                 <td>Revathi</td>
@@ -186,6 +111,8 @@
                 <td>revathi</td>
                 <td>revathi.murali@accionlabs.com</td>
                 <td>9235460058</td>
+                <td>Technical Screener</td>
+                <td></td>
             </tr>
             <tr>
                 <td>Raj</td>
@@ -193,6 +120,8 @@
                 <td>raj</td>
                 <td>raj.kumar@accionlabs.com</td>
                 <td>8844453258</td>
+                <td>Recruiter</td>
+                <td></td>
             </tr>
             <tr>
                 <td>Sachin</td>
@@ -200,12 +129,10 @@
                 <td>sachin</td>
                 <td>sachin.t@accionlabs.com</td>
                 <td>8767545432</td>
+                <td>Account Manager</td>
+                <td></td>
             </tr>
 
-
-            <tr class="extra-row" ng-show="activePosition == $index">
-                <td colspan="5" >Details are here... dfdsf sdf s dfg dfg dfdfg gdfgdf</td>
-            </tr>
 
 
             </tbody>
