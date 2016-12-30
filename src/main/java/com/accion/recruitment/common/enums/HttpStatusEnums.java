@@ -16,6 +16,11 @@ public enum HttpStatusEnums {
     USER_PROFILE_EXCEPTION("Problem with uploading the profile. Try another"),
     USER_SKILLS_EXCEPTION("Enter the screener details correctly."),
 
+    /*Login Controller Status*/
+
+    LOGIN_ERROR("Wrong  Credentials"),
+
+
 
     DATABASE_EXCEPTION("Database connectivity issue. Try again."),
     RECORD_NOT_SAVED("Problem with saving the record. Try again."),

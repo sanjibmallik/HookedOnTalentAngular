@@ -1,6 +1,8 @@
 package com.accion.recruitment.web.controller;
 
 
+import com.accion.recruitment.common.constants.LoginRestURIConstants;
+import com.accion.recruitment.common.enums.HttpStatusEnums;
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -25,15 +28,25 @@ public class LoginController{
     @Autowired
     private LoginService loginService;
 
-    @RequestMapping(value = "hot/userLoginAuthentication/{userName}/{password}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+
+    @RequestMapping(value = LoginRestURIConstants.LOGIN, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public User userLoginAuthentication(@PathVariable("userName") final String userNameOREmailId,
+    public String userLoginAuthentication(@PathVariable("userName") final String userNameOREmailId,
                                         @PathVariable("password") final String password) {
 
-        final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+        User userObject=new User();
         final String encodedPassword=encoder.encodePassword(password, null);
-        final User userObject=this.loginService.getLoginUserByUserNameOREmailIdAndPassword(userNameOREmailId, encodedPassword);
-        return userObject;
+        try{
+            userObject=this.loginService.getLoginUserByUserNameOREmailIdAndPassword(userNameOREmailId, encodedPassword);
+            return userObject.toString();
+        }catch (SQLException e){
+            return String.valueOf(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+        }catch (Exception e){
+            return String.valueOf(HttpStatusEnums.LOGIN_ERROR.ResponseMsg());
+        }
+
+
     }
 
 

@@ -3,6 +3,7 @@ package com.accion.recruitment.service;
 
 import com.accion.recruitment.jpa.entities.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -24,5 +25,5 @@ public interface LoginService {
      *         it return null.
      */
 
-    public User getLoginUserByUserNameOREmailIdAndPassword(final String userNameOREmailId,final String password);
+    public User getLoginUserByUserNameOREmailIdAndPassword(final String userNameOREmailId,final String password) throws SQLException;
 }

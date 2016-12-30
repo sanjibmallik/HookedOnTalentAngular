@@ -3,7 +3,7 @@ package com.accion.recruitment.dao.impl;
 import com.accion.recruitment.dao.GroupServiceDAO;
 import com.accion.recruitment.jpa.entities.Groups;
 import com.accion.recruitment.jpa.entities.User;
-import com.wordnik.swagger.annotations.ApiResponse;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

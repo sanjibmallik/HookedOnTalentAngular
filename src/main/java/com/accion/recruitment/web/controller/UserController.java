@@ -1,13 +1,12 @@
 package com.accion.recruitment.web.controller;
 
-import com.accion.recruitment.common.constants.UserControllerConstants;
+import com.accion.recruitment.common.constants.UserConstants;
 import com.accion.recruitment.common.constants.UserRestURIConstants;
 import com.accion.recruitment.common.enums.HttpStatusEnums;
 import com.accion.recruitment.common.enums.UserEnums;
 import com.accion.recruitment.jpa.entities.TechnicalScreenerSkills;
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.UserService;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,7 +41,7 @@ public class UserController {
 
     private final Date currentDate = new Date();
 
-    private final SimpleDateFormat sdf = new SimpleDateFormat(UserControllerConstants.DATE_FORMAT);
+    private final SimpleDateFormat sdf = new SimpleDateFormat(UserConstants.DATE_FORMAT);
 
 
     @RequestMapping(value = UserRestURIConstants.CREATE_USER, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.POST)
@@ -56,7 +55,7 @@ public class UserController {
 
         if(user != null && user.getUserName() != null && user.getUserName().isEmpty()){
             try{
-                User userObject=this.userService.findUserByPropertyName(UserControllerConstants.USER_NAME,user.getUserName());
+                User userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,user.getUserName());
                 if(userObject != null)
                     return String.valueOf(HttpStatusEnums.USER_NAME_EXIST.ResponseMsg());
             }catch (SQLException e){
@@ -67,7 +66,7 @@ public class UserController {
         }
         if(user != null && user.getEmailId() != null && user.getEmailId().isEmpty()){
             try{
-                User userObject=this.userService.findUserByPropertyName(UserControllerConstants.EMAIL_ID,user.getEmailId());
+                User userObject=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID,user.getEmailId());
                 if(userObject != null)
                     return String.valueOf(HttpStatusEnums.EMAIlID_EXIST.ResponseMsg());
             }catch (SQLException e){
@@ -78,7 +77,7 @@ public class UserController {
         }
         if(user != null && user.getContactNumber() != null){
             try{
-                User userObject=this.userService.findUserByPropertyName(UserControllerConstants.CONTACT_NUMBER,user.getContactNumber());
+                User userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER,user.getContactNumber());
                 if(userObject != null)
                     return String.valueOf(HttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg());
             }catch (SQLException e){
@@ -154,11 +153,11 @@ public class UserController {
 
     @RequestMapping(value = UserRestURIConstants.GET_USER_NAME, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public String userNameExist(@PathVariable(UserControllerConstants.USER_NAME) final String userName)  {
+    public String userNameExist(@PathVariable("userName") final String userName)  {
         User user;
         JSONObject jsonObject=new JSONObject();
         try{
-            user=this.userService.findUserByPropertyName(UserControllerConstants.USER_NAME,userName);
+            user=this.userService.findUserByPropertyName(UserConstants.USER_NAME,userName);
             if(user != null){
                 jsonObject.put("user", user.toString());
                 return jsonObject.toString();
@@ -173,11 +172,11 @@ public class UserController {
 
     @RequestMapping(value = UserRestURIConstants.GET_EMAIL_ID, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public String emailIdExist(@PathVariable(UserControllerConstants.EMAIL_ID) final String emailId) {
+    public String emailIdExist(@PathVariable("emailId") final String emailId) {
         User user;
         JSONObject jsonObject=new JSONObject();
         try{
-            user=this.userService.findUserByPropertyName(UserControllerConstants.EMAIL_ID, emailId);
+            user=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID, emailId);
             if(user != null){
                 jsonObject.put("user", user.toString());
                 return jsonObject.toString();
@@ -192,11 +191,11 @@ public class UserController {
 
     @RequestMapping(value = UserRestURIConstants.GET_CONTACT_NUMBER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public String contactNumberExist(@PathVariable(UserControllerConstants.CONTACT_NUMBER) final Long contactNumber){
+    public String contactNumberExist(@PathVariable("contactNumber") final Long contactNumber){
         User user;
         JSONObject jsonObject=new JSONObject();
         try{
-            user=this.userService.findUserByPropertyName(UserControllerConstants.CONTACT_NUMBER, contactNumber);
+            user=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER, contactNumber);
             if(user != null){
                 jsonObject.put("user", user.toString());
                 return jsonObject.toString();
@@ -212,13 +211,13 @@ public class UserController {
     public final String generatePassword(){
         String password="";
         try{
-            for (int i=0; i<UserControllerConstants.PASSWORD_LENGTH; i++)
+            for (int i=0; i< UserConstants.PASSWORD_LENGTH; i++)
             {
-                int index = (int)(this.random.nextDouble()*UserControllerConstants.LETTERS.length());
-                password += UserControllerConstants.LETTERS.substring(index, index+1);
+                int index = (int)(this.random.nextDouble()* UserConstants.LETTERS.length());
+                password += UserConstants.LETTERS.substring(index, index+1);
             }
         }catch (Exception e){
-            password=UserControllerConstants.DEFAULT_PASSWORD;
+            password= UserConstants.DEFAULT_PASSWORD;
         }
         return password;
 

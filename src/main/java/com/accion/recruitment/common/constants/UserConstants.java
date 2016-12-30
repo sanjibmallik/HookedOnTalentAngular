@@ -5,7 +5,7 @@ package com.accion.recruitment.common.constants;
  * @author $LastChangedBy: Mudassir Hussain $
  * $Date:: 12/29/16 00:11 AM#$
  */
-public class UserControllerConstants {
+public class UserConstants {
 
     public static final String LETTERS = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789+@";
     public static final Integer PASSWORD_LENGTH = 6;

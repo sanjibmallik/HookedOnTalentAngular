@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
+
 /**
  * @author Mudassir Hussain
  * @author $LastChangedBy: Mudassir Hussain $
@@ -24,10 +26,8 @@ public class LoginServiceImpl implements LoginService {
     private LoginServiceDAO loginServiceDAO;
 
     @Override
-    public User getLoginUserByUserNameOREmailIdAndPassword(final String userNameOREmailId,final String password) {
-
-        User user=this.loginServiceDAO.getLoginUserByUserNameOREmailIdAndPassword(userNameOREmailId, password);
-        return user;
+    public User getLoginUserByUserNameOREmailIdAndPassword(final String userNameOREmailId,final String password)throws SQLException{
+        return (User)this.loginServiceDAO.getLoginUserByUserNameOREmailIdAndPassword(userNameOREmailId, password);
     }
 
 }
