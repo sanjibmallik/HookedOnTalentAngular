@@ -1,9 +1,11 @@
 package com.accion.recruitment.web.controller;
 
+import com.accion.recruitment.common.constants.GroupRestURIConstants;
 import com.accion.recruitment.jpa.entities.Groups;
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.GroupService;
 import com.accion.recruitment.service.UserService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -22,13 +24,14 @@ import java.util.Set;
  */
 
 @Controller
+@Api(value="Roles Controller", description = "Roles Operation")
 public class GroupController {
 
     @Autowired
     private GroupService groupService;
 
 
-    @RequestMapping(value = "hot/getGroupsName", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = GroupRestURIConstants.GET_GROUP_NAME, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
     public Set<String> getGroupsName() {
         Set<String> groupsSet=this.groupService.getGroupsName();

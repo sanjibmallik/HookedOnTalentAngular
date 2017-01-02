@@ -7,10 +7,16 @@ import com.accion.recruitment.common.enums.UserEnums;
 import com.accion.recruitment.jpa.entities.TechnicalScreenerSkills;
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -151,23 +157,29 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = UserRestURIConstants.GET_USER_NAME, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ApiOperation(value = "Get the User based on user name  ",  code = 200, httpMethod="GET"
+            , notes = "Return the matched User", response = User.class, responseContainer = "User")
+
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successful Response Send", responseContainer = "User")
+            , @ApiResponse(code = 404, message = "User not found")
+            , @ApiResponse(code = 500, message = "Internal Server Error")})
+
+    @RequestMapping(value = UserRestURIConstants.GET_USER_NAME, produces = MediaType.TEXT_PLAIN_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public String userNameExist(@PathVariable("userName") final String userName)  {
+    public ResponseEntity<String> userNameExist(@PathVariable("userName") final String userName) {
         User user;
-        JSONObject jsonObject=new JSONObject();
         try{
             user=this.userService.findUserByPropertyName(UserConstants.USER_NAME,userName);
             if(user != null){
-                jsonObject.put("user", user.toString());
-                return jsonObject.toString();
+                return new ResponseEntity<String>(user.toString(), HttpStatus.OK);
             }
         }catch (SQLException e){
-            return String.valueOf(HttpStatus.FOUND);
+            return new ResponseEntity(HttpStatus.OK);
         }catch (Exception e){
-            return String.valueOf(HttpStatus.FOUND);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return  jsonObject.toString();
+        return    new ResponseEntity(HttpStatus.NOT_FOUND);
+
     }
 
     @RequestMapping(value = UserRestURIConstants.GET_EMAIL_ID, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)

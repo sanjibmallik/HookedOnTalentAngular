@@ -2,8 +2,6 @@ package com.accion.recruitment.web.config;
 
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -27,16 +25,14 @@ public class SwaggerConfiguration {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.accion.recruitment.web.controller"))
                 .paths(PathSelectors.ant("/**"))
-                .build();
+                .build().apiInfo(apiInfo());
 
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("blah")
-                .description("blah.")
-                .termsOfServiceUrl("http://www.blah.com.au")
-                .contact("blah")
+                .title("Hooked On Talent")
+                .description("Rest API'S.")
                 .build();
     }
 }
