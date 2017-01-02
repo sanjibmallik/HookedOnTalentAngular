@@ -7,10 +7,8 @@ import com.accion.recruitment.common.enums.UserEnums;
 import com.accion.recruitment.jpa.entities.TechnicalScreenerSkills;
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.UserService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +33,7 @@ import java.util.*;
  * $Date:: 12/26/16 00:11 AM#$
  */
 @Controller
+@Api(value = "UserController", description = "All the API's  related to user ")
 public class UserController {
 
 
@@ -50,8 +49,15 @@ public class UserController {
     private final SimpleDateFormat sdf = new SimpleDateFormat(UserConstants.DATE_FORMAT);
 
 
+    @ApiOperation(value = "Create the new User ",  code = 201, httpMethod="POST")
+
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "User Created Successfully", responseContainer = "User")
+            , @ApiResponse(code = 302, message = "User Found")
+            , @ApiResponse(code = 500, message = "Internal Server Error")})
+
     @RequestMapping(value = UserRestURIConstants.CREATE_USER, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.POST)
-    public @ResponseBody String createUser(final @RequestBody User user,
+    @ResponseBody
+    public  ResponseEntity<String> createUser(final @RequestBody User user,
                               final @RequestBody TechnicalScreenerSkills technicalScreenerSkills,
                               final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
                               final @RequestParam(required = false, value = "userProfile") MultipartFile userProfile,
@@ -63,33 +69,35 @@ public class UserController {
             try{
                 User userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,user.getUserName());
                 if(userObject != null)
-                    return String.valueOf(HttpStatusEnums.USER_NAME_EXIST.ResponseMsg());
+                    return new ResponseEntity<String>(HttpStatusEnums.USER_NAME_EXIST.ResponseMsg(), HttpStatus.FOUND);
             }catch (SQLException e){
-                return String.valueOf(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+                    return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }catch (Exception e){
-                return String.valueOf(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg());
+                    return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+
             }
         }
         if(user != null && user.getEmailId() != null && user.getEmailId().isEmpty()){
             try{
                 User userObject=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID,user.getEmailId());
                 if(userObject != null)
-                    return String.valueOf(HttpStatusEnums.EMAIlID_EXIST.ResponseMsg());
+                    return new ResponseEntity<String>(HttpStatusEnums.EMAIlID_EXIST.ResponseMsg(), HttpStatus.FOUND);
             }catch (SQLException e){
-                return String.valueOf(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+                return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }catch (Exception e){
-                return String.valueOf(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg());
+                return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+
             }
         }
         if(user != null && user.getContactNumber() != null){
             try{
                 User userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER,user.getContactNumber());
                 if(userObject != null)
-                    return String.valueOf(HttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg());
+                    return new ResponseEntity<String>(HttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg(), HttpStatus.FOUND);
             }catch (SQLException e){
-                return String.valueOf(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+                return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }catch (Exception e){
-                return String.valueOf(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg());
+                return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
         if (user != null && userImage != null && !userImage.isEmpty()) {
@@ -97,9 +105,9 @@ public class UserController {
                 byte[] bytes = userImage.getBytes();
                 user.setUserImage(bytes);
             } catch (IOException e) {
-                return String.valueOf(HttpStatusEnums.USER_IMAGE_EXCEPTION.ResponseMsg());
+                return new ResponseEntity<String>(HttpStatusEnums.USER_IMAGE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }catch (Exception e){
-                return String.valueOf(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg());
+                return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
         if (user != null && userProfile != null && !userProfile.isEmpty()) {
@@ -107,9 +115,9 @@ public class UserController {
                 byte[] bytes = userProfile.getBytes();
                 user.setUserProfile(bytes);
             } catch (IOException e) {
-                return String.valueOf(HttpStatusEnums.USER_PROFILE_EXCEPTION.ResponseMsg());
+                return new ResponseEntity<String>(HttpStatusEnums.USER_PROFILE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }catch (Exception e){
-                return String.valueOf(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg());
+                return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
@@ -127,29 +135,30 @@ public class UserController {
                 user.getTechnicalScreenerDetailsDSkillsSet().addAll(technicalScreenerSkillsList);
                 this.userService.saveUser(user);
             }catch (ArrayIndexOutOfBoundsException e){
-                return String.valueOf(HttpStatusEnums.USER_SKILLS_EXCEPTION.ResponseMsg());
+                return new ResponseEntity<String>(HttpStatusEnums.USER_SKILLS_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }catch (SQLException e){
-                return String.valueOf(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+                return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }catch (Exception e){
-                return String.valueOf(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg());
+                return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }else{
             try{
                 this.userService.saveUser(user);
             }catch (SQLException e){
-                return String.valueOf(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
-            }catch (Exception e){
-                return String.valueOf(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg());
-            }
+            return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         }
 
-        return String.valueOf(HttpStatus.CREATED);
+        return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.CREATED);
+        
     }
 
 
 
 
-    @RequestMapping(value = UserRestURIConstants.GET_ALL_USER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = UserRestURIConstants.GET_ALL_USER, produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.TEXT_PLAIN_VALUE,method = RequestMethod.GET)
     @ResponseBody
     public List<User> getAllUsers() {
         List<User> userList=this.userService.findAllUser();
@@ -157,67 +166,80 @@ public class UserController {
     }
 
 
-    @ApiOperation(value = "Get the User based on user name  ",  code = 200, httpMethod="GET"
-            , notes = "Return the matched User", response = User.class, responseContainer = "User")
-
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successful Response Send", responseContainer = "User")
-            , @ApiResponse(code = 404, message = "User not found")
-            , @ApiResponse(code = 500, message = "Internal Server Error")})
-
-    @RequestMapping(value = UserRestURIConstants.GET_USER_NAME, produces = MediaType.TEXT_PLAIN_VALUE, method = RequestMethod.GET)
+    @ApiOperation(value = "Get the User based on UserName  ", httpMethod="GET"
+            , notes = "Return the matched User")
+    @ApiResponses(value = {@ApiResponse(code = 302, message = "User Found "),
+                           @ApiResponse(code = 404, message = "User not found"),
+                           @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = UserRestURIConstants.GET_USER_NAME, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> userNameExist(@PathVariable("userName") final String userName) {
+    public ResponseEntity<String> isUserNameExist(@PathVariable("userName") final String userName) {
         User user;
+        JSONObject jsonObject=new JSONObject();
         try{
             user=this.userService.findUserByPropertyName(UserConstants.USER_NAME,userName);
             if(user != null){
-                return new ResponseEntity<String>(user.toString(), HttpStatus.OK);
+                jsonObject.put("user", user.toString());
+                return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.OK);
             }
         }catch (SQLException e){
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return    new ResponseEntity(HttpStatus.NOT_FOUND);
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
 
     }
 
+
+
+    @ApiOperation(value = "Get the User based on Email Id  ",  httpMethod="GET",
+                  notes = "Return the matched User")
+    @ApiResponses(value = {@ApiResponse(code = 302, message = "User Found "),
+                           @ApiResponse(code = 404, message = "User not found"),
+                           @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = UserRestURIConstants.GET_EMAIL_ID, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public String emailIdExist(@PathVariable("emailId") final String emailId) {
+    public ResponseEntity<String> emailIdExist(@PathVariable("emailId") final String emailId) {
         User user;
         JSONObject jsonObject=new JSONObject();
         try{
             user=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID, emailId);
             if(user != null){
                 jsonObject.put("user", user.toString());
-                return jsonObject.toString();
+                return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.OK);
             }
         }catch (SQLException e){
-            return String.valueOf(HttpStatus.FOUND);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
-            return String.valueOf(HttpStatus.FOUND);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return  jsonObject.toString();
+        return  new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
+
+    @ApiOperation(value = "Get the User based on Contact Number  ", httpMethod="GET",
+            notes = "Return the matched User")
+    @ApiResponses(value = {@ApiResponse(code = 302, message = "User Found "),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = UserRestURIConstants.GET_CONTACT_NUMBER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public String contactNumberExist(@PathVariable("contactNumber") final Long contactNumber){
+    public ResponseEntity<String> contactNumberExist(@PathVariable("contactNumber") final Long contactNumber){
         User user;
         JSONObject jsonObject=new JSONObject();
         try{
             user=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER, contactNumber);
             if(user != null){
                 jsonObject.put("user", user.toString());
-                return jsonObject.toString();
+                return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.OK);
             }
         }catch (SQLException e){
-            return String.valueOf(HttpStatus.FOUND);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
-            return String.valueOf(HttpStatus.FOUND);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return  jsonObject.toString();
+        return  new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     public final String generatePassword(){
