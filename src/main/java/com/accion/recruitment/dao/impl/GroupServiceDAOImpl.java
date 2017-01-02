@@ -38,6 +38,7 @@ public class GroupServiceDAOImpl<R> implements GroupServiceDAO{
         this.sessionFactory = sessionFactory;
     }
 
+    @Override
     public Boolean saveUserGroups(User user){
         final Session session = getSession();
         Groups groups=this.getGroupByGroupName(user.getRole());

@@ -48,5 +48,10 @@ public class UserServiceImpl implements UserService{
         return (User) this.userServiceDAO.findUserByPropertyName(propName, propValue);
     }
 
+    @Override
+    public User findUserById(final int userId )throws SQLException{
+        return (User) this.userServiceDAO.findUserById(userId);
+    }
+
 
 }

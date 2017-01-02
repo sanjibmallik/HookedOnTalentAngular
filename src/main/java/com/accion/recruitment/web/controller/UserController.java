@@ -6,6 +6,7 @@ import com.accion.recruitment.common.enums.HttpStatusEnums;
 import com.accion.recruitment.common.enums.UserEnums;
 import com.accion.recruitment.jpa.entities.TechnicalScreenerSkills;
 import com.accion.recruitment.jpa.entities.User;
+import com.accion.recruitment.service.EmailNotificationService;
 import com.accion.recruitment.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
@@ -40,6 +41,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EmailNotificationService emailNotificationService;
+
     private final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 
     private final Random random = new SecureRandom();
@@ -51,7 +55,7 @@ public class UserController {
 
     @ApiOperation(value = "Create the new User ",  code = 201, httpMethod="POST")
 
-    @ApiResponses(value = {@ApiResponse(code = 201, message = "User Created Successfully", responseContainer = "User")
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "User Created Successfully")
             , @ApiResponse(code = 302, message = "User Found")
             , @ApiResponse(code = 500, message = "Internal Server Error")})
 
@@ -134,6 +138,7 @@ public class UserController {
                 technicalScreenerSkillsList=this.getTechnicalSkillsObjectList(technicalScreenerSkills);
                 user.getTechnicalScreenerDetailsDSkillsSet().addAll(technicalScreenerSkillsList);
                 this.userService.saveUser(user);
+                this.emailNotificationService.sendUserCredentials(user);
             }catch (ArrayIndexOutOfBoundsException e){
                 return new ResponseEntity<String>(HttpStatusEnums.USER_SKILLS_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }catch (SQLException e){
@@ -144,6 +149,7 @@ public class UserController {
         }else{
             try{
                 this.userService.saveUser(user);
+                this.emailNotificationService.sendUserCredentials(user);
             }catch (SQLException e){
             return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
@@ -152,7 +158,7 @@ public class UserController {
         }
 
         return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.CREATED);
-        
+
     }
 
 
@@ -166,21 +172,50 @@ public class UserController {
     }
 
 
-    @ApiOperation(value = "Get the User based on UserName  ", httpMethod="GET"
+   /* @ApiOperation(value = "Get the User based on ID  ", httpMethod="GET"
             , notes = "Return the matched User")
     @ApiResponses(value = {@ApiResponse(code = 302, message = "User Found "),
-                           @ApiResponse(code = 404, message = "User not found"),
-                           @ApiResponse(code = 500, message = "Internal Server Error")})
-    @RequestMapping(value = UserRestURIConstants.GET_USER_NAME, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = UserRestURIConstants.CHANGE_STATUS, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> isUserNameExist(@PathVariable("userName") final String userName) {
+    public ResponseEntity<String> changeStatus(@PathVariable("id") final int userId) {
         User user;
         JSONObject jsonObject=new JSONObject();
         try{
-            user=this.userService.findUserByPropertyName(UserConstants.USER_NAME,userName);
+            user=this.userService.findUserById(userId);
             if(user != null){
                 jsonObject.put("user", user.toString());
-                return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.OK);
+                return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.FOUND);
+            }
+        }catch (SQLException e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+
+    }*/
+
+
+
+
+
+    @ApiOperation(value = "Get the User based on ID  ", httpMethod="GET"
+            , notes = "Return the matched User")
+    @ApiResponses(value = {@ApiResponse(code = 302, message = "User Found "),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = UserRestURIConstants.GET_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<String> getUserById(@PathVariable("id") final int userId) {
+        User user;
+        JSONObject jsonObject=new JSONObject();
+        try{
+            user=this.userService.findUserById(userId);
+            if(user != null){
+                jsonObject.put("user", user.toString());
+                return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.FOUND);
             }
         }catch (SQLException e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -192,6 +227,31 @@ public class UserController {
     }
 
 
+    @ApiOperation(value = "Get the User based on UserName  ", httpMethod="GET"
+            , notes = "Return the matched User")
+    @ApiResponses(value = {@ApiResponse(code = 302, message = "User Found "),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = UserRestURIConstants.GET_USER_NAME, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<String> isUserNameExist(@PathVariable("userName") final String userName) {
+        User user;
+        JSONObject jsonObject=new JSONObject();
+        try{
+            user=this.userService.findUserByPropertyName(UserConstants.USER_NAME,userName);
+            if(user != null){
+                jsonObject.put("user", user.toString());
+                return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.FOUND);
+            }
+        }catch (SQLException e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+
+    }
+
 
     @ApiOperation(value = "Get the User based on Email Id  ",  httpMethod="GET",
                   notes = "Return the matched User")
@@ -200,14 +260,14 @@ public class UserController {
                            @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = UserRestURIConstants.GET_EMAIL_ID, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> emailIdExist(@PathVariable("emailId") final String emailId) {
+    public ResponseEntity<String> isEmailIdExist(@PathVariable("emailId") final String emailId) {
         User user;
         JSONObject jsonObject=new JSONObject();
         try{
             user=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID, emailId);
             if(user != null){
                 jsonObject.put("user", user.toString());
-                return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.OK);
+                return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.FOUND);
             }
         }catch (SQLException e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -225,14 +285,14 @@ public class UserController {
             @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = UserRestURIConstants.GET_CONTACT_NUMBER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> contactNumberExist(@PathVariable("contactNumber") final Long contactNumber){
+    public ResponseEntity<String> isContactNumberExist(@PathVariable("contactNumber") final Long contactNumber){
         User user;
         JSONObject jsonObject=new JSONObject();
         try{
             user=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER, contactNumber);
             if(user != null){
                 jsonObject.put("user", user.toString());
-                return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.OK);
+                return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.FOUND);
             }
         }catch (SQLException e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

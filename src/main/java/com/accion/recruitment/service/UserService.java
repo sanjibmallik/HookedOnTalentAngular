@@ -48,5 +48,16 @@ public interface UserService {
      */
     public User findUserByPropertyName(final String propName,final Object propValue) throws SQLException;
 
+    /**
+     * findUserById() provide the specification for retrieval of the
+     * User object from the database based on the User name.
+     *
+     * @param userId accept the java.lang.int type of userId
+     *                  which is having user ID value
+     *
+     * @return instance of User having persisting state otherwise
+     *         it return null.
+     */
+    public User findUserById(final int userId) throws SQLException;
 
 }
