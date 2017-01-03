@@ -165,37 +165,52 @@ public class UserController {
 
 
 
+    @ApiOperation(value = "Get ALl the Users  ", httpMethod="GET")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Users Found "),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
 
     @RequestMapping(value = UserRestURIConstants.GET_ALL_USER, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<String> getAllUsers() throws JSONException {
-        List<User> userList=this.userService.findAllUser();
 
-        JSONObject responseDetailsJson = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
-
-        for(User user:userList){
-            jsonArray.put(user.toString());
+        try{
+            List<User> userList=this.userService.findAllUser();
+            JSONObject responseDetailsJson = new JSONObject();
+            JSONArray jsonArray = new JSONArray();
+            for(User user:userList){
+                jsonArray.put(user.toString());
+            }
+            responseDetailsJson.put("users", jsonArray);
+            return new ResponseEntity<String>(responseDetailsJson.toString(), HttpStatus.OK);
+        }catch (SQLException e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        responseDetailsJson.put("users", jsonArray);
-        return new ResponseEntity<String>(responseDetailsJson.toString(), HttpStatus.OK);
-
     }
 
 
-   /* @ApiOperation(value = "Get the User based on ID  ", httpMethod="GET"
-            , notes = "Return the matched User")
-    @ApiResponses(value = {@ApiResponse(code = 302, message = "User Found "),
-            @ApiResponse(code = 404, message = "User not found"),
+    @ApiOperation(value = "Enable OR Disable the User  ", httpMethod="GET")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Status Changed "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = UserRestURIConstants.CHANGE_STATUS, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> changeStatus(@PathVariable("id") final int userId) {
+    public ResponseEntity<String> changeStatus(@PathVariable("id") final int userId,
+                                               @PathVariable("status") String status) {
+
         User user;
         JSONObject jsonObject=new JSONObject();
         try{
             user=this.userService.findUserById(userId);
             if(user != null){
+                if(status.equalsIgnoreCase("true")){
+                    user.setEnabled(Boolean.FALSE);
+                    this.userService.saveUser(user);
+                    this.emailNotificationService.sendUserCredentials(user);
+                }else if(status.equalsIgnoreCase("false")){
+                    user.setEnabled(Boolean.TRUE);
+                }
+
                 jsonObject.put("user", user.toString());
                 return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.FOUND);
             }
@@ -206,7 +221,7 @@ public class UserController {
         }
         return new ResponseEntity(HttpStatus.NOT_FOUND);
 
-    }*/
+    }
 
 
 

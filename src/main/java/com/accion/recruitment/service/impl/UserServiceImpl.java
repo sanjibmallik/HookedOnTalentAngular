@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> findAllUser(){
+    public List<User> findAllUser() throws SQLException{
         List<User> userList=this.userServiceDAO.findAllUser();
         return  userList;
     }

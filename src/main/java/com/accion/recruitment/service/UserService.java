@@ -32,7 +32,7 @@ public interface UserService {
      *         User object of the persisting state.
      */
 
-    public List<User> findAllUser();
+    public List<User> findAllUser() throws SQLException;
 
     /**
      * findUserByPropertyName() provide the specification for retrieval of the
