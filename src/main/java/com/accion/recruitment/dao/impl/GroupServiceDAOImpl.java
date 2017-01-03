@@ -57,7 +57,7 @@ public class GroupServiceDAOImpl<R> implements GroupServiceDAO{
     }
 
     @Override
-    public List<R> getAllGroups() {
+    public List<R> findAllGroup() {
         final Session session = getSession();
         List<R> rList = session.createCriteria(Groups.class).list();
         return rList;

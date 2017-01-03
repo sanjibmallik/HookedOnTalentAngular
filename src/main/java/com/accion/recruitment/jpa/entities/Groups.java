@@ -84,6 +84,9 @@ public class Groups extends BaseEntity{
 
     @Override
     public String toString() {
-        return this.getGroupName();
+        return "{" +
+                "groupName:'" + groupName + '\'' +
+                '}';
+
     }
 }

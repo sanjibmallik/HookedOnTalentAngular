@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -28,13 +29,8 @@ public class GroupServiceImpl implements GroupService {
     private GroupServiceDAO groupServiceDAO;
 
     @Override
-    public Set<String> getGroupsName() {
-        Set<String> groupsSet=new HashSet<String>();
-        final List<Groups> groupsList =this.groupServiceDAO.getAllGroups();
-        for(Groups groups:groupsList){
-            groupsSet.add(groups.getGroupName());
-        }
-        groupsSet.remove("Client");
-        return groupsSet;
+    public List<Groups> findAllGroup() throws SQLException{
+        return this.groupServiceDAO.findAllGroup();
+
     }
 }

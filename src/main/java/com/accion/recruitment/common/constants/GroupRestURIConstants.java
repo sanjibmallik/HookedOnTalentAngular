@@ -8,6 +8,6 @@ package com.accion.recruitment.common.constants;
  */
 public class GroupRestURIConstants {
 
-    public static final String GET_GROUP_NAME="rest/group/groupName/{groupName}";
+    public static final String GET_GROUP_NAME="hot/group/groupName";
 
 }
