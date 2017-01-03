@@ -7,6 +7,6 @@ package com.accion.recruitment.common.constants;
  */
 public class LoginRestURIConstants {
 
-    public static final String LOGIN = "/rest/login/{userName}/{password}";
-    public static final String LOGOUT = "/rest/logout";
+    public static final String LOGIN = "/hot/login/{userName}/{password}";
+    public static final String LOGOUT = "/hot/logout";
 }

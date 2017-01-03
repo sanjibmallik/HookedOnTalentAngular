@@ -3,10 +3,13 @@
  */
 'use strict'
 
-angular.module('hot.userFactory',[])
-    .factory('userCreateFactory',function(){
+var hotUserFactory = angular.module('hot.userFactory',[]);
 
-    })
-.factory('userViewFactory',function(){
+   hotUserFactory.factory('userCreateFactory',function(){
 
-});
+    });
+
+
+   hotUserFactory.factory('userViewFactory',function(){
+
+    });

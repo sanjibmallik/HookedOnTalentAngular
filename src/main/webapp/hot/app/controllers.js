@@ -1,7 +1,9 @@
 'use strict';
 
-angular.module('hot.controllers', []).
-	controller('LoginCtrl', function($scope, $rootScope,$http,$state)
+var hotMainController = angular.module('hot.controllers', []);
+
+
+    hotMainController.controller('LoginCtrl', function($scope, $rootScope,$http,$state)
 	{
         $rootScope.isLoginPage        = true;
         $rootScope.isLightLoginPage   = false;
@@ -18,7 +20,7 @@ angular.module('hot.controllers', []).
 
             $http({
                 method : 'GET',
-                url : 'userLoginAuthentication/'+$scope.userName+'/'+$scope.password
+                url : 'login/'+$scope.userName+'/'+$scope.password
             }).then(function successCallback(response) {
                   console.log(response.data.errorMessage);
                     if(null==response.data.errorMessage){
