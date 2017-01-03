@@ -60,16 +60,16 @@ public class UserController {
             , @ApiResponse(code = 500, message = "Internal Server Error")})
 
     @RequestMapping(value = UserRestURIConstants.CREATE_USER, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.POST)
-    @ResponseBody
-    public  ResponseEntity<String> createUser(final @RequestBody User user,
-                              final @RequestBody TechnicalScreenerSkills technicalScreenerSkills,
+
+    public  ResponseEntity<Void> createUser(@RequestBody User user
+                              /*final @RequestBody(required = false) TechnicalScreenerSkills technicalScreenerSkills,
                               final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
                               final @RequestParam(required = false, value = "userProfile") MultipartFile userProfile,
-                              final Principal principal) {
+                              final Principal principal*/) {
 
         List<TechnicalScreenerSkills> technicalScreenerSkillsList=new ArrayList<TechnicalScreenerSkills>();
 
-        if(user != null && user.getUserName() != null && user.getUserName().isEmpty()){
+       /* if(user != null && user.getUserName() != null && user.getUserName().isEmpty()){
             try{
                 User userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,user.getUserName());
                 if(userObject != null)
@@ -157,7 +157,8 @@ public class UserController {
         }
         }
 
-        return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.CREATED);
+        return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.CREATED);*/
+        return new ResponseEntity<Void>( HttpStatus.CREATED);
 
     }
 
