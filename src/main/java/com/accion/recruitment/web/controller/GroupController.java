@@ -40,7 +40,7 @@ public class GroupController {
 
 
     @ApiOperation(value = "Get the Groups Name  ", httpMethod="GET"
-            , notes = "Return the ALl the group  names")
+            , notes = "Return the ALl the group  names except client group")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successful Group Names Send "),
             @ApiResponse(code = 404, message = "Group Names  not found"),
             @ApiResponse(code = 500, message = "Internal Server Error")})

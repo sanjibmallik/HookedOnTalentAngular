@@ -54,7 +54,7 @@ public class LoginController{
         try{
             userObject=this.loginService.getLoginUserByUserNameOREmailIdAndPassword(userNameOREmailId, encodedPassword);
             jsonObject.put("user", userObject.toString());
-            return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.FOUND);
+            return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.OK);
         }catch (SQLException e){
             return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
 
