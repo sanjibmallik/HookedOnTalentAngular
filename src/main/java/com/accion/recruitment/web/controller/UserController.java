@@ -165,7 +165,7 @@ public class UserController {
 
 
 
-    @RequestMapping(value = UserRestURIConstants.GET_ALL_USER, produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.TEXT_PLAIN_VALUE,method = RequestMethod.GET)
+    @RequestMapping(value = UserRestURIConstants.GET_ALL_USER, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.GET)
     @ResponseBody
     public List<User> getAllUsers() {
         List<User> userList=this.userService.findAllUser();

@@ -6,6 +6,7 @@ import com.accion.recruitment.common.constants.UserRestURIConstants;
 import com.accion.recruitment.common.enums.HttpStatusEnums;
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.LoginService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -30,6 +31,7 @@ import java.util.List;
  * $Date:: 12/23/16 00:11 AM#$
  */
 @Controller
+@Api(value = "LoginController", description = "Login API's ")
 public class LoginController{
 
     @Autowired
@@ -40,7 +42,7 @@ public class LoginController{
 
     @ApiOperation(value = "Login  based on UserName OR EmailId and Password   ", httpMethod="GET"
             , notes = "Return the Login User")
-    @ApiResponses(value = {@ApiResponse(code = 302, message = "User Found "),
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Login User Found "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
     @RequestMapping(value = LoginRestURIConstants.LOGIN, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
@@ -61,8 +63,6 @@ public class LoginController{
         }catch (Exception e){
             return new ResponseEntity<String>(HttpStatusEnums.LOGIN_ERROR.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
     }
 
 
