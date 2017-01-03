@@ -10,6 +10,7 @@ import com.accion.recruitment.service.EmailNotificationService;
 import com.accion.recruitment.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -167,9 +168,18 @@ public class UserController {
 
     @RequestMapping(value = UserRestURIConstants.GET_ALL_USER, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.GET)
     @ResponseBody
-    public List<User> getAllUsers() {
+    public ResponseEntity<String> getAllUsers() throws JSONException {
         List<User> userList=this.userService.findAllUser();
-        return  userList;
+
+        JSONObject responseDetailsJson = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+
+        for(User user:userList){
+            jsonArray.put(user.toString());
+        }
+        responseDetailsJson.put("users", jsonArray);
+        return new ResponseEntity<String>(responseDetailsJson.toString(), HttpStatus.OK);
+
     }
 
 

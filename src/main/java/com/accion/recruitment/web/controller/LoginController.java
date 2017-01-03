@@ -47,21 +47,20 @@ public class LoginController{
 
     @RequestMapping(value = LoginRestURIConstants.LOGIN, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> userLoginAuthentication(@PathVariable("userName") final String userNameOREmailId,
+    public ResponseEntity<Object> userLoginAuthentication(@PathVariable("userName") final String userNameOREmailId,
                                         @PathVariable("password") final String password) {
 
         User userObject;
-        JSONObject jsonObject=new JSONObject();
         final String encodedPassword=encoder.encodePassword(password, null);
         try{
             userObject=this.loginService.getLoginUserByUserNameOREmailIdAndPassword(userNameOREmailId, encodedPassword);
-            jsonObject.put("user", userObject.toString());
-            return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.OK);
+            User user=new User(userObject.getId(),userObject.getUserName(),userObject.getEmailId(),userObject.getFirstName(),userObject.getLastName(),userObject.getContactNumber(),
+            userObject.getRole(),userObject.getEnabled(),userObject.getErrorMessage());
+            return new ResponseEntity<Object>(user, HttpStatus.OK);
         }catch (SQLException e){
-            return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
-
+            return new ResponseEntity<Object>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
-            return new ResponseEntity<String>(HttpStatusEnums.LOGIN_ERROR.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Object>(HttpStatusEnums.LOGIN_ERROR.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
