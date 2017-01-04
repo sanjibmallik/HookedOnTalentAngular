@@ -24,7 +24,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
             url : 'group/groupName/'
         }).then(function successCallback(response) {
 
-                $scope.roles=response.data.groups;
+                $scope.roles=response.data;
                 console.log($scope.roles);
 
 
@@ -144,6 +144,9 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
                     "<hr />config: " + config;
             });
     };
+
+
+
 
 
 

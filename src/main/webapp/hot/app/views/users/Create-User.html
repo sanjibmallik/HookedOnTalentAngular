@@ -2,52 +2,49 @@
 <div ng-controller="createNewUserCtrl">
 
 
+
+<form role="form" name="newUserForm" class="form-horizontal" ng-submit="submitNewUser()">
+
 <div class="row">
-	<div class="col-sm-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">Enter User Details</h3>
-
-				<div class="panel-options">
-					<a href="" data-toggle="panel">
-						<span class="collapse-icon">&ndash;</span>
-						<span class="expand-icon">+</span>
-					</a>
-					<!--<a href="" data-toggle="remove">
-						&times;
-					</a>-->
-				</div>
-			</div>
-			<div class="panel-body">
-				<form role="form" name="newUserForm" class="form-horizontal">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
 
 
-                    <div class="form-group">
-						  <label class="col-sm-3 control-label">First Name</label>
-                         <div class="col-sm-5">
-						        <div class="input-group input-group-sm input-group-minimal">
-                                        <span class="input-group-addon">
-                                            <i class="linecons-user"></i>
-                                        </span>
-							    <input type="text" name="firstName" class="form-control" ng-model="newUser.firstName" placeholder="First Name"
-                                  ng-pattern="[a-zA-Z][a-zA-Z]*" data-is-regex="true" maxlength="10" ng-minlength="1" ng-required="true"/>
-                                </div>
+                <div class="panel-heading">
+                    <h3 class="panel-title">Enter User Details</h3>
 
-                                <div ng-messages="newUserForm.firstName.$error && newUserForm.firstName.$dirty">
-                                     <div ng-message="required">This field is required</div>
-                                     <div ng-message="minlength">min length</div>
-                                     <div ng-message="maxlength">max length</div>
+                   <!-- <div class="panel-options">
+                        <a href="" data-toggle="panel">
+                            <span class="collapse-icon">&ndash;</span>
+                            <span class="expand-icon">+</span>
+                        </a>
+                        &lt;!&ndash;<a href="" data-toggle="remove">
+                            &times;
+                        </a>&ndash;&gt;
+                    </div>-->
+                </div>
 
-                                </div>
 
-					     </div>
+
+
+
+        <div class="panel-body">
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">First Name</label>
+
+                    <div class="col-sm-5">
+                        <div class="input-group input-group-sm input-group-minimal">
+                                    <span class="input-group-addon">
+                                        <i class="linecons-user"></i>
+                                    </span>
+                            <input type="text" class="form-control" ng-model="newUser.firstName" placeholder="Last Name"
+                                   inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true">
+                        </div>
+                    </div>
                     </div>
 
-
-
-					<div class="form-group-separator"></div>
-
-
+            <div class="form-group-separator"></div>
 
                     <div class="form-group">
 						<label class="col-sm-3 control-label">Last Name</label>
@@ -58,19 +55,14 @@
 								<i class="linecons-user"></i>
 							</span>
 							<input type="text" class="form-control" ng-model="newUser.lastName" placeholder="Last Name"
-                                   inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
+                                   inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true">
 						</div>
 						</div>
 					</div>
 
-
-
                     <div class="form-group-separator"></div>
 
-
-
-
-                    <div class="form-group">
+                   <div class="form-group">
                         <label class="col-sm-3 control-label">User Name</label>
 
                         <div class="col-sm-5">
@@ -87,13 +79,7 @@
                         </div>
                     </div>
 
-
-					
-
 					<div class="form-group-separator"></div>
-
-
-
 
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Email Id</label>
@@ -111,14 +97,8 @@
                         </div>
 					</div>
 
-
-
-
 					<div class="form-group-separator"></div>
 
-
-
-					
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Contact number</label>
 
@@ -135,11 +115,7 @@
                         </div>
 					</div>
 
-
-
 					<div class="form-group-separator"></div>
-
-
 
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Upload Profile</label>
@@ -165,11 +141,6 @@
 
 					<div class="form-group-separator"></div>
 
-
-
-
-
-
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Select Role</label>
 
@@ -179,230 +150,258 @@
 
 						</div>
 					</div>
+                  </div>
+               <!-- first part-->
 
 
-	</div>
 
-
-<div class="row">
-    <div class="col-sm-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Address (Optional)</h3>
-                <div class="panel-options">
-                    <a href="" data-toggle="panel">
-                        <span class="collapse-icon">&ndash;</span>
+                <!-- ng-show="showTSDetailsDiv"-->
+                <div class="row" ng-show="showTSDetailsDiv">
+                    <div class="col-sm-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Enter Technical Screener Details</h3>
+                                <!--    <div class="panel-options">
+                                        <a href="" data-toggle="panel">
+                                            <span class="collapse-icon">&ndash;</span>
                         <span class="expand-icon">+</span>
                     </a>
-                   <!-- <a href="" data-toggle="remove">
-                        &times;
-                    </a>-->
+
+                </div>-->
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" >Primary skills</label>
+
+                                        <div class="col-sm-5">
+                                            <div class="input-group input-group-sm input-group-minimal">
+							<span class="input-group-addon">
+								<i class="linecons-user"></i>
+							</span>
+                                                <input type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Primary Skills">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group-separator"></div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" >Secondary Skills</label>
+
+                                        <div class="col-sm-5">
+                                            <div class="input-group input-group-sm input-group-minimal">
+							<span class="input-group-addon">
+								<i class="linecons-user"></i>
+							</span>
+                                                <input type="text" class="form-control"ng-maxlength="35" ng-minlength="1" ng-required="true" ng-model="newUser.secondarySkills" placeholder="Secondary Skills">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group-separator"></div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" >Expected Pay Range</label>
+
+                                        <div class="col-sm-5">
+                                            <div class="input-group input-group-sm input-group-minimal">
+							<span class="input-group-addon">
+								<i class="linecons-user"></i>
+							</span>
+                                                <input type="text" ng-model="newUser.expectedPayRange" class="form-control" placeholder="Pay Range"
+                                                       inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="panel-body">
-                <div class="form-horizontal">
 
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Alternate Contact</label>
 
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-mobile"></i>
-							</span>
-                                <input type="text" class="form-control" ng-maxlength="35" ng-minlength="1" ng-model="newUser.officePhoneNumber" inputmask data-mask="phone" />
+
+
+                <div class="row">
+               <div class="col-sm-12">
+
+                 <div class="panel panel-default">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Address (Optional)</h3>
+                            <!--<div class="panel-options">
+                                <a href="" data-toggle="panel">
+                                    <span class="collapse-icon">&ndash;</span>
+                                    <span class="expand-icon">+</span>
+                                </a>
+
+                            </div>-->
+                        </div>
+
+                <div class="panel-body">
+                 <div class="form-horizontal">
+
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Alternate Contact</label>
+
+                                <div class="col-sm-5">
+                                    <div class="input-group input-group-sm input-group-minimal">
+                                    <span class="input-group-addon">
+                                        <i class="linecons-mobile"></i>
+                                    </span>
+                                        <input type="text" class="form-control" ng-maxlength="35" ng-minlength="1" ng-model="newUser.officePhoneNumber" inputmask data-mask="phone" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group-separator"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Address Line 1</label>
+
+                                <div class="col-sm-5">
+                                    <div class="input-group input-group-sm input-group-minimal">
+                                    <span class="input-group-addon">
+                                        <i class="linecons-user"></i>
+                                    </span>
+                                        <input type="text" ng-model="newUser.address1" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"
+                                               inputmask data-mask="[a-zA-Z][a-zA-Z ][0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group-separator"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" >Address Line 2</label>
+
+                                <div class="col-sm-5">
+                                    <div class="input-group input-group-sm input-group-minimal">
+                                    <span class="input-group-addon">
+                                        <i class="linecons-user"></i>
+                                    </span>
+                                        <input type="text" ng-model="newUser.address2" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc"
+                                               inputmask data-mask="[a-zA-Z][a-zA-Z ][0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group-separator"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Zip Code</label>
+
+                                <div class="col-sm-5">
+                                    <div class="input-group input-group-sm input-group-minimal">
+                                    <span class="input-group-addon">
+                                        <i class="linecons-user"></i>
+                                    </span>
+                                        <input type="text" ng-model="newUser.zipCode" class="form-control"  placeholder="Zipcode"
+                                               inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group-separator"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">City</label>
+
+                                <div class="col-sm-5">
+                                    <div class="input-group input-group-sm input-group-minimal">
+                                    <span class="input-group-addon">
+                                        <i class="linecons-user"></i>
+                                    </span>
+                                        <input ng-model="newUser.city" type="text" class="form-control" placeholder="City"
+                                               inputmask data-mask="[a-zA-Z]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group-separator"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" >State</label>
+
+                                <div class="col-sm-5">
+                                    <div class="input-group input-group-sm input-group-minimal">
+                                    <span class="input-group-addon">
+                                        <i class="linecons-user"></i>
+                                    </span>
+                                        <input ng-model="newUser.state" type="text" class="form-control" placeholder="State"
+                                               inputmask data-mask="[a-zA-Z]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group-separator"></div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" >Country</label>
+
+                                    <div class="col-sm-5">
+                                        <div class="input-group input-group-sm input-group-minimal">
+                                        <span class="input-group-addon">
+                                            <i class="linecons-user"></i>
+                                        </span>
+                                            <input type="text" ng-model="newUser.country" class="form-control"  placeholder="Country"
+                                                   inputmask data-mask="[a-zA-Z]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                     </div>
+                 </div>
+               </div>
+           </div>
+
+
+
+
+
+                        <div class="row">
+                        <div class="col-sm-12">
+                            <div class="panel panel-default">
+
+
+                                <div class="panel-body" style="text-align: center;">
+
+                                    <input class="btn btn-info btn-icon" type="submit" value="Submit"/>
+
+
+
+                                    <input type="button" class="btn btn-warning btn-icon" ng-click="resetUserForm();" value="Reset">
+
+
+
+
+                                </div>
                             </div>
                         </div>
-                    </div>
+                      </div>
 
-                    <div class="form-group-separator"></div>
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Address Line 1</label>
 
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-user"></i>
-							</span>
-                                <input type="text" ng-model="newUser.address1" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z ][0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="form-group-separator"></div>
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" >Address Line 2</label>
 
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-user"></i>
-							</span>
-                                <input type="text" ng-model="newUser.address2" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z ][0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="form-group-separator"></div>
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Zip Code</label>
 
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-user"></i>
-							</span>
-                                <input type="text" ng-model="newUser.zipCode" class="form-control"  placeholder="Zipcode"
-                                       inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="form-group-separator"></div>
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">City</label>
 
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-user"></i>
-							</span>
-                                <input ng-model="newUser.city" type="text" class="form-control" placeholder="City"
-                                       inputmask data-mask="[a-zA-Z]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="form-group-separator"></div>
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" >State</label>
-
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-user"></i>
-							</span>
-                                <input ng-model="newUser.state" type="text" class="form-control" placeholder="State"
-                                       inputmask data-mask="[a-zA-Z]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" >Country</label>
-
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-user"></i>
-							</span>
-                                <input type="text" ng-model="newUser.country" class="form-control"  placeholder="Country"
-                                       inputmask data-mask="[a-zA-Z]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="row" ng-show="showTSDetailsDiv">
-    <div class="col-sm-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Enter Technical Screener Details</h3>
-                <div class="panel-options">
-                    <a href="" data-toggle="panel">
-                        <span class="collapse-icon">&ndash;</span>
-                        <span class="expand-icon">+</span>
-                    </a>
-                   <!-- <a href="" data-toggle="remove">
-                        &times;
-                    </a>-->
-                </div>
-            </div>
-            <div class="panel-body">
-                <div class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" >Primary skills</label>
 
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-user"></i>
-							</span>
-                                <input type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Primary Skills">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" >Secondary Skills</label>
-
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-user"></i>
-							</span>
-                                <input type="text" class="form-control"ng-maxlength="35" ng-minlength="1" ng-required="true" ng-model="newUser.secondarySkills" placeholder="Secondary Skills">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" >Expected Pay Range</label>
-
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-user"></i>
-							</span>
-                                <input type="text" ng-model="newUser.expectedPayRange" class="form-control" placeholder="Pay Range"
-                                       inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-12">
-        <div class="panel panel-default">
-
-            <div class="panel-body" style="text-align: center;">
-                <button class="btn btn-info btn-icon" ng-click="submitNewUser();">
-                    <i class="fa-rocket"></i>
-                    <span>Submit</span>
-                </button>
-
-                <button class="btn btn-warning btn-icon" ng-click="resetUserForm();">
-                    <i class="fa-rocket"></i>
-                    <span>Reset</span>
-                </button>
-
-            </div>
-        </div>
-    </div>
-</div>
 </form>
+
 </div>
