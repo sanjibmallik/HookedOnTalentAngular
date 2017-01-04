@@ -98,14 +98,12 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
 
 
-    $scope.checkEmailExist = function(email){
+    $scope.checkEmailExist = function(emailId){
         $scope.emailExist = false;
-        console.log($scope.newUser.email);
-
-        $http.get('user/emailId/'+ $scope.newUser.email)
+        $http.get('user/emailId/'+ emailId)
             .success(function (data, status, headers, config) {
 
-                console.log(data.length);
+
                 if( data.length==0){
                     $scope.emailExist = false;
                 }else{
@@ -123,14 +121,21 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
     };
 
 
-    $scope.checkContactNumberExist = function(emailId){
+    $scope.checkContactNumberExist = function(){
         $scope.contactNumberExist = false;
+        console.log($scope.newUser.contactNumber);
 
-        $http.get('user/emailId/'+ emailId)
+        $http.get('user/contactNumber/'+ $scope.newUser.contactNumber)
             .success(function (data, status, headers, config) {
 
                 console.log(data);
-                $scope.contactNumberExist = true;
+                if(data.length==0){
+                    $scope.contactNumberExist = false;
+                }else{
+                    $scope.contactNumberExist = true;
+
+                }
+
             })
             .error(function (data, status, header, config){
                 $scope.ResponseDetails = "Data: " + data +
@@ -139,10 +144,6 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
                     "<hr />config: " + config;
             });
     };
-
-
-
-
 
 
 
