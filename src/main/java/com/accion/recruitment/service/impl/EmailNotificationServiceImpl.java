@@ -38,4 +38,13 @@ public class EmailNotificationServiceImpl implements EmailNotificationService {
         return this.emailNotificationHelper.sendMail(user.getEmailId(),subject,body);
 
     }
+
+    public  Boolean  sendUserStatus(User user){
+        subject = "HookedOn Talent User Enable notification";
+        body = "<html><head>";
+        body += "<style>table {border-collapse: collapse;} table, td, th {border: 2px solid black;}</style></head>";
+        body += "Hello "+user.getFirstName()+",<br/><br/>";
+        body += "This is a system generated email to inform you that your account has been Activated in HoT- HookedOn Talent Application<br/><br/>";
+        return this.emailNotificationHelper.sendMail(user.getEmailId(),subject,body);
+    }
 }

@@ -8,6 +8,7 @@ import com.accion.recruitment.jpa.entities.TechnicalScreenerSkills;
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.EmailNotificationService;
 import com.accion.recruitment.service.UserService;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.json.JSONArray;
@@ -21,6 +22,7 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -60,9 +62,9 @@ public class UserController {
             , @ApiResponse(code = 302, message = "User Found")
             , @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = UserRestURIConstants.CREATE_USER, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.POST)
+    @RequestMapping(value = UserRestURIConstants.CREATE_USER, method = RequestMethod.POST)
 
-    public  ResponseEntity<Void> createUser(@RequestBody User user
+    public  ResponseEntity<User> createUser(@RequestBody User user
                               /*final @RequestBody(required = false) TechnicalScreenerSkills technicalScreenerSkills,
                               final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
                               final @RequestParam(required = false, value = "userProfile") MultipartFile userProfile,
@@ -159,7 +161,7 @@ public class UserController {
         }
 
         return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.CREATED);*/
-        return new ResponseEntity<Void>( HttpStatus.CREATED);
+        return null;
 
     }
 
@@ -206,17 +208,19 @@ public class UserController {
                 if(status.equalsIgnoreCase("true")){
                     user.setEnabled(Boolean.FALSE);
                     this.userService.saveUser(user);
-                    this.emailNotificationService.sendUserCredentials(user);
+                    this.emailNotificationService.sendUserStatus(user);
                 }else if(status.equalsIgnoreCase("false")){
                     user.setEnabled(Boolean.TRUE);
+                    this.userService.saveUser(user);
+                    this.emailNotificationService.sendUserStatus(user);
                 }
 
-                jsonObject.put("user", user.toString());
-                return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.FOUND);
+                return new ResponseEntity(HttpStatus.OK);
             }
         }catch (SQLException e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -234,14 +238,14 @@ public class UserController {
             @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = UserRestURIConstants.GET_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> getUserById(@PathVariable("id") final int userId) {
-        User user;
-        JSONObject jsonObject=new JSONObject();
+    public ResponseEntity<Object> getUserById(@PathVariable("id") final int userId) {
+        User userObject;
         try{
-            user=this.userService.findUserById(userId);
-            if(user != null){
-                jsonObject.put("user", user.toString());
-                return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.FOUND);
+            userObject=this.userService.findUserById(userId);
+            if(userObject != null){
+                User user=new User(userObject.getId(),userObject.getUserName(),userObject.getEmailId(),userObject.getFirstName(),userObject.getLastName(),userObject.getContactNumber(),
+                        userObject.getRole(),userObject.getEnabled(),userObject.getErrorMessage());
+                return new ResponseEntity<Object>(user, HttpStatus.OK);
             }
         }catch (SQLException e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -260,14 +264,14 @@ public class UserController {
             @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = UserRestURIConstants.GET_USER_NAME, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> isUserNameExist(@PathVariable("userName") final String userName) {
-        User user;
-        JSONObject jsonObject=new JSONObject();
+    public ResponseEntity<Object> isUserNameExist(@PathVariable("userName") final String userName) {
+        User userObject;
         try{
-            user=this.userService.findUserByPropertyName(UserConstants.USER_NAME,userName);
-            if(user != null){
-                jsonObject.put("user", user.toString());
-                return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.FOUND);
+            userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,userName);
+            if(userObject != null){
+                User user=new User(userObject.getId(),userObject.getUserName(),userObject.getEmailId(),userObject.getFirstName(),userObject.getLastName(),userObject.getContactNumber(),
+                        userObject.getRole(),userObject.getEnabled(),userObject.getErrorMessage());
+                return new ResponseEntity<Object>(user, HttpStatus.OK);
             }
         }catch (SQLException e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -286,14 +290,14 @@ public class UserController {
                            @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = UserRestURIConstants.GET_EMAIL_ID, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> isEmailIdExist(@PathVariable("emailId") final String emailId) {
-        User user;
-        JSONObject jsonObject=new JSONObject();
+    public ResponseEntity<Object> isEmailIdExist(@PathVariable("emailId") final String emailId) {
+        User userObject;
         try{
-            user=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID, emailId);
-            if(user != null){
-                jsonObject.put("user", user.toString());
-                return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.FOUND);
+            userObject=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID, emailId);
+            if(userObject != null){
+                User user=new User(userObject.getId(),userObject.getUserName(),userObject.getEmailId(),userObject.getFirstName(),userObject.getLastName(),userObject.getContactNumber(),
+                        userObject.getRole(),userObject.getEnabled(),userObject.getErrorMessage());
+                return new ResponseEntity<Object>(user, HttpStatus.OK);
             }
         }catch (SQLException e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -311,14 +315,14 @@ public class UserController {
             @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = UserRestURIConstants.GET_CONTACT_NUMBER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> isContactNumberExist(@PathVariable("contactNumber") final Long contactNumber){
-        User user;
-        JSONObject jsonObject=new JSONObject();
+    public ResponseEntity<Object> isContactNumberExist(@PathVariable("contactNumber") final Long contactNumber){
+        User userObject;
         try{
-            user=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER, contactNumber);
-            if(user != null){
-                jsonObject.put("user", user.toString());
-                return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.FOUND);
+            userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER, contactNumber);
+            if(userObject != null){
+                User user=new User(userObject.getId(),userObject.getUserName(),userObject.getEmailId(),userObject.getFirstName(),userObject.getLastName(),userObject.getContactNumber(),
+                        userObject.getRole(),userObject.getEnabled(),userObject.getErrorMessage());
+                return new ResponseEntity<Object>(user, HttpStatus.OK);
             }
         }catch (SQLException e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

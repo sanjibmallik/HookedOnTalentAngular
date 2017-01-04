@@ -1,6 +1,7 @@
 package com.accion.recruitment.dao.impl;
 
 import com.accion.recruitment.dao.UserServiceDAO;
+import com.accion.recruitment.jpa.entities.Groups;
 import com.accion.recruitment.jpa.entities.User;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -42,6 +43,13 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
         this.sessionFactory = sessionFactory;
     }
 
+
+    @Override
+    public Boolean saveUser(User user){
+        final Session session = getSession();
+        session.saveOrUpdate(user);
+        return true;
+    }
 
     @Override
     public User findUserByUserNameOREmailId(final String userNameOREmailID) {

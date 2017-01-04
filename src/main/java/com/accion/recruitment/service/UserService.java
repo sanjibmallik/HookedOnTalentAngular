@@ -13,6 +13,7 @@ import java.util.List;
  */
 public interface UserService {
 
+
     /**
      * saveUser() provide the specification for persisting
      * the User object in the database.
@@ -23,6 +24,17 @@ public interface UserService {
      */
 
     public Boolean saveUser(final User user) throws SQLException;
+
+    /**
+     * saveUserGroups() provide the specification for persisting
+     * the User object in the database.
+     *
+     * @param user accept the instance of the User class
+     *             containing data.
+     * @return status of the persisting operation.
+     */
+
+    public Boolean saveUserGroups(final User user) throws SQLException;
 
     /**
      * findAllUser() provide the specification for getting all the

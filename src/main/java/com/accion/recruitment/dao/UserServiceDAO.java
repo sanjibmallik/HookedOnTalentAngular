@@ -14,6 +14,17 @@ import java.util.List;
 public interface UserServiceDAO<E> {
 
     /**
+     * saveUser() provide the specification for persisting
+     * the User object in the database.
+     *
+     * @param user accept the instance of the User class
+     *             containing data.
+     * @return status of the persisting operation.
+     */
+
+    public Boolean saveUser(User user);
+
+    /**
      * findUserByUserNameOREmailId() provide the specification for retrieval of the
      * User object from the database based on the UserName OR EmailId.
      *
