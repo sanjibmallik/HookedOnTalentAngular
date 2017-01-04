@@ -6,10 +6,8 @@ import com.accion.recruitment.common.enums.HttpStatusEnums;
 import com.accion.recruitment.common.enums.UserEnums;
 import com.accion.recruitment.jpa.entities.TechnicalScreenerSkills;
 import com.accion.recruitment.jpa.entities.User;
-import com.accion.recruitment.service.EmailNotificationService;
+import com.accion.recruitment.service.UserEmailNotificationService;
 import com.accion.recruitment.service.UserService;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,7 +20,6 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -45,9 +42,10 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private EmailNotificationService emailNotificationService;
+    private UserEmailNotificationService userEmailNotificationService;
 
     private final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+
 
     private final Random random = new SecureRandom();
 
@@ -59,7 +57,6 @@ public class UserController {
     @ApiOperation(value = "Create the new User ",  code = 201, httpMethod="POST")
 
     @ApiResponses(value = {@ApiResponse(code = 201, message = "User Created Successfully")
-            , @ApiResponse(code = 302, message = "User Found")
             , @ApiResponse(code = 500, message = "Internal Server Error")})
 
     @RequestMapping(value = UserRestURIConstants.CREATE_USER, method = RequestMethod.POST)
@@ -72,11 +69,11 @@ public class UserController {
 
         List<TechnicalScreenerSkills> technicalScreenerSkillsList=new ArrayList<TechnicalScreenerSkills>();
 
-        if(user != null && user.getUserName() != null && user.getUserName().isEmpty()){
+        if(user != null && user.getUserName() != null && (!user.getUserName().isEmpty())){
             try{
                 User userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,user.getUserName());
                 if(userObject != null)
-                    return new ResponseEntity<String>(HttpStatusEnums.USER_NAME_EXIST.ResponseMsg(), HttpStatus.FOUND);
+                    return new ResponseEntity<String>(HttpStatusEnums.USER_NAME_EXIST.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }catch (SQLException e){
                     return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }catch (Exception e){
@@ -84,11 +81,11 @@ public class UserController {
 
             }
         }
-        if(user != null && user.getEmailId() != null && user.getEmailId().isEmpty()){
+        if(user != null && user.getEmailId() != null && (!user.getEmailId().isEmpty())){
             try{
                 User userObject=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID,user.getEmailId());
                 if(userObject != null)
-                    return new ResponseEntity<String>(HttpStatusEnums.EMAIlID_EXIST.ResponseMsg(), HttpStatus.FOUND);
+                    return new ResponseEntity<String>(HttpStatusEnums.EMAIlID_EXIST.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }catch (SQLException e){
                 return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }catch (Exception e){
@@ -100,7 +97,7 @@ public class UserController {
             try{
                 User userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER,user.getContactNumber());
                 if(userObject != null)
-                    return new ResponseEntity<String>(HttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg(), HttpStatus.FOUND);
+                    return new ResponseEntity<String>(HttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }catch (SQLException e){
                 return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }catch (Exception e){
@@ -128,7 +125,8 @@ public class UserController {
             }
         }
 
-        user.setPassword(this.encoder.encodePassword(this.generatePassword(), null));
+        String password=this.generatePassword();
+        user.setPassword(this.encoder.encodePassword(password, null));
         user.setCreatedBy(principal.getName());
         user.setCreatedDate(new Date(sdf.format(currentDate)));
         user.setUpdatedBy(principal.getName());
@@ -140,8 +138,16 @@ public class UserController {
             try{
                 technicalScreenerSkillsList=this.getTechnicalSkillsObjectList(technicalScreenerSkills);
                 user.getTechnicalScreenerDetailsDSkillsSet().addAll(technicalScreenerSkillsList);
-                this.userService.saveUser(user);
-                this.emailNotificationService.sendUserCredentials(user);
+                if(this.userService.saveUserGroups(user)){
+                    user.setPassword(password);
+                    if(this.userEmailNotificationService.sendUserCredentials(user)){
+                        return new ResponseEntity<String>(HttpStatusEnums.RECORD_SAVED_EMAIL_SEND.ResponseMsg(), HttpStatus.CREATED);
+                    }else{
+                        return new ResponseEntity<String>(HttpStatusEnums.RECORD_SAVED_EMAIL_NOT_SEND.ResponseMsg(), HttpStatus.CREATED);
+                    }
+                }else{
+                    return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                }
             }catch (ArrayIndexOutOfBoundsException e){
                 return new ResponseEntity<String>(HttpStatusEnums.USER_SKILLS_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
             }catch (SQLException e){
@@ -151,17 +157,22 @@ public class UserController {
             }
         }else{
             try{
-                this.userService.saveUser(user);
-                this.emailNotificationService.sendUserCredentials(user);
+                if(this.userService.saveUserGroups(user)){
+                    user.setPassword(password);
+                    if(this.userEmailNotificationService.sendUserCredentials(user)){
+                        return new ResponseEntity<String>(HttpStatusEnums.RECORD_SAVED_EMAIL_SEND.ResponseMsg(), HttpStatus.CREATED);
+                    }else{
+                        return new ResponseEntity<String>(HttpStatusEnums.RECORD_SAVED_EMAIL_NOT_SEND.ResponseMsg(), HttpStatus.CREATED);
+                    }
+                }else{
+                    return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                }
             }catch (SQLException e){
             return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
             return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         }
-
-        return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.CREATED);
-
 
     }
 
@@ -208,11 +219,11 @@ public class UserController {
                 if(status.equalsIgnoreCase("true")){
                     user.setEnabled(Boolean.FALSE);
                     this.userService.saveUser(user);
-                    this.emailNotificationService.sendUserStatus(user);
+                    this.userEmailNotificationService.sendUserStatus(user);
                 }else if(status.equalsIgnoreCase("false")){
                     user.setEnabled(Boolean.TRUE);
                     this.userService.saveUser(user);
-                    this.emailNotificationService.sendUserStatus(user);
+                    this.userEmailNotificationService.sendUserStatus(user);
                 }
 
                 return new ResponseEntity(HttpStatus.OK);

@@ -7,7 +7,7 @@ import com.accion.recruitment.jpa.entities.User;
  * @author $LastChangedBy: Mudassir Hussain $
  * $Date:: 01/02/17 00:11 AM#$
  */
-public interface EmailNotificationService {
+public interface UserEmailNotificationService {
 
 
     public  Boolean  sendUserCredentials(User user);
