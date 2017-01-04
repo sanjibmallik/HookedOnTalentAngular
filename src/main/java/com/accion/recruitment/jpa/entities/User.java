@@ -21,7 +21,7 @@ public class User extends BaseEntity {
     public User() {
     }
 
-    public User(Integer id,String userName, String emailId, String firstName, String lastName,Long contactNumber,String role ,Boolean enabled, String errorMessage ) {
+    public User(Integer id,String userName, String emailId, String firstName, String lastName,String contactNumber,String role ,Boolean enabled, String errorMessage ) {
         this.id=id;
         this.userName = userName;
         this.emailId = emailId;
@@ -63,13 +63,13 @@ public class User extends BaseEntity {
     private Boolean enabled=Boolean.TRUE;
 
     @Column(length = 12, nullable = false)
-    private Long contactNumber;
+    private String contactNumber;
 
     @Column(length = 255, nullable = false)
     private String role;
 
     @Column(length = 12, nullable = true)
-    private Long alternateContact;
+    private String alternateContact;
 
     @Column(length = 255, nullable = true)
     private String addressOne;
@@ -181,11 +181,11 @@ public class User extends BaseEntity {
         this.enabled = enabled;
     }
 
-    public Long getContactNumber() {
+    public String getContactNumber() {
         return contactNumber;
     }
 
-    public void setContactNumber(Long contactNumber) {
+    public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
     }
 
@@ -197,11 +197,11 @@ public class User extends BaseEntity {
         this.role = role;
     }
 
-    public Long getAlternateContact() {
+    public String getAlternateContact() {
         return alternateContact;
     }
 
-    public void setAlternateContact(Long alternateContact) {
+    public void setAlternateContact(String alternateContact) {
         this.alternateContact = alternateContact;
     }
 

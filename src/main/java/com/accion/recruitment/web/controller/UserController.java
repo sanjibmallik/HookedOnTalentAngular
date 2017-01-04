@@ -64,15 +64,15 @@ public class UserController {
 
     @RequestMapping(value = UserRestURIConstants.CREATE_USER, method = RequestMethod.POST)
 
-    public  ResponseEntity<User> createUser(@RequestBody User user
-                              /*final @RequestBody(required = false) TechnicalScreenerSkills technicalScreenerSkills,
+    public  ResponseEntity<String> createUser(@RequestBody User user,
+                              final @RequestBody(required = false) TechnicalScreenerSkills technicalScreenerSkills,
                               final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
                               final @RequestParam(required = false, value = "userProfile") MultipartFile userProfile,
-                              final Principal principal*/) {
+                              final Principal principal) {
 
         List<TechnicalScreenerSkills> technicalScreenerSkillsList=new ArrayList<TechnicalScreenerSkills>();
 
-       /* if(user != null && user.getUserName() != null && user.getUserName().isEmpty()){
+        if(user != null && user.getUserName() != null && user.getUserName().isEmpty()){
             try{
                 User userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,user.getUserName());
                 if(userObject != null)
@@ -160,8 +160,8 @@ public class UserController {
         }
         }
 
-        return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.CREATED);*/
-        return null;
+        return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.CREATED);
+
 
     }
 
@@ -327,6 +327,7 @@ public class UserController {
         }catch (SQLException e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return  new ResponseEntity(HttpStatus.OK);
