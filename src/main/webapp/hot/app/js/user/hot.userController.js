@@ -18,10 +18,6 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
 
 
-        $scope.checkEmailExist = function(emailId){
-           console.log(emailId);
-
-        }
 
         $http({
             method : 'GET',
@@ -58,7 +54,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
             $http.post('createUser/', data)
                 .success(function (data, status, headers, config) {
-                    $scope.PostDataResponse = data;
+
                 })
                 .error(function (data, status, header, config){
                     $scope.ResponseDetails = "Data: " + data +
@@ -82,9 +78,15 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
             $http.get('user/userName/'+ userName)
                 .success(function (data, status, headers, config) {
-                    $scope.PostDataResponse = data;
+
                     console.log(data);
-                    $scope.userNameExist = true;
+                    if(data.length==0){
+                        $scope.userNameExist = false;
+                    }else{
+                        $scope.userNameExist = true;
+
+                    }
+
                 })
                 .error(function (data, status, header, config){
                     $scope.ResponseDetails = "Data: " + data +
@@ -96,14 +98,21 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
 
 
-    $scope.checkEmailExist = function(emailId){
+    $scope.checkEmailExist = function(email){
         $scope.emailExist = false;
+        console.log($scope.newUser.email);
 
-        $http.get('user/emailId/'+ emailId)
+        $http.get('user/emailId/'+ $scope.newUser.email)
             .success(function (data, status, headers, config) {
-                $scope.PostDataResponse = data;
-                console.log(data);
-                $scope.emailExist = true;
+
+                console.log(data.length);
+                if( data.length==0){
+                    $scope.emailExist = false;
+                }else{
+                    $scope.emailExist = true;
+
+                }
+
             })
             .error(function (data, status, header, config){
                 $scope.ResponseDetails = "Data: " + data +
@@ -119,7 +128,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
         $http.get('user/emailId/'+ emailId)
             .success(function (data, status, headers, config) {
-                $scope.PostDataResponse = data;
+
                 console.log(data);
                 $scope.contactNumberExist = true;
             })
