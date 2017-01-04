@@ -6,6 +6,7 @@ import com.accion.recruitment.jpa.entities.Groups;
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.GroupService;
 import com.accion.recruitment.service.UserService;
+import com.google.gson.Gson;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -40,7 +41,7 @@ public class GroupController {
 
 
     @ApiOperation(value = "Get the Groups Name  ", httpMethod="GET"
-            , notes = "Return the ALl the group  names except client group")
+            , notes = "Return  All the group  names except client group")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successful Group Names Send "),
             @ApiResponse(code = 404, message = "Group Names  not found"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
@@ -50,15 +51,14 @@ public class GroupController {
         try{
             List<Groups> groupsList=this.groupService.findAllGroup();
             Set<String> groupsSet=new HashSet<String>();
-            JSONObject jsonObject=new JSONObject();
             for(Groups groups:groupsList){
                 groupsSet.add(groups.getGroupName());
             }
             groupsSet.remove("Client");
-            jsonObject.put("groups", groupsSet);
-            return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.OK);
+            String json = new Gson().toJson(groupsSet );
+            return new ResponseEntity<String>(json, HttpStatus.OK);
         }catch (SQLException e){
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
