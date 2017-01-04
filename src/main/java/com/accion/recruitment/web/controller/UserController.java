@@ -288,7 +288,7 @@ public class UserController {
     @ApiResponses(value = {@ApiResponse(code = 302, message = "User Found "),
                            @ApiResponse(code = 404, message = "User not found"),
                            @ApiResponse(code = 500, message = "Internal Server Error")})
-    @RequestMapping(value = UserRestURIConstants.GET_EMAIL_ID, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = UserRestURIConstants.GET_EMAIL_ID, produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.ALL_VALUE,method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Object> isEmailIdExist(@PathVariable("emailId") final String emailId) {
         User userObject;
@@ -315,7 +315,7 @@ public class UserController {
             @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = UserRestURIConstants.GET_CONTACT_NUMBER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Object> isContactNumberExist(@PathVariable("contactNumber") final Long contactNumber){
+    public ResponseEntity<Object> isContactNumberExist(@PathVariable("contactNumber") final String contactNumber){
         User userObject;
         try{
             userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER, contactNumber);
@@ -329,7 +329,7 @@ public class UserController {
         }catch (Exception e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return  new ResponseEntity(HttpStatus.NOT_FOUND);
+        return  new ResponseEntity(HttpStatus.OK);
     }
 
     public final String generatePassword(){

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Qualifier;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.accion.recruitment.jpa.entities.Admin;
 import com.accion.recruitment.service.AdminService;
-import com.wordnik.swagger.annotations.ApiOperation;
+
 
 /**
  * @author Manas
@@ -29,13 +30,13 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 
-	@ApiOperation(value = "Get all Admin")
+	/*@ApiOperation(value = "Get all Admin")
 	@RequestMapping(value = "api/admin", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	@ResponseBody
 	public List<Admin> list() {
 		return adminService.findAll();
 	}
-
+*/
 /*	@ApiOperation(value = "Get Admin")
 	@RequestMapping(value = "api/admin/{adminId}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	@ResponseBody

@@ -45,12 +45,13 @@
 	</bean>
 	
 	<bean id="cnManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-		<property name="favorPathExtension" value="true" />
+		<property name="favorPathExtension" value="false" />
 		<property name="defaultContentType" value="text/html" />
 		<property name="useJaf" value="false" />
 		<property name="mediaTypes">
 			<map>
 				<entry key="html" value="text/html" />
+                <entry key="plain" value="text/plain" />
 				<entry key="json" value="application/json" />
 			</map>
 		</property>
@@ -78,6 +79,12 @@
     <context:component-scan base-package="com.accion.recruitment.web" />
     <mvc:default-servlet-handler/>
 
+    <bean id="handlerMapping"
+          class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+        <property name="contentNegotiationManager" ref="cnManager"/>
+        <property name="useRegisteredSuffixPatternMatch" value="true"/>
+        <property name="useSuffixPatternMatch" value="false"/>
+    </bean>
 
 
 </beans>

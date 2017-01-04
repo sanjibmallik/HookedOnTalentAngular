@@ -55,7 +55,7 @@ public class GroupController {
                 groupsSet.add(groups.getGroupName());
             }
             groupsSet.remove("Client");
-            jsonObject.put("groups", groupsSet.toString());
+            jsonObject.put("groups", groupsSet);
             return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.OK);
         }catch (SQLException e){
             return new ResponseEntity(HttpStatus.NOT_FOUND);
