@@ -56,7 +56,8 @@ public class UserController {
 
     @ApiOperation(value = "Create the new User ",  code = 201, httpMethod="POST")
 
-    @ApiResponses(value = {@ApiResponse(code = 201, message = "User Created Successfully")
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "User Created Successfully"),
+                    @ApiResponse(code = 200, message = "Successful Respond Send")
             , @ApiResponse(code = 500, message = "Internal Server Error")})
 
     @RequestMapping(value = UserRestURIConstants.CREATE_USER, method = RequestMethod.POST)
@@ -73,11 +74,11 @@ public class UserController {
             try{
                 User userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,user.getUserName());
                 if(userObject != null)
-                    return new ResponseEntity<String>(HttpStatusEnums.USER_NAME_EXIST.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                    return new ResponseEntity<String>(HttpStatusEnums.USER_NAME_EXIST.ResponseMsg(), HttpStatus.OK);
             }catch (SQLException e){
-                    return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                    return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.OK);
             }catch (Exception e){
-                    return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                    return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.OK);
 
             }
         }
@@ -85,11 +86,11 @@ public class UserController {
             try{
                 User userObject=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID,user.getEmailId());
                 if(userObject != null)
-                    return new ResponseEntity<String>(HttpStatusEnums.EMAIlID_EXIST.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                    return new ResponseEntity<String>(HttpStatusEnums.EMAIlID_EXIST.ResponseMsg(), HttpStatus.OK);
             }catch (SQLException e){
-                return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.OK);
             }catch (Exception e){
-                return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.OK);
 
             }
         }
@@ -97,11 +98,11 @@ public class UserController {
             try{
                 User userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER,user.getContactNumber());
                 if(userObject != null)
-                    return new ResponseEntity<String>(HttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                    return new ResponseEntity<String>(HttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg(), HttpStatus.OK);
             }catch (SQLException e){
-                return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.OK);
             }catch (Exception e){
-                return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.OK);
             }
         }
         if (user != null && userImage != null && !userImage.isEmpty()) {
@@ -109,9 +110,9 @@ public class UserController {
                 byte[] bytes = userImage.getBytes();
                 user.setUserImage(bytes);
             } catch (IOException e) {
-                return new ResponseEntity<String>(HttpStatusEnums.USER_IMAGE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<String>(HttpStatusEnums.USER_IMAGE_EXCEPTION.ResponseMsg(), HttpStatus.OK);
             }catch (Exception e){
-                return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.OK);
             }
         }
         if (user != null && userProfile != null && !userProfile.isEmpty()) {
@@ -119,9 +120,9 @@ public class UserController {
                 byte[] bytes = userProfile.getBytes();
                 user.setUserProfile(bytes);
             } catch (IOException e) {
-                return new ResponseEntity<String>(HttpStatusEnums.USER_PROFILE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<String>(HttpStatusEnums.USER_PROFILE_EXCEPTION.ResponseMsg(), HttpStatus.OK);
             }catch (Exception e){
-                return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.OK);
             }
         }
 
@@ -146,14 +147,14 @@ public class UserController {
                         return new ResponseEntity<String>(HttpStatusEnums.RECORD_SAVED_EMAIL_NOT_SEND.ResponseMsg(), HttpStatus.CREATED);
                     }
                 }else{
-                    return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                    return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.OK);
                 }
             }catch (ArrayIndexOutOfBoundsException e){
-                return new ResponseEntity<String>(HttpStatusEnums.USER_SKILLS_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<String>(HttpStatusEnums.USER_SKILLS_EXCEPTION.ResponseMsg(), HttpStatus.OK);
             }catch (SQLException e){
-                return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.OK);
             }catch (Exception e){
-                return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.OK);
             }
         }else{
             try{
@@ -165,12 +166,12 @@ public class UserController {
                         return new ResponseEntity<String>(HttpStatusEnums.RECORD_SAVED_EMAIL_NOT_SEND.ResponseMsg(), HttpStatus.CREATED);
                     }
                 }else{
-                    return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+                    return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.OK);
                 }
             }catch (SQLException e){
-            return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<String>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<String>(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg(), HttpStatus.OK);
         }
         }
 
@@ -212,7 +213,6 @@ public class UserController {
                                                @PathVariable("status") String status) {
 
         User user;
-        JSONObject jsonObject=new JSONObject();
         try{
             user=this.userService.findUserById(userId);
             if(user != null){
