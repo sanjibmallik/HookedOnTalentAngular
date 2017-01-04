@@ -2,6 +2,7 @@ package com.accion.recruitment.service;
 
 import com.accion.recruitment.jpa.entities.Groups;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
@@ -20,5 +21,5 @@ public interface GroupService {
      * @return the instance of the java.util.List containing
      *         the Group Names.
      */
-    public Set<String> getGroupsName() ;
+    public List<Groups> findAllGroup() throws SQLException;
 }

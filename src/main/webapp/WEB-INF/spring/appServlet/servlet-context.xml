@@ -9,7 +9,13 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
+
+
+    <mvc:resources location="classpath:/META-INF/resources/" mapping="swagger-ui.html"></mvc:resources>
+    <mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"></mvc:resources>
+
+    <bean class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration" id="configuration">
+    </bean>
 	<!-- Enables the Spring MVC @Controller programming model -->	
 	<mvc:interceptors>
 		<bean class="com.accion.recruitment.web.config.RequestProcessingTimeInterceptor">
@@ -22,7 +28,7 @@
 			</property>
 		</bean>
 	</mvc:interceptors>
-	
+
 	<bean id="webObjectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
 		<property name="failOnEmptyBeans" value="false"/>
 	</bean>
@@ -59,6 +65,14 @@
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".html" />
 	</bean>
+
+
+   <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
 
     <mvc:annotation-driven/>
     <context:component-scan base-package="com.accion.recruitment.web" />

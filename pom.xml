@@ -19,6 +19,7 @@
     <hibernate.version>4.1.10.Final</hibernate.version>
     <hibernate.jpa.version>1.0.1.Final</hibernate.jpa.version>
     <hibernate.validator.version>5.2.2.Final</hibernate.validator.version>
+    <javax.mail.version>1.4</javax.mail.version>
     <mysql.version>5.1.18</mysql.version>
     <c3po.version>0.9.1.2</c3po.version>
 	<log4j.version>2.0.2</log4j.version>
@@ -124,6 +125,12 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
+      <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-core</artifactId>
+          <version>${jackson.version}</version>
+      </dependency>
+
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -220,12 +227,12 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.entity.manager.version}</version>
-		</dependency>
+		</dependency><!--
 		<dependency>
 			<groupId>com.mangofactory</groupId>
 			<artifactId>swagger-springmvc</artifactId>
 			<version>0.9.4</version>
-		</dependency>
+		</dependency>-->
       <dependency>
           <groupId>mysql</groupId>
           <artifactId>mysql-connector-java</artifactId>
@@ -271,15 +278,39 @@
           <artifactId>hibernate-validator</artifactId>
           <version>${hibernate.validator.version}</version>
       </dependency>
+
+      <!-- JSON-->
       <dependency>
           <groupId>org.json</groupId>
           <artifactId>json</artifactId>
           <version>20090211</version>
       </dependency>
+      <!-- SWAGGER -->
+      <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
+      <dependency>
+          <groupId>io.springfox</groupId>
+          <artifactId>springfox-swagger-ui</artifactId>
+          <version>2.4.0</version>
+      </dependency>
+      <dependency>
+          <groupId>io.springfox</groupId>
+          <artifactId>springfox-swagger2</artifactId>
+          <version>2.4.0</version>
+      </dependency>
 
+      <!-- Java MAIL dependency -->
 
-      <!-- END database and hibernate -->
+      <dependency>
+          <groupId>javax.mail</groupId>
+          <artifactId>mail</artifactId>
+          <version>${javax.mail.version}</version>
+      </dependency>
 
+      <dependency>
+          <groupId>com.google.code.gson</groupId>
+          <artifactId>gson</artifactId>
+          <version>2.8.0</version>
+      </dependency>
   </dependencies>
   
   <build>

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -31,20 +32,25 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public Boolean saveUser(final User user) {
+    public Boolean saveUser(final User user) throws SQLException{
         Boolean bolValue=this.groupServiceDAO.saveUserGroups(user);
         return bolValue;
     }
 
     @Override
-    public List<User> findAllUser(){
+    public List<User> findAllUser() throws SQLException{
         List<User> userList=this.userServiceDAO.findAllUser();
         return  userList;
     }
 
     @Override
-    public User findUserByPropertyName(final String propName,final Object propValue){
+    public User findUserByPropertyName(final String propName,final Object propValue)throws SQLException{
         return (User) this.userServiceDAO.findUserByPropertyName(propName, propValue);
+    }
+
+    @Override
+    public User findUserById(final int userId )throws SQLException{
+        return (User) this.userServiceDAO.findUserById(userId);
     }
 
 

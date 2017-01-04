@@ -2,6 +2,7 @@ package com.accion.recruitment.service;
 
 import com.accion.recruitment.jpa.entities.User;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface UserService {
      * @return status of the persisting operation.
      */
 
-    public Boolean saveUser(final User user);
+    public Boolean saveUser(final User user) throws SQLException;
 
     /**
      * findAllUser() provide the specification for getting all the
@@ -31,7 +32,7 @@ public interface UserService {
      *         User object of the persisting state.
      */
 
-    public List<User> findAllUser();
+    public List<User> findAllUser() throws SQLException;
 
     /**
      * findUserByPropertyName() provide the specification for retrieval of the
@@ -45,7 +46,18 @@ public interface UserService {
      * @return instance of User having persisting state otherwise
      *         it return null.
      */
-    public User findUserByPropertyName(final String propName,final Object propValue);
+    public User findUserByPropertyName(final String propName,final Object propValue) throws SQLException;
 
+    /**
+     * findUserById() provide the specification for retrieval of the
+     * User object from the database based on the User name.
+     *
+     * @param userId accept the java.lang.int type of userId
+     *                  which is having user ID value
+     *
+     * @return instance of User having persisting state otherwise
+     *         it return null.
+     */
+    public User findUserById(final int userId) throws SQLException;
 
 }

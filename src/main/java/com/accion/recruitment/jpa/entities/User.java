@@ -18,6 +18,26 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
+    public User() {
+    }
+
+    public User(Integer id,String userName, String emailId, String firstName, String lastName,Long contactNumber,String role ,Boolean enabled, String errorMessage ) {
+        this.id=id;
+        this.userName = userName;
+        this.emailId = emailId;
+        this.enabled = enabled;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.contactNumber = contactNumber;
+        this.errorMessage = errorMessage;
+        this.role = role;
+    }
+
+    public User(Integer id,String firstName, String lastName) {
+        this.id=id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -285,18 +305,28 @@ public class User extends BaseEntity {
 
     @Override
     public String toString() {
-        return "{" +
-                "userName:'" + userName + '\'' +
-                ", email:'" + emailId + '\'' +
-                ", enabled:'" + enabled + '\'' +
-                ", firstName:'" + firstName + '\'' +
-                ", lastName:'" + lastName + '\'' +
-                ", role:'" + role + '\'' +
-                ", errorMessage:'" + errorMessage + '\'' +
-                '}';
-    }
+        return "{'id':" + id    +
+                ",'userName':'" + userName + '\'' +
+                ", 'emailId':'" + emailId + '\'' +
+                ", 'enabled':'" + enabled + '\'' +
+                ", 'firstName':'" + firstName + '\'' +
+                ", 'lastName':'" + lastName + '\'' +
+                ", 'contactNumber':" + contactNumber +
+                ", 'role':'" + role + '\'' +
+                ", 'errorMessage':'" + errorMessage + '\'' + "}";
 
 
+       /* return "{\"id\": "+id+"" +
+                "\"firstName\": '"+firstName+"'" +
+                " }";*/
+/*
+        /return "firstName=" + firstName + ", lastName=" + lastName ;*/
 
+    /*return "User [id=" + id + ", firstName=" + firstName + ", " +
+                "lastName=" + lastName + "]";
+    }*/
+
+
+}
 
 }

@@ -105,6 +105,12 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
         return (User) criteria.uniqueResult();
     }
 
-
+    @Override
+    public User findUserById(final int userId) {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(User.class);
+        criteria.add(Restrictions.eq("id",userId));
+        return (User) criteria.uniqueResult();
+    }
 
 }

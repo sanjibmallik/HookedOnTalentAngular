@@ -3,7 +3,7 @@ package com.accion.recruitment.dao.impl;
 import com.accion.recruitment.dao.GroupServiceDAO;
 import com.accion.recruitment.jpa.entities.Groups;
 import com.accion.recruitment.jpa.entities.User;
-import com.wordnik.swagger.annotations.ApiResponse;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -38,6 +38,7 @@ public class GroupServiceDAOImpl<R> implements GroupServiceDAO{
         this.sessionFactory = sessionFactory;
     }
 
+    @Override
     public Boolean saveUserGroups(User user){
         final Session session = getSession();
         Groups groups=this.getGroupByGroupName(user.getRole());
@@ -56,7 +57,7 @@ public class GroupServiceDAOImpl<R> implements GroupServiceDAO{
     }
 
     @Override
-    public List<R> getAllGroups() {
+    public List<R> findAllGroup() {
         final Session session = getSession();
         List<R> rList = session.createCriteria(Groups.class).list();
         return rList;

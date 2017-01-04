@@ -42,6 +42,6 @@ public interface GroupServiceDAO<E> {
      * @return the instance of the java.util.List containing
      *         the Groups for the particular Groups.
      */
-    public List<E> getAllGroups();
+    public List<E> findAllGroup();
 
 }
