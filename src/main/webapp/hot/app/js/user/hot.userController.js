@@ -9,7 +9,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
         //Error messages
         $scope.emailErrorMessage = "That emailId is taken. Try another";
         $scope.userNameErrorMessage = "That username is taken. Try another";
-        $scope.contactErrorMessage = "That contact number is taken. Try another";
+        $scope.contactNumberErrorMessage = "That contact number is taken. Try another";
 
         //show hides
         $scope.emailExist = false;
@@ -33,7 +33,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
 
             },function errorCallback(response) {
-              /* console.log(response.statusText);*/
+               console.log(response.statusText);
             });
 
 
@@ -78,12 +78,13 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
 
         $scope.checkUserExist = function(userName){
+            $scope.userNameExist = false;
 
-            $http.get('userNameExist/'+ userName)
+            $http.get('user/userName/'+ userName)
                 .success(function (data, status, headers, config) {
                     $scope.PostDataResponse = data;
                     console.log(data);
-                    $scope.emailExist = true;
+                    $scope.userNameExist = true;
                 })
                 .error(function (data, status, header, config){
                     $scope.ResponseDetails = "Data: " + data +
@@ -93,7 +94,50 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
                 });
         };
 
-    });
+
+
+    $scope.checkEmailExist = function(emailId){
+        $scope.emailExist = false;
+
+        $http.get('user/emailId/'+ emailId)
+            .success(function (data, status, headers, config) {
+                $scope.PostDataResponse = data;
+                console.log(data);
+                $scope.emailExist = true;
+            })
+            .error(function (data, status, header, config){
+                $scope.ResponseDetails = "Data: " + data +
+                    "<hr />status: " + status +
+                    "<hr />headers: " + header +
+                    "<hr />config: " + config;
+            });
+    };
+
+
+    $scope.checkContactNumberExist = function(emailId){
+        $scope.contactNumberExist = false;
+
+        $http.get('user/emailId/'+ emailId)
+            .success(function (data, status, headers, config) {
+                $scope.PostDataResponse = data;
+                console.log(data);
+                $scope.contactNumberExist = true;
+            })
+            .error(function (data, status, header, config){
+                $scope.ResponseDetails = "Data: " + data +
+                    "<hr />status: " + status +
+                    "<hr />headers: " + header +
+                    "<hr />config: " + config;
+            });
+    };
+
+
+
+
+
+
+
+});
 
 
 
