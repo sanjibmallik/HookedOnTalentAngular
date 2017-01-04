@@ -33,6 +33,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Boolean saveUser(final User user) throws SQLException{
+        Boolean bolValue=this.userServiceDAO.saveUser(user);
+        return bolValue;
+    }
+
+    @Override
+    public Boolean saveUserGroups(final User user) throws SQLException{
         Boolean bolValue=this.groupServiceDAO.saveUserGroups(user);
         return bolValue;
     }
