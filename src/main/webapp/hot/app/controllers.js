@@ -21,8 +21,13 @@ var hotMainController = angular.module('hot.controllers', []);
             $http({
                 method : 'GET',
                 url : 'login/'+$scope.userName+'/'+$scope.password
-            }).then(function successCallback(response) {
-                  console.log(response.data.errorMessage);
+            }).then(function mySucces(response) {
+                    console.log("success");
+
+                    console.log(response.data);
+                    $scope.user = response.data;
+                    console.log($scope.user.errorMessage);
+
                     if(null==response.data.errorMessage){
                         $state.go('app.dashboard', {});
                     }
@@ -30,16 +35,13 @@ var hotMainController = angular.module('hot.controllers', []);
                         $scope.errorMessageShow = true;
                         $scope.errorMessage = response.data.errorMessage;
                     }
+                }, function myError(response) {
+                    console.log("error");
+                    console.log(response);
 
-
-
-                }, function errorCallback(response) {
-                    console.log(response.statusText);
                 });
 
         }
-
-
 
 	}).
 

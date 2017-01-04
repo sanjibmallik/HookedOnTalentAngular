@@ -25,10 +25,10 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
         $http({
             method : 'GET',
-            url : 'getGroupsName/'
+            url : 'group/groupName/'
         }).then(function successCallback(response) {
 
-                $scope.roles=response.data;
+                $scope.roles=response.data.groups;
                 console.log($scope.roles);
 
 
