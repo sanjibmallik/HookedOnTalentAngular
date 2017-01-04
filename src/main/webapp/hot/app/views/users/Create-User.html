@@ -127,7 +127,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-mobile"></i>
 							</span>
-							<input type="text" class="form-control" ng-maxlength="10" ng-minlength="9" ng-required="true" ng-model="newUser.personalPhoneNumber" inputmask data-mask="phone" ng-blur="checkEmailExist(newUser.email)" />
+							<input type="text" class="form-control" ng-required="true" ng-model="newUser.contactNumber" ng-blur="checkContactNumberExist(newUser.contactNumber)" />
 						</div>
                             <div ng-show="contactNumberExist" style="color: red;">{{contactNumberErrorMessage}}</div>
 
