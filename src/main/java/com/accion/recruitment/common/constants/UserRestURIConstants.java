@@ -12,7 +12,7 @@ public class UserRestURIConstants {
     public static final String GET_ALL_USER = "/hot/users";
     public static final String GET_BY_ID = "/hot/user/{id}";
     public static final String GET_USER_NAME = "/hot/user/userName/{userName}";
-    public static final String GET_EMAIL_ID = "/hot/user/emailId/{emailId}";
+    public static final String GET_EMAIL_ID = "/hot/user/emailId/{emailId:..+}";
     public static final String GET_CONTACT_NUMBER = "/hot/user/contactNumber/{contactNumber}";
     public static final String CHANGE_STATUS = "/hot/user/status/{id}/{status}";
 }
