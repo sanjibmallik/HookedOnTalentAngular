@@ -40,7 +40,11 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
                 $scope.showTSDetailsDiv=true;
             }else{
+
                 $scope.showTSDetailsDiv=false;
+                $scope.newUser.primarySkills = "";
+                $scope.newUser.secondarySkills= "";
+                $scope.newUser.expectedPayRange = "";
             }
 
 
@@ -52,7 +56,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
            var data = $scope.newUser;
             console.log(data);
 
-            $http.post('createUser/', data)
+            $http.post('user/createUser', data)
                 .success(function (data, status, headers, config) {
 
                 })
