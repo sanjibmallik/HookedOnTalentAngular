@@ -113,7 +113,8 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
                         ASSETS.tables.datatables
                     ]);
                 }
-            }
+            },
+            controller: 'UIModalsCtrl'
 		});
 });
 

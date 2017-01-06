@@ -88,8 +88,7 @@ angular.module('hot.services', []).
 			var requirments    = this.addItem('Requirments', 		'/app/requirments', 			'linecons-cog');
 			var candidates    = this.addItem('Candidates', 		'/app/candidates', 			'linecons-cog');
 			var questionBank    = this.addItem('Question Bank', 		'/app/questionBank', 			'linecons-cog');
-			var profile    = this.addItem(' My Profile', 		'/app/profile', 			'linecons-cog');
-			var settings    = this.addItem('Settings', 		'/app/settings', 			'linecons-cog');
+
 			
 
 
@@ -97,6 +96,10 @@ angular.module('hot.services', []).
 				// Subitems of Users
 				users.addItem('Create User', 	'-/Create-User'); // "-/" will append parents link
 				users.addItem('Display Users', 	'-/Display-Users');
+
+            // Subitems of Users
+            requirments.addItem('Create Requirement', 	'-/Create-Requirement'); // "-/" will append parents link
+            requirments.addItem('Display Requirement', 	'-/Display-Requirement');
 
 			
 
