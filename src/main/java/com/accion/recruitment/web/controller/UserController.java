@@ -179,7 +179,7 @@ public class UserController {
 
 
 
-    @ApiOperation(value = "Get ALl the Users  ", httpMethod="GET")
+    @ApiOperation(value = "Get All the Users  ", httpMethod="GET")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Users Found "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
@@ -216,25 +216,39 @@ public class UserController {
         try{
             user=this.userService.findUserById(userId);
             if(user != null){
-                if(status.equalsIgnoreCase("true")){
+                if(status.equalsIgnoreCase(UserConstants.TRUE)){
                     user.setEnabled(Boolean.FALSE);
-                    this.userService.saveUser(user);
-                    this.userEmailNotificationService.sendUserStatus(user);
-                }else if(status.equalsIgnoreCase("false")){
+                    if(this.userService.saveUser(user)){
+                        if(this.userEmailNotificationService.sendUserDisableStatus(user)){
+                            return new ResponseEntity<String>(HttpStatusEnums.STATUS_CHANGED_EMAIL_SEND.ResponseMsg(), HttpStatus.OK);
+                        }else {
+                            return new ResponseEntity<String>(HttpStatusEnums.STATUS_CHANGED_EMAIL_NOT_SEND.ResponseMsg(), HttpStatus.OK);
+                        }
+                    }else{
+                        return new ResponseEntity<String>(HttpStatusEnums.STATUS_NOT_CHANGED.ResponseMsg(), HttpStatus.OK);
+                    }
+                }else if(status.equalsIgnoreCase(UserConstants.FALSE)){
                     user.setEnabled(Boolean.TRUE);
-                    this.userService.saveUser(user);
-                    this.userEmailNotificationService.sendUserStatus(user);
+                    if(this.userService.saveUser(user)){
+                        if(this.userEmailNotificationService.sendUserEnableStatus(user)){
+                            return new ResponseEntity<String>(HttpStatusEnums.STATUS_CHANGED_EMAIL_SEND.ResponseMsg(), HttpStatus.OK);
+                        }else {
+                            return new ResponseEntity<String>(HttpStatusEnums.STATUS_CHANGED_EMAIL_NOT_SEND.ResponseMsg(), HttpStatus.OK);
+                        }
+                    }else{
+                        return new ResponseEntity<String>(HttpStatusEnums.STATUS_NOT_CHANGED.ResponseMsg(), HttpStatus.OK);
+                    }
                 }
 
-                return new ResponseEntity(HttpStatus.OK);
             }
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (SQLException e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
+
 
     }
 

@@ -12,6 +12,8 @@ public interface UserEmailNotificationService {
 
     public  Boolean  sendUserCredentials(User user);
 
-    public  Boolean  sendUserStatus(User user);
+    public  Boolean  sendUserDisableStatus(User user);
+
+    public  Boolean  sendUserEnableStatus(User user);
 
 }
