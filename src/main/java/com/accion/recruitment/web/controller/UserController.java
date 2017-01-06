@@ -129,12 +129,13 @@ public class UserController {
         user.setPassword(this.encoder.encodePassword(password, null));
         try{
             user.setCreatedBy(principal.getName());
+            user.setUpdatedBy(principal.getName());
         }catch (Exception e){
 
         }
 
         user.setCreatedDate(new Date(sdf.format(currentDate)));
-        user.setUpdatedBy(principal.getName());
+
         user.setUpdatedDate(new Date(sdf.format(currentDate)));
 
 
