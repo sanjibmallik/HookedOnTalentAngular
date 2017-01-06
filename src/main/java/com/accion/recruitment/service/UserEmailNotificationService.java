@@ -16,4 +16,6 @@ public interface UserEmailNotificationService {
 
     public  Boolean  sendUserEnableStatus(User user);
 
+    public  Boolean  sendUserResetPassword(User user);
+
 }

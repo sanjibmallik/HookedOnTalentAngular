@@ -252,6 +252,38 @@ public class UserController {
 
     }
 
+    @ApiOperation(value = "Reset the User password ", httpMethod="PUT")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Password Reseted "),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = UserRestURIConstants.RESET_PASSWORD, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity<String> resetPassword(@PathVariable("id") final int userId) {
+
+        User user;
+        try{
+            user=this.userService.findUserById(userId);
+            if(user != null){
+                String password=this.generatePassword();
+                user.setPassword(this.encoder.encodePassword(password, null));
+                if(this.userService.saveUser(user)){
+                    user.setPassword(password);
+                    if(this.userEmailNotificationService.sendUserResetPassword(user)){
+                        return new ResponseEntity<String>(HttpStatusEnums.PASSWORD_RESTED_EMAIL_SEND.ResponseMsg(), HttpStatus.OK);
+                    }else{
+                        return new ResponseEntity<String>(HttpStatusEnums.PASSWORD_RESTED_EMAIL_NOT_SEND.ResponseMsg(), HttpStatus.OK);
+                    }
+                }else{
+                    return new ResponseEntity<String>(HttpStatusEnums.PASSWORD_NOT_RESTED.ResponseMsg(), HttpStatus.OK);
+                }
+            }
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (SQLException e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 

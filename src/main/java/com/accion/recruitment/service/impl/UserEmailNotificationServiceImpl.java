@@ -75,6 +75,22 @@ public class UserEmailNotificationServiceImpl implements UserEmailNotificationSe
     }
 
 
+    public  Boolean  sendUserResetPassword(User user){
+        String subject = "HookedOn Talent notification";
+        String body = "<html><head>";
+        body += "<style>table {border-collapse: collapse;} table, td, th {border: 2px solid black;}</style></head>";
+        body += "Hello "+user.getFirstName()+",<br/><br/>";
+        body += "Your new System Generated Password is: "+user.getPassword()+"<br/><br/>";
+        body += "UserName : "+user.getUserName();
+        body += "<br/><br/>";
+        body += "You are requested to login to HoT application with the new password and change it as per your convenience.";
+        body += "<br/><br/>";
+        body+=this.getSettingsMap().get("link");
+        body+= EmailNotificationConstants.SIGNATURE;
+        return this.emailNotificationHelper.sendMail(user.getEmailId(),this.getSettingsMap().get("from"),subject,body);
+
+    }
+
     public HashMap<String,String> getSettingsMap(){
         Settings settings=this.settingsService.getSettingsDetailsById(1);
         HashMap<String,String> settingMap=new HashMap<String, String>();

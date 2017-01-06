@@ -25,11 +25,16 @@ public enum HttpStatusEnums {
     DATABASE_EXCEPTION("Database connectivity issue. Try again."),
     RECORD_NOT_SAVED("Problem with saving the record. Try again."),
     RECORD_SAVED_EMAIL_SEND("Record saved and Email Send Successfully."),
-    RECORD_SAVED_EMAIL_NOT_SEND("Record saved and Email Not Send Successfully."),
+    RECORD_SAVED_EMAIL_NOT_SEND("Record saved and Email Not Send ."),
 
-    STATUS_CHANGED_EMAIL_SEND("Status Changed and Email Not Send Successfully."),
-    STATUS_CHANGED_EMAIL_NOT_SEND("Status Changed and Email Not Send Successfully."),
-    STATUS_NOT_CHANGED("Status Not Changed");
+    STATUS_CHANGED_EMAIL_SEND("Status Changed and Email  Send Successfully."),
+    STATUS_CHANGED_EMAIL_NOT_SEND("Status Changed and Email Not Send ."),
+    STATUS_NOT_CHANGED("Status Not Changed."),
+
+    PASSWORD_NOT_RESTED("Password Not Rested"),
+    PASSWORD_RESTED_EMAIL_SEND("Password Rested and Email  Send Successfully."),
+    PASSWORD_RESTED_EMAIL_NOT_SEND("Password Rested and Email Not Send .");
+
 
     private String responseMsg;
 
