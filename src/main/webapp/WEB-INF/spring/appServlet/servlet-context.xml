@@ -51,7 +51,7 @@
 		<property name="mediaTypes">
 			<map>
 				<entry key="html" value="text/html" />
-                <entry key="plain" value="text/plain" />
+                <entry key="all" value="*/*" />
 				<entry key="json" value="application/json" />
 			</map>
 		</property>

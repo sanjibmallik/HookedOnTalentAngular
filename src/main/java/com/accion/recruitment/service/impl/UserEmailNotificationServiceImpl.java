@@ -80,6 +80,7 @@ public class UserEmailNotificationServiceImpl implements UserEmailNotificationSe
         String body = "<html><head>";
         body += "<style>table {border-collapse: collapse;} table, td, th {border: 2px solid black;}</style></head>";
         body += "Hello "+user.getFirstName()+",<br/><br/>";
+        body += "This email is sent automatically by HookedOn Talent in response to your request to reset your password.<br/><br/>";
         body += "Your new System Generated Password is: "+user.getPassword()+"<br/><br/>";
         body += "UserName : "+user.getUserName();
         body += "<br/><br/>";
