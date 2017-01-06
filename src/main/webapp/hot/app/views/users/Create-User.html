@@ -1,5 +1,6 @@
 <page-title ng-if="layoutOptions.pageTitles" title="Create New User" description=""></page-title>
 <div ng-controller="createNewUserCtrl">
+<script type="text/ng-template"></script>
 
 
 
@@ -154,74 +155,9 @@
                <!-- first part-->
 
 
+               <!-- <div ng-if='showTSDiv'>-->
 
-                <!-- ng-show="showTSDetailsDiv"-->
-                <div class="row" ng-show="showTSDetailsDiv">
-                    <div class="col-sm-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Enter Technical Screener Details</h3>
-                                <!--    <div class="panel-options">
-                                        <a href="" data-toggle="panel">
-                                            <span class="collapse-icon">&ndash;</span>
-                        <span class="expand-icon">+</span>
-                    </a>
-
-                </div>-->
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-horizontal">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label" >Primary skills</label>
-
-                                        <div class="col-sm-5">
-                                            <div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-user"></i>
-							</span>
-                                                <input type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Primary Skills">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group-separator"></div>
-
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label" >Secondary Skills</label>
-
-                                        <div class="col-sm-5">
-                                            <div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-user"></i>
-							</span>
-                                                <input type="text" class="form-control"ng-maxlength="35" ng-minlength="1" ng-required="true" ng-model="newUser.secondarySkills" placeholder="Secondary Skills">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group-separator"></div>
-
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label" >Expected Pay Range</label>
-
-                                        <div class="col-sm-5">
-                                            <div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-user"></i>
-							</span>
-                                                <input type="text" ng-model="newUser.expectedPayRange" class="form-control" placeholder="Pay Range"
-                                                       inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
+            <div ng-if="newUser.role=='TechnicalScreener'" ng-include src="'app/views/users/tsSkills_tpl.html'"></div>
 
 
 

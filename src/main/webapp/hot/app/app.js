@@ -12,6 +12,7 @@ var app = angular.module('hot-app', [
 	'hot.services',
     'hot.userControllers',
     'hot.userFactory',
+    'hot.userFilter',
 	'FBAngular'
 ]);
 
@@ -112,7 +113,8 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
                         ASSETS.tables.datatables
                     ]);
                 }
-            }
+            },
+            controller: 'UIModalsCtrl'
 		});
 });
 
