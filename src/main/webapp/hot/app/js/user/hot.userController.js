@@ -33,26 +33,32 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
             });
 
 
-        $scope.showTSDetailsDiv=false;
+        /*$scope.showTSDetailsDiv=false;
 
             $scope.update = function() {
             if($scope.newUser.role=="TechnicalScreener"){
 
                 $scope.showTSDetailsDiv=true;
+
             }else{
+
                 $scope.showTSDetailsDiv=false;
+             *//*   $scope.showTSDiv = false;*//*
+               *//* $scope.newUser.primarySkills = "";
+                $scope.newUser.secondarySkills= "";
+                $scope.newUser.expectedPayRange = "";*//*
             }
 
 
         }
 
-
+*/
         $scope.submitNewUser = function(){
 
            var data = $scope.newUser;
             console.log(data);
 
-            $http.post('createUser/', data)
+            $http.post('user/createUser', data)
                 .success(function (data, status, headers, config) {
 
                 })

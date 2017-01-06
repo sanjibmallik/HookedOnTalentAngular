@@ -303,7 +303,7 @@ public class User extends BaseEntity {
         this.technicalScreenerDetailsDSkillsSet = technicalScreenerDetailsDSkillsSet;
     }
 
-   /* @Override
+    @Override
     public String toString() {
         return "{'id':" + id    +
                 ",'userName':'" + userName + '\'' +
@@ -315,6 +315,6 @@ public class User extends BaseEntity {
                 ", 'role':'" + role + '\'' +
                 ", 'errorMessage':'" + errorMessage + '\'' + "}";
 
-    }*/
+    }
 
 }

@@ -47,16 +47,49 @@ public class UserEmailNotificationServiceImpl implements UserEmailNotificationSe
         }
     }
 
-    public  Boolean  sendUserStatus(User user){
-    /*    subject = "HookedOn Talent User Enable notification";
-        body = "<html><head>";
+    public  Boolean  sendUserDisableStatus(User user){
+        String subject = "HookedOn Talent notification";
+        String body = "<html><head>";
+        body += "<style>table {border-collapse: collapse;} table, td, th {border: 2px solid black;}</style></head>";
+        body += "Hello "+user.getFirstName()+",<br/><br/>";
+        body += "This is a system generated email to inform you that your account has been deactivated in HoT- HookedOn Talent Application<br/><br/>";
+        body += "Your login credentials will be non-functional till next update. <br/><br/>";
+        body += "Please contact admin for further details.<br/><br/>";
+        body+= EmailNotificationConstants.SIGNATURE;
+        return this.emailNotificationHelper.sendMail(user.getEmailId(),this.getSettingsMap().get("from"),subject,body);
+
+    }
+
+    public  Boolean  sendUserEnableStatus(User user){
+        String subject = "HookedOn Talent notification";
+        String body = "<html><head>";
         body += "<style>table {border-collapse: collapse;} table, td, th {border: 2px solid black;}</style></head>";
         body += "Hello "+user.getFirstName()+",<br/><br/>";
         body += "This is a system generated email to inform you that your account has been Activated in HoT- HookedOn Talent Application<br/><br/>";
-        return this.emailNotificationHelper.sendMail(user.getEmailId(),"",subject,body);*/
-        return null;
+        body += "Your login credentials are enabled for HoT-HookedOn Talent Application.<br/><br/>";
+        body += "Please login to the application using your user id & password using the application link provided below.<br/></br>";
+        body+=this.getSettingsMap().get("link");
+        body+= EmailNotificationConstants.SIGNATURE;
+        return this.emailNotificationHelper.sendMail(user.getEmailId(),this.getSettingsMap().get("from"),subject,body);
+
     }
 
+
+    public  Boolean  sendUserResetPassword(User user){
+        String subject = "HookedOn Talent notification";
+        String body = "<html><head>";
+        body += "<style>table {border-collapse: collapse;} table, td, th {border: 2px solid black;}</style></head>";
+        body += "Hello "+user.getFirstName()+",<br/><br/>";
+        body += "Your new System Generated Password is: "+user.getPassword()+"<br/><br/>";
+        body += "UserName : "+user.getUserName();
+        body += "<br/><br/>";
+        body += "You are requested to login to HoT application with the new password and change it as per your convenience.";
+        body += "<br/><br/>";
+        body+=this.getSettingsMap().get("link");
+        body+= EmailNotificationConstants.SIGNATURE;
+        return this.emailNotificationHelper.sendMail(user.getEmailId(),this.getSettingsMap().get("from"),subject,body);
+
+    }
 
     public HashMap<String,String> getSettingsMap(){
         Settings settings=this.settingsService.getSettingsDetailsById(1);

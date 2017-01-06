@@ -1,5 +1,6 @@
 <page-title ng-if="layoutOptions.pageTitles" title="Create New User" description=""></page-title>
 <div ng-controller="createNewUserCtrl">
+<script type="text/ng-template"></script>
 
 
 
@@ -38,7 +39,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-user"></i>
                                     </span>
-                            <input type="text" class="form-control" ng-model="newUser.firstName" placeholder="Last Name"
+                            <input type="text" class="form-control" ng-model="newUser.firstName" placeholder="First Name"
                                    inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true">
                         </div>
                     </div>
@@ -89,7 +90,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-mail"></i>
 							</span>
-							<input type="email" class="form-control" ng-model="newUser.email" placeholder="Enter your email Id" ng-maxlength="35" ng-minlength="1" ng-required="true" ng-blur="checkEmailExist(newUser.email)">
+							<input type="email" class="form-control" ng-model="newUser.emailId" placeholder="Enter your email Id" ng-maxlength="35" ng-minlength="1" ng-required="true" ng-blur="checkEmailExist(newUser.emailId)">
 						</div>
                             <div ng-show="emailExist" style="color: red;">{{emailErrorMessage}}</div>
 
@@ -154,74 +155,9 @@
                <!-- first part-->
 
 
+               <!-- <div ng-if='showTSDiv'>-->
 
-                <!-- ng-show="showTSDetailsDiv"-->
-                <div class="row" ng-show="showTSDetailsDiv">
-                    <div class="col-sm-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Enter Technical Screener Details</h3>
-                                <!--    <div class="panel-options">
-                                        <a href="" data-toggle="panel">
-                                            <span class="collapse-icon">&ndash;</span>
-                        <span class="expand-icon">+</span>
-                    </a>
-
-                </div>-->
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-horizontal">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label" >Primary skills</label>
-
-                                        <div class="col-sm-5">
-                                            <div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-user"></i>
-							</span>
-                                                <input type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Primary Skills">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group-separator"></div>
-
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label" >Secondary Skills</label>
-
-                                        <div class="col-sm-5">
-                                            <div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-user"></i>
-							</span>
-                                                <input type="text" class="form-control"ng-maxlength="35" ng-minlength="1" ng-required="true" ng-model="newUser.secondarySkills" placeholder="Secondary Skills">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group-separator"></div>
-
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label" >Expected Pay Range</label>
-
-                                        <div class="col-sm-5">
-                                            <div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-user"></i>
-							</span>
-                                                <input type="text" ng-model="newUser.expectedPayRange" class="form-control" placeholder="Pay Range"
-                                                       inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
+            <div ng-if="newUser.role=='TechnicalScreener'" ng-include src="'app/views/users/tsSkills_tpl.html'"></div>
 
 
 
@@ -253,7 +189,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-mobile"></i>
                                     </span>
-                                        <input type="text" class="form-control" ng-maxlength="35" ng-minlength="1" ng-model="newUser.officePhoneNumber" inputmask data-mask="phone" />
+                                        <input type="text" class="form-control" ng-maxlength="35" ng-minlength="1" ng-model="newUser.alternateContact" inputmask data-mask="phone" />
                                     </div>
                                 </div>
                             </div>
@@ -268,7 +204,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-user"></i>
                                     </span>
-                                        <input type="text" ng-model="newUser.address1" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"
+                                        <input type="text" ng-model="newUser.addressOne" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"
                                                inputmask data-mask="[a-zA-Z][a-zA-Z ][0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                                     </div>
                                 </div>
@@ -284,7 +220,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-user"></i>
                                     </span>
-                                        <input type="text" ng-model="newUser.address2" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc"
+                                        <input type="text" ng-model="newUser.addressTwo" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc"
                                                inputmask data-mask="[a-zA-Z][a-zA-Z ][0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                                     </div>
                                 </div>
@@ -383,19 +319,6 @@
                             </div>
                         </div>
                       </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             </div>
         </div>

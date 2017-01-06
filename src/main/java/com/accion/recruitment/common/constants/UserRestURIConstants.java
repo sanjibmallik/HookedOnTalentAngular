@@ -15,4 +15,5 @@ public class UserRestURIConstants {
     public static final String GET_EMAIL_ID = "/hot/user/emailId/{emailId:..+}";
     public static final String GET_CONTACT_NUMBER = "/hot/user/contactNumber/{contactNumber}";
     public static final String CHANGE_STATUS = "/hot/user/status/{id}/{status}";
+    public static final String RESET_PASSWORD = "/hot/user/reset/{id}";
 }
