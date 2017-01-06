@@ -27,7 +27,8 @@ public enum HttpStatusEnums {
     RECORD_SAVED_EMAIL_SEND("Record saved and Email Send Successfully."),
     RECORD_SAVED_EMAIL_NOT_SEND("Record saved and Email Not Send ."),
 
-    STATUS_CHANGED_EMAIL_SEND("Status Changed and Email  Send Successfully."),
+    USER_ENABLED_EMAIL_SEND("User Enabled  and Email  Send Successfully."),
+    USER_DISABLED_EMAIL_SEND("User Disabled and Email  Send Successfully."),
     STATUS_CHANGED_EMAIL_NOT_SEND("Status Changed and Email Not Send ."),
     STATUS_NOT_CHANGED("Status Not Changed."),
 

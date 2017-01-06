@@ -127,7 +127,12 @@ public class UserController {
 
         String password=this.generatePassword();
         user.setPassword(this.encoder.encodePassword(password, null));
-        user.setCreatedBy(principal.getName());
+        try{
+            user.setCreatedBy(principal.getName());
+        }catch (Exception e){
+
+        }
+
         user.setCreatedDate(new Date(sdf.format(currentDate)));
         user.setUpdatedBy(principal.getName());
         user.setUpdatedDate(new Date(sdf.format(currentDate)));
@@ -203,10 +208,10 @@ public class UserController {
     }
 
 
-    @ApiOperation(value = "Enable OR Disable the User  ", httpMethod="GET")
+    @ApiOperation(value = "Enable OR Disable the User  ", httpMethod="PUT")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Status Changed "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
-    @RequestMapping(value = UserRestURIConstants.CHANGE_STATUS, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.GET)
+    @RequestMapping(value = UserRestURIConstants.CHANGE_STATUS, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<String> changeStatus(@PathVariable("id") final int userId,
                                                @PathVariable("status") String status) {
@@ -219,7 +224,7 @@ public class UserController {
                     user.setEnabled(Boolean.FALSE);
                     if(this.userService.saveUser(user)){
                         if(this.userEmailNotificationService.sendUserDisableStatus(user)){
-                            return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.STATUS_CHANGED_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
+                            return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_ENABLED_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
                         }else {
                             return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.STATUS_CHANGED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.OK);
                         }
@@ -230,7 +235,7 @@ public class UserController {
                     user.setEnabled(Boolean.TRUE);
                     if(this.userService.saveUser(user)){
                         if(this.userEmailNotificationService.sendUserEnableStatus(user)){
-                            return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.STATUS_CHANGED_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
+                            return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_DISABLED_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
                         }else {
                             return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.STATUS_CHANGED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.OK);
                         }
