@@ -210,7 +210,7 @@ public class UserController {
 
 
     @ApiOperation(value = "Enable OR Disable the User  ", httpMethod="PUT")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "Status Changed "),
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "User Status Changed "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = UserRestURIConstants.CHANGE_STATUS, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.PUT)
     @ResponseBody
@@ -225,23 +225,23 @@ public class UserController {
                     user.setEnabled(Boolean.FALSE);
                     if(this.userService.saveUser(user)){
                         if(this.userEmailNotificationService.sendUserDisableStatus(user)){
-                            return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_ENABLED_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
+                            return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_DISABLED_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
                         }else {
-                            return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.STATUS_CHANGED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.OK);
+                            return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_DISABLED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.OK);
                         }
                     }else{
-                        return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.STATUS_NOT_CHANGED.ResponseMsg()), HttpStatus.OK);
+                        return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_STATUS_NOT_CHANGED.ResponseMsg()), HttpStatus.OK);
                     }
                 }else if(status.equalsIgnoreCase(UserConstants.FALSE)){
                     user.setEnabled(Boolean.TRUE);
                     if(this.userService.saveUser(user)){
                         if(this.userEmailNotificationService.sendUserEnableStatus(user)){
-                            return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_DISABLED_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
+                            return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_ENABLED_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
                         }else {
-                            return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.STATUS_CHANGED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.OK);
+                            return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_ENABLED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.OK);
                         }
                     }else{
-                        return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.STATUS_NOT_CHANGED.ResponseMsg()), HttpStatus.OK);
+                        return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_STATUS_NOT_CHANGED.ResponseMsg()), HttpStatus.OK);
                     }
                 }
 
@@ -258,7 +258,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "Reset the User password ", httpMethod="PUT")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "Password Reseted "),
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Password Changed "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = UserRestURIConstants.RESET_PASSWORD, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
     @ResponseBody
@@ -273,12 +273,12 @@ public class UserController {
                 if(this.userService.saveUser(user)){
                     user.setPassword(password);
                     if(this.userEmailNotificationService.sendUserResetPassword(user)){
-                        return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.PASSWORD_RESTED_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
+                        return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.PASSWORD_CHANGED_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
                     }else{
-                        return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.PASSWORD_RESTED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.OK);
+                        return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.PASSWORD_CHANGED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.OK);
                     }
                 }else{
-                    return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.PASSWORD_NOT_RESTED.ResponseMsg()), HttpStatus.OK);
+                    return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.PASSWORD_NOT_CHANGED.ResponseMsg()), HttpStatus.OK);
                 }
             }
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

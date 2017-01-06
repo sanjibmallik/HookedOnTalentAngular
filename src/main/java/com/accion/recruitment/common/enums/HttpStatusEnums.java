@@ -28,13 +28,14 @@ public enum HttpStatusEnums {
     RECORD_SAVED_EMAIL_NOT_SEND("Record saved and Email Not Send ."),
 
     USER_ENABLED_EMAIL_SEND("User Enabled  and Email  Send Successfully."),
+    USER_ENABLED_EMAIL_NOT_SEND("User Enabled  and Email Not Send."),
     USER_DISABLED_EMAIL_SEND("User Disabled and Email  Send Successfully."),
-    STATUS_CHANGED_EMAIL_NOT_SEND("Status Changed and Email Not Send ."),
-    STATUS_NOT_CHANGED("Status Not Changed."),
+    USER_DISABLED_EMAIL_NOT_SEND("User Enabled  and Email Not Send."),
+    USER_STATUS_NOT_CHANGED("Status Not Changed."),
 
-    PASSWORD_NOT_RESTED("Password Not Rested"),
-    PASSWORD_RESTED_EMAIL_SEND("Password Rested and Email  Send Successfully."),
-    PASSWORD_RESTED_EMAIL_NOT_SEND("Password Rested and Email Not Send .");
+    PASSWORD_NOT_CHANGED("Password Changed"),
+    PASSWORD_CHANGED_EMAIL_SEND("Password Changed and Email  Send Successfully."),
+    PASSWORD_CHANGED_EMAIL_NOT_SEND("Password Changed and Email Not Send .");
 
 
     private String responseMsg;
