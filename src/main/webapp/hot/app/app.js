@@ -191,6 +191,44 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
                 }
             },
             controller: 'UIModalsCtrl'
+        }).
+        state('app.requirements-Create-Requirement', {
+            url: '/requirements-Create-Requirement',
+            templateUrl: appHelper.templatePath('requirements/Create-Requirement'),
+            resolve: {
+                resources: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.charts.dxGlobalize,
+                        ASSETS.extra.toastr,
+                        ASSETS.core.bootstrap,
+                        ASSETS.core.jQueryUI,
+                        ASSETS.forms.jQueryValidate,
+                        ASSETS.forms.inputmask,
+                        ASSETS.forms.multiSelect,
+                        ASSETS.forms.datepicker,
+                        ASSETS.forms.selectboxit,
+                        ASSETS.forms.formWizard
+                    ]);
+                },
+                dxCharts: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.charts.dxCharts
+                    ]);
+                }
+            }
+        }).
+
+        state('app.requirements-Display-Requirement', {
+            url: '/requirements-Display-Requirement',
+            templateUrl: appHelper.templatePath('requirements/Display-Requirement'),
+            resolve: {
+                deps: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.tables.datatables
+                    ]);
+                }
+            },
+            controller: 'UIModalsCtrl'
         });
 });
 
