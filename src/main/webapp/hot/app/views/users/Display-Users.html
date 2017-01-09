@@ -84,7 +84,7 @@
                        <!-- style="font-size: 10px;background-color: #2c2e2f;color: white;"-->
                     <ul class="dropdown-menu dropdown-gray" role="menu" style="font-size: 11px;">
                         <li>
-                            <a href="" ng-click="openModal('modal-2')" class="">Details</a>
+                            <a href="" ng-click="openModal('modal-2','{{user}}')" class="">Details</a>
                         </li>
                         <li class="divider"></li>
                         <li>
@@ -102,7 +102,6 @@
                         <li>
                             <a href="" ng-click="openModal('modal-4')" class="">Reset Password</a>
                         </li>
-
 
                     </ul>
                  </div>
@@ -197,7 +196,7 @@
             <tr>
 
                 <th>User Name</th>
-                <th>azhar</th>
+                <th>{{user.firstName}}</th>
             </tr>
             </thead>
 
@@ -205,25 +204,25 @@
             <tr>
 
                 <td>First Name</td>
-                <td>Azhar</td>
+                <td>{{user.firstName}}</td>
             </tr>
 
             <tr>
 
                 <td>Last Name</td>
-                <td>Liaquat</td>
+                <td>{{user.lastName}}</td>
             </tr>
 
             <tr>
 
                 <td>email</td>
-                <td>azhar.liaquat@accionlabs.com</td>
+                <td>{{user.emailId}}</td>
             </tr>
 
             <tr>
 
                 <td>Contact No.</td>
-                <td>9844580058</td>
+                <td>{{user.contactNumber}}</td>
             </tr>
 
             <tr>

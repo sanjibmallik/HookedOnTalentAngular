@@ -36,14 +36,40 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
         $scope.submitNewUser = function(){
 
            var data = $scope.newUser;
-            var jsonUser = {
-                "firstName":$scope.newUser.firstName,
-                "lastName":$scope.newUser.lastName
-            }
-            console.log(jsonUser);
-            console.log(data);
 
-            $http.post('user/create', data)
+
+            var jsonUser = {
+                "user":{
+                    "firstName":$scope.newUser.firstName,
+                    "lastName":$scope.newUser.lastName,
+                    "userName":$scope.newUser.userName,
+                    "emailId":$scope.newUser.emailId,
+                    "contactNumber":$scope.newUser.contactNumber,
+                    "role":$scope.newUser.role,
+                    "alternateContact":$scope.newUser.alternateContact,
+                    "addressOne":$scope.newUser.addressOne,
+                    "addressTwo":$scope.newUser.addressTwo,
+                    "zipCode":$scope.newUser.zipCode,
+                    "city":$scope.newUser.city,
+                    "state":$scope.newUser.state,
+                    "country":$scope.newUser.country
+
+                },
+
+                "technicalScreenerSkills":{
+                    "primarySkills":$scope.newUser.primarySkills,
+                    "secondarySkills":$scope.newUser.secondarySkills,
+                    "expectedPayRange":$scope.newUser.expectedPayRange
+
+                }
+            }
+
+
+
+
+            console.log(jsonUser);
+
+            $http.post('user/create', jsonUser)
                 .success(function (data, status, headers, config) {
 
                 })
