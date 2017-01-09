@@ -12,7 +12,9 @@ import com.accion.recruitment.service.UserService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.Gson;
 import io.swagger.annotations.*;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -59,134 +61,285 @@ public class UserController {
             , @ApiResponse(code = 500, message = "Internal Server Error")})
 
     @RequestMapping(value = UserRestURIConstants.CREATE_USER, method = RequestMethod.POST)
-@JsonIgnore
     public  ResponseEntity<String> createUser(@RequestBody UserSkills userSkills,
                               final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
                               final @RequestParam(required = false, value = "userProfile") MultipartFile userProfile,
                               final Principal principal) {
 
-        final Date currentDate = new Date();
-
-        User user=new User();
-        TechnicalScreenerSkills  technicalScreenerSkills=new TechnicalScreenerSkills();
-        if(userSkills.getUser()!=null){
-            user=userSkills.getUser();
-        }
-        if(userSkills.getTechnicalScreenerSkills()!=null){
-            technicalScreenerSkills=userSkills.getTechnicalScreenerSkills();
-        }
-
-        List<TechnicalScreenerSkills> technicalScreenerSkillsList=new ArrayList<TechnicalScreenerSkills>();
-
-        if(user != null && user.getUserName() != null && (!user.getUserName().isEmpty())){
-            try{
-                User userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,user.getUserName());
-                if(userObject != null)
-                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NAME_EXIST.ResponseMsg()), HttpStatus.OK);
-            }catch (SQLException e){
-                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-            }catch (Exception e){
-                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
-            }
-        }
-        if(user != null && user.getEmailId() != null && (!user.getEmailId().isEmpty())){
-            try{
-                User userObject=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID,user.getEmailId());
-                if(userObject != null)
-                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.EMAIlID_EXIST.ResponseMsg()), HttpStatus.OK);
-            }catch (SQLException e){
-                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-            }catch (Exception e){
-                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
-            }
-        }
-        if(user != null && user.getContactNumber() != null){
-            try{
-                User userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER,user.getContactNumber());
-                if(userObject != null)
-                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg()), HttpStatus.OK);
-            }catch (SQLException e){
-                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-            }catch (Exception e){
-                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
-            }
-        }
-        if (user != null && userImage != null && !userImage.isEmpty()) {
-            try {
-                byte[] bytes = userImage.getBytes();
-                user.setUserImage(bytes);
-            } catch (IOException e) {
-                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_IMAGE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-            }catch (Exception e){
-                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
-            }
-        }
-        if (user != null && userProfile != null && !userProfile.isEmpty()) {
-            try {
-                byte[] bytes = userProfile.getBytes();
-                user.setUserProfile(bytes);
-            } catch (IOException e) {
-                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_PROFILE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-            }catch (Exception e){
-                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
-            }
-        }
-
-        String password=this.generatePassword();
-        user.setPassword(this.encoder.encodePassword(password, null));
         try{
-            user.setCreatedBy(principal.getName());
-            user.setUpdatedBy(principal.getName());
+            final Date currentDate = new Date();
+            User user=new User();
+            TechnicalScreenerSkills  technicalScreenerSkills=new TechnicalScreenerSkills();
+            List<TechnicalScreenerSkills> technicalScreenerSkillsList=new ArrayList<TechnicalScreenerSkills>();
+
+            if(userSkills.getUser()!=null){
+                user=userSkills.getUser();
+            }else{
+                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+            }
+
+            if(user != null && user.getUserName() != null && (!user.getUserName().isEmpty())){
+                try{
+                    User userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,user.getUserName());
+                    if(userObject != null)
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NAME_EXIST.ResponseMsg()), HttpStatus.OK);
+                }catch (SQLException e){
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+            if(user != null && user.getEmailId() != null && (!user.getEmailId().isEmpty())){
+                try{
+                    User userObject=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID,user.getEmailId());
+                    if(userObject != null)
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.EMAIlID_EXIST.ResponseMsg()), HttpStatus.OK);
+                }catch (SQLException e){
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+            if(user != null && user.getContactNumber() != null){
+                try{
+                    User userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER,user.getContactNumber());
+                    if(userObject != null)
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg()), HttpStatus.OK);
+                }catch (SQLException e){
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+            if (user != null && userImage != null && !userImage.isEmpty()) {
+                try {
+                    byte[] bytes = userImage.getBytes();
+                    user.setUserImage(bytes);
+                } catch (IOException e) {
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_IMAGE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+            if (user != null && userProfile != null && !userProfile.isEmpty()) {
+                try {
+                    byte[] bytes = userProfile.getBytes();
+                    user.setUserProfile(bytes);
+                } catch (IOException e) {
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_PROFILE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+
+            String password=this.generatePassword();
+            user.setPassword(this.encoder.encodePassword(password, null));
+            try{
+                user.setCreatedBy(principal.getName());
+                user.setUpdatedBy(principal.getName());
+            }catch (Exception e){
+
+            }
+
+            user.setCreatedDate(new Date(sdf.format(currentDate)));
+            user.setUpdatedDate(new Date(sdf.format(currentDate)));
+
+
+
+            if(user.getRole().equalsIgnoreCase(UserEnums.TechnicalScreener.toString())){
+                try{
+                    if(userSkills.getTechnicalScreenerSkills()!=null){
+                        technicalScreenerSkills=userSkills.getTechnicalScreenerSkills();
+                        technicalScreenerSkillsList=this.getTechnicalSkillsObjectList(technicalScreenerSkills);
+                        user.getTechnicalScreenerDetailsDSkillsSet().addAll(technicalScreenerSkillsList);
+                        if(this.userService.saveUserGroups(user)){
+                            user.setPassword(password);
+                            if(this.userEmailNotificationService.sendUserCredentials(user)){
+                                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_SAVED_EMAIL_SEND.ResponseMsg()), HttpStatus.CREATED);
+                            }else{
+                                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_SAVED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.CREATED);
+                            }
+                        }else{
+                            return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                        }
+                    }else{
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_SKILLS_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                    }
+
+                }catch (ArrayIndexOutOfBoundsException e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_SKILLS_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                }catch (SQLException e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                }
+            }else{
+                try{
+                    if(this.userService.saveUserGroups(user)){
+                        user.setPassword(password);
+                        if(this.userEmailNotificationService.sendUserCredentials(user)){
+                            return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_SAVED_EMAIL_SEND.ResponseMsg()), HttpStatus.CREATED);
+                        }else{
+                            return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_SAVED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.CREATED);
+                        }
+                    }else{
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                    }
+                }catch (SQLException e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+
         }catch (Exception e){
-
-        }
-
-        user.setCreatedDate(new Date(sdf.format(currentDate)));
-        user.setUpdatedDate(new Date(sdf.format(currentDate)));
-
-
-
-        if(user.getRole().equalsIgnoreCase(UserEnums.TechnicalScreener.toString())){
-            try{
-                technicalScreenerSkillsList=this.getTechnicalSkillsObjectList(technicalScreenerSkills);
-                user.getTechnicalScreenerDetailsDSkillsSet().addAll(technicalScreenerSkillsList);
-                if(this.userService.saveUserGroups(user)){
-                    user.setPassword(password);
-                    if(this.userEmailNotificationService.sendUserCredentials(user)){
-                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_SAVED_EMAIL_SEND.ResponseMsg()), HttpStatus.CREATED);
-                    }else{
-                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_SAVED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.CREATED);
-                    }
-                }else{
-                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
-                }
-            }catch (ArrayIndexOutOfBoundsException e){
-                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_SKILLS_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-            }catch (SQLException e){
-                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-            }catch (Exception e){
-                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
-            }
-        }else{
-            try{
-                if(this.userService.saveUserGroups(user)){
-                    user.setPassword(password);
-                    if(this.userEmailNotificationService.sendUserCredentials(user)){
-                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_SAVED_EMAIL_SEND.ResponseMsg()), HttpStatus.CREATED);
-                    }else{
-                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_SAVED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.CREATED);
-                    }
-                }else{
-                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
-                }
-            }catch (SQLException e){
-                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-            }catch (Exception e){
-                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
-            }
+            return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
         }
     }
 
+    @ApiOperation(value = "Update/Edit the new User ",  code = 201, httpMethod="PUT")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Updated User Successfully")
+            , @ApiResponse(code = 500, message = "Internal Server Error")})
+
+    @RequestMapping(value = UserRestURIConstants.UPDATE_USER, method = RequestMethod.PUT)
+    @JsonIgnore
+    public  ResponseEntity<String> updateUser(@RequestBody UserSkills userSkills,
+                                              final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
+                                              final @RequestParam(required = false, value = "userProfile") MultipartFile userProfile,
+                                              final Principal principal) {
+
+        try{
+            final Date currentDate = new Date();
+            User user=new User();
+            TechnicalScreenerSkills  technicalScreenerSkills=new TechnicalScreenerSkills();
+            List<TechnicalScreenerSkills> technicalScreenerSkillsList=new ArrayList<TechnicalScreenerSkills>();
+
+            if(userSkills.getUser()!=null){
+                user=userSkills.getUser();
+            }else{
+                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+            }
+
+            User oldUser=this.userService.findUserById(user.getId());
+            if(oldUser==null)
+                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+
+
+            if(user != null && user.getUserName() != null && (!user.getUserName().isEmpty()) && (!oldUser.getUserName().equals(user.getUserName()))){
+                try{
+                    User userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,user.getUserName());
+                    if(userObject != null)
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NAME_EXIST.ResponseMsg()), HttpStatus.OK);
+                }catch (SQLException e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+            if(user != null && user.getEmailId() != null && (!user.getEmailId().isEmpty())  && (!oldUser.getEmailId().equals(user.getEmailId()))){
+                try{
+                    User userObject=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID,user.getEmailId());
+                    if(userObject != null)
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.EMAIlID_EXIST.ResponseMsg()), HttpStatus.OK);
+                }catch (SQLException e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+            if(user != null && user.getContactNumber() != null &&(!oldUser.getContactNumber().equals(user.getContactNumber()))){
+                try{
+                    User userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER,user.getContactNumber());
+                    if(userObject != null)
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg()), HttpStatus.OK);
+                }catch (SQLException e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+            if (user != null && userImage != null && !userImage.isEmpty()) {
+                try {
+                    byte[] bytes = userImage.getBytes();
+                    user.setUserImage(bytes);
+                } catch (IOException e) {
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_IMAGE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                }
+            }else{
+                user.setUserImage(oldUser.getUserImage());
+            }
+            if (user != null && userProfile != null && !userProfile.isEmpty()) {
+                try {
+                    byte[] bytes = userProfile.getBytes();
+                    user.setUserProfile(bytes);
+                } catch (IOException e) {
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_PROFILE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                }
+            }else{
+                user.setUserProfile(oldUser.getUserProfile());
+            }
+
+
+            try{
+                user.setUpdatedBy(principal.getName());
+            }catch (Exception e){
+
+            }
+
+
+            user.setUpdatedDate(new Date(sdf.format(currentDate)));
+
+            if(user.getRole().equals(oldUser.getRole())){
+                if(this.userService.saveUser(user)){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_UPDATED.ResponseMsg()), HttpStatus.OK);
+                }else {
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                }
+            }else{
+                if(user.getRole().equalsIgnoreCase(UserEnums.TechnicalScreener.toString())){
+                    try{
+                        if(userSkills.getTechnicalScreenerSkills()!=null){
+                            technicalScreenerSkills=userSkills.getTechnicalScreenerSkills();
+                            technicalScreenerSkillsList=this.getTechnicalSkillsObjectList(technicalScreenerSkills);
+                            user.getTechnicalScreenerDetailsDSkillsSet().addAll(technicalScreenerSkillsList);
+                            if(this.userService.saveUserGroups(user)){
+                                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_UPDATED.ResponseMsg()), HttpStatus.OK);
+                            }else {
+                                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                            }
+                        }else{
+                            return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_SKILLS_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                        }
+                    }catch (ArrayIndexOutOfBoundsException e){
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_SKILLS_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                    }catch (SQLException e){
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                    }catch (Exception e){
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                    }
+                }else{
+                    try{
+                        if(this.userService.saveUserGroups(user)){
+                                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_UPDATED.ResponseMsg()), HttpStatus.OK);
+                        }else{
+                            return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                        }
+                    }catch (SQLException e){
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                    }catch (Exception e){
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                    }
+                }
+            }
+        }catch (Exception e){
+            return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+        }
+
+    }
 
 
     @ApiOperation(value = "Get All the Users  ", httpMethod="GET")
@@ -201,24 +354,26 @@ public class UserController {
         try{
             List<User> userList=this.userService.findAllUser();
 
-           /* List<User> userList1=new ArrayList<User>();
+            List<User> userList1=new ArrayList<User>();
             JSONObject responseDetailsJson = new JSONObject();
             JSONArray jsonArray = new JSONArray();
-            User user=new User();
+
             for(User userObject:userList){
 
-                *//* new User(userObject.getId(),userObject.getUserName(),userObject.getEmailId(),userObject.getFirstName(),userObject.getLastName(),userObject.getContactNumber(),
+            /*     new User(userObject.getId(),userObject.getUserName(),userObject.getEmailId(),userObject.getFirstName(),userObject.getLastName(),userObject.getContactNumber(),
                         userObject.getRole(),userObject.getEnabled(),userObject.getErrorMessage());
-                *//*user= new User(userObject.getId(),userObject.getFirstName(),userObject.getLastName(),userObject.getUserName(),userObject.getEmailId(),userObject.getEnabled(),
+            */
+                User user= new User(userObject.getId(),userObject.getFirstName(),userObject.getLastName(),userObject.getUserName(),userObject.getEmailId(),userObject.getEnabled(),
                         userObject.getContactNumber(),userObject.getRole(),userObject.getAlternateContact(),userObject.getAddressOne(),userObject.getAddressTwo(),
                         userObject.getZipCode(),userObject.getCity(),userObject.getState(),userObject.getCountry(),userObject.getExpectedPayRange(),userObject.getUserImage(),
-                        userObject.getUserProfile(),userObject.getErrorMessage(),userObject.getGroupsSet(),userObject.getTechnicalScreenerDetailsDSkillsSet());
+                        userObject.getUserProfile(),userObject.getErrorMessage());
                 userList1.add(user);
                 jsonArray.put(user.toString());
             }
 
-            responseDetailsJson.put("users", jsonArray);*/
-            return new ResponseEntity<List<User>>(userList, HttpStatus.OK);
+            responseDetailsJson.put("users", jsonArray);
+
+            return new ResponseEntity<List<User>>(userList1, HttpStatus.OK);
         }catch (SQLException e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
