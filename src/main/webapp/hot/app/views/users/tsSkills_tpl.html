@@ -22,7 +22,7 @@
                                         <span class="input-group-addon">
                                             <i class="linecons-user"></i>
                                         </span>
-                                <input type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Primary Skills">
+                                <input type="text" name="primarySkills" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Primary Skills">
                             </div>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" class="form-control"ng-maxlength="35" ng-minlength="1" ng-required="true" ng-model="newUser.secondarySkills" placeholder="Secondary Skills">
+                                <input type="text" class="form-control"ng-maxlength="35" ng-minlength="1" ng-required="true" ng-model="newUser.secondarySkills" name="secondarySkills" placeholder="Secondary Skills">
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" ng-model="newUser.expectedPayRange" class="form-control" placeholder="Pay Range"
+                                <input type="text" ng-model="newUser.expectedPayRange" name="expectedPayRange" class="form-control" placeholder="Pay Range"
                                        inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                             </div>
                         </div>

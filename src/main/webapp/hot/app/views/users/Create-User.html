@@ -39,7 +39,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-user"></i>
                                     </span>
-                            <input type="text" class="form-control" ng-model="newUser.firstName" placeholder="First Name"
+                            <input type="text" name="firstName" class="form-control" ng-model="newUser.firstName" placeholder="First Name"
                                    inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true">
                         </div>
                     </div>
@@ -55,9 +55,12 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-							<input type="text" class="form-control" ng-model="newUser.lastName" placeholder="Last Name"
+							<input type="text" name="lastName" class="form-control" ng-model="newUser.lastName" placeholder="Last Name"
                                    inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true">
 						</div>
+                            <ng-messages>
+
+                            </ng-messages>
 						</div>
 					</div>
 
@@ -71,7 +74,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" class="form-control" ng-model="newUser.userName" placeholder="User Name"
+                                <input type="text" name="userName" class="form-control" ng-model="newUser.userName" placeholder="User Name"
                                 inputmask data-mask="^[a-zA-Z0-9]*$" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true"  ng-blur="checkUserExist(newUser.userName)">
                             </div>
 
@@ -90,7 +93,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-mail"></i>
 							</span>
-							<input type="email" class="form-control" ng-model="newUser.emailId" placeholder="Enter your email Id" ng-maxlength="35" ng-minlength="1" ng-required="true" ng-blur="checkEmailExist(newUser.emailId)">
+							<input type="email" class="form-control" name="emailId" ng-model="newUser.emailId" placeholder="Enter your email Id" ng-maxlength="35" ng-minlength="1" ng-required="true" ng-blur="checkEmailExist(newUser.emailId)">
 						</div>
                             <div ng-show="emailExist" style="color: red;">{{emailErrorMessage}}</div>
 
@@ -108,7 +111,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-mobile"></i>
 							</span>
-							<input type="text" class="form-control" ng-required="true" ng-model="newUser.contactNumber" ng-blur="checkContactNumberExist(newUser.contactNumber)" />
+							<input type="text" class="form-control" ng-required="true" ng-model="newUser.contactNumber" name="contactNumber" ng-blur="checkContactNumberExist(newUser.contactNumber)" />
 						</div>
                             <div ng-show="contactNumberExist" style="color: red;">{{contactNumberErrorMessage}}</div>
 
@@ -147,7 +150,7 @@
 
 						<div class="col-sm-5">
 
-                            <select class="form-control" ng-options="role as role for role in roles" ng-model="newUser.role" ng-change="update();"></select>
+                            <select class="form-control" name="role" ng-options="role as role for role in roles" ng-model="newUser.role" ng-change="update();"></select>
 
 						</div>
 					</div>
@@ -189,7 +192,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-mobile"></i>
                                     </span>
-                                        <input type="text" class="form-control" ng-maxlength="35" ng-minlength="1" ng-model="newUser.alternateContact" inputmask data-mask="phone" />
+                                        <input type="text" class="form-control" ng-maxlength="35" ng-minlength="1" ng-model="newUser.alternateContact" name="alternateContact" inputmask data-mask="phone" />
                                     </div>
                                 </div>
                             </div>
@@ -204,7 +207,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-user"></i>
                                     </span>
-                                        <input type="text" ng-model="newUser.addressOne" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"
+                                        <input type="text" name="addressOne" ng-model="newUser.addressOne" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"
                                                inputmask data-mask="[a-zA-Z][a-zA-Z ][0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                                     </div>
                                 </div>
@@ -220,7 +223,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-user"></i>
                                     </span>
-                                        <input type="text" ng-model="newUser.addressTwo" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc"
+                                        <input type="text" name="addressTwo" ng-model="newUser.addressTwo" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc"
                                                inputmask data-mask="[a-zA-Z][a-zA-Z ][0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                                     </div>
                                 </div>
@@ -236,7 +239,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-user"></i>
                                     </span>
-                                        <input type="text" ng-model="newUser.zipCode" class="form-control"  placeholder="Zipcode"
+                                        <input type="text" ng-model="newUser.zipCode" name="zipCode" class="form-control"  placeholder="Zipcode"
                                                inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                                     </div>
                                 </div>
@@ -252,7 +255,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-user"></i>
                                     </span>
-                                        <input ng-model="newUser.city" type="text" class="form-control" placeholder="City"
+                                        <input ng-model="newUser.city" name="city" type="text" class="form-control" placeholder="City"
                                                inputmask data-mask="[a-zA-Z]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                                     </div>
                                 </div>
@@ -268,7 +271,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-user"></i>
                                     </span>
-                                        <input ng-model="newUser.state" type="text" class="form-control" placeholder="State"
+                                        <input ng-model="newUser.state" name="state" type="text" class="form-control" placeholder="State"
                                                inputmask data-mask="[a-zA-Z]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                                     </div>
                                 </div>
@@ -284,7 +287,7 @@
                                         <span class="input-group-addon">
                                             <i class="linecons-user"></i>
                                         </span>
-                                            <input type="text" ng-model="newUser.country" class="form-control"  placeholder="Country"
+                                            <input type="text" ng-model="newUser.country" name="country" class="form-control"  placeholder="Country"
                                                    inputmask data-mask="[a-zA-Z]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                                         </div>
                                     </div>
