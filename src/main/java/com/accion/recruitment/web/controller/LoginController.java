@@ -2,15 +2,13 @@ package com.accion.recruitment.web.controller;
 
 
 import com.accion.recruitment.common.constants.LoginRestURIConstants;
-import com.accion.recruitment.common.constants.UserRestURIConstants;
-import com.accion.recruitment.common.enums.HttpStatusEnums;
+import com.accion.recruitment.common.enums.UserHttpStatusEnums;
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * @author Mudassir Hussain
@@ -58,9 +55,9 @@ public class LoginController{
             userObject.getRole(),userObject.getEnabled(),userObject.getErrorMessage());
             return new ResponseEntity<Object>(user, HttpStatus.OK);
         }catch (SQLException e){
-            return new ResponseEntity<Object>(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Object>(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
-            return new ResponseEntity<Object>(HttpStatusEnums.LOGIN_ERROR.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Object>(UserHttpStatusEnums.LOGIN_ERROR.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

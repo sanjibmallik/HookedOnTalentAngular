@@ -2,7 +2,7 @@ package com.accion.recruitment.web.controller;
 
 import com.accion.recruitment.common.constants.UserConstants;
 import com.accion.recruitment.common.constants.UserRestURIConstants;
-import com.accion.recruitment.common.enums.HttpStatusEnums;
+import com.accion.recruitment.common.enums.UserHttpStatusEnums;
 import com.accion.recruitment.common.enums.UserEnums;
 import com.accion.recruitment.jpa.entities.TechnicalScreenerSkills;
 import com.accion.recruitment.jpa.entities.User;
@@ -10,12 +10,9 @@ import com.accion.recruitment.jpa.entities.UserSkills;
 import com.accion.recruitment.service.UserEmailNotificationService;
 import com.accion.recruitment.service.UserService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
 import io.swagger.annotations.*;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -62,7 +59,7 @@ public class UserController {
             , @ApiResponse(code = 500, message = "Internal Server Error")})
 
     @RequestMapping(value = UserRestURIConstants.CREATE_USER, method = RequestMethod.POST)
-
+@JsonIgnore
     public  ResponseEntity<String> createUser(@RequestBody UserSkills userSkills,
                               final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
                               final @RequestParam(required = false, value = "userProfile") MultipartFile userProfile,
@@ -85,33 +82,33 @@ public class UserController {
             try{
                 User userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,user.getUserName());
                 if(userObject != null)
-                    return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_NAME_EXIST.ResponseMsg()), HttpStatus.OK);
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NAME_EXIST.ResponseMsg()), HttpStatus.OK);
             }catch (SQLException e){
-                    return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
             }catch (Exception e){
-                    return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
             }
         }
         if(user != null && user.getEmailId() != null && (!user.getEmailId().isEmpty())){
             try{
                 User userObject=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID,user.getEmailId());
                 if(userObject != null)
-                    return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.EMAIlID_EXIST.ResponseMsg()), HttpStatus.OK);
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.EMAIlID_EXIST.ResponseMsg()), HttpStatus.OK);
             }catch (SQLException e){
-                    return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
             }catch (Exception e){
-                    return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
             }
         }
         if(user != null && user.getContactNumber() != null){
             try{
                 User userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER,user.getContactNumber());
                 if(userObject != null)
-                    return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg()), HttpStatus.OK);
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg()), HttpStatus.OK);
             }catch (SQLException e){
-                    return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
             }catch (Exception e){
-                    return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
             }
         }
         if (user != null && userImage != null && !userImage.isEmpty()) {
@@ -119,9 +116,9 @@ public class UserController {
                 byte[] bytes = userImage.getBytes();
                 user.setUserImage(bytes);
             } catch (IOException e) {
-                return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_IMAGE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_IMAGE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
             }catch (Exception e){
-                return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
             }
         }
         if (user != null && userProfile != null && !userProfile.isEmpty()) {
@@ -129,9 +126,9 @@ public class UserController {
                 byte[] bytes = userProfile.getBytes();
                 user.setUserProfile(bytes);
             } catch (IOException e) {
-                return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_PROFILE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_PROFILE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
             }catch (Exception e){
-                return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
             }
         }
 
@@ -145,7 +142,6 @@ public class UserController {
         }
 
         user.setCreatedDate(new Date(sdf.format(currentDate)));
-
         user.setUpdatedDate(new Date(sdf.format(currentDate)));
 
 
@@ -157,36 +153,36 @@ public class UserController {
                 if(this.userService.saveUserGroups(user)){
                     user.setPassword(password);
                     if(this.userEmailNotificationService.sendUserCredentials(user)){
-                        return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.RECORD_SAVED_EMAIL_SEND.ResponseMsg()), HttpStatus.CREATED);
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_SAVED_EMAIL_SEND.ResponseMsg()), HttpStatus.CREATED);
                     }else{
-                        return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.RECORD_SAVED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.CREATED);
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_SAVED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.CREATED);
                     }
                 }else{
-                    return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
                 }
             }catch (ArrayIndexOutOfBoundsException e){
-                return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_SKILLS_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_SKILLS_EXCEPTION.ResponseMsg()), HttpStatus.OK);
             }catch (SQLException e){
-                return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
             }catch (Exception e){
-                return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
             }
         }else{
             try{
                 if(this.userService.saveUserGroups(user)){
                     user.setPassword(password);
                     if(this.userEmailNotificationService.sendUserCredentials(user)){
-                        return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.RECORD_SAVED_EMAIL_SEND.ResponseMsg()), HttpStatus.CREATED);
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_SAVED_EMAIL_SEND.ResponseMsg()), HttpStatus.CREATED);
                     }else{
-                        return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.RECORD_SAVED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.CREATED);
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_SAVED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.CREATED);
                     }
                 }else{
-                    return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
                 }
             }catch (SQLException e){
-                return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
             }catch (Exception e){
-                return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
             }
         }
     }
@@ -200,19 +196,20 @@ public class UserController {
     @RequestMapping(value = UserRestURIConstants.GET_ALL_USER, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.GET)
     @ResponseBody
     @JsonIgnore
-    public ResponseEntity<Object> getAllUsers() throws JSONException {
+    public ResponseEntity<List<User>> getAllUsers() throws JSONException {
 
         try{
             List<User> userList=this.userService.findAllUser();
-            List<User> userList1=new ArrayList<User>();
+
+           /* List<User> userList1=new ArrayList<User>();
             JSONObject responseDetailsJson = new JSONObject();
             JSONArray jsonArray = new JSONArray();
             User user=new User();
             for(User userObject:userList){
 
-                /* new User(userObject.getId(),userObject.getUserName(),userObject.getEmailId(),userObject.getFirstName(),userObject.getLastName(),userObject.getContactNumber(),
+                *//* new User(userObject.getId(),userObject.getUserName(),userObject.getEmailId(),userObject.getFirstName(),userObject.getLastName(),userObject.getContactNumber(),
                         userObject.getRole(),userObject.getEnabled(),userObject.getErrorMessage());
-                */user= new User(userObject.getId(),userObject.getFirstName(),userObject.getLastName(),userObject.getUserName(),userObject.getEmailId(),userObject.getEnabled(),
+                *//*user= new User(userObject.getId(),userObject.getFirstName(),userObject.getLastName(),userObject.getUserName(),userObject.getEmailId(),userObject.getEnabled(),
                         userObject.getContactNumber(),userObject.getRole(),userObject.getAlternateContact(),userObject.getAddressOne(),userObject.getAddressTwo(),
                         userObject.getZipCode(),userObject.getCity(),userObject.getState(),userObject.getCountry(),userObject.getExpectedPayRange(),userObject.getUserImage(),
                         userObject.getUserProfile(),userObject.getErrorMessage(),userObject.getGroupsSet(),userObject.getTechnicalScreenerDetailsDSkillsSet());
@@ -220,8 +217,8 @@ public class UserController {
                 jsonArray.put(user.toString());
             }
 
-            responseDetailsJson.put("users", jsonArray);
-            return new ResponseEntity<Object>(userList, HttpStatus.OK);
+            responseDetailsJson.put("users", jsonArray);*/
+            return new ResponseEntity<List<User>>(userList, HttpStatus.OK);
         }catch (SQLException e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
@@ -246,23 +243,23 @@ public class UserController {
                     user.setEnabled(Boolean.FALSE);
                     if(this.userService.saveUser(user)){
                         if(this.userEmailNotificationService.sendUserDisableStatus(user)){
-                            return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_DISABLED_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
+                            return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_DISABLED_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
                         }else {
-                            return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_DISABLED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.OK);
+                            return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_DISABLED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.OK);
                         }
                     }else{
-                        return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_STATUS_NOT_CHANGED.ResponseMsg()), HttpStatus.OK);
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_STATUS_NOT_CHANGED.ResponseMsg()), HttpStatus.OK);
                     }
                 }else if(status.equalsIgnoreCase(UserConstants.FALSE)){
                     user.setEnabled(Boolean.TRUE);
                     if(this.userService.saveUser(user)){
                         if(this.userEmailNotificationService.sendUserEnableStatus(user)){
-                            return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_ENABLED_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
+                            return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_ENABLED_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
                         }else {
-                            return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_ENABLED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.OK);
+                            return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_ENABLED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.OK);
                         }
                     }else{
-                        return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.USER_STATUS_NOT_CHANGED.ResponseMsg()), HttpStatus.OK);
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_STATUS_NOT_CHANGED.ResponseMsg()), HttpStatus.OK);
                     }
                 }
 
@@ -294,12 +291,12 @@ public class UserController {
                 if(this.userService.saveUser(user)){
                     user.setPassword(password);
                     if(this.userEmailNotificationService.sendUserResetPassword(user)){
-                        return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.PASSWORD_CHANGED_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.PASSWORD_CHANGED_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
                     }else{
-                        return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.PASSWORD_CHANGED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.OK);
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.PASSWORD_CHANGED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.OK);
                     }
                 }else{
-                    return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.PASSWORD_NOT_CHANGED.ResponseMsg()), HttpStatus.OK);
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.PASSWORD_NOT_CHANGED.ResponseMsg()), HttpStatus.OK);
                 }
             }
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -1,6 +1,9 @@
 package com.accion.recruitment.jpa.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
@@ -13,6 +16,9 @@ import java.util.HashSet;
  */
 @Entity
 @Table(name = "technicalscreener_skills")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class TechnicalScreenerSkills extends BaseEntity {
 
     public TechnicalScreenerSkills() {
@@ -62,7 +68,6 @@ public class TechnicalScreenerSkills extends BaseEntity {
             , fetch = FetchType.EAGER
             , cascade = {CascadeType.PERSIST, CascadeType.MERGE })
     @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
-    @JsonBackReference
     private Collection<User> technicalScreenerDetailsSet=new HashSet<User>();
 
 

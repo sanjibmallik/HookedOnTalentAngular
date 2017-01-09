@@ -5,7 +5,7 @@ package com.accion.recruitment.common.enums;
  * @author $LastChangedBy: Mudassir Hussain $
  * $Date:: 12/29/16 00:11 AM#$
  */
-public enum HttpStatusEnums {
+public enum UserHttpStatusEnums {
 
     /*User Controller Status*/
 
@@ -40,7 +40,7 @@ public enum HttpStatusEnums {
 
     private String responseMsg;
 
-    HttpStatusEnums(String responseMsg){
+    UserHttpStatusEnums(String responseMsg){
         this.responseMsg=responseMsg;
     }
 
