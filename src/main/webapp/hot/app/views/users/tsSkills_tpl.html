@@ -1,3 +1,62 @@
+<script>
+    $(document).ready(function() {
+        var max_fields      = 10; //maximum input boxes allowed
+        var wrapper         = $(".input_fields_wrap"); //Fields wrapper
+        var add_button      = $(".add_field_button"); //Add button ID
+
+        var x = 1; //initlal text box count
+        $(add_button).click(function(e){ //on add input button click
+            e.preventDefault();
+            if(x < max_fields){ //max input box allowed
+                x++; //text box increment
+                $(wrapper).append('' +
+
+                        '<label style="margin-top: -7px;" class="col-sm-3 control-label"></label>' +
+                        '<div style="margin-left: 242px; width: 38.4%;">' +
+                        '   <input style="float: left; width: 50%" type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Primary Skill">' +
+                        '   <input style="float: left; width: 25%" type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Years">' +
+                        '   <input style="float: left; width: 25%" type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Months">' +
+                        '       <a href="#" class="remove_field">Remove</a>' +
+
+                        '</div>'); //add input box
+            }
+        });
+
+        $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+            e.preventDefault(); $(this).parent('div').remove(); x--;
+        })
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        var max_fields      = 10; //maximum input boxes allowed
+        var wrapper2         = $(".input_fields_wrap2"); //Fields wrapper
+        var add_button2      = $(".add_field_button2"); //Add button ID
+
+        var x = 1; //initlal text box count
+        $(add_button2).click(function(e){ //on add input button click
+            e.preventDefault();
+            if(x < max_fields){ //max input box allowed
+                x++; //text box increment
+                $(wrapper2).append('' +
+
+                        '<label style="margin-top: -7px;" class="col-sm-3 control-label"></label>' +
+                        '<div style="margin-left: 242px; width: 38.4%;">' +
+                        '   <input style="float: left; width: 50%" type="text" ng-model="newUser.secondarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Secondary Skill">' +
+                        '   <input style="float: left; width: 25%" type="text" ng-model="newUser.secondarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Years">' +
+                        '   <input style="float: left; width: 25%" type="text" ng-model="newUser.secondarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Months">' +
+                        '       <a href="#" class="remove_field">Remove</a>' +
+
+                        '</div>'); //add input box
+            }
+        });
+
+        $(wrapper2).on("click",".remove_field", function(e){ //user click on remove text
+            e.preventDefault(); $(this).parent('div').remove(); x--;
+        })
+    });
+</script>
 
 <div class="row">
     <div class="col-sm-12">
@@ -18,14 +77,25 @@
                         <label class="col-sm-3 control-label" >Primary skills</label>
 
                         <div class="col-sm-5">
+
+                            <input style="float: left; width: 50%" type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Primary Skill">
+                            <input style="float: left; width: 25%" type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Years">
+                            <input style="float: left; width: 25%" type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Months">
+                        </div>
+
+                        <div class="input_fields_wrap" style="margin-top: 0px;">
+                            <button class="add_field_button btn btn-primary" style="margin-left: 10px;">+</button>
+
                             <div class="input-group input-group-sm input-group-minimal">
                                         <span class="input-group-addon">
                                             <i class="linecons-user"></i>
                                         </span>
-                                <input type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Primary Skills">
+                                <input type="text" name="primarySkills" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Primary Skills">
                             </div>
+
                         </div>
                     </div>
+
 
                     <div class="form-group-separator"></div>
 
@@ -33,12 +103,22 @@
                         <label class="col-sm-3 control-label" >Secondary Skills</label>
 
                         <div class="col-sm-5">
+
+                            <input style="float: left; width: 50%" type="text" ng-model="newUser.secondarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Secondary Skill">
+                            <input style="float: left; width: 25%" type="text" ng-model="newUser.secondarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Years">
+                            <input style="float: left; width: 25%" type="text" ng-model="newUser.secondarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Months">
+                        </div>
+
+                        <div class="input_fields_wrap2" style="margin-top: 0px;">
+                            <button class="add_field_button2 btn btn-primary" style="margin-left: 10px;">+</button>
+
                             <div class="input-group input-group-sm input-group-minimal">
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" class="form-control"ng-maxlength="35" ng-minlength="1" ng-required="true" ng-model="newUser.secondarySkills" placeholder="Secondary Skills">
+                                <input type="text" class="form-control"ng-maxlength="35" ng-minlength="1" ng-required="true" ng-model="newUser.secondarySkills" name="secondarySkills" placeholder="Secondary Skills">
                             </div>
+
                         </div>
                     </div>
 
@@ -52,7 +132,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" ng-model="newUser.expectedPayRange" class="form-control" placeholder="Pay Range"
+                                <input type="text" ng-model="newUser.expectedPayRange" name="expectedPayRange" class="form-control" placeholder="Pay Range"
                                        inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                             </div>
                         </div>
