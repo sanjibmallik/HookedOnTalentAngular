@@ -183,10 +183,10 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
            url : 'users'
        }).then(function successCallback(response) {
 
-               $scope.allUsers=response.data.users;
+               $scope.allUsers=response.data;
                console.log($scope.allUsers);
-               $scope.oneUser = $scope.allUsers[4];
-               console.log($scope.oneUser);
+             /*  $scope.oneUser = $scope.allUsers[4];
+               console.log($scope.oneUser);*/
 
 
                $scope.testUser={"user":[
