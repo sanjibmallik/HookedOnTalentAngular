@@ -6,8 +6,10 @@ import com.accion.recruitment.common.enums.HttpStatusEnums;
 import com.accion.recruitment.common.enums.UserEnums;
 import com.accion.recruitment.jpa.entities.TechnicalScreenerSkills;
 import com.accion.recruitment.jpa.entities.User;
+import com.accion.recruitment.jpa.entities.UserSkills;
 import com.accion.recruitment.service.UserEmailNotificationService;
 import com.accion.recruitment.service.UserService;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
 import io.swagger.annotations.*;
 import org.json.JSONArray;
@@ -63,11 +65,19 @@ public class UserController {
 
     @RequestMapping(value = UserRestURIConstants.CREATE_USER, method = RequestMethod.POST)
 
-    public  ResponseEntity<String> createUser(@RequestBody User user,
-                              final @RequestBody(required = false) TechnicalScreenerSkills technicalScreenerSkills,
+    public  ResponseEntity<String> createUser(@RequestBody UserSkills userSkills,
                               final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
                               final @RequestParam(required = false, value = "userProfile") MultipartFile userProfile,
                               final Principal principal) {
+
+        User user=new User();
+        TechnicalScreenerSkills  technicalScreenerSkills=new TechnicalScreenerSkills();
+        if(userSkills.getUser()!=null){
+            user=userSkills.getUser();
+        }
+        if(userSkills.getTechnicalScreenerSkills()!=null){
+            technicalScreenerSkills=userSkills.getTechnicalScreenerSkills();
+        }
 
         List<TechnicalScreenerSkills> technicalScreenerSkillsList=new ArrayList<TechnicalScreenerSkills>();
 
@@ -179,6 +189,7 @@ public class UserController {
                 return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
         }
         }
+
 
     }
 

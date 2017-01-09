@@ -124,6 +124,16 @@ public class User extends BaseEntity {
     )
     private Collection<TechnicalScreenerSkills> technicalScreenerDetailsDSkillsSet=new HashSet<TechnicalScreenerSkills>();
 
+    @Transient
+    private TechnicalScreenerSkills technicalScreenerSkills;
+
+    public TechnicalScreenerSkills getTechnicalScreenerSkills() {
+        return technicalScreenerSkills;
+    }
+
+    public void setTechnicalScreenerSkills(TechnicalScreenerSkills technicalScreenerSkills) {
+        this.technicalScreenerSkills = technicalScreenerSkills;
+    }
 
     public Integer getId() {
         return id;

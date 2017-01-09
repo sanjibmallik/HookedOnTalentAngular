@@ -13,6 +13,18 @@ import java.util.HashSet;
 @Entity
 @Table(name = "technicalscreener_skills")
 public class TechnicalScreenerSkills extends BaseEntity {
+    public TechnicalScreenerSkills() {
+    }
+
+    public TechnicalScreenerSkills(String primarySkills, String primarySkillsYears, String secondarySkills, String primarySkillsMonths, String secondarySkillsYears, String secondarySkillsMonths) {
+        this.primarySkills = primarySkills;
+        this.primarySkillsYears = primarySkillsYears;
+        this.secondarySkills = secondarySkills;
+        this.primarySkillsMonths = primarySkillsMonths;
+        this.secondarySkillsYears = secondarySkillsYears;
+        this.secondarySkillsMonths = secondarySkillsMonths;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="id" ,insertable = true, nullable = false, unique = true, updatable = true)
@@ -157,8 +169,27 @@ public class TechnicalScreenerSkills extends BaseEntity {
         this.id = id;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "TechnicalScreeenerSkills [skillType=" + skillType + ", skills=" + skills + ",years=" + years + "]";
+    }
+*/
+    @Override
+    public String toString() {
+        return "TechnicalScreenerSkills{" +
+                "id=" + id +
+                ", primarySkills='" + primarySkills + '\'' +
+                ", primarySkillsYears='" + primarySkillsYears + '\'' +
+                ", primarySkillsMonths='" + primarySkillsMonths + '\'' +
+                ", secondarySkills='" + secondarySkills + '\'' +
+                ", secondarySkillsYears='" + secondarySkillsYears + '\'' +
+                ", secondarySkillsMonths='" + secondarySkillsMonths + '\'' +
+                ", tsName='" + tsName + '\'' +
+                ", skillType='" + skillType + '\'' +
+                ", skills='" + skills + '\'' +
+                ", years=" + years +
+                ", months=" + months +
+                ", technicalScreenerDetailsSet=" + technicalScreenerDetailsSet +
+                '}';
     }
 }
