@@ -115,7 +115,83 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
                 }
             },
             controller: 'UIModalsCtrl'
-		});
+		}).
+        state('app.clients-Create-Client', {
+            url: '/clients-Create-Client',
+            templateUrl: appHelper.templatePath('clients/Create-Client'),
+            resolve: {
+                resources: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.charts.dxGlobalize,
+                        ASSETS.extra.toastr,
+                        ASSETS.core.bootstrap,
+                        ASSETS.core.jQueryUI,
+                        ASSETS.forms.jQueryValidate,
+                        ASSETS.forms.inputmask,
+                        ASSETS.forms.multiSelect,
+                        ASSETS.forms.datepicker,
+                        ASSETS.forms.selectboxit,
+                        ASSETS.forms.formWizard
+                    ]);
+                },
+                dxCharts: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.charts.dxCharts
+                    ]);
+                }
+            }
+        }).
+
+        state('app.clients-Display-Clients', {
+            url: '/clients-Display-Clients',
+            templateUrl: appHelper.templatePath('clients/Display-Clients'),
+            resolve: {
+                deps: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.tables.datatables
+                    ]);
+                }
+            },
+            controller: 'UIModalsCtrl'
+        }).
+        state('app.questionBank-Add-Questions', {
+            url: '/questionBank-Add-Questions',
+            templateUrl: appHelper.templatePath('questionBank/Add-Questions'),
+            resolve: {
+                resources: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.charts.dxGlobalize,
+                        ASSETS.extra.toastr,
+                        ASSETS.core.bootstrap,
+                        ASSETS.core.jQueryUI,
+                        ASSETS.forms.jQueryValidate,
+                        ASSETS.forms.inputmask,
+                        ASSETS.forms.multiSelect,
+                        ASSETS.forms.datepicker,
+                        ASSETS.forms.selectboxit,
+                        ASSETS.forms.formWizard
+                    ]);
+                },
+                dxCharts: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.charts.dxCharts
+                    ]);
+                }
+            }
+        }).
+
+        state('app.questionBank-Display-Questions', {
+            url: '/questionBank-Display-Questions',
+            templateUrl: appHelper.templatePath('questionBank/Display-Questions'),
+            resolve: {
+                deps: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.tables.datatables
+                    ]);
+                }
+            },
+            controller: 'UIModalsCtrl'
+        });
 });
 
 

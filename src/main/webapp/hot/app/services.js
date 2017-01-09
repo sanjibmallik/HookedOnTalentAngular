@@ -85,6 +85,7 @@ angular.module('hot.services', []).
 		{
 			var dashboard    = this.addItem('Dashboard', 		'/app/dashboard', 			'linecons-cog');
 			var users    = this.addItem('Users', 		'/app/users', 			'linecons-cog');
+            var clients    = this.addItem('Clients', 		'/app/clients', 			'linecons-cog');
 			var requirments    = this.addItem('Requirments', 		'/app/requirments', 			'linecons-cog');
 			var candidates    = this.addItem('Candidates', 		'/app/candidates', 			'linecons-cog');
 			var questionBank    = this.addItem('Question Bank', 		'/app/questionBank', 			'linecons-cog');
@@ -97,9 +98,17 @@ angular.module('hot.services', []).
 				users.addItem('Create User', 	'-/Create-User'); // "-/" will append parents link
 				users.addItem('Display Users', 	'-/Display-Users');
 
+            // Subitems of Clients
+            clients.addItem('Create Client', 	'-/Create-Client'); // "-/" will append parents link
+            clients.addItem('Display Clients', 	'-/Display-Clients');
+
             // Subitems of Users
             requirments.addItem('Create Requirement', 	'-/Create-Requirement'); // "-/" will append parents link
             requirments.addItem('Display Requirement', 	'-/Display-Requirement');
+
+            // Subitems of Users
+            questionBank.addItem('Add Questions', 	'-/Add-Questions'); // "-/" will append parents link
+            questionBank.addItem('Display Questions', 	'-/Display-Questions');
 
 			
 
