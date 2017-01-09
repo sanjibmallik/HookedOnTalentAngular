@@ -1,5 +1,6 @@
 package com.accion.recruitment.jpa.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.util.HashSet;
 @Entity
 @Table(name = "technicalscreener_skills")
 public class TechnicalScreenerSkills extends BaseEntity {
+
     public TechnicalScreenerSkills() {
     }
 
@@ -60,6 +62,7 @@ public class TechnicalScreenerSkills extends BaseEntity {
             , fetch = FetchType.EAGER
             , cascade = {CascadeType.PERSIST, CascadeType.MERGE })
     @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
+    @JsonBackReference
     private Collection<User> technicalScreenerDetailsSet=new HashSet<User>();
 
 
@@ -169,27 +172,9 @@ public class TechnicalScreenerSkills extends BaseEntity {
         this.id = id;
     }
 
-    /*@Override
+    @Override
     public String toString() {
         return "TechnicalScreeenerSkills [skillType=" + skillType + ", skills=" + skills + ",years=" + years + "]";
     }
-*/
-    @Override
-    public String toString() {
-        return "TechnicalScreenerSkills{" +
-                "id=" + id +
-                ", primarySkills='" + primarySkills + '\'' +
-                ", primarySkillsYears='" + primarySkillsYears + '\'' +
-                ", primarySkillsMonths='" + primarySkillsMonths + '\'' +
-                ", secondarySkills='" + secondarySkills + '\'' +
-                ", secondarySkillsYears='" + secondarySkillsYears + '\'' +
-                ", secondarySkillsMonths='" + secondarySkillsMonths + '\'' +
-                ", tsName='" + tsName + '\'' +
-                ", skillType='" + skillType + '\'' +
-                ", skills='" + skills + '\'' +
-                ", years=" + years +
-                ", months=" + months +
-                ", technicalScreenerDetailsSet=" + technicalScreenerDetailsSet +
-                '}';
-    }
+
 }

@@ -1,6 +1,8 @@
 package com.accion.recruitment.jpa.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -51,6 +53,7 @@ public class Groups extends BaseEntity{
     @CollectionId(columns = @Column(name="permissionGroupId"),
             type=@Type(type="long"),generator = "increment"
     )
+    @JsonManagedReference
     private Collection<Permission> permissionSet=new HashSet<Permission>();
 
     public Collection<Permission> getPermissionSet() {
@@ -68,6 +71,7 @@ public class Groups extends BaseEntity{
     @CollectionId(columns = @Column(name="userGroupId"),
             type=@Type(type="long"),generator = "increment"
     )
+    @JsonBackReference
     private Collection<User> userSet=new HashSet<User>();
 
     public Collection<User> getUserSet() {

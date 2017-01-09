@@ -1,5 +1,6 @@
 package com.accion.recruitment.jpa.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 
@@ -52,6 +53,7 @@ public class Permission extends BaseEntity {
             , fetch = FetchType.EAGER
             , cascade = {CascadeType.PERSIST, CascadeType.MERGE })
     @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
+    @JsonBackReference
     private Set<Groups> groupsSet=new HashSet<Groups>();
 
     public Set<Groups> getGroupsSet() {

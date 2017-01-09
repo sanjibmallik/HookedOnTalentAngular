@@ -1,5 +1,6 @@
 package com.accion.recruitment.jpa.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.*;
 import javax.persistence.*;
 import java.util.Collection;
@@ -33,6 +34,32 @@ public class User extends BaseEntity {
         this.role = role;
     }
 
+    public User(Integer id,String firstName, String lastName, String userName, String emailId, Boolean enabled, String contactNumber, String role, String alternateContact, String addressOne, String addressTwo, Long zipCode, String city, String state, String country, Long expectedPayRange, byte[] userImage, byte[] userProfile, String errorMessage, Set<Groups> groupsSet, Collection<TechnicalScreenerSkills> technicalScreenerDetailsDSkillsSet) {
+        this.id=id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.emailId = emailId;
+        this.enabled = enabled;
+        this.contactNumber = contactNumber;
+        this.role = role;
+        this.alternateContact = alternateContact;
+        this.addressOne = addressOne;
+        this.addressTwo = addressTwo;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.expectedPayRange = expectedPayRange;
+        this.userImage = userImage;
+        this.userProfile = userProfile;
+        this.errorMessage = errorMessage;
+        this.groupsSet = groupsSet;
+        this.technicalScreenerDetailsDSkillsSet = technicalScreenerDetailsDSkillsSet;
+    }
+    /*public User(Integer id, String firstName, String lastName, String emailId, Boolean enabled, String contactNumber, String role, String alternateContact, String addressOne, String addressTwo, Long zipCode, String city, String state, String country, Long expectedPayRange, byte[] userImage, byte[] userProfile, String errorMessage, Set<Groups> groupsSet, Collection<TechnicalScreenerSkills> technicalScreenerDetailsDSkillsSet) {
+        super();
+    }*/
     public User(Integer id,String firstName, String lastName) {
         this.id=id;
         this.firstName = firstName;
@@ -112,6 +139,7 @@ public class User extends BaseEntity {
             , fetch = FetchType.EAGER
             , cascade = {CascadeType.PERSIST, CascadeType.MERGE })
     @org.hibernate.annotations.Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+    @JsonManagedReference
     private Set<Groups> groupsSet=new HashSet<Groups>();
 
     @ManyToMany(targetEntity = TechnicalScreenerSkills.class, fetch = FetchType.EAGER,cascade = {CascadeType.ALL})
@@ -122,18 +150,10 @@ public class User extends BaseEntity {
     @CollectionId(columns = @Column(name="ts_skill_details_id"),
             type=@Type(type="long"),generator = "increment"
     )
+    @JsonManagedReference
     private Collection<TechnicalScreenerSkills> technicalScreenerDetailsDSkillsSet=new HashSet<TechnicalScreenerSkills>();
 
-    @Transient
-    private TechnicalScreenerSkills technicalScreenerSkills;
 
-    public TechnicalScreenerSkills getTechnicalScreenerSkills() {
-        return technicalScreenerSkills;
-    }
-
-    public void setTechnicalScreenerSkills(TechnicalScreenerSkills technicalScreenerSkills) {
-        this.technicalScreenerSkills = technicalScreenerSkills;
-    }
 
     public Integer getId() {
         return id;

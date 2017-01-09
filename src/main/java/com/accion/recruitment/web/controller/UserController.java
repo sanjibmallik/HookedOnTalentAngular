@@ -9,6 +9,7 @@ import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.jpa.entities.UserSkills;
 import com.accion.recruitment.service.UserEmailNotificationService;
 import com.accion.recruitment.service.UserService;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
 import io.swagger.annotations.*;
@@ -49,10 +50,7 @@ public class UserController {
 
     private final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 
-
     private final Random random = new SecureRandom();
-
-    private final Date currentDate = new Date();
 
     private final SimpleDateFormat sdf = new SimpleDateFormat(UserConstants.DATE_FORMAT);
 
@@ -69,6 +67,8 @@ public class UserController {
                               final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
                               final @RequestParam(required = false, value = "userProfile") MultipartFile userProfile,
                               final Principal principal) {
+
+        final Date currentDate = new Date();
 
         User user=new User();
         TechnicalScreenerSkills  technicalScreenerSkills=new TechnicalScreenerSkills();
@@ -185,12 +185,10 @@ public class UserController {
                 }
             }catch (SQLException e){
                 return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-        }catch (Exception e){
+            }catch (Exception e){
                 return new ResponseEntity<String>(new Gson().toJson(HttpStatusEnums.RECORD_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+            }
         }
-        }
-
-
     }
 
 
@@ -201,17 +199,29 @@ public class UserController {
 
     @RequestMapping(value = UserRestURIConstants.GET_ALL_USER, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> getAllUsers() throws JSONException {
+    @JsonIgnore
+    public ResponseEntity<Object> getAllUsers() throws JSONException {
 
         try{
             List<User> userList=this.userService.findAllUser();
+            List<User> userList1=new ArrayList<User>();
             JSONObject responseDetailsJson = new JSONObject();
             JSONArray jsonArray = new JSONArray();
-            for(User user:userList){
+            User user=new User();
+            for(User userObject:userList){
+
+                /* new User(userObject.getId(),userObject.getUserName(),userObject.getEmailId(),userObject.getFirstName(),userObject.getLastName(),userObject.getContactNumber(),
+                        userObject.getRole(),userObject.getEnabled(),userObject.getErrorMessage());
+                */user= new User(userObject.getId(),userObject.getFirstName(),userObject.getLastName(),userObject.getUserName(),userObject.getEmailId(),userObject.getEnabled(),
+                        userObject.getContactNumber(),userObject.getRole(),userObject.getAlternateContact(),userObject.getAddressOne(),userObject.getAddressTwo(),
+                        userObject.getZipCode(),userObject.getCity(),userObject.getState(),userObject.getCountry(),userObject.getExpectedPayRange(),userObject.getUserImage(),
+                        userObject.getUserProfile(),userObject.getErrorMessage(),userObject.getGroupsSet(),userObject.getTechnicalScreenerDetailsDSkillsSet());
+                userList1.add(user);
                 jsonArray.put(user.toString());
             }
+
             responseDetailsJson.put("users", jsonArray);
-            return new ResponseEntity<String>(responseDetailsJson.toString(), HttpStatus.OK);
+            return new ResponseEntity<Object>(userList, HttpStatus.OK);
         }catch (SQLException e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
