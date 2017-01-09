@@ -32,13 +32,13 @@
 		
 		<sec:http auto-config="true" use-expressions="true">
 			<sec:csrf disabled="true"/>
-			<sec:intercept-url pattern="/login" access="permitAll"/>
-			<sec:intercept-url pattern="/hot/**" access="permitAll"/>
+			<sec:intercept-url pattern="/hot/index.html#/login" access="permitAll"/>
+			<sec:intercept-url pattern="/api/**" access="permitAll"/>
 			<sec:intercept-url pattern="/" access="hasAnyRole('ROLE_ADMIN','ROLE_RECRUITER')"/>
-			<sec:session-management invalid-session-url="/login" session-authentication-error-url="/sessiontimeout" session-fixation-protection="newSession"/>
+			<sec:session-management invalid-session-url="/hot/index.html#/login" session-authentication-error-url="/hot/index.html#/login" session-fixation-protection="newSession"/>
 			<sec:access-denied-handler error-page="/error"/>
-			<sec:logout delete-cookies="true" invalidate-session="true" logout-url="/j_spring_security_logout" logout-success-url="/login"/>
-			<sec:form-login login-page="/login" default-target-url="/" authentication-failure-url="/failure" username-parameter="j_username" password-parameter="j_password" login-processing-url="/j_spring_security_check"/>
+			<sec:logout delete-cookies="true" invalidate-session="true" logout-url="/j_spring_security_logout" logout-success-url="/hot/index.html#/login"/>
+			<sec:form-login login-page="/hot/index.html#/login" default-target-url="/" authentication-failure-url="/failure" username-parameter="j_username" password-parameter="j_password" login-processing-url="/j_spring_security_check"/>
 		</sec:http>
 		
 </beans>
