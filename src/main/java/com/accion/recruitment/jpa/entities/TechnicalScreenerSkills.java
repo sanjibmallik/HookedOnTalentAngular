@@ -1,5 +1,9 @@
 package com.accion.recruitment.jpa.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
@@ -12,7 +16,11 @@ import java.util.HashSet;
  */
 @Entity
 @Table(name = "technicalscreener_skills")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class TechnicalScreenerSkills extends BaseEntity {
+
     public TechnicalScreenerSkills() {
     }
 
@@ -169,27 +177,9 @@ public class TechnicalScreenerSkills extends BaseEntity {
         this.id = id;
     }
 
-    /*@Override
+    @Override
     public String toString() {
         return "TechnicalScreeenerSkills [skillType=" + skillType + ", skills=" + skills + ",years=" + years + "]";
     }
-*/
-    @Override
-    public String toString() {
-        return "TechnicalScreenerSkills{" +
-                "id=" + id +
-                ", primarySkills='" + primarySkills + '\'' +
-                ", primarySkillsYears='" + primarySkillsYears + '\'' +
-                ", primarySkillsMonths='" + primarySkillsMonths + '\'' +
-                ", secondarySkills='" + secondarySkills + '\'' +
-                ", secondarySkillsYears='" + secondarySkillsYears + '\'' +
-                ", secondarySkillsMonths='" + secondarySkillsMonths + '\'' +
-                ", tsName='" + tsName + '\'' +
-                ", skillType='" + skillType + '\'' +
-                ", skills='" + skills + '\'' +
-                ", years=" + years +
-                ", months=" + months +
-                ", technicalScreenerDetailsSet=" + technicalScreenerDetailsSet +
-                '}';
-    }
+
 }

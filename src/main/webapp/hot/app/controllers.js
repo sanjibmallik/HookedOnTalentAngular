@@ -266,8 +266,11 @@ var hotMainController = angular.module('hot.controllers', []);
 	controller('UIModalsCtrl', function($scope, $rootScope, $modal, $sce)
 	{
 		// Open Simple Modal
-		$scope.openModal = function(modal_id, modal_size, modal_backdrop)
+		$scope.openModal = function(modal_id, modal_size, modal_backdrop,userObject)
 		{
+
+            $scope.user=userObject;
+            console.log($scope.user);
 			$rootScope.currentModal = $modal.open({
 				templateUrl: modal_id,
 				size: modal_size,

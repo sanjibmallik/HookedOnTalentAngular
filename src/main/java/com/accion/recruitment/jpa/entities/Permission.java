@@ -1,5 +1,9 @@
 package com.accion.recruitment.jpa.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 
@@ -19,6 +23,9 @@ import java.util.Set;
 
 @Entity
 @Table(name="permission")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Permission extends BaseEntity {
 
     @Id
@@ -52,9 +59,9 @@ public class Permission extends BaseEntity {
             , fetch = FetchType.EAGER
             , cascade = {CascadeType.PERSIST, CascadeType.MERGE })
     @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
-    private Set<Groups> groupsSet=new HashSet<Groups>();
+    private Collection<Groups> groupsSet=new HashSet<Groups>();
 
-    public Set<Groups> getGroupsSet() {
+    public Collection<Groups> getGroupsSet() {
         return groupsSet;
     }
 
