@@ -40,7 +40,7 @@ public class User extends BaseEntity {
         this.role = role;
     }
 
-    public User(Integer id,String firstName, String lastName, String userName, String emailId, Boolean enabled, String contactNumber, String role, String alternateContact, String addressOne, String addressTwo, Long zipCode, String city, String state, String country, Long expectedPayRange, byte[] userImage, byte[] userProfile, String errorMessage, Set<Groups> groupsSet, Collection<TechnicalScreenerSkills> technicalScreenerDetailsDSkillsSet) {
+    public User(Integer id,String firstName, String lastName, String userName, String emailId, Boolean enabled, String contactNumber, String role, String alternateContact, String addressOne, String addressTwo, Long zipCode, String city, String state, String country, Long expectedPayRange, byte[] userImage, byte[] userProfile, String errorMessage) {
         this.id=id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -60,8 +60,6 @@ public class User extends BaseEntity {
         this.userImage = userImage;
         this.userProfile = userProfile;
         this.errorMessage = errorMessage;
-        this.groupsSet = groupsSet;
-        this.technicalScreenerDetailsDSkillsSet = technicalScreenerDetailsDSkillsSet;
     }
     /*public User(Integer id, String firstName, String lastName, String emailId, Boolean enabled, String contactNumber, String role, String alternateContact, String addressOne, String addressTwo, Long zipCode, String city, String state, String country, Long expectedPayRange, byte[] userImage, byte[] userProfile, String errorMessage, Set<Groups> groupsSet, Collection<TechnicalScreenerSkills> technicalScreenerDetailsDSkillsSet) {
         super();

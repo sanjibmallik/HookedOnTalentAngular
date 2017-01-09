@@ -1,5 +1,7 @@
 package com.accion.recruitment.common.enums;
 
+import com.accion.recruitment.jpa.entities.User;
+
 /**
  * @author Mudassir Hussain
  * @author $LastChangedBy: Mudassir Hussain $
@@ -23,9 +25,9 @@ public enum UserHttpStatusEnums {
 
 
     DATABASE_EXCEPTION("Database connectivity issue. Try again."),
-    RECORD_NOT_SAVED("Problem with saving the record. Try again."),
-    RECORD_SAVED_EMAIL_SEND("Record saved and Email Send Successfully."),
-    RECORD_SAVED_EMAIL_NOT_SEND("Record saved and Email Not Send ."),
+    USER_NOT_SAVED("Problem with saving the User. Try again."),
+    USER_SAVED_EMAIL_SEND("User saved and Email Send Successfully."),
+    USER_SAVED_EMAIL_NOT_SEND("User saved and Email Not Send ."),
 
     USER_ENABLED_EMAIL_SEND("User Enabled  and Email  Send Successfully."),
     USER_ENABLED_EMAIL_NOT_SEND("User Enabled  and Email Not Send."),
@@ -35,8 +37,10 @@ public enum UserHttpStatusEnums {
 
     PASSWORD_NOT_CHANGED("Password Changed"),
     PASSWORD_CHANGED_EMAIL_SEND("Password Changed and Email  Send Successfully."),
-    PASSWORD_CHANGED_EMAIL_NOT_SEND("Password Changed and Email Not Send .");
+    PASSWORD_CHANGED_EMAIL_NOT_SEND("Password Changed and Email Not Send ."),
 
+    USER_UPDATED("User Updated Successfully."),
+    USER_NOT_UPDATED("Problem with updating the User. Try again.");
 
     private String responseMsg;
 

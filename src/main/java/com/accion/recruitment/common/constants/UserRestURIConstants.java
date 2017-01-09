@@ -9,6 +9,7 @@ package com.accion.recruitment.common.constants;
 public class UserRestURIConstants {
 
     public static final String CREATE_USER = "/hot/user/create";
+    public static final String UPDATE_USER = "/hot/user/update";
     public static final String GET_ALL_USER = "/hot/users";
     public static final String GET_BY_ID = "/hot/user/{id}";
     public static final String GET_USER_NAME = "/hot/user/userName/{userName}";
