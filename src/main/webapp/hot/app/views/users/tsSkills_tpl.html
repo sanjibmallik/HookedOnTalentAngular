@@ -77,6 +77,7 @@
                         <label class="col-sm-3 control-label" >Primary skills</label>
 
                         <div class="col-sm-5">
+
                             <input style="float: left; width: 50%" type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Primary Skill">
                             <input style="float: left; width: 25%" type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Years">
                             <input style="float: left; width: 25%" type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Months">
@@ -84,6 +85,14 @@
 
                         <div class="input_fields_wrap" style="margin-top: 0px;">
                             <button class="add_field_button btn btn-primary" style="margin-left: 10px;">+</button>
+
+                            <div class="input-group input-group-sm input-group-minimal">
+                                        <span class="input-group-addon">
+                                            <i class="linecons-user"></i>
+                                        </span>
+                                <input type="text" name="primarySkills" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Primary Skills">
+                            </div>
+
                         </div>
                     </div>
 
@@ -94,6 +103,7 @@
                         <label class="col-sm-3 control-label" >Secondary Skills</label>
 
                         <div class="col-sm-5">
+
                             <input style="float: left; width: 50%" type="text" ng-model="newUser.secondarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Secondary Skill">
                             <input style="float: left; width: 25%" type="text" ng-model="newUser.secondarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Years">
                             <input style="float: left; width: 25%" type="text" ng-model="newUser.secondarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Months">
@@ -101,6 +111,14 @@
 
                         <div class="input_fields_wrap2" style="margin-top: 0px;">
                             <button class="add_field_button2 btn btn-primary" style="margin-left: 10px;">+</button>
+
+                            <div class="input-group input-group-sm input-group-minimal">
+							<span class="input-group-addon">
+								<i class="linecons-user"></i>
+							</span>
+                                <input type="text" class="form-control"ng-maxlength="35" ng-minlength="1" ng-required="true" ng-model="newUser.secondarySkills" name="secondarySkills" placeholder="Secondary Skills">
+                            </div>
+
                         </div>
                     </div>
 
@@ -114,7 +132,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
-                                <input type="text" ng-model="newUser.expectedPayRange" class="form-control" placeholder="Pay Range"
+                                <input type="text" ng-model="newUser.expectedPayRange" name="expectedPayRange" class="form-control" placeholder="Pay Range"
                                        inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                             </div>
                         </div>

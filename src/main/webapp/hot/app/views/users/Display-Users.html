@@ -69,13 +69,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-click="toggleDetail($index)">
-                <td>Azhar</td>
-                <td>Liaquat</td>
-                <td>azhar</td>
-                <td>azhar.liaquat@accionlabs.com</td>
-                <td>9844580058</td>
-                <td>Admin</td>
+             <tr ng-repeat="user in testUser.user">
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.userName}}</td>
+                <td>{{user.emailId}}</td>
+                <td>{{user.contactNumber}}</td>
+                <td>{{user.role}}</td>
                 <td>
                     <div class="btn-group" dropdown>
                     <button type="button" class="btn btn-gray dropdown-toggle" data-toggle="dropdown" style="font-size: 11px;">
@@ -105,249 +105,23 @@
 
 
                     </ul>
-                </div>
+                 </div>
                 </td>
-            </tr>
-            <tr ng-click="toggleDetail($index)">
-                <td>Mudassir</td>
-                <td>Hussain</td>
-                <td>mudassir</td>
-                <td>mudassir.h@accionlabs.com</td>
-                <td>9865465324</td>
-                <td>Admin</td>
-                <td>
-                    <div class="btn-group" dropdown>
-                        <button type="button" class="btn btn-gray dropdown-toggle" data-toggle="dropdown" style="font-size: 11px;">
-                            Action <span class="caret"></span>
-                        </button>
-                        <!-- style="font-size: 10px;background-color: #2c2e2f;color: white;"-->
-                        <ul class="dropdown-menu dropdown-gray" role="menu" style="font-size: 11px;">
-                            <li>
-                                <a href="" ng-click="openModal('modal-2')" class="">Details</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-5', 'lg');" class="">Edit</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-1')" class="">Disable</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-3')" class="">Delete</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-4')" class="">Reset Password</a>
-                            </li>
 
-
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr ng-click="toggleDetail($index)">
-                <td>Sanjib</td>
-                <td>Mallik</td>
-                <td>sanjib</td>
-                <td>Sanjib.mallik@accionlabs.com</td>
-                <td>98875630058</td>
-                <td>Admin</td>
-                <td>
-                    <div class="btn-group" dropdown>
-                        <button type="button" class="btn btn-gray dropdown-toggle" data-toggle="dropdown" style="font-size: 11px;">
-                            Action <span class="caret"></span>
-                        </button>
-                        <!-- style="font-size: 10px;background-color: #2c2e2f;color: white;"-->
-                        <ul class="dropdown-menu dropdown-gray" role="menu" style="font-size: 11px;">
-                            <li>
-                                <a href="" ng-click="openModal('modal-2')" class="">Details</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-5', 'lg');" class="">Edit</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-1')" class="">Disable</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-3')" class="">Delete</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-4')" class="">Reset Password</a>
-                            </li>
-
-
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Nitish</td>
-                <td>Kumar</td>
-                <td>nitish</td>
-                <td>nitish.kumar@accionlabs.com</td>
-                <td>8767880058</td>
-                <td>Recruiter</td>
-                <td>
-                    <div class="btn-group" dropdown>
-                        <button type="button" class="btn btn-gray dropdown-toggle" data-toggle="dropdown" style="font-size: 11px;">
-                            Action <span class="caret"></span>
-                        </button>
-                        <!-- style="font-size: 10px;background-color: #2c2e2f;color: white;"-->
-                        <ul class="dropdown-menu dropdown-gray" role="menu" style="font-size: 11px;">
-                            <li>
-                                <a href="" ng-click="openModal('modal-2')" class="">Details</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-5', 'lg');" class="">Edit</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-1')" class="">Disable</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-3')" class="">Delete</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-4')" class="">Reset Password</a>
-                            </li>
-
-
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Revathi</td>
-                <td>Murali</td>
-                <td>revathi</td>
-                <td>revathi.murali@accionlabs.com</td>
-                <td>9235460058</td>
-                <td>Technical Screener</td>
-                <td>
-                    <div class="btn-group" dropdown>
-                        <button type="button" class="btn btn-gray dropdown-toggle" data-toggle="dropdown" style="font-size: 11px;">
-                            Action <span class="caret"></span>
-                        </button>
-                        <!-- style="font-size: 10px;background-color: #2c2e2f;color: white;"-->
-                        <ul class="dropdown-menu dropdown-gray" role="menu" style="font-size: 11px;">
-                            <li>
-                                <a href="" ng-click="openModal('modal-2')" class="">Details</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-5', 'lg');" class="">Edit</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-1')" class="">Disable</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-3')" class="">Delete</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-4')" class="">Reset Password</a>
-                            </li>
-
-
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Raj</td>
-                <td>Kumar</td>
-                <td>raj</td>
-                <td>raj.kumar@accionlabs.com</td>
-                <td>8844453258</td>
-                <td>Recruiter</td>
-                <td>
-                    <div class="btn-group" dropdown>
-                        <button type="button" class="btn btn-gray dropdown-toggle" data-toggle="dropdown" style="font-size: 11px;">
-                            Action <span class="caret"></span>
-                        </button>
-                        <!-- style="font-size: 10px;background-color: #2c2e2f;color: white;"-->
-                        <ul class="dropdown-menu dropdown-gray" role="menu" style="font-size: 11px;">
-                            <li>
-                                <a href="" ng-click="openModal('modal-2')" class="">Details</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-5', 'lg');" class="">Edit</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-1')" class="">Disable</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-3')" class="">Delete</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-4')" class="">Reset Password</a>
-                            </li>
-
-
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Sachin</td>
-                <td>Tendulkar</td>
-                <td>sachin</td>
-                <td>sachin.t@accionlabs.com</td>
-                <td>8767545432</td>
-                <td>Account Manager</td>
-                <td>
-                    <div class="btn-group" dropdown>
-                        <button type="button" class="btn btn-gray dropdown-toggle" data-toggle="dropdown" style="font-size: 11px;">
-                            Action <span class="caret"></span>
-                        </button>
-                        <!-- style="font-size: 10px;background-color: #2c2e2f;color: white;"-->
-                        <ul class="dropdown-menu dropdown-gray" role="menu" style="font-size: 11px;">
-                            <li>
-                                <a href="" ng-click="openModal('modal-2')" class="">Details</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-5', 'lg');" class="">Edit</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-1')" class="">Disable</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-3')" class="">Delete</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-4')" class="">Reset Password</a>
-                            </li>
-
-
-                        </ul>
-                    </div>
-                </td>
             </tr>
 
-            </tbody>
+
+
+           </tbody>
         </table>
 
     </div>
 </div>
+
+
+
+
+
 
 
 <script type="text/ng-template" id="modal-1">
@@ -470,6 +244,8 @@
 </script>
 
 
+
+
 <script type="text/ng-template" id="modal-5">
     <div class="modal-header">
         <button type="button" class="close" ng-click="currentModal.close();" aria-hidden="true">&times;</button>
@@ -504,7 +280,7 @@
             <div class="col-md-6">
 
                 <div class="form-group">
-                    <label for="field-1" class="control-label">Conatct No.</label>
+                    <label for="field-1" class="control-label">Contact No.</label>
 
                     <input type="text" class="form-control" placeholder="Primary Conatact">
                 </div>
