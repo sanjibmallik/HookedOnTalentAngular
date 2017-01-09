@@ -27,7 +27,7 @@ import com.accion.recruitment.service.AdminService;
  */
 @Controller
 public class AdminControllerImpl {
-
+/*
     @Autowired
     private AdminService adminService;
 
@@ -38,7 +38,7 @@ public class AdminControllerImpl {
         return adminService.findAll();
     }
 
-/*	@ApiOperation(value = "Get Admin")
+	@ApiOperation(value = "Get Admin")
 	@RequestMapping(value = "api/admin/{adminId}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	@ResponseBody
 	public Admin get(@PathVariable final Long adminId) {
