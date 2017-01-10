@@ -63,12 +63,12 @@ public class TechnicalScreenerSkills extends BaseEntity {
     private Long months;
 
 
-    @ManyToMany(mappedBy="technicalScreenerDetailsDSkillsSet"
+    /*@ManyToMany(mappedBy="technicalScreenerDetailsDSkillsSet"
             , targetEntity = User.class
             , fetch = FetchType.EAGER
             , cascade = {CascadeType.PERSIST, CascadeType.MERGE })
     @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
-    private Collection<User> technicalScreenerDetailsSet=new HashSet<User>();
+    private Collection<User> technicalScreenerDetailsSet=new HashSet<User>();*/
 
 
     public String getPrimarySkills() {
@@ -161,13 +161,13 @@ public class TechnicalScreenerSkills extends BaseEntity {
         this.months = months;
     }
 
-    public Collection<User> getTechnicalScreenerDetailsSet() {
+    /*public Collection<User> getTechnicalScreenerDetailsSet() {
         return technicalScreenerDetailsSet;
     }
 
     public void setTechnicalScreenerDetailsSet(Collection<User> technicalScreenerDetailsSet) {
         this.technicalScreenerDetailsSet = technicalScreenerDetailsSet;
-    }
+    }*/
 
     public Integer getId() {
         return id;
