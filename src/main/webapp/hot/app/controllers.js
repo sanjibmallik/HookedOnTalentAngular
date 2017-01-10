@@ -290,10 +290,10 @@ var hotMainController = angular.module('hot.controllers', []);
 					{
 						return $http.get(url_location).then(function(response){
 
-                           /* $scope.responseData = response.data;
-                            console.log($scope.responseData.firstName);*/
-							$rootScope.modalContent = $sce.trustAsHtml(response.data);
-
+                            $rootScope.responseData = response.data;
+                            console.log($rootScope.responseData.firstName);
+							/*$rootScope.modalContent = $sce.trustAsHtml(response.data);
+*/
 						}, function(response){
 							$rootScope.modalContent = $sce.trustAsHtml('<div class="label label-danger">Cannot load ajax content! Please check the given url.</div>');
 						});

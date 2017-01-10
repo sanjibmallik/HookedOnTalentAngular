@@ -46,12 +46,16 @@
             jQuery(document).ready(function($)
             {
                 $("#example-3").dataTable().yadcf([
+
                     {column_number : 0, filter_type: 'text'},
                     {column_number : 1, filter_type: 'text'},
                     {column_number : 2, filter_type: 'text'},
                     {column_number : 3, filter_type: 'text'},
                     {column_number : 4, filter_type: 'text'},
-                    {column_number : 5,filter_type: 'text'}
+                    {column_number : 5,filter_type: 'text'},
+                    {column_number : 6, filter_type: 'text'},
+                    {column_number : 7, filter_type: 'text'}
+
                 ]);
             });
         </script>
@@ -71,7 +75,7 @@
             </thead>
             <tbody>
              <tr ng-repeat="user in allUsers">
-                 <td>{{user.id}}</td>
+                <td>{{user.id}}</td>
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>{{user.userName}}</td>
@@ -90,7 +94,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="" ng-click="openModal('modal-5', 'lg');" class="">Edit</a>
+                            <a href="" ng-click="openAjaxModal('modal-5', 'user/userName/'+user.userName);" class="">Edit</a>
                         </li>
                         <li class="divider"></li>
                         <li>
@@ -194,13 +198,13 @@
         <h4 class="modal-title">Details</h4>
     </div>
 
-    <div class="modal-body" ng-controller="UIModalsCtrl">
+    <div class="modal-body">
         <table class="table responsive">
             <thead>
             <tr>
 
                 <th>User Name</th>
-                <th></th>
+                <th>{{responseData.userName}}</th>
             </tr>
             </thead>
 
@@ -208,7 +212,7 @@
             <tr>
 
                 <td>First Name</td>
-                <td>ng-bind-html={{responseData.firstName}}</td>
+                <td>{{responseData.firstName}}</td>
             </tr>
 
             <tr>
@@ -220,19 +224,19 @@
             <tr>
 
                 <td>email</td>
-                <td></td>
+                <td>{{responseData.emailId}}</td>
             </tr>
 
             <tr>
 
                 <td>Contact No.</td>
-                <td></td>
+                <td>{{responseData.contactNumber}}</td>
             </tr>
 
             <tr>
 
                 <td>Alternate Contact</td>
-                <td>NA</td>
+                <td></td>
             </tr>
             </tbody>
         </table>
@@ -263,7 +267,7 @@
                 <div class="form-group">
                     <label for="field-1" class="control-label">First Name</label>
 
-                    <input type="text" class="form-control" placeholder="First Name">
+                    <input type="text" ng-model="responseData.firstName" class="form-control" placeholder="First Name">
                 </div>
 
             </div>
@@ -273,7 +277,7 @@
                 <div class="form-group">
                     <label for="field-2" class="control-label">Last Name</label>
 
-                    <input type="text" class="form-control"  placeholder="Last Name">
+                    <input type="text" class="form-control" ng-model="responseData.lastName"  placeholder="Last Name">
                 </div>
 
             </div>
@@ -285,7 +289,7 @@
                 <div class="form-group">
                     <label for="field-1" class="control-label">Contact No.</label>
 
-                    <input type="text" class="form-control" placeholder="Primary Conatact">
+                    <input type="text" ng-model="responseData.contactNumber" class="form-control" placeholder="Primary Conatact">
                 </div>
 
             </div>
@@ -307,7 +311,7 @@
                 <div class="form-group">
                     <label for="field-3" class="control-label">Address</label>
 
-                    <input type="text" class="form-control" id="field-3" placeholder="Address">
+                    <input type="text" ng-model="responseData.addressOne" class="form-control" id="field-3" placeholder="Address">
                 </div>
 
             </div>
@@ -319,7 +323,7 @@
                 <div class="form-group">
                     <label for="field-4" class="control-label">City</label>
 
-                    <input type="text" class="form-control" id="field-4" placeholder="Pitsburg">
+                    <input type="text" ng-model="responseData.city" class="form-control" id="field-4" placeholder="Pitsburg">
                 </div>
 
             </div>
@@ -329,7 +333,7 @@
                 <div class="form-group">
                     <label for="field-5" class="control-label">Country</label>
 
-                    <input type="text" class="form-control" id="field-5" placeholder="United States">
+                    <input type="text" ng-model="responseData.country" class="form-control" id="field-5" placeholder="United States">
                 </div>
 
             </div>
@@ -339,7 +343,7 @@
                 <div class="form-group">
                     <label for="field-6" class="control-label">Zip</label>
 
-                    <input type="text" class="form-control" id="field-6" placeholder="123456">
+                    <input type="text" ng-model="responseData.zipCode" class="form-control" id="field-6" placeholder="123456">
                 </div>
 
             </div>
