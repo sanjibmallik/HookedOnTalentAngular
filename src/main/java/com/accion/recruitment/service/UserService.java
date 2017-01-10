@@ -48,7 +48,7 @@ public interface UserService {
 
     /**
      * findUserByPropertyName() provide the specification for retrieval of the
-     * User object from the database based on the User name.
+     * User object from the database based on the Property name.
      *
      * @param propName accept the java.lang.String type of propName
      *                  which is having column name value .

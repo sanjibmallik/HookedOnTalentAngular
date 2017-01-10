@@ -8,4 +8,6 @@ package com.accion.recruitment.common.constants;
 public class ClientRestURIConstants {
 
     public static final String GET_CLIENT_NAME = "/hot/client/clientName/{clientName}";
+    public static final String GET_FEDERAL_ID = "/hot/client/federalId/{federalId}";
+    public static final String GET_BY_PROPERTY = "/hot/client/{propertyName}/{propertyValue:..+}";
 }

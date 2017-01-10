@@ -1,12 +1,17 @@
 package com.accion.recruitment.web.controller;
 
+import com.accion.recruitment.common.constants.ClientConstants;
 import com.accion.recruitment.common.constants.ClientRestURIConstants;
 import com.accion.recruitment.common.constants.UserConstants;
 import com.accion.recruitment.common.constants.UserRestURIConstants;
+import com.accion.recruitment.jpa.entities.ClientDetails;
 import com.accion.recruitment.jpa.entities.User;
+import com.accion.recruitment.service.ClientService;
+import com.accion.recruitment.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +32,11 @@ import java.sql.SQLException;
 @Controller
 public class ClientController {
 
+    @Autowired
+    private ClientService clientService;
+
+
+    
     @ApiOperation(value = "Get the Client Details based on ClientName  ", httpMethod="GET"
             , notes = "Return the matched Client")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Client Found "),
@@ -36,10 +46,68 @@ public class ClientController {
     @ResponseBody
     public ResponseEntity<Object> isClientNameExist(@PathVariable("clientName") final String clientName) {
 
-
-        return new ResponseEntity(HttpStatus.OK);
-
+        ClientDetails clientDetailsObject;
+        try{
+            clientDetailsObject=this.clientService.findClientDetailsByPropertyName(ClientConstants.CLIENT_NAME,clientName);
+            if(clientDetailsObject!=null){
+                ClientDetails clientDetails=new ClientDetails(clientDetailsObject.getId(),clientDetailsObject.getClientName());
+                return new ResponseEntity<Object>(clientDetails, HttpStatus.OK);
+            }
+        }catch (SQLException sql){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ApiOperation(value = "Get the Client Details based on FederalId  ", httpMethod="GET"
+            , notes = "Return the matched Client")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Client Found "),
+            @ApiResponse(code = 404, message = "Client not found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = ClientRestURIConstants.GET_FEDERAL_ID, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> isFederalIdExist(@PathVariable("federalId") final String federalId) {
+
+        ClientDetails clientDetailsObject;
+        try{
+            clientDetailsObject=this.clientService.findClientDetailsByPropertyName(ClientConstants.FEDERAL_ID,federalId);
+            if(clientDetailsObject!=null){
+                ClientDetails clientDetails=new ClientDetails(clientDetailsObject.getId(),clientDetailsObject.getClientName());
+                return new ResponseEntity<Object>(clientDetails, HttpStatus.OK);
+            }
+        }catch (SQLException sql){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /*@ApiOperation(value = "Get the Client Details based on property Name and Value  ", httpMethod="GET"
+            , notes = "Return the matched Client")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Client Found "),
+            @ApiResponse(code = 404, message = "Client not found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = ClientRestURIConstants.GET_BY_PROPERTY, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> propertyName(@PathVariable("propertyName") final String propertyName,
+                                               @PathVariable("propertyValue") final String propertyValue) {
+
+        ClientDetails clientDetailsObject;
+        try{
+            clientDetailsObject=this.clientService.findClientDetailsByPropertyName(propertyName,propertyValue);
+            if(clientDetailsObject!=null){
+                ClientDetails clientDetails=new ClientDetails(clientDetailsObject.getId(),clientDetailsObject.getClientName());
+                return new ResponseEntity<Object>(clientDetails, HttpStatus.OK);
+            }
+        }catch (SQLException sql){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }*/
 
 }

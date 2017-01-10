@@ -485,7 +485,7 @@ public class UserController {
         }catch (Exception e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 
@@ -511,7 +511,7 @@ public class UserController {
         }catch (Exception e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 
@@ -537,7 +537,7 @@ public class UserController {
         }catch (Exception e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return  new ResponseEntity(HttpStatus.OK);
+        return  new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
@@ -563,7 +563,7 @@ public class UserController {
             e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return  new ResponseEntity(HttpStatus.OK);
+        return  new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     public final String generatePassword(){

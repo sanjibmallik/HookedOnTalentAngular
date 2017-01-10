@@ -18,6 +18,14 @@ import java.util.Set;
 @Table(name = "client_details")
 public class ClientDetails extends BaseEntity {
 
+    public ClientDetails() {
+    }
+
+    public ClientDetails(Integer id,String clientName) {
+        this.id=id;
+        this.clientName = clientName;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="id" ,insertable = true, nullable = false, unique = true, updatable = true)
