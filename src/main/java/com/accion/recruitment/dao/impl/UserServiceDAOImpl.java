@@ -121,4 +121,12 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
         return (User) criteria.uniqueResult();
     }
 
+    @Override
+    public Boolean deleteRecordByQuery(final String query) {
+        final Session session = getSession();
+        final Query sqlQuery = session.createSQLQuery(query);
+        sqlQuery.executeUpdate();
+        return true;
+    }
+
 }
