@@ -16,6 +16,7 @@ var app = angular.module('hot-app', [
     'hot.userFactory',
     'hot.userFilter'
 
+
 ]);
 
 app.run(function()

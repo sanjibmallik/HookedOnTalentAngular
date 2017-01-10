@@ -74,7 +74,7 @@ var hotMainController = angular.module('hot.controllers', []);
 				userProfile		: true
 			},
 			chat: {
-				isOpen			: false,
+				isOpen			: false
 			},
 			settingsPane: {
 				isOpen			: false,
@@ -281,13 +281,19 @@ var hotMainController = angular.module('hot.controllers', []);
 		// Loading AJAX Content
 		$scope.openAjaxModal = function(modal_id, url_location)
 		{
+            console.log(url_location);
+
 			$rootScope.currentModal = $modal.open({
 				templateUrl: modal_id,
 				resolve: {
 					ajaxContent: function($http)
 					{
 						return $http.get(url_location).then(function(response){
+
+                           /* $scope.responseData = response.data;
+                            console.log($scope.responseData.firstName);*/
 							$rootScope.modalContent = $sce.trustAsHtml(response.data);
+
 						}, function(response){
 							$rootScope.modalContent = $sce.trustAsHtml('<div class="label label-danger">Cannot load ajax content! Please check the given url.</div>');
 						});
