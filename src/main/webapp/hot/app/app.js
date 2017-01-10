@@ -6,14 +6,17 @@ var app = angular.module('hot-app', [
 	'ui.router',
 	'ui.bootstrap',
 	'oc.lazyLoad',
+    'FBAngular',
+    'pagerApp',
 	'hot.controllers',
 	'hot.directives',
 	'hot.factory',
 	'hot.services',
     'hot.userControllers',
     'hot.userFactory',
-    'hot.userFilter',
-	'FBAngular'
+    'hot.userFilter'
+
+
 ]);
 
 app.run(function()

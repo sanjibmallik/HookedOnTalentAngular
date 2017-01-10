@@ -185,11 +185,8 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
                $scope.allUsers=response.data;
                console.log($scope.allUsers);
-             /*  $scope.oneUser = $scope.allUsers[4];
-               console.log($scope.oneUser);*/
 
-
-               $scope.testUser={"user":[
+              /* $scope.testUser={"user":[
                    {
                        'id':195,'userName':'sandesh.s', 'emailId':'sandesh.s@accionlabs.com', 'enabled':'true', 'firstName':'Sandesh', 'lastName':'Sukumaran', 'contactNumber':4129798111, 'role':'SuperAdmin', 'errorMessage':'null'
 
@@ -198,7 +195,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
                        'id':198,'userName':'sandesh.s', 'emailId':'sandesh.s@accionlabs.com', 'enabled':'true', 'firstName':'Sandesh', 'lastName':'Sukumaran', 'contactNumber':4129798111, 'role':'SuperAdmin', 'errorMessage':'null'
                    }
                ]};
-
+*/
 
 
            },function errorCallback(response) {

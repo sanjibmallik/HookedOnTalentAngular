@@ -55,12 +55,11 @@ public class UserController {
 
 
     @ApiOperation(value = "Create the new User ",  code = 201, httpMethod="POST")
-
     @ApiResponses(value = {@ApiResponse(code = 201, message = "User Created Successfully"),
                     @ApiResponse(code = 200, message = "Successful Respond Send")
             , @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = UserRestURIConstants.CREATE_USER, method = RequestMethod.POST)
+    @RequestMapping(value = UserRestURIConstants.CREATE_USER,produces = MediaType.APPLICATION_JSON_VALUE ,method = RequestMethod.POST)
     public  ResponseEntity<String> createUser(@RequestBody UserSkills userSkills,
                               final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
                               final @RequestParam(required = false, value = "userProfile") MultipartFile userProfile,
@@ -197,7 +196,42 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "Update/Edit the new User ",  code = 201, httpMethod="PUT")
+    @ApiOperation(value = "Get All the Users  ", httpMethod="GET")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Users Found "),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+
+    @RequestMapping(value = UserRestURIConstants.GET_ALL_USER, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.GET)
+    @ResponseBody
+    @JsonIgnore
+    public ResponseEntity<List<User>> getAllUsers() throws JSONException {
+
+        try{
+            List<User> userList=this.userService.findAllUser();
+            List<User> users=new ArrayList<User>();
+
+            for(User userObject:userList){
+
+            /*     new User(userObject.getId(),userObject.getUserName(),userObject.getEmailId(),userObject.getFirstName(),userObject.getLastName(),userObject.getContactNumber(),
+                        userObject.getRole(),userObject.getEnabled(),userObject.getErrorMessage());
+            */
+                User user= new User(userObject.getId(),userObject.getFirstName(),userObject.getLastName(),userObject.getUserName(),userObject.getEmailId(),userObject.getEnabled(),
+                        userObject.getContactNumber(),userObject.getRole(),userObject.getAlternateContact(),userObject.getAddressOne(),userObject.getAddressTwo(),
+                        userObject.getZipCode(),userObject.getCity(),userObject.getState(),userObject.getCountry(),userObject.getExpectedPayRange(),userObject.getUserImage(),
+                        userObject.getUserProfile(),userObject.getErrorMessage());
+                users.add(user);
+
+            }
+            return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+        }catch (SQLException e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+    @ApiOperation(value = "Update/Edit the  User ",  code = 201, httpMethod="PUT")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Updated User Successfully")
             , @ApiResponse(code = 500, message = "Internal Server Error")})
 
@@ -210,9 +244,10 @@ public class UserController {
 
         try{
             final Date currentDate = new Date();
-            User user=new User();
-            TechnicalScreenerSkills  technicalScreenerSkills=new TechnicalScreenerSkills();
-            List<TechnicalScreenerSkills> technicalScreenerSkillsList=new ArrayList<TechnicalScreenerSkills>();
+            User user;
+            User oldUser;
+            TechnicalScreenerSkills  technicalScreenerSkills;
+            List<TechnicalScreenerSkills> technicalScreenerSkillsList;
 
             if(userSkills.getUser()!=null){
                 user=userSkills.getUser();
@@ -220,10 +255,13 @@ public class UserController {
                 return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
             }
 
-            User oldUser=this.userService.findUserById(user.getId());
-            if(oldUser==null)
+            try{
+                oldUser=this.userService.findUserById(user.getId());
+                if(oldUser==null)
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+            }catch (Exception e){
                 return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
-
+            }
 
             if(user != null && user.getUserName() != null && (!user.getUserName().isEmpty()) && (!oldUser.getUserName().equals(user.getUserName()))){
                 try{
@@ -283,14 +321,11 @@ public class UserController {
                 user.setUserProfile(oldUser.getUserProfile());
             }
 
-
             try{
                 user.setUpdatedBy(principal.getName());
             }catch (Exception e){
 
             }
-
-
             user.setUpdatedDate(new Date(sdf.format(currentDate)));
 
             if(user.getRole().equals(oldUser.getRole())){
@@ -300,85 +335,48 @@ public class UserController {
                     return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
                 }
             }else{
-                if(user.getRole().equalsIgnoreCase(UserEnums.TechnicalScreener.toString())){
-                    try{
-                        if(userSkills.getTechnicalScreenerSkills()!=null){
-                            technicalScreenerSkills=userSkills.getTechnicalScreenerSkills();
-                            technicalScreenerSkillsList=this.getTechnicalSkillsObjectList(technicalScreenerSkills);
-                            user.getTechnicalScreenerDetailsDSkillsSet().addAll(technicalScreenerSkillsList);
-                            if(this.userService.saveUserGroups(user)){
-                                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_UPDATED.ResponseMsg()), HttpStatus.OK);
-                            }else {
-                                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                String deleteUserGroupQuery="delete  FROM default.user_group where userSet_id="+oldUser.getId();
+                if(this.userService.deleteRecordByQuery(deleteUserGroupQuery)){
+                    if(user.getRole().equalsIgnoreCase(UserEnums.TechnicalScreener.toString())){
+                        try{
+                            if(userSkills.getTechnicalScreenerSkills()!=null){
+                                technicalScreenerSkills=userSkills.getTechnicalScreenerSkills();
+                                technicalScreenerSkillsList=this.getTechnicalSkillsObjectList(technicalScreenerSkills);
+                                user.getTechnicalScreenerDetailsDSkillsSet().addAll(technicalScreenerSkillsList);
+                                if(this.userService.saveUserGroups(user)){
+                                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_UPDATED.ResponseMsg()), HttpStatus.OK);
+                                }else {
+                                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                                }
+                            }else{
+                                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_SKILLS_EXCEPTION.ResponseMsg()), HttpStatus.OK);
                             }
-                        }else{
+                        }catch (ArrayIndexOutOfBoundsException e){
                             return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_SKILLS_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-                        }
-                    }catch (ArrayIndexOutOfBoundsException e){
-                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_SKILLS_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-                    }catch (SQLException e){
-                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-                    }catch (Exception e){
-                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
-                    }
-                }else{
-                    try{
-                        if(this.userService.saveUserGroups(user)){
-                                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_UPDATED.ResponseMsg()), HttpStatus.OK);
-                        }else{
+                        }catch (SQLException e){
+                            return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                        }catch (Exception e){
                             return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
                         }
-                    }catch (SQLException e){
-                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-                    }catch (Exception e){
-                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                    }else{
+                        try{
+                            if(this.userService.saveUserGroups(user)){
+                                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_UPDATED.ResponseMsg()), HttpStatus.OK);
+                            }else{
+                                return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                            }
+                        }catch (SQLException e){
+                            return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                        }catch (Exception e){
+                            return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                        }
                     }
                 }
             }
         }catch (Exception e){
             return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
         }
-
-    }
-
-
-    @ApiOperation(value = "Get All the Users  ", httpMethod="GET")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "Users Found "),
-            @ApiResponse(code = 500, message = "Internal Server Error")})
-
-    @RequestMapping(value = UserRestURIConstants.GET_ALL_USER, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.GET)
-    @ResponseBody
-    @JsonIgnore
-    public ResponseEntity<List<User>> getAllUsers() throws JSONException {
-
-        try{
-            List<User> userList=this.userService.findAllUser();
-
-            List<User> userList1=new ArrayList<User>();
-            JSONObject responseDetailsJson = new JSONObject();
-            JSONArray jsonArray = new JSONArray();
-
-            for(User userObject:userList){
-
-            /*     new User(userObject.getId(),userObject.getUserName(),userObject.getEmailId(),userObject.getFirstName(),userObject.getLastName(),userObject.getContactNumber(),
-                        userObject.getRole(),userObject.getEnabled(),userObject.getErrorMessage());
-            */
-                User user= new User(userObject.getId(),userObject.getFirstName(),userObject.getLastName(),userObject.getUserName(),userObject.getEmailId(),userObject.getEnabled(),
-                        userObject.getContactNumber(),userObject.getRole(),userObject.getAlternateContact(),userObject.getAddressOne(),userObject.getAddressTwo(),
-                        userObject.getZipCode(),userObject.getCity(),userObject.getState(),userObject.getCountry(),userObject.getExpectedPayRange(),userObject.getUserImage(),
-                        userObject.getUserProfile(),userObject.getErrorMessage());
-                userList1.add(user);
-                jsonArray.put(user.toString());
-            }
-
-            responseDetailsJson.put("users", jsonArray);
-
-            return new ResponseEntity<List<User>>(userList1, HttpStatus.OK);
-        }catch (SQLException e){
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-        }catch (Exception e){
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
     }
 
 
@@ -468,7 +466,7 @@ public class UserController {
 
     @ApiOperation(value = "Get the User based on ID  ", httpMethod="GET"
             , notes = "Return the matched User")
-    @ApiResponses(value = {@ApiResponse(code = 302, message = "User Found "),
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "User Found "),
             @ApiResponse(code = 404, message = "User not found"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = UserRestURIConstants.GET_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
@@ -487,14 +485,14 @@ public class UserController {
         }catch (Exception e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 
 
     @ApiOperation(value = "Get the User based on UserName  ", httpMethod="GET"
             , notes = "Return the matched User")
-    @ApiResponses(value = {@ApiResponse(code = 302, message = "User Found "),
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "User Found "),
             @ApiResponse(code = 404, message = "User not found"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = UserRestURIConstants.GET_USER_NAME, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
@@ -513,14 +511,14 @@ public class UserController {
         }catch (Exception e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 
 
     @ApiOperation(value = "Get the User based on Email Id  ",  httpMethod="GET",
                   notes = "Return the matched User")
-    @ApiResponses(value = {@ApiResponse(code = 302, message = "User Found "),
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "User Found "),
                            @ApiResponse(code = 404, message = "User not found"),
                            @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = UserRestURIConstants.GET_EMAIL_ID, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.GET)
@@ -539,13 +537,13 @@ public class UserController {
         }catch (Exception e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return  new ResponseEntity(HttpStatus.OK);
+        return  new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
     @ApiOperation(value = "Get the User based on Contact Number  ", httpMethod="GET",
             notes = "Return the matched User")
-    @ApiResponses(value = {@ApiResponse(code = 302, message = "User Found "),
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "User Found "),
             @ApiResponse(code = 404, message = "User not found"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = UserRestURIConstants.GET_CONTACT_NUMBER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
@@ -565,7 +563,7 @@ public class UserController {
             e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return  new ResponseEntity(HttpStatus.OK);
+        return  new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     public final String generatePassword(){
