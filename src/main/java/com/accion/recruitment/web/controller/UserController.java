@@ -203,11 +203,11 @@ public class UserController {
     @RequestMapping(value = UserRestURIConstants.GET_ALL_USER, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.GET)
     @ResponseBody
     @JsonIgnore
-    public ResponseEntity<List<User>> getAllUsers() throws JSONException {
+    public ResponseEntity<Set<User>> getAllUsers() throws JSONException {
 
         try{
             List<User> userList=this.userService.findAllUser();
-            List<User> users=new ArrayList<User>();
+            Set<User> users=new HashSet<User>();
 
             for(User userObject:userList){
 
@@ -221,7 +221,7 @@ public class UserController {
                 users.add(user);
 
             }
-            return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+            return new ResponseEntity<Set<User>>(users, HttpStatus.OK);
         }catch (SQLException e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
