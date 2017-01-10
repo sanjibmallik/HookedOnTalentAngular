@@ -291,7 +291,7 @@ var hotMainController = angular.module('hot.controllers', []);
 						return $http.get(url_location).then(function(response){
 
                             $rootScope.responseData = response.data;
-                            console.log($rootScope.responseData.firstName);
+                            console.log($rootScope.responseData);
 							/*$rootScope.modalContent = $sce.trustAsHtml(response.data);
 */
 						}, function(response){
