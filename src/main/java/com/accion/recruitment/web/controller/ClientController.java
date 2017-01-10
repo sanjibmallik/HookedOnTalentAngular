@@ -36,7 +36,33 @@ public class ClientController {
     private ClientService clientService;
 
 
-    
+
+    @ApiOperation(value = "Get the Client Details based on ID  ", httpMethod="GET"
+            , notes = "Return the matched Client")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Client Found "),
+            @ApiResponse(code = 404, message = "Client not found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = ClientRestURIConstants.GET_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> getClientById(@PathVariable("id") final Integer clientDetailsId) {
+
+        ClientDetails clientDetailsObject;
+        try{
+            clientDetailsObject=this.clientService.findClientDetailsByPropertyName(ClientConstants.CLIENT_ID,clientDetailsId);
+            if(clientDetailsObject!=null){
+                ClientDetails clientDetails=new ClientDetails(clientDetailsObject.getId(),clientDetailsObject.getClientName());
+                return new ResponseEntity<Object>(clientDetails, HttpStatus.OK);
+            }
+        }catch (SQLException sql){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+
     @ApiOperation(value = "Get the Client Details based on ClientName  ", httpMethod="GET"
             , notes = "Return the matched Client")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Client Found "),

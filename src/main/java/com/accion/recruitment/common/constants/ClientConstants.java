@@ -9,4 +9,5 @@ public class ClientConstants {
 
     public static final String CLIENT_NAME = "clientName";
     public static final String FEDERAL_ID = "federalId";
+    public static final String CLIENT_ID = "id";
 }
