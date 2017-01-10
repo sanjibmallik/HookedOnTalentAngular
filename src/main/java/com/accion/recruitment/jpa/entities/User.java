@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
@@ -21,10 +23,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 public class User extends BaseEntity {
+
     public User() {
     }
 
@@ -61,9 +63,7 @@ public class User extends BaseEntity {
         this.userProfile = userProfile;
         this.errorMessage = errorMessage;
     }
-    /*public User(Integer id, String firstName, String lastName, String emailId, Boolean enabled, String contactNumber, String role, String alternateContact, String addressOne, String addressTwo, Long zipCode, String city, String state, String country, Long expectedPayRange, byte[] userImage, byte[] userProfile, String errorMessage, Set<Groups> groupsSet, Collection<TechnicalScreenerSkills> technicalScreenerDetailsDSkillsSet) {
-        super();
-    }*/
+
     public User(Integer id,String firstName, String lastName) {
         this.id=id;
         this.firstName = firstName;
@@ -131,11 +131,8 @@ public class User extends BaseEntity {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] userProfile;
 
-
     @Transient
     private String errorMessage;
-
-
 
 
     @ManyToMany(mappedBy = "userSet"
@@ -155,6 +152,42 @@ public class User extends BaseEntity {
     )
     private Collection<TechnicalScreenerSkills> technicalScreenerDetailsDSkillsSet=new HashSet<TechnicalScreenerSkills>();
 
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany( cascade = CascadeType.REMOVE)
+    @JoinTable( name="account_manager_clients",
+
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "clientDetails_id"))
+    private Collection<ClientDetails> accountManagerClients = new HashSet<ClientDetails>();
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany( cascade = CascadeType.REMOVE)
+    @JoinTable( name="account_manager_positions",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "position_id"))
+    private Collection<Positions> accountManagerPositions = new HashSet<Positions>();
+
+    @ManyToMany(mappedBy = "technicalScreenerPositions"
+            , targetEntity = Positions.class
+            , fetch = FetchType.EAGER
+            , cascade = {CascadeType.PERSIST, CascadeType.MERGE })
+    @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Positions> technicalScreenerPositions=new HashSet<Positions>();
+
+    @ManyToMany(mappedBy = "recruiterPositions"
+            , targetEntity = Positions.class
+            , fetch = FetchType.EAGER
+            , cascade = {CascadeType.PERSIST, CascadeType.MERGE })
+    @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Positions> recruiterPositions=new HashSet<Positions>();
+
+    @ManyToMany(mappedBy = "recruiterCandidates"
+            , targetEntity = Candidates.class
+            , fetch = FetchType.EAGER
+            , cascade = {CascadeType.PERSIST, CascadeType.MERGE })
+    @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Candidates> recruiterCandidates=new HashSet<Candidates>();
 
 
     public Integer getId() {
@@ -285,8 +318,6 @@ public class User extends BaseEntity {
         this.country = country;
     }
 
-
-
     public Long getExpectedPayRange() {
         return expectedPayRange;
     }
@@ -333,6 +364,46 @@ public class User extends BaseEntity {
 
     public void setTechnicalScreenerDetailsDSkillsSet(Collection<TechnicalScreenerSkills> technicalScreenerDetailsDSkillsSet) {
         this.technicalScreenerDetailsDSkillsSet = technicalScreenerDetailsDSkillsSet;
+    }
+
+    public Collection<ClientDetails> getAccountManagerClients() {
+        return accountManagerClients;
+    }
+
+    public void setAccountManagerClients(Collection<ClientDetails> accountManagerClients) {
+        this.accountManagerClients = accountManagerClients;
+    }
+
+    public Collection<Positions> getAccountManagerPositions() {
+        return accountManagerPositions;
+    }
+
+    public void setAccountManagerPositions(Collection<Positions> accountManagerPositions) {
+        this.accountManagerPositions = accountManagerPositions;
+    }
+
+    public Set<Positions> getTechnicalScreenerPositions() {
+        return technicalScreenerPositions;
+    }
+
+    public void setTechnicalScreenerPositions(Set<Positions> technicalScreenerPositions) {
+        this.technicalScreenerPositions = technicalScreenerPositions;
+    }
+
+    public Set<Positions> getRecruiterPositions() {
+        return recruiterPositions;
+    }
+
+    public void setRecruiterPositions(Set<Positions> recruiterPositions) {
+        this.recruiterPositions = recruiterPositions;
+    }
+
+    public Set<Candidates> getRecruiterCandidates() {
+        return recruiterCandidates;
+    }
+
+    public void setRecruiterCandidates(Set<Candidates> recruiterCandidates) {
+        this.recruiterCandidates = recruiterCandidates;
     }
 
     @Override

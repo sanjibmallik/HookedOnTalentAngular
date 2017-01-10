@@ -80,9 +80,9 @@ public interface UserService {
      * @param query accept the java.lang.String type
      *                  which is having Database Query
      *
-     * @return instance of User having persisting state otherwise
+     * @return instance of Record having persisting state otherwise
      *         it return null.
      */
-    /*public Boolean deleteUserByQuery(String query);*/
+    public Boolean deleteRecordByQuery(String query)throws SQLException;
 
 }
