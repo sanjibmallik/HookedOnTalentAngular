@@ -215,6 +215,7 @@ public class UserController {
                         userObject.getContactNumber(),userObject.getRole(),userObject.getAlternateContact(),userObject.getAddressOne(),userObject.getAddressTwo(),
                         userObject.getZipCode(),userObject.getCity(),userObject.getState(),userObject.getCountry(),userObject.getExpectedPayRange(),userObject.getUserImage(),
                         userObject.getUserProfile(),userObject.getErrorMessage(),userObject.getTechnicalScreenerDetailsDSkillsSet());
+                users.add(user);
 
             }
             return new ResponseEntity<Set<User>>(users, HttpStatus.OK);
