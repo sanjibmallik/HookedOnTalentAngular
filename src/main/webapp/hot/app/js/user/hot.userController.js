@@ -218,6 +218,19 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
 
 
+       $rootScope.enableDisableUser = function(userId,status){
+           $http.put('user/status/'+userId+'/'+status)
+               .success(function (data, status, headers, config) {
+                   console.log(data);
+               })
+               .error(function (data, status, header, config) {
+               });
+           $rootScope.currentModal.dismiss();
+
+       }
+
+
+
 
 
    });

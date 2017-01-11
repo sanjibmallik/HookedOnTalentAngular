@@ -96,10 +96,21 @@
                         <li>
                             <a href="" ng-click="openAjaxModal('modal-5', 'user/'+user.id);" class="">Edit</a>
                         </li>
+
                         <li class="divider"></li>
-                        <li>
-                            <a href="" ng-click="openAjaxModal('modal-1')" class="">Disable</a>
+
+                        <li ng-show="user.enabled==true">
+                          <a href="" ng-click="openAjaxModal('modal-1','user/'+user.id)" class="">Disable</a>
                         </li>
+
+
+                        <li ng-show="user.enabled==false">
+                            <a href="" ng-click="openAjaxModal('modal-1','user/'+user.id)" class="">Enable</a>
+                        </li>
+
+
+
+
                         <li class="divider"></li>
                         <li>
                             <a href="" ng-click="openModal('modal-3')" class="">Delete</a>
@@ -144,7 +155,7 @@
 
     <div class="modal-footer">
         <button type="button" class="btn btn-white" ng-click="currentModal.close();">Close</button>
-        <button type="button" class="btn btn-info" ng-click="currentModal.dismiss();">Yes</button>
+        <button type="button" class="btn btn-info" ng-click="enableDisableUser(responseData.id,responseData.enabled);">Yes</button>
     </div>
 
 </script>
