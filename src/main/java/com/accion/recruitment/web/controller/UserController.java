@@ -99,7 +99,7 @@ public class UserController {
                         return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
                 }
             }
-            if(user != null && user.getContactNumber() != null){
+            if(user != null && user.getContactNumber() != null && (!user.getContactNumber().isEmpty())){
                 try{
                     User userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER,user.getContactNumber());
                     if(userObject != null)
@@ -282,7 +282,7 @@ public class UserController {
                     return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
                 }
             }
-            if(user != null && user.getContactNumber() != null &&(!oldUser.getContactNumber().equals(user.getContactNumber()))){
+            if(user != null && user.getContactNumber() != null && (!user.getContactNumber().isEmpty()) &&(!oldUser.getContactNumber().equals(user.getContactNumber()))){
                 try{
                     User userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER,user.getContactNumber());
                     if(userObject != null)
