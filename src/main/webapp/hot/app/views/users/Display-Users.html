@@ -262,8 +262,9 @@
                 <td>Alternate Contact</td>
                 <td></td>
             </tr>
-           <!-- <tr ng-if="responseData.role=='TechnicalScreener'">
-                <ng-include src=""></ng-include>-->
+            <tr ng-if="responseData.role=='TechnicalScreener'"
+                ng-include src="'app/views/users/tsSkillsDetails_tpl.html'">
+            </tr>
 
             </tbody>
         </table>
