@@ -19,7 +19,7 @@ var hotMainController = angular.module('hot.controllers', []);
         $scope.submitUserLoginForm = function(){
 
             $http({
-                method : 'GET',
+                method : 'POST',
                 url : 'login/'+$scope.userName+'/'+$scope.password
             }).then(function mySucces(response) {
                     console.log("success");
@@ -44,6 +44,8 @@ var hotMainController = angular.module('hot.controllers', []);
         }
 
 	}).
+
+
 
 	controller('MainCtrl', function($scope, $rootScope, $location, $layout, $layoutToggles, $pageLoadingBar, Fullscreen)
 	{

@@ -90,13 +90,13 @@ public class User extends BaseEntity {
     @Column(length = 255, nullable = false)
     private String emailId;
 
-    @Column(length = 255, nullable = false)
+    @Column(unique = true,length = 255, nullable = false)
     private String password;
 
     @Column(nullable = false)
     private Boolean enabled=Boolean.TRUE;
 
-    @Column(length = 12, nullable = false)
+    @Column(unique = true,length = 12, nullable = false)
     private String contactNumber;
 
     @Column(length = 255, nullable = false)
