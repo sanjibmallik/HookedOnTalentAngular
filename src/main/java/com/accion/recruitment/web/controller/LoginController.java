@@ -37,12 +37,12 @@ public class LoginController{
     final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 
 
-    @ApiOperation(value = "Login  based on UserName OR EmailId and Password   ", httpMethod="GET"
+    @ApiOperation(value = "Login  based on UserName OR EmailId and Password   ", httpMethod="POST"
             , notes = "Return the Login User")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Login User Found "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = LoginRestURIConstants.LOGIN, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = LoginRestURIConstants.LOGIN, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Object> userLoginAuthentication(@PathVariable("userName") final String userNameOREmailId,
                                         @PathVariable("password") final String password) {

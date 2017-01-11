@@ -502,8 +502,10 @@ public class UserController {
         try{
             userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,userName);
             if(userObject != null){
-                User user=new User(userObject.getId(),userObject.getUserName(),userObject.getEmailId(),userObject.getFirstName(),userObject.getLastName(),userObject.getContactNumber(),
-                        userObject.getRole(),userObject.getEnabled(),userObject.getErrorMessage());
+                User user= new User(userObject.getId(),userObject.getFirstName(),userObject.getLastName(),userObject.getUserName(),userObject.getEmailId(),userObject.getEnabled(),
+                        userObject.getContactNumber(),userObject.getRole(),userObject.getAlternateContact(),userObject.getAddressOne(),userObject.getAddressTwo(),
+                        userObject.getZipCode(),userObject.getCity(),userObject.getState(),userObject.getCountry(),userObject.getExpectedPayRange(),userObject.getUserImage(),
+                        userObject.getUserProfile(),userObject.getErrorMessage(),userObject.getTechnicalScreenerDetailsDSkillsSet());
                 return new ResponseEntity<Object>(user, HttpStatus.OK);
             }
         }catch (SQLException e){
@@ -528,8 +530,10 @@ public class UserController {
         try{
             userObject=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID, emailId);
             if(userObject != null){
-                User user=new User(userObject.getId(),userObject.getUserName(),userObject.getEmailId(),userObject.getFirstName(),userObject.getLastName(),userObject.getContactNumber(),
-                        userObject.getRole(),userObject.getEnabled(),userObject.getErrorMessage());
+                User user= new User(userObject.getId(),userObject.getFirstName(),userObject.getLastName(),userObject.getUserName(),userObject.getEmailId(),userObject.getEnabled(),
+                        userObject.getContactNumber(),userObject.getRole(),userObject.getAlternateContact(),userObject.getAddressOne(),userObject.getAddressTwo(),
+                        userObject.getZipCode(),userObject.getCity(),userObject.getState(),userObject.getCountry(),userObject.getExpectedPayRange(),userObject.getUserImage(),
+                        userObject.getUserProfile(),userObject.getErrorMessage(),userObject.getTechnicalScreenerDetailsDSkillsSet());
                 return new ResponseEntity<Object>(user, HttpStatus.OK);
             }
         }catch (SQLException e){
@@ -553,8 +557,10 @@ public class UserController {
         try{
             userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER, contactNumber);
             if(userObject != null){
-                User user=new User(userObject.getId(),userObject.getUserName(),userObject.getEmailId(),userObject.getFirstName(),userObject.getLastName(),userObject.getContactNumber(),
-                        userObject.getRole(),userObject.getEnabled(),userObject.getErrorMessage());
+                User user= new User(userObject.getId(),userObject.getFirstName(),userObject.getLastName(),userObject.getUserName(),userObject.getEmailId(),userObject.getEnabled(),
+                        userObject.getContactNumber(),userObject.getRole(),userObject.getAlternateContact(),userObject.getAddressOne(),userObject.getAddressTwo(),
+                        userObject.getZipCode(),userObject.getCity(),userObject.getState(),userObject.getCountry(),userObject.getExpectedPayRange(),userObject.getUserImage(),
+                        userObject.getUserProfile(),userObject.getErrorMessage(),userObject.getTechnicalScreenerDetailsDSkillsSet());
                 return new ResponseEntity<Object>(user, HttpStatus.OK);
             }
         }catch (SQLException e){

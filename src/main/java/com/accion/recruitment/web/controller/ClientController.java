@@ -4,10 +4,12 @@ import com.accion.recruitment.common.constants.ClientConstants;
 import com.accion.recruitment.common.constants.ClientRestURIConstants;
 import com.accion.recruitment.common.constants.UserConstants;
 import com.accion.recruitment.common.constants.UserRestURIConstants;
-import com.accion.recruitment.jpa.entities.ClientDetails;
-import com.accion.recruitment.jpa.entities.User;
+import com.accion.recruitment.common.enums.ClientHttpStatusEnums;
+import com.accion.recruitment.common.enums.UserHttpStatusEnums;
+import com.accion.recruitment.jpa.entities.*;
 import com.accion.recruitment.service.ClientService;
 import com.accion.recruitment.service.UserService;
+import com.google.gson.Gson;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -16,12 +18,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.sql.SQLException;
+import java.util.Date;
 
 /**
  * @author Mudassir Hussain
@@ -35,6 +37,49 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
+    @ApiOperation(value = "Create the new Client ",  code = 201, httpMethod="POST")
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "Client Created Successfully"),
+            @ApiResponse(code = 200, message = "Successful Respond Send")
+            , @ApiResponse(code = 500, message = "Internal Server Error")})
+
+    @RequestMapping(value = ClientRestURIConstants.CREATE_CLIENT,produces = MediaType.APPLICATION_JSON_VALUE ,method = RequestMethod.POST)
+    public  ResponseEntity<String> createUser(@RequestBody ClientDetailsContact clientDetailsContact,
+                                              final Principal principal) {
+
+        try{
+            final Date currentDate = new Date();
+            ClientDetails clientDetails=new ClientDetails();
+            ClientContacts clientContacts=new ClientContacts();
+
+            if(clientDetailsContact.getClientDetails()!=null && clientDetailsContact.getClientContacts()!=null){
+                clientDetails=clientDetailsContact.getClientDetails();
+                clientContacts=clientDetailsContact.getClientContacts();
+            }else{
+
+            }
+
+            if(clientDetails != null && clientDetails.getClientName() != null && (!clientDetails.getClientName().isEmpty())){
+                try{
+                    ClientDetails clientObject=this.clientService.findClientDetailsByPropertyName(ClientConstants.CLIENT_NAME, clientDetails.getClientName());
+                    if(clientObject != null)
+                        return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NAME_EXIST.ResponseMsg()), HttpStatus.OK);
+                }catch (SQLException e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+
+
+
+
+        }catch (Exception e){
+
+        }
+
+        return null;
+
+    }
 
 
     @ApiOperation(value = "Get the Client Details based on ID  ", httpMethod="GET"
