@@ -22,7 +22,7 @@
 </style>
 
 <!-- Custom column filtering -->
-<div class="panel panel-default" ng-controller="viewAllUserCtrl">
+<div class="panel panel-default" ng-controller="viewAllUserCtrl" ng-cloak>
 
 
     <!--panel started here-->
@@ -52,9 +52,7 @@
                     {column_number : 2, filter_type: 'text'},
                     {column_number : 3, filter_type: 'text'},
                     {column_number : 4, filter_type: 'text'},
-                    {column_number : 5,filter_type: 'text'},
-                    {column_number : 6, filter_type: 'text'},
-                    {column_number : 7, filter_type: 'text'}
+                    {column_number : 5,filter_type: 'text'}
 
                 ]);
             });
@@ -63,7 +61,7 @@
         <table class="table table-striped table-bordered" id="example-3">
             <thead>
             <tr class="replace-inputs">
-                <th>User Id</th>
+                <!--<th>User Id</th>-->
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>User Name(s)</th>
@@ -75,7 +73,7 @@
             </thead>
             <tbody>
              <tr ng-repeat="user in allUsers">
-                <td>{{user.id}}</td>
+                <!--<td>{{user.id}}</td>-->
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>{{user.userName}}</td>
@@ -96,17 +94,28 @@
                         <li>
                             <a href="" ng-click="openAjaxModal('modal-5', 'user/'+user.id);" class="">Edit</a>
                         </li>
+
                         <li class="divider"></li>
-                        <li>
-                            <a href="" ng-click="openModal('modal-1')" class="">Disable</a>
+
+                        <li ng-show="user.enabled==true">
+                          <a href="" ng-click="openAjaxModal('modal-1','user/'+user.id)" class="">Disable</a>
                         </li>
-                        <li class="divider"></li>
+
+
+                        <li ng-show="user.enabled==false">
+                            <a href="" ng-click="openAjaxModal('modal-1','user/'+user.id)" class="">Enable</a>
+                        </li>
+
+
+
+
+                        <!--<li class="divider"></li>
                         <li>
                             <a href="" ng-click="openModal('modal-3')" class="">Delete</a>
-                        </li>
+                        </li>-->
                         <li class="divider"></li>
                         <li>
-                            <a href="" ng-click="openModal('modal-4')" class="">Reset Password</a>
+                            <a href="" ng-click="openAjaxModal('modal-4','user/'+user.id)" class="">Reset Password</a>
                         </li>
 
                     </ul>
@@ -133,22 +142,31 @@
 
     <div class="modal-header">
         <button type="button" class="close" ng-click="currentModal.close();" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Disable User</h4>
+        <h4 class="modal-title" ng-show="responseData.enabled==true">Disable User</h4>
+        <h4 class="modal-title" ng-show="responseData.enabled==false">Enable User</h4>
     </div>
 
     <div class="modal-body">
 
-        <h4>Are you sure you want to disable this user?</h4>
+        <h4 ng-show="responseData.enabled==true">Are you sure you want to disable this user: {{responseData.firstName}}?</h4>
+        <h4 ng-show="responseData.enabled==false">Are you sure you want to enable this user: {{responseData.firstName}}?</h4>
     </div>
             <br/>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" ng-click="currentModal.close();">Close</button>
-        <button type="button" class="btn btn-info" ng-click="currentModal.dismiss();">Yes</button>
+
+        <button type="button" class="btn btn-info" ng-click="enableDisableUser(responseData.id,responseData.enabled);">Yes</button>
+        <button type="button" class="btn btn-red" ng-click="currentModal.close();">No</button>
     </div>
 
 </script>
 
+
+
+
+
+
+<!--
 <script type="text/ng-template" id="modal-3">
 
     <div class="modal-header">
@@ -163,11 +181,14 @@
     <br/>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" ng-click="currentModal.close();">Close</button>
+        <button type="button" class="btn btn-red" ng-click="currentModal.close();">Close</button>
         <button type="button" class="btn btn-info" ng-click="currentModal.dismiss();">Yes</button>
     </div>
 
 </script>
+-->
+
+
 
 <script type="text/ng-template" id="modal-4">
 
@@ -183,8 +204,9 @@
     <br/>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" ng-click="currentModal.close();">Close</button>
-        <button type="button" class="btn btn-info" ng-click="currentModal.dismiss();">Yes</button>
+
+        <button type="button" class="btn btn-info" ng-click="resetUserPassword(responseData.id);">Yes</button>
+        <button type="button" class="btn btn-red" ng-click="currentModal.close();">No</button>
     </div>
 
 </script>
@@ -238,6 +260,10 @@
                 <td>Alternate Contact</td>
                 <td></td>
             </tr>
+            <tr ng-if="responseData.role=='TechnicalScreener'"
+                ng-include src="'app/views/users/tsSkillsDetails_tpl.html'">
+            </tr>
+
             </tbody>
         </table>
     </div>
@@ -304,29 +330,31 @@
 
             </div>
         </div>
-
         <div class="row">
-            <div class="col-md-12">
+            <div ng-if="responseData.role=='TechnicalScreener'" ng-include src="'app/views/users/tsSkillsEditView_tpl.html'"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
 
                 <div class="form-group">
-                    <label for="field-3" class="control-label">Address</label>
+                    <label for="field-3" class="control-label">Address 1</label>
 
-                    <input type="text" ng-model="responseData.addressOne" class="form-control" id="field-3" placeholder="Address">
+                    <textarea rows="4" type="text" ng-model="responseData.addressOne" class="form-control" placeholder="Address"></textarea>
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label for="field-3" class="control-label">Address 2</label>
+
+                    <textarea rows="4" type="text" ng-model="responseData.addressTwo" class="form-control" placeholder="Address"></textarea>
                 </div>
 
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
 
-                <div class="form-group">
-                    <label for="field-3" class="control-label">Address Two</label>
-
-                    <input type="text" ng-model="responseData.addressTwo" class="form-control" id="field-3" placeholder="Address">
-                </div>
-
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-md-4">
@@ -360,7 +388,7 @@
             </div>
 
 
-            <div ng-include src="'app/views/users/tsSkillsEditView_tpl.html'"></div>
+
 
 
 
@@ -371,7 +399,9 @@
     </div>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" ng-click="currentModal.close();">Close</button>
-        <button type="button" class="btn btn-info" ng-click="currentModal.dismiss();">Save changes</button>
+
+      <!--  <button type="button" class="btn btn-info" ng-click="currentModal.dismiss();">Save changes</button>-->
+        <button type="button" class="btn btn-info" ng-click="saveEditUser;">Save changes</button>
+        <button type="button" class="btn btn-red" ng-click="currentModal.close();">Cancel</button>
     </div>
 </script>
