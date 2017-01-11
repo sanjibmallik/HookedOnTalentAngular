@@ -7,8 +7,16 @@ package com.accion.recruitment.common.enums;
  */
 public enum ClientHttpStatusEnums {
 
-    CLIENT_NAME_EXIST("That ClientName is exist in database. Try another.");
+    CLIENT_NAME_EXIST("That ClientName is exist in database. Try another."),
+    CONTACT_NUMBER_EXIST("That Contact Number is exist in database. Try another."),
+    FEDERAL_ID_EXIST("That FederalId is exist in database. Try another."),
 
+
+    CLIENT_NOT_SAVED("Problem with saving the Client. Try again."),
+    CLIENT_SAVED_EMAIL_SEND("Client saved and Email Send Successfully."),
+    CLIENT_SAVED_EMAIL_NOT_SEND("Client saved and Email Not Send ."),
+
+    DATABASE_EXCEPTION("Database connectivity issue. Try again.");
 
     private String responseMsg;
 

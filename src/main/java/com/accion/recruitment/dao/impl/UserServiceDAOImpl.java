@@ -92,7 +92,9 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
     @Override
     public List<R> findAllUser() {
         final Session session = getSession();
-        List<R> rList = session.createCriteria(User.class).list();
+        final Criteria criteria = session.createCriteria(User.class);
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        List<R> rList = criteria.list();
         return rList;
     }
 
