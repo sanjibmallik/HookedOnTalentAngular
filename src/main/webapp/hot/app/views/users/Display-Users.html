@@ -22,7 +22,7 @@
 </style>
 
 <!-- Custom column filtering -->
-<div class="panel panel-default" ng-controller="viewAllUserCtrl">
+<div class="panel panel-default" ng-controller="viewAllUserCtrl" ng-cloak>
 
 
     <!--panel started here-->
@@ -98,7 +98,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="" ng-click="openModal('modal-1')" class="">Disable</a>
+                            <a href="" ng-click="openAjaxModal('modal-1')" class="">Disable</a>
                         </li>
                         <li class="divider"></li>
                         <li>
@@ -106,7 +106,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="" ng-click="openModal('modal-4')" class="">Reset Password</a>
+                            <a href="" ng-click="openAjaxModal('modal-4','user/'+user.id)" class="">Reset Password</a>
                         </li>
 
                     </ul>
@@ -184,7 +184,7 @@
 
     <div class="modal-footer">
         <button type="button" class="btn btn-white" ng-click="currentModal.close();">Close</button>
-        <button type="button" class="btn btn-info" ng-click="currentModal.dismiss();">Yes</button>
+        <button type="button" class="btn btn-info" ng-click="resetUserPassword(responseData.id);">Yes</button>
     </div>
 
 </script>
@@ -238,6 +238,9 @@
                 <td>Alternate Contact</td>
                 <td></td>
             </tr>
+           <!-- <tr ng-if="responseData.role=='TechnicalScreener'">
+                <ng-include src=""></ng-include>-->
+
             </tbody>
         </table>
     </div>
@@ -360,7 +363,7 @@
             </div>
 
 
-            <div ng-include src="'app/views/users/tsSkillsEditView_tpl.html'"></div>
+            <div ng-if="responseData.role=='TechnicalScreener'" ng-include src="'app/views/users/tsSkillsEditView_tpl.html'"></div>
 
 
 
@@ -372,6 +375,7 @@
 
     <div class="modal-footer">
         <button type="button" class="btn btn-white" ng-click="currentModal.close();">Close</button>
-        <button type="button" class="btn btn-info" ng-click="currentModal.dismiss();">Save changes</button>
+      <!--  <button type="button" class="btn btn-info" ng-click="currentModal.dismiss();">Save changes</button>-->
+        <button type="button" class="btn btn-info" ng-click="saveEditUser;">Save changes</button>
     </div>
 </script>

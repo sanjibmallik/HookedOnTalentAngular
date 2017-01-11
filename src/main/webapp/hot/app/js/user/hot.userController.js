@@ -173,7 +173,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
 
 
-   hotUserControllers.controller('viewAllUserCtrl',function($scope,$http){
+   hotUserControllers.controller('viewAllUserCtrl',function($scope,$rootScope,$http){
         $scope.test='test';
 
 
@@ -202,6 +202,19 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
                console.log(response.statusText);
            });
 
+
+
+       $rootScope.resetUserPassword = function(userId){
+           console.log(userId);
+           $http.put('user/reset/'+userId)
+               .success(function (data, status, headers, config) {
+                   console.log(data);
+               })
+               .error(function (data, status, header, config) {
+               });
+           $rootScope.currentModal.dismiss();
+
+       }
 
 
 

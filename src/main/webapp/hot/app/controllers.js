@@ -45,6 +45,8 @@ var hotMainController = angular.module('hot.controllers', []);
 
 	}).
 
+
+
 	controller('MainCtrl', function($scope, $rootScope, $location, $layout, $layoutToggles, $pageLoadingBar, Fullscreen)
 	{
 		$rootScope.isLoginPage        = false;
