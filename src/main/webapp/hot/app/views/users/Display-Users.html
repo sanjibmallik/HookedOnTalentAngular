@@ -144,12 +144,14 @@
 
     <div class="modal-header">
         <button type="button" class="close" ng-click="currentModal.close();" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Disable User</h4>
+        <h4 class="modal-title" ng-show="responseData.enabled==true">Disable User</h4>
+        <h4 class="modal-title" ng-show="responseData.enabled==false">Enable User</h4>
     </div>
 
     <div class="modal-body">
 
-        <h4>Are you sure you want to disable this user?</h4>
+        <h4 ng-show="responseData.enabled==true">Are you sure you want to disable this user: {{responseData.firstName}}?</h4>
+        <h4 ng-show="responseData.enabled==false">Are you sure you want to enable this user: {{responseData.firstName}}?</h4>
     </div>
             <br/>
 
@@ -161,6 +163,12 @@
 
 </script>
 
+
+
+
+
+
+<!--
 <script type="text/ng-template" id="modal-3">
 
     <div class="modal-header">
@@ -180,6 +188,9 @@
     </div>
 
 </script>
+-->
+
+
 
 <script type="text/ng-template" id="modal-4">
 
