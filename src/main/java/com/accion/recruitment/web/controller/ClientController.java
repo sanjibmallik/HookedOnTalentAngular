@@ -1,9 +1,6 @@
 package com.accion.recruitment.web.controller;
 
-import com.accion.recruitment.common.constants.ClientConstants;
-import com.accion.recruitment.common.constants.ClientRestURIConstants;
-import com.accion.recruitment.common.constants.UserConstants;
-import com.accion.recruitment.common.constants.UserRestURIConstants;
+import com.accion.recruitment.common.constants.*;
 import com.accion.recruitment.common.enums.ClientHttpStatusEnums;
 import com.accion.recruitment.common.enums.UserHttpStatusEnums;
 import com.accion.recruitment.jpa.entities.*;
@@ -24,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * @author Mudassir Hussain
@@ -51,82 +49,29 @@ public class ClientController {
 
         try{
             final Date currentDate = new Date();
-            ClientDetails clientDetails=new ClientDetails();
-            ClientContacts clientContacts=new ClientContacts();
+            ClientDetails clientDetails;
+            ClientContacts clientContacts;
+            User user;
+            HashMap<String,String> clientDetailsExistMap;
+            HashMap<String,String> userDetailsExistMap;
+            UserController userController=new UserController();
 
-            if(clientDetailsContact.getClientDetails()!=null && clientDetailsContact.getClientContacts()!=null){
+            if(clientDetailsContact.getClientDetails()!=null && clientDetailsContact.getClientContacts()!=null && clientDetailsContact.getUser()!=null){
                 clientDetails=clientDetailsContact.getClientDetails();
                 clientContacts=clientDetailsContact.getClientContacts();
+                user=clientDetailsContact.getUser();
             }else{
-
+                return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
             }
 
-            if(clientDetails != null && clientDetails.getClientName() != null && (!clientDetails.getClientName().isEmpty())){
-                try{
-                    ClientDetails clientObject=this.clientService.findClientDetailsByPropertyName(ClientConstants.CLIENT_NAME, clientDetails.getClientName());
-                    if(clientObject != null)
-                        return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NAME_EXIST.ResponseMsg()), HttpStatus.OK);
-                }catch (SQLException e){
-                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-                }catch (Exception e){
-                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
-                }
+            clientDetailsExistMap=this.checkClientDetailsExist(clientDetails,clientContacts);
+            userDetailsExistMap=userController.checkUserDetailsExist(user);
+            if(clientDetailsExistMap.containsKey(HookedOnConstants.EXIST)){
+                return new ResponseEntity<String>(new Gson().toJson(clientDetailsExistMap.get(HookedOnConstants.EXIST)), HttpStatus.OK);
+            }else if(userDetailsExistMap.containsKey(HookedOnConstants.EXIST)){
+                return new ResponseEntity<String>(new Gson().toJson(userDetailsExistMap.get(HookedOnConstants.EXIST)), HttpStatus.OK);
             }
-            if(clientDetails != null && clientDetails.getContactNumber() != null && (!clientDetails.getContactNumber().isEmpty())){
-                try{
-                    ClientDetails clientObject=this.clientService.findClientDetailsByPropertyName(ClientConstants.CONTACT_NUMBER, clientDetails.getContactNumber());
-                    if(clientObject != null)
-                        return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg()), HttpStatus.OK);
-                }catch (SQLException e){
-                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-                }catch (Exception e){
-                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
-                }
-            }
-            if(clientDetails != null && clientDetails.getFederalId() != null && (!clientDetails.getFederalId().isEmpty())){
-                try{
-                    ClientDetails clientObject=this.clientService.findClientDetailsByPropertyName(ClientConstants.FEDERAL_ID, clientDetails.getFederalId());
-                    if(clientObject != null)
-                        return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.FEDERAL_ID_EXIST.ResponseMsg()), HttpStatus.OK);
-                }catch (SQLException e){
-                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-                }catch (Exception e){
-                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
-                }
-            }
-            if(clientContacts != null && clientContacts.getUserName() != null && (!clientContacts.getUserName().isEmpty())){
-                try{
-                    User userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,clientContacts.getUserName());
-                    if(userObject != null)
-                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NAME_EXIST.ResponseMsg()), HttpStatus.OK);
-                }catch (SQLException e){
-                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-                }catch (Exception e){
-                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
-                }
-            }
-            if(clientContacts != null && clientContacts.getEmailId() != null && (!clientContacts.getEmailId().isEmpty())){
-                try{
-                    User userObject=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID,clientContacts.getEmailId());
-                    if(userObject != null)
-                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.EMAIlID_EXIST.ResponseMsg()), HttpStatus.OK);
-                }catch (SQLException e){
-                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-                }catch (Exception e){
-                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
-                }
-            }
-            if(clientContacts != null && clientContacts.getContactNumber() != null && (!clientContacts.getContactNumber().isEmpty())){
-                try{
-                    User userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER,clientContacts.getContactNumber());
-                    if(userObject != null)
-                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg()), HttpStatus.OK);
-                }catch (SQLException e){
-                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
-                }catch (Exception e){
-                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
-                }
-            }
+
 
 
         }catch (Exception e){
@@ -137,6 +82,81 @@ public class ClientController {
 
     }
 
+    public HashMap<String,String> checkClientDetailsExist(ClientDetails clientDetails,ClientContacts clientContacts){
+
+        HashMap clientDetailsMap=new HashMap<String,String>();
+
+
+
+        if(clientDetails != null && clientDetails.getClientName() != null && (!clientDetails.getClientName().isEmpty())){
+            try{
+                ClientDetails clientObject=this.clientService.findClientDetailsByPropertyName(ClientConstants.CLIENT_NAME, clientDetails.getClientName());
+                if(clientObject != null)
+                    return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, ClientHttpStatusEnums.CLIENT_NAME_EXIST.ResponseMsg());
+            }catch (SQLException e){
+                return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, ClientHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+            }catch (Exception e){
+                return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg());
+            }
+        }
+        if(clientDetails != null && clientDetails.getContactNumber() != null && (!clientDetails.getContactNumber().isEmpty())){
+            try{
+                ClientDetails clientObject=this.clientService.findClientDetailsByPropertyName(ClientConstants.CONTACT_NUMBER, clientDetails.getContactNumber());
+                if(clientObject != null)
+                    return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, ClientHttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg());
+            }catch (SQLException e){
+                return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, ClientHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+            }catch (Exception e){
+                return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg());
+            }
+        }
+        if(clientDetails != null && clientDetails.getFederalId() != null && (!clientDetails.getFederalId().isEmpty())){
+            try{
+                ClientDetails clientObject=this.clientService.findClientDetailsByPropertyName(ClientConstants.FEDERAL_ID, clientDetails.getFederalId());
+                if(clientObject != null)
+                    return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, ClientHttpStatusEnums.FEDERAL_ID_EXIST.ResponseMsg());
+            }catch (SQLException e){
+                return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, ClientHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+            }catch (Exception e){
+                return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg());
+            }
+        }
+        if(clientContacts != null && clientContacts.getUserName() != null && (!clientContacts.getUserName().isEmpty())){
+            try{
+                User userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,clientContacts.getUserName());
+                if(userObject != null)
+                    return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.USER_NAME_EXIST.ResponseMsg());
+            }catch (SQLException e){
+                return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+            }catch (Exception e){
+                return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg());
+            }
+        }
+        if(clientContacts != null && clientContacts.getEmailId() != null && (!clientContacts.getEmailId().isEmpty())){
+            try{
+                User userObject=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID,clientContacts.getEmailId());
+                if(userObject != null)
+                    return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.EMAIlID_EXIST.ResponseMsg());
+            }catch (SQLException e){
+                return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+            }catch (Exception e){
+                return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg());
+            }
+        }
+        if(clientContacts != null && clientContacts.getContactNumber() != null && (!clientContacts.getContactNumber().isEmpty())){
+            try{
+                User userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER,clientContacts.getContactNumber());
+                if(userObject != null)
+                    return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg());
+            }catch (SQLException e){
+                return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+            }catch (Exception e){
+                return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg());
+            }
+        }
+        return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.NOT_EXIST,"");
+
+    }
 
     @ApiOperation(value = "Get the Client Details based on ID  ", httpMethod="GET"
             , notes = "Return the matched Client")

@@ -10,6 +10,7 @@ public class ClientDetailsContact {
 
     private ClientDetails clientDetails;
     private ClientContacts clientContacts;
+    private User user;
 
     public ClientDetails getClientDetails() {
         return clientDetails;
@@ -25,5 +26,13 @@ public class ClientDetailsContact {
 
     public void setClientContacts(ClientContacts clientContacts) {
         this.clientContacts = clientContacts;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

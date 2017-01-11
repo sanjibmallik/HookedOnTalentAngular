@@ -7,7 +7,7 @@ package com.accion.recruitment.common.constants;
  */
 public class LoginConstants {
 
-    public static final String WRONG_CREDENTIALS="Wrong Credentials";
+    public static final String WRONG_CREDENTIALS="Incorrect UserName/Password";
     public static final String USER_DISABLED="User Is Disabled";
 
 
