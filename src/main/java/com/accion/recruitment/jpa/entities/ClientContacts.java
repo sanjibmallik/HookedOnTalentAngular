@@ -36,13 +36,13 @@ public class ClientContacts  extends BaseEntity{
     @Column(length = 255, nullable = true)
     private String contactFullName;
 
-    @Column(length = 255, nullable = false)
+    @Column(unique = true,length = 255, nullable = false)
     private String contactNumber;
 
     @Column(length = 255, nullable = true)
     private String alternateContact;
 
-    @Column(length = 255, nullable = false)
+    @Column(unique = true,length = 255, nullable = false)
     private String emailId;
 
     @Column(length = 255, nullable = true)
