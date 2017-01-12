@@ -24,7 +24,7 @@
         top: 0;
         right: 0;
         left: 0;
-        bottom: 0px;
+        bottom: -1000px;
         background-color: #000;
     }
 </style>
@@ -268,6 +268,18 @@
                 <td>Alternate Contact</td>
                 <td></td>
             </tr>
+
+            <tr>
+
+                <td>City</td>
+                <td></td>
+            </tr>
+
+            <tr>
+
+                <td>Role</td>
+                <td></td>
+            </tr>
             <tr ng-if="responseData.role=='TechnicalScreener'"
                 ng-include src="'app/views/users/tsSkillsDetails_tpl.html'">
             </tr>
@@ -323,7 +335,7 @@
                 <div class="form-group">
                     <label for="field-1" class="control-label">Contact No.</label>
 
-                    <input type="text" ng-model="responseData.contactNumber" class="form-control" placeholder="Primary Conatact">
+                    <input type="text" ng-model="responseData.contactNumber" class="form-control" placeholder="Your Primary Contact number">
                 </div>
 
             </div>
@@ -347,7 +359,7 @@
                 <div class="form-group">
                     <label for="field-3" class="control-label">Address 1</label>
 
-                    <textarea rows="4" type="text" ng-model="responseData.addressOne" class="form-control" placeholder="Address"></textarea>
+                    <textarea rows="4" type="text" ng-model="responseData.addressOne" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"></textarea>
                 </div>
 
             </div>
@@ -357,7 +369,7 @@
                 <div class="form-group">
                     <label for="field-3" class="control-label">Address 2</label>
 
-                    <textarea rows="4" type="text" ng-model="responseData.addressTwo" class="form-control" placeholder="Address"></textarea>
+                    <textarea rows="4" type="text" ng-model="responseData.addressTwo" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc"></textarea>
                 </div>
 
             </div>
