@@ -280,12 +280,16 @@
                 <td>Role</td>
                 <td></td>
             </tr>
-            <tr ng-if="responseData.role=='TechnicalScreener'"
-                ng-include src="'app/views/users/tsSkillsDetails_tpl.html'">
-            </tr>
+
+
+
+
 
             </tbody>
         </table>
+
+        <div ng-if="responseData.role=='TechnicalScreener'"
+             ng-include src="'app/views/users/tsSkillsDetails_tpl.html'"></div>
     </div>
     <br/>
 
