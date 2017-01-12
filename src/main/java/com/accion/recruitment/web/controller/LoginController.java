@@ -62,4 +62,16 @@ public class LoginController{
     }
 
 
+    @ApiOperation(value = "Logout User ", httpMethod="GET"
+            , notes = "Return the Login User")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Logout Successfully "),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+
+    @RequestMapping(value = LoginRestURIConstants.LOGOUT, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> userLogout() {
+
+        return null;
+    }
+
 }
