@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,6 +95,7 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
         final Session session = getSession();
         final Criteria criteria = session.createCriteria(User.class);
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        criteria.addOrder(Order.desc("id"));
         List<R> rList = criteria.list();
         return rList;
     }

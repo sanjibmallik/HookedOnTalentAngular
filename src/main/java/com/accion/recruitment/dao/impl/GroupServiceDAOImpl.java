@@ -8,6 +8,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -59,7 +60,10 @@ public class GroupServiceDAOImpl<R> implements GroupServiceDAO{
     @Override
     public List<R> findAllGroup() {
         final Session session = getSession();
-        List<R> rList = session.createCriteria(Groups.class).list();
+        final Criteria criteria = session.createCriteria(Groups.class);
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        criteria.addOrder(Order.desc("id"));
+        List<R> rList = criteria.list();
         return rList;
     }
 

@@ -186,16 +186,13 @@ public class UserController {
 
         try{
             List<User> userList=this.userService.findAllUser();
-            Set<User> users=new HashSet<User>();
-
+            Set<User> users=new LinkedHashSet<User>();
             for(User userObject:userList){
-
                  User user= new User(userObject.getId(),userObject.getFirstName(),userObject.getLastName(),userObject.getUserName(),userObject.getEmailId(),userObject.getEnabled(),
                         userObject.getContactNumber(),userObject.getRole(),userObject.getAlternateContact(),userObject.getAddressOne(),userObject.getAddressTwo(),
                         userObject.getZipCode(),userObject.getCity(),userObject.getState(),userObject.getCountry(),userObject.getExpectedPayRange(),userObject.getUserImage(),
                         userObject.getUserProfile(),userObject.getErrorMessage(),userObject.getTechnicalScreenerDetailsDSkillsSet());
                 users.add(user);
-
             }
             return new ResponseEntity<Set<User>>(users, HttpStatus.OK);
         }catch (SQLException e){
