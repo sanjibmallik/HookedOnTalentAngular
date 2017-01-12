@@ -6,6 +6,7 @@ import com.accion.recruitment.common.constants.UserRestURIConstants;
 import com.accion.recruitment.common.enums.ClientHttpStatusEnums;
 import com.accion.recruitment.common.enums.UserHttpStatusEnums;
 import com.accion.recruitment.common.enums.UserEnums;
+import com.accion.recruitment.common.helper.PasswordGeneratorHelper;
 import com.accion.recruitment.jpa.entities.TechnicalScreenerSkills;
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.jpa.entities.UserSkills;
@@ -51,7 +52,8 @@ public class UserController {
 
     private final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 
-    private final Random random = new SecureRandom();
+    private PasswordGeneratorHelper passwordGeneratorHelper;
+
 
     private final SimpleDateFormat sdf = new SimpleDateFormat(UserConstants.DATE_FORMAT);
 
@@ -69,10 +71,10 @@ public class UserController {
 
         try{
             final Date currentDate = new Date();
-            User user=new User();
-            TechnicalScreenerSkills  technicalScreenerSkills=new TechnicalScreenerSkills();
-            List<TechnicalScreenerSkills> technicalScreenerSkillsList=new ArrayList<TechnicalScreenerSkills>();
-            HashMap<String,String> userDetailsExistMap=new HashMap<String, String>();
+            User user;
+            TechnicalScreenerSkills  technicalScreenerSkills;
+            List<TechnicalScreenerSkills> technicalScreenerSkillsList;
+            HashMap<String,String> userDetailsExistMap;
 
             if(userSkills.getUser()!=null){
                 user=userSkills.getUser();
@@ -107,7 +109,7 @@ public class UserController {
                 }
             }
 
-            String password=this.generatePassword();
+            String password=this.passwordGeneratorHelper.generatePassword();
             user.setPassword(this.encoder.encodePassword(password, null));
             try{
                 user.setCreatedBy(principal.getName());
@@ -170,45 +172,6 @@ public class UserController {
         }catch (Exception e){
             return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
         }
-    }
-
-    public  HashMap<String,String> checkUserDetailsExist(User user){
-        HashMap userDetailsMap=new HashMap<String,String>();
-
-        if(user != null && user.getUserName() != null && (!user.getUserName().isEmpty())){
-            try{
-                User userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,user.getUserName());
-                if(userObject != null)
-                    return (HashMap<String, String>) userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.USER_NAME_EXIST.ResponseMsg());
-            }catch (SQLException e){
-                return (HashMap<String, String>) userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
-            }catch (Exception e){
-                return (HashMap<String, String>) userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg());
-            }
-        }
-        if(user != null && user.getEmailId() != null && (!user.getEmailId().isEmpty())){
-            try{
-                User userObject=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID,user.getEmailId());
-                if(userObject != null)
-                    return (HashMap<String, String>) userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.EMAIlID_EXIST.ResponseMsg());
-            }catch (SQLException e){
-                return (HashMap<String, String>) userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
-            }catch (Exception e){
-                return (HashMap<String, String>) userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg());
-            }
-        }
-        if(user != null && user.getContactNumber() != null && (!user.getContactNumber().isEmpty())){
-            try{
-                User userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER,user.getContactNumber());
-                if(userObject != null)
-                    return (HashMap<String, String>) userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg());
-            }catch (SQLException e){
-                return (HashMap<String, String>) userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
-            }catch (Exception e){
-                return (HashMap<String, String>) userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg());
-            }
-        }
-        return (HashMap<String, String>) userDetailsMap.put(HookedOnConstants.NOT_EXIST, "");
     }
 
 
@@ -452,7 +415,7 @@ public class UserController {
         try{
             user=this.userService.findUserById(userId);
             if(user != null){
-                String password=this.generatePassword();
+                String password=this.passwordGeneratorHelper.generatePassword();
                 user.setPassword(this.encoder.encodePassword(password, null));
                 if(this.userService.saveUser(user)){
                     user.setPassword(password);
@@ -588,20 +551,63 @@ public class UserController {
         return  new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public final String generatePassword(){
-        String password="";
-        try{
-            for (int i=0; i< UserConstants.PASSWORD_LENGTH; i++)
-            {
-                int index = (int)(this.random.nextDouble()* UserConstants.LETTERS.length());
-                password += UserConstants.LETTERS.substring(index, index+1);
-            }
-        }catch (Exception e){
-            password= UserConstants.DEFAULT_PASSWORD;
-        }
-        return password;
 
+
+    public  HashMap<String,String> checkUserDetailsExist(User user){
+        HashMap userDetailsMap=new HashMap<String,String>();
+
+        if(user != null && user.getUserName() != null && (!user.getUserName().isEmpty())){
+            try{
+                User userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,user.getUserName());
+                if(userObject != null){
+                    userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.USER_NAME_EXIST.ResponseMsg());
+                    return userDetailsMap;
+                }
+
+            }catch (SQLException e){
+                userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+                return userDetailsMap;
+            }catch (Exception e){
+                userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg());
+                return userDetailsMap;
+            }
+        }
+        if(user != null && user.getEmailId() != null && (!user.getEmailId().isEmpty())){
+            try{
+                User userObject=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID,user.getEmailId());
+                if(userObject != null){
+                    userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.EMAIlID_EXIST.ResponseMsg());
+                    return userDetailsMap;
+                }
+
+            }catch (SQLException e){
+                userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+                return userDetailsMap;
+            }catch (Exception e){
+                userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg());
+                return userDetailsMap;
+            }
+        }
+        if(user != null && user.getContactNumber() != null && (!user.getContactNumber().isEmpty())){
+            try{
+                User userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER,user.getContactNumber());
+                if(userObject != null){
+                    userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg());
+                    return userDetailsMap;
+                }
+
+            }catch (SQLException e){
+                userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg());
+                return userDetailsMap;
+            }catch (Exception e){
+                userDetailsMap.put(HookedOnConstants.EXIST, UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg());
+                return userDetailsMap;
+            }
+        }
+        return (HashMap<String, String>) userDetailsMap.put(HookedOnConstants.NOT_EXIST, "");
     }
+
+
 
     public final List<TechnicalScreenerSkills> getTechnicalSkillsObjectList(TechnicalScreenerSkills technicalScreenerSkills) throws ArrayIndexOutOfBoundsException{
 

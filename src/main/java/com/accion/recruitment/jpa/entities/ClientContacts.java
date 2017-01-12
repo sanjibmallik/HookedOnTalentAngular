@@ -54,7 +54,6 @@ public class ClientContacts  extends BaseEntity{
     @Column(length = 255, nullable = true)
     private String addressTwo;
 
-
     @Column(length = 255, nullable = true)
     private String city;
 
@@ -70,6 +69,8 @@ public class ClientContacts  extends BaseEntity{
     @Column(length = 5000,nullable = true)
     private String note;
 
+    @Column(length = 255,nullable = true)
+    private String sendUserEmail;
 
     @ManyToMany(mappedBy = "clientContacts"
             , targetEntity = ClientDetails.class
@@ -212,6 +213,14 @@ public class ClientContacts  extends BaseEntity{
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getSendUserEmail() {
+        return sendUserEmail;
+    }
+
+    public void setSendUserEmail(String sendUserEmail) {
+        this.sendUserEmail = sendUserEmail;
     }
 
     public Set<ClientDetails> getClientDetails() {
