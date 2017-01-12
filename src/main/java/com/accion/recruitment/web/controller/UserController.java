@@ -52,7 +52,7 @@ public class UserController {
 
     private final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 
-    private PasswordGeneratorHelper passwordGeneratorHelper;
+    private PasswordGeneratorHelper passwordGeneratorHelper=new PasswordGeneratorHelper();
 
 
     private final SimpleDateFormat sdf = new SimpleDateFormat(UserConstants.DATE_FORMAT);
@@ -601,7 +601,8 @@ public class UserController {
                 return userDetailsMap;
             }
         }
-        return (HashMap<String, String>) userDetailsMap.put(HookedOnConstants.NOT_EXIST, "");
+        userDetailsMap.put(HookedOnConstants.NOT_EXIST, "");
+        return userDetailsMap;
     }
 
 
