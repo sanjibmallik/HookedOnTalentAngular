@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Add Video Question</h3>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Select Domain</label>
+                    <div class="col-sm-5">
+                        <select class="form-control" name="role">
+                            <option>Java</option>
+                            <option>Angular</option>
+                            <option>Php</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group-separator"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Select Level</label>
+                    <div class="col-sm-5">
+                        <select class="form-control" name="role">
+                            <option>Easy</option>
+                            <option>Medium</option>
+                            <option>Hard</option>
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group-separator"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Question:</label>
+                    <div class="col-sm-5">
+                        <div class="input-group input-group-sm input-group-minimal">
+                                <span class="input-group-addon">
+                                    <i class="linecons-user"></i>
+                                </span>
+                            <input type="text" name="firstName" class="form-control" ng-model="newUser.firstName" placeholder="Enter Question"
+                                   inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group-separator"></div>
+
+            </div>
+        </div>
+    </div>
+</div>

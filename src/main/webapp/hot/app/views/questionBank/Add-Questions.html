@@ -9,381 +9,41 @@
     <div class="form-group">
         <label class="col-sm-3 control-label">Select Question Type</label>
         <div class="col-sm-5">
-            <select class="form-control" name="role">
-                <option>General Question</option>
-                <option>Technical Question</option>
-                <option>Video Question</option>
+            <select class="form-control" name="role" ng-model="questionType">
+                <option value="" ng-hide="true">Select</option>
+                <option value="generalQuestion">General Question</option>
+                <option value="technicalQuestion">Technical Question</option>
+                <option value="videoQuestion">Video Question</option>
             </select>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Add General Question</h3>
-                </div>
 
-                <div class="panel-body">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Question Type</label>
-                        <div class="col-sm-5">
-                            <input id="id_radioGenO" type="radio" name="type" value="objective" checked onclick="hide('pre_subGen')">&nbspObjective
-                            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                            <input id="id_radioGenS" type="radio" name="type" value="subjective" onclick="show('pre_subGen')">&nbspSubjective
-                        </div>
-                    </div>
+    <div ng-switch="questionType">
+        <div ng-switch-when="generalQuestion">
+           <div ng-include src="'app/views/questionBank/addGeneralQuestion_tpl.html'"></div>
 
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Question:</label>
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-                                <span class="input-group-addon">
-                                    <i class="linecons-user"></i>
-                                </span>
-                                <input type="text" name="firstName" class="form-control" ng-model="newUser.firstName" placeholder="Enter Question"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Option 1</label>
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-                                <span class="input-group-addon">
-                                    <i class="linecons-user"></i>
-                                </span>
-                                <input type="text" name="lastName" class="form-control" ng-model="newUser.lastName" placeholder="Option 1"
-                                    inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Option 2</label>
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-                                <span class="input-group-addon">
-                                    <i class="linecons-user"></i>
-                                </span>
-                                <input type="text" name="lastName" class="form-control" ng-model="newUser.lastName" placeholder="Option 2"
-                                inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Option 3</label>
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-                                <span class="input-group-addon">
-                                    <i class="linecons-user"></i>
-                                </span>
-                                <input type="text" name="lastName" class="form-control" ng-model="newUser.lastName" placeholder="Option 3"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Option 4</label>
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-                                <span class="input-group-addon">
-                                    <i class="linecons-user"></i>
-                                </span>
-                                <input type="text" name="lastName" class="form-control" ng-model="newUser.lastName" placeholder="Option 4"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Option 5</label>
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-                                <span class="input-group-addon">
-                                    <i class="linecons-user"></i>
-                                </span>
-                                <input type="text" name="lastName" class="form-control" ng-model="newUser.lastName" placeholder="Option 5"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Option 6</label>
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-                                <span class="input-group-addon">
-                                    <i class="linecons-user"></i>
-                                </span>
-                                <input type="text" name="lastName" class="form-control" ng-model="newUser.lastName" placeholder="Option 6"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div style="text-align: center; zoom: 1.3;" class="form-group">
-
-                        <label  class="col-sm-3 control-label"></label>
-                        <div class="col-sm-5">
-                            <input type="checkbox" name="addToPosition" value="Yes"> &nbsp&nbsp Mark as generic Question for positions
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
         </div>
+        <div ng-switch-when="technicalQuestion">
+            <div ng-include src="'app/views/questionBank/addTechnicalQuestion_tpl.html'"></div>
+
+        </div>
+        <div ng-switch-when="videoQuestion">
+            <div ng-include src="'app/views/questionBank/addVideoQuestion_tpl.html'"></div>
+
+        </div>
+        <div ng-switch-default>
+           <!-- <div ng-include src="'app/views/questionBank/addGeneralQuestion_tpl.html'"></div>-->
+        </div>
+
     </div>
 
 
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Add Technical Question</h3>
-                </div>
+    <!--<div ng-if="questionType=='generalQuestion'" ng-include src="'app/views/questionBank/addGeneralQuestion_tpl.html'"></div>
+    <div ng-if="questionType=='technicalQuestion'" ng-include src="app/views/q" class="row"></div>
+    <div ng-if="questionType=='videoQuestion'" ng-include src="app/views/q" class="row"></div>
+-->
 
-                <div class="panel-body">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Question Type</label>
-                        <div class="col-sm-5">
-                            <input id="id_radioGenO" type="radio" name="type" value="objective" checked onclick="hide('pre_subGen')">&nbspObjective
-                            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                            <input id="id_radioGenS" type="radio" name="type" value="subjective" onclick="show('pre_subGen')">&nbspSubjective
-                        </div>
-                    </div>
 
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Select Domain</label>
-                        <div class="col-sm-5">
-                            <select class="form-control" name="role">
-                                <option>Java</option>
-                                <option>Angular</option>
-                                <option>Php</option>
-                                <option>Other</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Select Level</label>
-                        <div class="col-sm-5">
-                            <select class="form-control" name="role">
-                                <option>Easy</option>
-                                <option>Medium</option>
-                                <option>Hard</option>
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Question:</label>
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-                                <span class="input-group-addon">
-                                    <i class="linecons-user"></i>
-                                </span>
-                                <input type="text" name="firstName" class="form-control" ng-model="newUser.firstName" placeholder="Enter Question"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Option 1</label>
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-                                <span class="input-group-addon">
-                                    <i class="linecons-user"></i>
-                                </span>
-                                <input type="text" name="lastName" class="form-control" ng-model="newUser.lastName" placeholder="Option 1"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Option 2</label>
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-                                <span class="input-group-addon">
-                                    <i class="linecons-user"></i>
-                                </span>
-                                <input type="text" name="lastName" class="form-control" ng-model="newUser.lastName" placeholder="Option 2"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Option 3</label>
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-                                <span class="input-group-addon">
-                                    <i class="linecons-user"></i>
-                                </span>
-                                <input type="text" name="lastName" class="form-control" ng-model="newUser.lastName" placeholder="Option 3"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Option 4</label>
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-                                <span class="input-group-addon">
-                                    <i class="linecons-user"></i>
-                                </span>
-                                <input type="text" name="lastName" class="form-control" ng-model="newUser.lastName" placeholder="Option 4"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Option 5</label>
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-                                <span class="input-group-addon">
-                                    <i class="linecons-user"></i>
-                                </span>
-                                <input type="text" name="lastName" class="form-control" ng-model="newUser.lastName" placeholder="Option 5"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Option 6</label>
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-                                <span class="input-group-addon">
-                                    <i class="linecons-user"></i>
-                                </span>
-                                <input type="text" name="lastName" class="form-control" ng-model="newUser.lastName" placeholder="Option 6"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Prefered Answer</label>
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-                                <span class="input-group-addon">
-                                    <i class="linecons-user"></i>
-                                </span>
-                                <input type="text" name="lastName" class="form-control" ng-model="newUser.lastName" placeholder="Answer"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                </div>
-            </div>
-        </div>
+    </form>
     </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Add Video Question</h3>
-                </div>
-
-                <div class="panel-body">
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Select Domain</label>
-                        <div class="col-sm-5">
-                            <select class="form-control" name="role">
-                                <option>Java</option>
-                                <option>Angular</option>
-                                <option>Php</option>
-                                <option>Other</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Select Level</label>
-                        <div class="col-sm-5">
-                            <select class="form-control" name="role">
-                                <option>Easy</option>
-                                <option>Medium</option>
-                                <option>Hard</option>
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Question:</label>
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-                                <span class="input-group-addon">
-                                    <i class="linecons-user"></i>
-                                </span>
-                                <input type="text" name="firstName" class="form-control" ng-model="newUser.firstName" placeholder="Enter Question"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-separator"></div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-
-</div>
