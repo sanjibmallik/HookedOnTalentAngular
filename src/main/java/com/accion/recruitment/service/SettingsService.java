@@ -11,5 +11,5 @@ public interface SettingsService {
 
     public Boolean saveSettings(Settings settings);
 
-    public Settings getSettingsDetailsById(final int settingId);
+    public Settings findSettingsDetailsById(final int settingId);
 }

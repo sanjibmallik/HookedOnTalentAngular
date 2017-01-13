@@ -93,7 +93,7 @@ public class UserEmailNotificationServiceImpl implements UserEmailNotificationSe
     }
 
     public HashMap<String,String> getSettingsMap(){
-        Settings settings=this.settingsService.getSettingsDetailsById(1);
+        Settings settings=this.settingsService.findSettingsDetailsById(1);
         HashMap<String,String> settingMap=new HashMap<String, String>();
         String link= "Link: <a href=\""+settings.getDomainName()+""+EmailNotificationConstants.CHANGE_PASSWORD_URL+"\">"+settings.getDomainName()+""+EmailNotificationConstants.CHANGE_PASSWORD_URL+"\"</a> <br/><br/><br/>";
         settingMap.put("from",settings.getEmailId());
