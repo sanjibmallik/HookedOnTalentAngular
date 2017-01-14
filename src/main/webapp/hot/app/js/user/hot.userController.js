@@ -1,6 +1,6 @@
 'use strict'
 
-var hotUserControllers = angular.module('hot.userControllers',['ui.bootstrap']);
+var hotUserControllers = angular.module('hot.userControllers',['ui.bootstrap','ngTable']);
 
 
 hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
@@ -173,36 +173,37 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
 
 
-   hotUserControllers.controller('viewAllUserCtrl',function($scope,$rootScope,$http){
+   hotUserControllers.controller('viewAllUserCtrl',function($scope,$rootScope,$http, $filter, NgTableParams){
         $scope.test='test';
+       $rootScope.users = [];
+
+     angular.element(document).ready(function(){$http({
+         method : 'GET',
+         url : 'users'
+     }).then(function successCallback(response) {
+
+             $rootScope.users=response.data;
+             $rootScope.usersTable = new NgTableParams({
+                 page: 1,
+                 count: 10
+             } , {
+                 total:  $rootScope.users.length,
+                 getData: function (params) {
+                     $scope.data = $rootScope.users;
+                     $scope.data = params.filter() ? $filter('filter')($scope.data, params.filter()) : $scope.data;
+                     $scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                     return $scope.data;
+                 }
 
 
-
-       $http({
-           method : 'GET',
-           url : 'users'
-       }).then(function successCallback(response) {
-
-               $scope.allUsers=response.data;
-               console.log($scope.allUsers);
-
-              /* $scope.testUser={"user":[
-                   {
-                       'id':195,'userName':'sandesh.s', 'emailId':'sandesh.s@accionlabs.com', 'enabled':'true', 'firstName':'Sandesh', 'lastName':'Sukumaran', 'contactNumber':4129798111, 'role':'SuperAdmin', 'errorMessage':'null'
-
-                   },
-                   {
-                       'id':198,'userName':'sandesh.s', 'emailId':'sandesh.s@accionlabs.com', 'enabled':'true', 'firstName':'Sandesh', 'lastName':'Sukumaran', 'contactNumber':4129798111, 'role':'SuperAdmin', 'errorMessage':'null'
-                   }
-               ]};
-*/
+             });
 
 
-           },function errorCallback(response) {
-               console.log(response.statusText);
-           });
+         },function errorCallback(response) {
+             console.log(response.statusText);
+         });
 
-
+     });
 
        $rootScope.resetUserPassword = function(userId){
            console.log(userId);
@@ -230,7 +231,31 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
        }
 
 
+      /* console.log($rootScope.users.length);*/
+
+     /* $rootScope.users = [{"id":1,"firstName":"Philip","lastName":"Kim","emailId":"pkim0@mediafire.com","contactNumber":"Indonesia","userName":"29.107.35.8"},
+           {"id":2,"firstName":"Judith","lastName":"Austin","email":"jaustin1@mapquest.com","country":"China","userName":"173.65.94.30"},
+           {"id":3,"firstName":"Julie","lastName":"Wells","email":"jwells2@illinois.edu","country":"Finland","userName":"9.100.80.145"},
+           {"id":4,"firstName":"Gloria","lastName":"Greene","email":"ggreene3@blogs.com","country":"Indonesia","userName":"69.115.85.157"},
+           {"id":50,"firstName":"Andrea","lastName":"Greene","email":"agreene4@fda.gov","country":"Russia","userName":"128.72.13.52"}
+       ];*/
 
 
 
+     /*  $rootScope.usersTable = new NgTableParams({
+           page: 1,
+           count: 10
+       } , {
+           total:  $rootScope.users.length,
+           getData: function (params) {
+               $scope.data = $rootScope.users;
+               $scope.data = params.filter() ? $filter('filter')($scope.data, params.filter()) : $scope.data;
+               $scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+               return $scope.data;
+           }
+
+
+       });
+
+*/
    });

@@ -14,7 +14,8 @@ var app = angular.module('hot-app', [
 	'hot.services',
     'hot.userControllers',
     'hot.userFactory',
-    'hot.userFilter'
+    'hot.userFilter',
+    'ngTable'
 
 
 ]);
