@@ -30,7 +30,7 @@ public class SettingsServiceImpl implements SettingsService {
     }
 
     @Override
-    public Settings getSettingsDetailsById(final int settingId) {
+    public Settings findSettingsDetailsById(final int settingId) {
         return (Settings) this.settingServiceDAO.findSettingsDetailsById(settingId);
     }
 

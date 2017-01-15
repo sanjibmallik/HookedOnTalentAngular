@@ -182,7 +182,7 @@ public class UserController {
     @RequestMapping(value = UserRestURIConstants.GET_ALL_USER, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.GET)
     @ResponseBody
     @JsonIgnore
-    public ResponseEntity<Set<User>> getAllUsers() throws JSONException {
+    public ResponseEntity<Set<User>> getAllUsers(){
 
         try{
             List<User> userList=this.userService.findAllUser();
