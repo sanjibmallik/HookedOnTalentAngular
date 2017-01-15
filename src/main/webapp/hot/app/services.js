@@ -84,17 +84,17 @@ angular.module('hot.services', []).
 		this.prepareSidebarMenu = function()
 		{
 			var dashboard    = this.addItem('Dashboard', 		'/app/dashboard', 			'linecons-cog');
-			var users    = this.addItem('Users', 		'/app/users', 			'linecons-cog');
-            var clients    = this.addItem('Clients', 		'/app/clients', 			'linecons-cog');
-			var requirements    = this.addItem('Requirements', 		'/app/requirements', 			'linecons-cog');
-			var candidates    = this.addItem('Candidates', 		'/app/candidates', 			'linecons-cog');
-			var questionBank    = this.addItem('Question Bank', 		'/app/questionBank', 			'linecons-cog');
+			var users    = this.addItem('Users', 		'/app/users', 			'linecons-user');
+            var clients    = this.addItem('Clients', 		'/app/clients', 			'linecons-heart');
+			var requirements    = this.addItem('Requirements', 		'/app/requirements', 			'linecons-tag');
+			var candidates    = this.addItem('Candidates', 		'/app/candidates', 			'linecons-graduation-cap');
+			var questionBank    = this.addItem('Question Bank', 		'/app/questionBank', 			'linecons-lightbulb');
 
 			
 
 
 				
-				// Subitems of Users
+			// Subitems of Users
 				users.addItem('Create User', 	'-/Create-User'); // "-/" will append parents link
 				users.addItem('Display Users', 	'-/Display-Users');
 
@@ -110,6 +110,9 @@ angular.module('hot.services', []).
             questionBank.addItem('Add Questions', 	'-/Add-Questions'); // "-/" will append parents link
             questionBank.addItem('Display Questions', 	'-/Display-Questions');
 
+            // Subitems of Candidates
+            candidates.addItem('Add Candidate', 	'-/Add-Candidate'); // "-/" will append parents link
+            candidates.addItem('Display Candidates', 	'-/Display-Candidates');
 			
 
 
