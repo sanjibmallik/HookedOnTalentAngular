@@ -9,15 +9,14 @@
                     <span class="collapse-icon">&ndash;</span>
                     <span class="expand-icon">+</span>
                 </a>
-
             </div>
             </div>
 
-
-
-                    <div class="panel-body">
-                        <div class="form-horizontal">
-                         <div class="form-group">
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label"></label>
+                        <div class="col-sm-7">
                         <table class="table">
                             <thead>
                             <th>Skill Type</th>
@@ -29,23 +28,26 @@
                             </thead>
                             <tbody>
                             <tr data-ng-repeat="skill in allSkills">
-                                <td>
+                                <td width="150px">
 
                                     <select class="form-control" ng-model="skill.skillType">
                                         <option value="PrimarySkill">Primary Skill</option>
                                         <option value="SecondarySkill">Secondary Skill</option>
                                     </select>
                                 </td>
-                                <td><input type="text" class="form-control" ng-model="skill.skills" placeholder="Skill" style="border: none !important;"></td>
-                                <td><input type="number" class="form-control" ng-model="skill.years" placeholder="Years" style="border: none !important;"></td>
-                                <td><input type="number" class="form-control" ng-model="skill.months" placeholder="Months" style="border: none !important;"></td>
+                                <td><input type="text" class="form-control" ng-model="skill.skills" placeholder="Skill"></td>
+                                <td><input type="number" class="form-control" ng-model="skill.years" placeholder="Years"></td>
+                                <td><input type="number" class="form-control" ng-model="skill.months" placeholder="Months"></td>
                             </tr>
-                            <button  class="btn btn-danger pull-right" ng-click="removeRow();">-</button>
-                            <button class="btn btn-primary addnew pull-right" ng-click="addNewRow();">+</button>
+
 
                             </tbody>
 
                         </table>
+                            <input type="button" value="-" class="btn btn-danger pull-right" ng-click="removeRow();"/>
+                            <input type="button" value="+" class="btn btn-primary addnew pull-right" ng-click="addNewRow();"/>
+
+                        </div>
 
                     </div>
 
