@@ -120,6 +120,45 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
             },
             controller: 'UIModalsCtrl'
 		}).
+
+        state('app.candidates-Add-Candidate', {
+            url: '/candidates-Add-Candidate',
+            templateUrl: appHelper.templatePath('candidates/Add-Candidate'),
+            resolve: {
+                resources: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.charts.dxGlobalize,
+                        ASSETS.extra.toastr,
+                        ASSETS.core.bootstrap,
+                        ASSETS.core.jQueryUI,
+                        ASSETS.forms.jQueryValidate,
+                        ASSETS.forms.inputmask,
+                        ASSETS.forms.multiSelect,
+                        ASSETS.forms.datepicker,
+                        ASSETS.forms.selectboxit,
+                        ASSETS.forms.formWizard
+                    ]);
+                },
+                dxCharts: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.charts.dxCharts
+                    ]);
+                }
+            }
+        }).
+
+        state('app.candidates-Display-Candidates', {
+            url: '/candidates-Display-Candidates',
+            templateUrl: appHelper.templatePath('candidates/Display-Candidates'),
+            resolve: {
+                deps: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.tables.datatables
+                    ]);
+                }
+            },
+            controller: 'UIModalsCtrl'
+        }).
         state('app.clients-Create-Client', {
             url: '/clients-Create-Client',
             templateUrl: appHelper.templatePath('clients/Create-Client'),
