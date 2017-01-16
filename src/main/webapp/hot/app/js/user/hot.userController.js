@@ -48,7 +48,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
 
         $scope.submitNewUser = function(){
-            
+
             $scope.userPrimarySkills = [];
             $scope.userSecodarySkills = [];
 
