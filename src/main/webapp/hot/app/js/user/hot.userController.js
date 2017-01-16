@@ -250,7 +250,28 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
        $rootScope.updateUser= function(){
            console.log("updateUser function");
-              var jsonUser = {
+
+           $rootScope.userPrimarySkills = [];
+           $rootScope.userSecodarySkills = [];
+
+
+           for(var i=0;$rootScope.responseData.technicalScreenerDetailsDSkillsSet.length>i;i++){
+
+
+               if($rootScope.responseData.technicalScreenerDetailsDSkillsSet[i].skillType=="PrimarySkill"){
+
+                   $rootScope.userPrimarySkills.push($scope.responseData.technicalScreenerDetailsDSkillsSet[i]);
+
+               }else{
+
+                   $rootScope.userSecodarySkills.push($scope.responseData.technicalScreenerDetailsDSkillsSet[i])
+
+               }
+           }
+
+
+
+           var jsonUser = {
                "user":{
                    "firstName":$rootScope.responseData.firstName,
                    "lastName":$rootScope.responseData.lastName,
@@ -269,12 +290,16 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
                },
 
                "technicalScreenerSkills":{
-                   "primarySkills":$rootScope.responseData.primarySkills,
-                   "secondarySkills":$rootScope.responseData.secondarySkills,
+                   "primarySkills":$rootScope.userPrimarySkills,
+                   "secondarySkills":$rootScope.userSecodarySkills,
                    "expectedPayRange":$rootScope.responseData.expectedPayRange
 
                }
+
+
            }
+
+           console.log(jsonUser);
 
 
 
