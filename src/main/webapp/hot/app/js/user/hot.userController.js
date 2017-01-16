@@ -6,31 +6,17 @@ var hotUserControllers = angular.module('hot.userControllers',['ui.bootstrap','n
 hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
 
-    $scope.newUserPrimarySkills = [{id: 'primarySkill_1'}];
+    $scope.allSkills = [{}];
 
-    $scope.addNewChoice = function() {
-        var newItemNo =  $scope.newUserPrimarySkills.length+1;
-        $scope.newUserPrimarySkills.push({'id':'primarySkill_'+newItemNo});
+    $scope.addNewRow = function() {
+        var newItemNo =  $scope.allSkills.length+1;
+        $scope.allSkills.push({});
     };
 
-    $scope.removeChoice = function() {
-        var lastItem =  $scope.newUserPrimarySkills.length-1;
-        $scope.newUserPrimarySkills.splice(lastItem);
+    $scope.removeRow = function() {
+        var lastItem =  $scope.allSkills.length-1;
+        $scope.allSkills.splice(lastItem);
     };
-
-
-    $scope.newUserSecondarySkills = [{id: 'secondarySkill_1'}];
-
-    $scope.addNewChoiceSec = function() {
-        var newItemNoSec =  $scope.newUserSecondarySkills.length+1;
-        $scope.newUserSecondarySkills.push({'id':'secondarySkill_1'+newItemNoSec});
-    };
-
-    $scope.removeChoiceSec = function() {
-        var lastItemSec =  $scope.newUserSecondarySkills.length-1;
-        $scope.newUserSecondarySkills.splice(lastItemSec);
-    };
-
 
 
     $scope.newUser = {};
@@ -63,7 +49,25 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
         $scope.submitNewUser = function(){
 
-           var data = $scope.newUser;
+            $scope.userPrimarySkills = [];
+            $scope.userSecodarySkills = [];
+
+
+            for(var i=0;$scope.allSkills.length>i;i++){
+
+                if($scope.allSkills[i].skillType=="PrimarySkill"){
+
+                    $scope.userPrimarySkills.push($scope.allSkills[i]);
+
+                }else{
+
+                    $scope.userSecodarySkills.push($scope.allSkills[i])
+
+                }
+            }
+
+
+            var data = $scope.newUser;
 
 
             var jsonUser = {
@@ -85,8 +89,8 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
                 },
 
                 "technicalScreenerSkills":{
-                   "primarySkills": $scope.newUserPrimarySkills,
-                    "secondarySkills": $scope.newUserSecondarySkills,
+                   "primarySkills":$scope.userPrimarySkills,
+                    "secondarySkills":$scope.userSecodarySkills,
                     "expectedPayRange":$scope.newUser.expectedPayRange
 
                 }
