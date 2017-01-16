@@ -299,6 +299,23 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
            $rootScope.currentModal.dismiss();
 
        }
+       $rootScope.addNewRow = function(){
+           console.log($rootScope.responseData.technicalScreenerDetailsDSkillsSet.length);
+
+           var newItemNo =  $rootScope.responseData.technicalScreenerDetailsDSkillsSet.length+1;
+           $rootScope.responseData.technicalScreenerDetailsDSkillsSet.push({});
+           console.log($rootScope.responseData.technicalScreenerDetailsDSkillsSet);
+       };
+
+
+
+       $rootScope.removeRow = function() {
+           var lastItem =  $rootScope.responseData.technicalScreenerDetailsDSkillsSet.length-1;
+           $rootScope.responseData.technicalScreenerDetailsDSkillsSet.splice(lastItem);
+       };
+
+
+
 
 
    });
