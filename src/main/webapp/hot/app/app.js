@@ -272,6 +272,58 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
                 }
             },
             controller: 'UIModalsCtrl'
+        }).
+
+        state('app.profile', {
+            url: '/profile',
+            templateUrl: appHelper.templatePath('profile'),
+            resolve: {
+                resources: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.charts.dxGlobalize,
+                        ASSETS.extra.toastr,
+                        ASSETS.core.bootstrap,
+                        ASSETS.core.jQueryUI,
+                        ASSETS.forms.jQueryValidate,
+                        ASSETS.forms.inputmask,
+                        ASSETS.forms.multiSelect,
+                        ASSETS.forms.datepicker,
+                        ASSETS.forms.selectboxit,
+                        ASSETS.forms.formWizard
+                    ]);
+                },
+                dxCharts: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.charts.dxCharts
+                    ]);
+                }
+            }
+        }).
+
+        state('app.settings', {
+            url: '/settings',
+            templateUrl: appHelper.templatePath('settings'),
+            resolve: {
+                resources: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.charts.dxGlobalize,
+                        ASSETS.extra.toastr,
+                        ASSETS.core.bootstrap,
+                        ASSETS.core.jQueryUI,
+                        ASSETS.forms.jQueryValidate,
+                        ASSETS.forms.inputmask,
+                        ASSETS.forms.multiSelect,
+                        ASSETS.forms.datepicker,
+                        ASSETS.forms.selectboxit,
+                        ASSETS.forms.formWizard
+                    ]);
+                },
+                dxCharts: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.charts.dxCharts
+                    ]);
+                }
+            }
         });
 });
 
