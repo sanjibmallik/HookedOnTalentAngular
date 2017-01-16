@@ -9,29 +9,18 @@
         <th>Skill type</th>
         <th>Experience</th>
     </tr>
-<tr>
-    <td>Java</td>
-    <td>Primary Skills</td>
-    <td>5 Years, 10 Months</td>
+<tr ng-repeat="primarySkill in responseData.technicalScreenerDetailsSkillsSet">
+    <td>{{primarySkill.skills}}</td>
+    <td>{{primarySkill.skillType}}</td>
+    <td>{{primarySkill.years}} Years, {{primarySkill.months}} Months</td>
 </tr>
-
-<tr>
-    <td>Angular</td>
-    <td>Secondary Skills</td>
-    <td>2 Years, 10 Months</td>
-</tr>
-    <tr>
-        <td>NodeJs</td>
-        <td>Secondary Skills</td>
-        <td>1 Years, 4 Months</td>
-    </tr>
 
 </table>
 
         <table class="table responsive">
 <tr>
     <td>Expected Pay Range</td>
-    <td>2 Dollers</td>
+    <td>{{responseData.expectedPayRange}}</td>
 </tr>
         </table>
 

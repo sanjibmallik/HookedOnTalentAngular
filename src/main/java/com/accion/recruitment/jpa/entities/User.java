@@ -44,7 +44,7 @@ public class User extends BaseEntity {
 
 
 
-    public User(Integer id,String firstName, String lastName, String userName, String emailId, Boolean enabled, String contactNumber, String role, String alternateContact, String addressOne, String addressTwo, Long zipCode, String city, String state, String country, Long expectedPayRange, byte[] userImage, byte[] userProfile, String errorMessage,Collection<TechnicalScreenerSkills> technicalScreenerDetailsDSkillsSet) {
+    public User(Integer id,String firstName, String lastName, String userName, String emailId, Boolean enabled, String contactNumber, String role, String alternateContact, String addressOne, String addressTwo, Long zipCode, String city, String state, String country, Long expectedPayRange, byte[] userImage, byte[] userProfile, String errorMessage,Collection<TechnicalScreenerSkills> technicalScreenerDetailsSkillsSet) {
         this.id=id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -64,7 +64,7 @@ public class User extends BaseEntity {
         this.userImage = userImage;
         this.userProfile = userProfile;
         this.errorMessage = errorMessage;
-        this.technicalScreenerDetailsDSkillsSet = technicalScreenerDetailsDSkillsSet;
+        this.technicalScreenerDetailsSkillsSet = technicalScreenerDetailsSkillsSet;
     }
 
     public User(Integer id,String firstName, String lastName) {
@@ -153,7 +153,7 @@ public class User extends BaseEntity {
     @CollectionId(columns = @Column(name="ts_skill_details_id"),
             type=@Type(type="long"),generator = "increment"
     )
-    private Collection<TechnicalScreenerSkills> technicalScreenerDetailsDSkillsSet=new HashSet<TechnicalScreenerSkills>();
+    private Collection<TechnicalScreenerSkills> technicalScreenerDetailsSkillsSet=new HashSet<TechnicalScreenerSkills>();
 
 
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -362,11 +362,11 @@ public class User extends BaseEntity {
     }
 
     public Collection<TechnicalScreenerSkills> getTechnicalScreenerDetailsDSkillsSet() {
-        return technicalScreenerDetailsDSkillsSet;
+        return technicalScreenerDetailsSkillsSet;
     }
 
-    public void setTechnicalScreenerDetailsDSkillsSet(Collection<TechnicalScreenerSkills> technicalScreenerDetailsDSkillsSet) {
-        this.technicalScreenerDetailsDSkillsSet = technicalScreenerDetailsDSkillsSet;
+    public void setTechnicalScreenerDetailsDSkillsSet(Collection<TechnicalScreenerSkills> technicalScreenerDetailsSkillsSet) {
+        this.technicalScreenerDetailsSkillsSet = technicalScreenerDetailsSkillsSet;
     }
 
     public Collection<ClientDetails> getAccountManagerClients() {
