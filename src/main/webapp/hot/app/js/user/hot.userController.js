@@ -218,6 +218,50 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
        }
 
 
+       $rootScope.updateUser= function(){
+           console.log("updateUser function");
+              var jsonUser = {
+               "user":{
+                   "firstName":$rootScope.responseData.firstName,
+                   "lastName":$rootScope.responseData.lastName,
+                   "userName":$rootScope.responseData.userName,
+                   "emailId":$rootScope.responseData.emailId,
+                   "contactNumber":$rootScope.responseData.contactNumber,
+                   "role":$rootScope.responseData.role,
+                   "alternateContact":$rootScope.responseData.alternateContact,
+                   "addressOne":$rootScope.responseData.addressOne,
+                   "addressTwo":$rootScope.responseData.addressTwo,
+                   "zipCode":$rootScope.responseData.zipCode,
+                   "city":$rootScope.responseData.city,
+                   "state":$rootScope.responseData.state,
+                   "country":$rootScope.responseData.country
+
+               },
+
+               "technicalScreenerSkills":{
+                   "primarySkills":$rootScope.responseData.primarySkills,
+                   "secondarySkills":$rootScope.responseData.secondarySkills,
+                   "expectedPayRange":$rootScope.responseData.expectedPayRange
+
+               }
+           }
+
+
+
+           $http.put('user/update/',jsonUser)
+               .success(function (data, status, headers, config) {
+                   console.log(data);
+               })
+               .error(function (data, status, header, config) {
+               });
+           $rootScope.currentModal.dismiss();
+
+       }
+
+
+
+
+
 
        $rootScope.enableDisableUser = function(userId,status){
            $http.put('user/status/'+userId+'/'+status)
@@ -231,31 +275,4 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
        }
 
 
-      /* console.log($rootScope.users.length);*/
-
-     /* $rootScope.users = [{"id":1,"firstName":"Philip","lastName":"Kim","emailId":"pkim0@mediafire.com","contactNumber":"Indonesia","userName":"29.107.35.8"},
-           {"id":2,"firstName":"Judith","lastName":"Austin","email":"jaustin1@mapquest.com","country":"China","userName":"173.65.94.30"},
-           {"id":3,"firstName":"Julie","lastName":"Wells","email":"jwells2@illinois.edu","country":"Finland","userName":"9.100.80.145"},
-           {"id":4,"firstName":"Gloria","lastName":"Greene","email":"ggreene3@blogs.com","country":"Indonesia","userName":"69.115.85.157"},
-           {"id":50,"firstName":"Andrea","lastName":"Greene","email":"agreene4@fda.gov","country":"Russia","userName":"128.72.13.52"}
-       ];*/
-
-
-
-     /*  $rootScope.usersTable = new NgTableParams({
-           page: 1,
-           count: 10
-       } , {
-           total:  $rootScope.users.length,
-           getData: function (params) {
-               $scope.data = $rootScope.users;
-               $scope.data = params.filter() ? $filter('filter')($scope.data, params.filter()) : $scope.data;
-               $scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-               return $scope.data;
-           }
-
-
-       });
-
-*/
    });
