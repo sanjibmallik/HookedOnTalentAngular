@@ -14,16 +14,17 @@
             </div>
             <div class="panel-body">
                 <div class="form-horizontal">
-                    <div class="form-group"  data-ng-repeat="primarySkills in newUserPrimarySkills">
+                    <div class="form-group">
                         <label class="col-sm-3 control-label" >Primary skills</label>
-
+                           <div data-ng-repeat="primarySkills in newUserPrimarySkills">
                             <input type="text" ng-model="primarySkills.skills" name="" placeholder="Primary Skills">
                             <input type="text"  ng-model="primarySkills.years" name="" placeholder="Years">
                             <input type="text"  ng-model="primarySkills.months" name="" placeholder="Months">
                             <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
+                           </div>
 
 
-                        <button class="addfields" ng-click="addNewChoice()">Add fields</button>
+                        <button class="addfields" ng-click="addNewChoice()">Add More Skills</button>
 
 
                     </div>
@@ -38,16 +39,15 @@
             <div class="panel-body">
                 <div class="form-horizontal">
 
-                    <div class="form-group"  data-ng-repeat="secondarySkills in newUserSecondarySkills">
-                        <label class="col-sm-3 control-label" >Secondary skills</label>
-
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Secondary skills</label>
+                        <div   data-ng-repeat="secondarySkills in newUserSecondarySkills">
                         <input type="text" ng-model="secondarySkills.skills" name="" placeholder="Secondary Skills">
                         <input type="text"  ng-model="secondarySkills.years" name="" placeholder="Years">
                         <input type="text"  ng-model="secondarySkills.months" name="" placeholder="Months">
                         <button class="remove" ng-show="$last" ng-click="removeChoiceSec()">-</button>
-
-
-                        <button class="addfields" ng-click="addNewChoiceSec()">Add fields</button>
+                        </div>
+                 <button class="addfields" ng-click="addNewChoiceSec()">Add More Skills</button>
 
 
                     </div>

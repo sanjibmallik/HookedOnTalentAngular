@@ -93,8 +93,6 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
             }
 
 
-
-
             console.log(jsonUser);
 
             $http.post('user/create', jsonUser)
