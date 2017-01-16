@@ -12,7 +12,52 @@
 
             </div>
             </div>
-            <div class="panel-body">
+
+
+
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                         <div class="form-group">
+                        <table class="table">
+                            <thead>
+                            <th>Skill Type</th>
+                            <th>Skill Name</th>
+                            <th>Years</th>
+                            <th>Months</th>
+
+
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="skill in allSkills">
+                                <td>
+
+                                    <select class="form-control" ng-model="skill.skillType">
+                                        <option value="PrimarySkill">Primary Skill</option>
+                                        <option value="SecondarySkill">Secondary Skill</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" class="form-control" ng-model="skill.skills" placeholder="Skill" style="border: none !important;"></td>
+                                <td><input type="number" class="form-control" ng-model="skill.years" placeholder="Years" style="border: none !important;"></td>
+                                <td><input type="number" class="form-control" ng-model="skill.months" placeholder="Months" style="border: none !important;"></td>
+                            </tr>
+                            <button  class="btn btn-danger pull-right" ng-click="removeRow();">-</button>
+                            <button class="btn btn-primary addnew pull-right" ng-click="addNewRow();">+</button>
+
+                            </tbody>
+
+                        </table>
+{{allSkills.length}}
+                    </div>
+
+                </div>
+                    </div>
+
+
+
+<!--
+
+
+                <div class="panel-body">
                 <div class="form-horizontal">
                     <div class="form-group">
                         <div class="col-sm-12" data-ng-repeat="primarySkills in newUserPrimarySkills">
@@ -32,17 +77,19 @@
                     </div>
                 </div>
             </div>
+-->
 
+<!--
 
 
             <div class="panel-body">
                 <div class="form-horizontal">
                     <div class="form-group">
                         <div class="col-sm-12" data-ng-repeat="secondarySkills in newUserSecondarySkills">
-                           <!-- <label ng-hide="newUserSecondarySkills.length >1" class="col-sm-3 control-label">Secondary skills</label>-->
+                           &lt;!&ndash; <label ng-hide="newUserSecondarySkills.length >1" class="col-sm-3 control-label">Secondary skills</label>&ndash;&gt;
                             <label class="col-sm-3 control-label">Secondary skills</label>
                              <div class="col-sm-5">
-                           <!-- {{newUserSecondarySkills.length}}-->
+                           &lt;!&ndash; {{newUserSecondarySkills.length}}&ndash;&gt;
                         <input style="float: left; width: 50%" class="form-control" type="text" ng-model="secondarySkills.skills" name="" placeholder="Secondary Skills">
                         <input style="float: left; width: 25%" class="form-control" type="text" ng-model="secondarySkills.years" name="" placeholder="Years">
                         <input style="float: left; width: 25%" class="form-control" type="text" ng-model="secondarySkills.months" name="" placeholder="Months">
@@ -61,6 +108,7 @@
             </div>
 
 
+-->
 
             <div class="form-group-separator"></div>
             <div class="form-group">
