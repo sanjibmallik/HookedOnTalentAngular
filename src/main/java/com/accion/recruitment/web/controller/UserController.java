@@ -33,6 +33,8 @@ import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author Mudassir Hussain
@@ -72,7 +74,7 @@ public class UserController {
         try{
             final Date currentDate = new Date();
             User user;
-            TechnicalScreenerSkills  technicalScreenerSkills;
+            HashMap<String,Object>   technicalScreenerSkills;
             List<TechnicalScreenerSkills> technicalScreenerSkillsList;
             HashMap<String,String> userDetailsExistMap;
 
@@ -127,7 +129,7 @@ public class UserController {
                 try{
                     if(userSkills.getTechnicalScreenerSkills()!=null){
                         technicalScreenerSkills=userSkills.getTechnicalScreenerSkills();
-                        technicalScreenerSkillsList=this.getTechnicalSkillsObjectList(technicalScreenerSkills);
+                        technicalScreenerSkillsList=this.getTechnicalSkillsObject(technicalScreenerSkills);
                         user.getTechnicalScreenerDetailsDSkillsSet().addAll(technicalScreenerSkillsList);
                         if(this.userService.saveUserGroups(user)){
                             user.setPassword(password);
@@ -219,7 +221,7 @@ public class UserController {
             final Date currentDate = new Date();
             User user;
             User oldUser;
-            TechnicalScreenerSkills  technicalScreenerSkills;
+            HashMap<String,Object>   technicalScreenerSkills;
             List<TechnicalScreenerSkills> technicalScreenerSkillsList;
 
             if(userSkills.getUser()!=null){
@@ -314,7 +316,7 @@ public class UserController {
                         try{
                             if(userSkills.getTechnicalScreenerSkills()!=null){
                                 technicalScreenerSkills=userSkills.getTechnicalScreenerSkills();
-                                technicalScreenerSkillsList=this.getTechnicalSkillsObjectList(technicalScreenerSkills);
+                                technicalScreenerSkillsList=this.getTechnicalSkillsObject(technicalScreenerSkills);
                                 user.getTechnicalScreenerDetailsDSkillsSet().addAll(technicalScreenerSkillsList);
                                 if(this.userService.saveUserGroups(user)){
                                     return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_UPDATED.ResponseMsg()), HttpStatus.OK);
@@ -603,6 +605,45 @@ public class UserController {
         }
         userDetailsMap.put(HookedOnConstants.NOT_EXIST, "");
         return userDetailsMap;
+    }
+
+
+    public final List<TechnicalScreenerSkills> getTechnicalSkillsObject(HashMap<String,Object> technicalScreenerSkillsMap) throws ArrayIndexOutOfBoundsException{
+
+        List<HashMap<String, Object>> primarySkillsArrayList;
+        List<HashMap<String, Object>>  secondarySkillsArrayList;
+        List<TechnicalScreenerSkills> technicalScreenerSkillsList=new ArrayList<TechnicalScreenerSkills>();
+
+        if(technicalScreenerSkillsMap.containsKey("primarySkills")){
+            primarySkillsArrayList= (List<HashMap<String, Object>>) technicalScreenerSkillsMap.get("primarySkills");
+            for(int i=0;i<primarySkillsArrayList.size();i++){
+                HashMap hashMap = primarySkillsArrayList.get(i);
+                if(hashMap.containsKey("skills") && hashMap.containsKey("years") && hashMap.containsKey("months")){
+                    TechnicalScreenerSkills technicalScreenerSkills=new TechnicalScreenerSkills();
+                    technicalScreenerSkills.setPrimarySkills(hashMap.get("skills").toString());
+                    technicalScreenerSkills.setYears(Long.valueOf(hashMap.get("years").toString()));
+                    technicalScreenerSkills.setMonths(Long.valueOf(hashMap.get("months").toString()));
+                    technicalScreenerSkills.setSkillType(UserEnums.PrimarySkill.toString());
+                    technicalScreenerSkillsList.add(technicalScreenerSkills);
+                }
+            }
+        }
+        if(technicalScreenerSkillsMap.containsKey("secondarySkills")){
+            secondarySkillsArrayList= (List<HashMap<String, Object>>) technicalScreenerSkillsMap.get("secondarySkills");
+            for(int i=0;i<secondarySkillsArrayList.size();i++){
+                HashMap hashMap = secondarySkillsArrayList.get(i);
+                if(hashMap.containsKey("skills") && hashMap.containsKey("years") && hashMap.containsKey("months")){
+                    TechnicalScreenerSkills technicalScreenerSkills=new TechnicalScreenerSkills();
+                    technicalScreenerSkills.setPrimarySkills(hashMap.get("skills").toString());
+                    technicalScreenerSkills.setYears(Long.valueOf(hashMap.get("years").toString()));
+                    technicalScreenerSkills.setMonths(Long.valueOf(hashMap.get("months").toString()));
+                    technicalScreenerSkills.setSkillType(UserEnums.SecondarySkill.toString());
+                    technicalScreenerSkillsList.add(technicalScreenerSkills);
+                }
+            }
+        }
+
+        return technicalScreenerSkillsList;
     }
 
 
