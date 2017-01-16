@@ -21,9 +21,9 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
     $scope.newUser = {};
         //Error messages
-        $scope.emailErrorMessage = "That emailId is taken. Try another";
-        $scope.userNameErrorMessage = "That username is taken. Try another";
-        $scope.contactNumberErrorMessage = "That contact number is taken. Try another";
+        $scope.emailErrorMessage = "email Id already exist";
+        $scope.userNameErrorMessage = "username already exist";
+        $scope.contactNumberErrorMessage = "contact number already exist";
 
         //show hides
         $scope.emailExist = false;
@@ -130,7 +130,8 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
                     if(data.length==0){
                         $scope.userNameExist = false;
                     }else{
-                        $scope.userNameExist = true;
+                        $scope.userNameExist = true
+                        $scope.newUser.userName="";
 
                     }
 
@@ -155,6 +156,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
                     $scope.emailExist = false;
                 }else{
                     $scope.emailExist = true;
+                    $scope.newUser.emailId="";
 
                 }
 
@@ -180,6 +182,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
                     $scope.contactNumberExist = false;
                 }else{
                     $scope.contactNumberExist = true;
+                    $scope.newUser.contactNumber = "";
 
                 }
 
@@ -250,7 +253,28 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
        $rootScope.updateUser= function(){
            console.log("updateUser function");
-              var jsonUser = {
+
+           $rootScope.userPrimarySkills = [];
+           $rootScope.userSecodarySkills = [];
+
+
+           for(var i=0;$rootScope.responseData.technicalScreenerDetailsDSkillsSet.length>i;i++){
+
+
+               if($rootScope.responseData.technicalScreenerDetailsDSkillsSet[i].skillType=="PrimarySkill"){
+
+                   $rootScope.userPrimarySkills.push($scope.responseData.technicalScreenerDetailsDSkillsSet[i]);
+
+               }else{
+
+                   $rootScope.userSecodarySkills.push($scope.responseData.technicalScreenerDetailsDSkillsSet[i])
+
+               }
+           }
+
+
+
+           var jsonUser = {
                "user":{
                    "firstName":$rootScope.responseData.firstName,
                    "lastName":$rootScope.responseData.lastName,
@@ -269,12 +293,16 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
                },
 
                "technicalScreenerSkills":{
-                   "primarySkills":$rootScope.responseData.primarySkills,
-                   "secondarySkills":$rootScope.responseData.secondarySkills,
+                   "primarySkills":$rootScope.userPrimarySkills,
+                   "secondarySkills":$rootScope.userSecodarySkills,
                    "expectedPayRange":$rootScope.responseData.expectedPayRange
 
                }
+
+
            }
+
+           console.log(jsonUser);
 
 
 
