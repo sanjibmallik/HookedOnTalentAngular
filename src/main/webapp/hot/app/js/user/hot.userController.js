@@ -5,7 +5,35 @@ var hotUserControllers = angular.module('hot.userControllers',['ui.bootstrap','n
 
 hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
- $scope.newUser = {};
+
+    $scope.newUserPrimarySkills = [{id: 'primarySkill_1'}];
+
+    $scope.addNewChoice = function() {
+        var newItemNo =  $scope.newUserPrimarySkills.length+1;
+        $scope.newUserPrimarySkills.push({'id':'primarySkill_'+newItemNo});
+    };
+
+    $scope.removeChoice = function() {
+        var lastItem =  $scope.newUserPrimarySkills.length-1;
+        $scope.newUserPrimarySkills.splice(lastItem);
+    };
+
+
+    $scope.newUserSecondarySkills = [{id: 'secondarySkill_1'}];
+
+    $scope.addNewChoiceSec = function() {
+        var newItemNoSec =  $scope.newUserSecondarySkills.length+1;
+        $scope.newUserSecondarySkills.push({'id':'secondarySkill_1'+newItemNoSec});
+    };
+
+    $scope.removeChoiceSec = function() {
+        var lastItemSec =  $scope.newUserSecondarySkills.length-1;
+        $scope.newUserSecondarySkills.splice(lastItemSec);
+    };
+
+
+
+    $scope.newUser = {};
         //Error messages
         $scope.emailErrorMessage = "That emailId is taken. Try another";
         $scope.userNameErrorMessage = "That username is taken. Try another";
@@ -57,14 +85,12 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
                 },
 
                 "technicalScreenerSkills":{
-                    "primarySkills":$scope.newUser.primarySkills,
-                    "secondarySkills":$scope.newUser.secondarySkills,
+                   "primarySkills": $scope.newUserPrimarySkills,
+                    "secondarySkills": $scope.newUserSecondarySkills,
                     "expectedPayRange":$scope.newUser.expectedPayRange
 
                 }
             }
-
-
 
 
             console.log(jsonUser);
