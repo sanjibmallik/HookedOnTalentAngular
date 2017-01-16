@@ -1,132 +1,78 @@
-<script>
-    $(document).ready(function() {
-        var max_fields      = 10; //maximum input boxes allowed
-        var wrapper         = $(".input_fields_wrap"); //Fields wrapper
-        var add_button      = $(".add_field_button"); //Add button ID
-
-        var x = 1; //initlal text box count
-        $(add_button).click(function(e){ //on add input button click
-            e.preventDefault();
-            if(x < max_fields){ //max input box allowed
-                x++; //text box increment
-                $(wrapper).append('' +
-
-                        '<label style="margin-top: -7px;" class="col-sm-3 control-label"></label>' +
-                        '<div style="margin-left: 242px; width: 38.4%;">' +
-                        '   <input style="float: left; width: 50%" type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Primary Skill">' +
-                        '   <input style="float: left; width: 25%" type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Years">' +
-                        '   <input style="float: left; width: 25%" type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Months">' +
-                        '       <a href="#" class="remove_field">Remove</a>' +
-
-                        '</div>'); //add input box
-            }
-        });
-
-        $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-            e.preventDefault(); $(this).parent('div').remove(); x--;
-        })
-    });
-</script>
-
-<script>
-    $(document).ready(function() {
-        var max_fields      = 10; //maximum input boxes allowed
-        var wrapper2         = $(".input_fields_wrap2"); //Fields wrapper
-        var add_button2      = $(".add_field_button2"); //Add button ID
-
-        var x = 1; //initlal text box count
-        $(add_button2).click(function(e){ //on add input button click
-            e.preventDefault();
-            if(x < max_fields){ //max input box allowed
-                x++; //text box increment
-                $(wrapper2).append('' +
-
-                        '<label style="margin-top: -7px;" class="col-sm-3 control-label"></label>' +
-                        '<div style="margin-left: 242px; width: 38.4%;">' +
-                        '   <input style="float: left; width: 50%" type="text" ng-model="newUser.secondarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Secondary Skill">' +
-                        '   <input style="float: left; width: 25%" type="text" ng-model="newUser.secondarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Years">' +
-                        '   <input style="float: left; width: 25%" type="text" ng-model="newUser.secondarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Months">' +
-                        '       <a href="#" class="remove_field">Remove</a>' +
-
-                        '</div>'); //add input box
-            }
-        });
-
-        $(wrapper2).on("click",".remove_field", function(e){ //user click on remove text
-            e.preventDefault(); $(this).parent('div').remove(); x--;
-        })
-    });
-</script>
 
 <div class="row">
     <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Technical Screener Details</h3>
-                <!--    <div class="panel-options">
-                        <a href="" data-toggle="panel">
-                            <span class="collapse-icon">&ndash;</span>
-                        <span class="expand-icon">+</span>
-                    </a>
+               <div class="panel-options">
+                <a href="" data-toggle="panel">
+                    <span class="collapse-icon">&ndash;</span>
+                    <span class="expand-icon">+</span>
+                </a>
 
-                </div>-->
+            </div>
             </div>
             <div class="panel-body">
                 <div class="form-horizontal">
-                    <div class="form-group">
+                    <div class="form-group"  data-ng-repeat="primarySkills in newUserPrimarySkills">
                         <label class="col-sm-3 control-label" >Primary skills</label>
 
-                        <div class="col-sm-5">
+                            <input type="text" ng-model="primarySkills.skills" name="" placeholder="Primary Skills">
+                            <input type="text"  ng-model="primarySkills.years" name="" placeholder="Years">
+                            <input type="text"  ng-model="primarySkills.months" name="" placeholder="Months">
+                            <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
 
-                            <input style="float: left; width: 50%" type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Primary Skill">
-                            <input style="float: left; width: 25%" type="text" ng-model="" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Years">
-                            <input style="float: left; width: 25%" type="text" ng-model="" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Months">
-                        </div>
 
-                        <div class="input_fields_wrap" style="margin-top: 0px;">
-                            <button class="add_field_button btn btn-primary" style="margin-left: 10px;">+</button>
+                        <button class="addfields" ng-click="addNewChoice()">Add fields</button>
 
-                        </div>
+
                     </div>
 
 
                     <div class="form-group-separator"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" >Secondary Skills</label>
-
-                        <div class="col-sm-5">
-
-                            <input style="float: left; width: 50%" type="text" ng-model="newUser.secondarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Secondary Skill">
-                            <input style="float: left; width: 25%" type="text" ng-model="" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Years">
-                            <input style="float: left; width: 25%" type="text" ng-model="" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Months">
-                        </div>
-
-                        <div class="input_fields_wrap2" style="margin-top: 0px;">
-                            <button class="add_field_button2 btn btn-primary" style="margin-left: 10px;">+</button>
-
-
-                        </div>
                     </div>
+                </div>
 
-                    <div class="form-group-separator"></div>
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" >Expected Pay Range</label>
 
-                        <div class="col-sm-5">
-                            <div class="input-group input-group-sm input-group-minimal">
-							<span class="input-group-addon">
-								<i class="linecons-user"></i>
-							</span>
-                                <input type="text" ng-model="newUser.expectedPayRange" name="expectedPayRange" class="form-control" placeholder="Pay Range"
-                                       inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
-                            </div>
-                        </div>
+            <div class="panel-body">
+                <div class="form-horizontal">
+
+                    <div class="form-group"  data-ng-repeat="secondarySkills in newUserSecondarySkills">
+                        <label class="col-sm-3 control-label" >Secondary skills</label>
+
+                        <input type="text" ng-model="secondarySkills.skills" name="" placeholder="Secondary Skills">
+                        <input type="text"  ng-model="secondarySkills.years" name="" placeholder="Years">
+                        <input type="text"  ng-model="secondarySkills.months" name="" placeholder="Months">
+                        <button class="remove" ng-show="$last" ng-click="removeChoiceSec()">-</button>
+
+
+                        <button class="addfields" ng-click="addNewChoiceSec()">Add fields</button>
+
+
+                    </div>
+                    </div></div>
+
+
+
+            <div class="form-group-separator"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Expected Pay Range</label>
+                <div class="col-sm-5">
+                    <div class="input-group input-group-sm input-group-minimal">
+	    					<span class="input-group-addon">
+		    					<i class="linecons-user"></i>
+			    			</span>
+                        <input type="text" name="lastName" class="form-control" ng-model="newUser.expectedPayRange" placeholder="Last Name"
+                               inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true">
                     </div>
 
                 </div>
             </div>
+
+
         </div>
     </div>
 </div>
+
+
