@@ -95,7 +95,8 @@
 								<i class="linecons-mobile"></i>
 							</span>
 							<input type="text" class="form-control" required="true" ng-model="newUser.contactNumber"
-                                   name="contactNumber" ng-blur="checkContactNumberExist(newUser.contactNumber)" />
+                                   name="contactNumber" ng-blur="checkContactNumberExist(newUser.contactNumber)"
+                                   inputmask data-mask="phone" />
 						</div>
                         <div ng-show="contactNumberExist" style="color: red;">{{contactNumberErrorMessage}}</div>
                     </div>
