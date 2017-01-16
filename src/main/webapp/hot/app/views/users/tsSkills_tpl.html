@@ -15,43 +15,50 @@
             <div class="panel-body">
                 <div class="form-horizontal">
                     <div class="form-group">
+                        <div class="col-sm-12" data-ng-repeat="primarySkills in newUserPrimarySkills">
                         <label class="col-sm-3 control-label" >Primary skills</label>
-                           <div data-ng-repeat="primarySkills in newUserPrimarySkills">
-                            <input type="text" ng-model="primarySkills.skills" name="" placeholder="Primary Skills">
-                            <input type="text"  ng-model="primarySkills.years" name="" placeholder="Years">
-                            <input type="text"  ng-model="primarySkills.months" name="" placeholder="Months">
-                            <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
-                           </div>
+                        <div class="col-sm-5">
+                            <input style="float: left; width: 50%" class="form-control" type="text" ng-model="primarySkills.skills" name="" placeholder="Primary Skills">
+                            <input style="float: left; width: 25%" class="form-control" type="text"  ng-model="primarySkills.years" name="" placeholder="Years">
+                            <input style="float: left; width: 25%" class="form-control" type="text"  ng-model="primarySkills.months" name="" placeholder="Months">
+                            <br/>
+                        </div>
 
-
-                        <button class="addfields" ng-click="addNewChoice()">Add More Skills</button>
-
-
-                    </div>
-
-
-                    <div class="form-group-separator"></div>
+                        </div>
+                        <div style="float: right" class="col-sm-4">
+                            <button class="addfields add_field_button btn btn-primary" ng-click="addNewChoice()">+</button>
+                            <button class="remove add_field_button btn btn-primary" ng-click="removeChoice()">-</button>
+                        </div>
                     </div>
                 </div>
+            </div>
 
 
 
             <div class="panel-body">
                 <div class="form-horizontal">
-
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Secondary skills</label>
-                        <div   data-ng-repeat="secondarySkills in newUserSecondarySkills">
-                        <input type="text" ng-model="secondarySkills.skills" name="" placeholder="Secondary Skills">
-                        <input type="text"  ng-model="secondarySkills.years" name="" placeholder="Years">
-                        <input type="text"  ng-model="secondarySkills.months" name="" placeholder="Months">
-                        <button class="remove" ng-show="$last" ng-click="removeChoiceSec()">-</button>
+                        <div class="col-sm-12" data-ng-repeat="secondarySkills in newUserSecondarySkills">
+                           <!-- <label ng-hide="newUserSecondarySkills.length >1" class="col-sm-3 control-label">Secondary skills</label>-->
+                            <label class="col-sm-3 control-label">Secondary skills</label>
+                             <div class="col-sm-5">
+                           <!-- {{newUserSecondarySkills.length}}-->
+                        <input style="float: left; width: 50%" class="form-control" type="text" ng-model="secondarySkills.skills" name="" placeholder="Secondary Skills">
+                        <input style="float: left; width: 25%" class="form-control" type="text" ng-model="secondarySkills.years" name="" placeholder="Years">
+                        <input style="float: left; width: 25%" class="form-control" type="text" ng-model="secondarySkills.months" name="" placeholder="Months">
+                            <br/>
                         </div>
-                 <button class="addfields" ng-click="addNewChoiceSec()">Add More Skills</button>
+                        </div>
 
+
+                        <div style="float: right" class="col-sm-4">
+                        <button class="addfields add_field_button btn btn-primary" ng-click="addNewChoiceSec()">+</button>
+                        <button class="remove add_field_button btn btn-primary" ng-click="removeChoiceSec()">-</button>
+                        </div>
 
                     </div>
-                    </div></div>
+                    </div>
+            </div>
 
 
 
@@ -74,5 +81,3 @@
         </div>
     </div>
 </div>
-
-
