@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 
 
 @Repository(value = "clientServiceDAOImpl")
-public class ClientServiceDAOImpl implements ClientServiceDAO {
+public class ClientServiceDAOImpl<R> implements ClientServiceDAO {
 
 
     protected Logger logger;
@@ -83,5 +83,16 @@ public class ClientServiceDAOImpl implements ClientServiceDAO {
         List<Industry> rList = criteria.list();
         return rList;
     }
+
+    @Override
+    public List<R> findAllClients() {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(ClientDetails.class);
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        criteria.addOrder(Order.desc("id"));
+        List<R> rList = criteria.list();
+        return rList;
+    }
+
 
 }

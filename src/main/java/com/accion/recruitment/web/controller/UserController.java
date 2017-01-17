@@ -416,9 +416,8 @@ public class UserController {
             e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
     }
+
 
     @ApiOperation(value = "Reset the User password ", httpMethod="PUT")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Password Changed "),
