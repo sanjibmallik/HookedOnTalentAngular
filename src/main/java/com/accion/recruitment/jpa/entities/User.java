@@ -44,7 +44,7 @@ public class User extends BaseEntity {
 
 
 
-    public User(Integer id,String firstName, String lastName, String userName, String emailId, Boolean enabled, String contactNumber, String role, String alternateContact, String addressOne, String addressTwo, Long zipCode, String city, String state, String country, Long expectedPayRange, byte[] userImage, byte[] userProfile, String errorMessage,Collection<TechnicalScreenerSkills> technicalScreenerDetailsSkillsSet) {
+    public User(Integer id,String firstName, String lastName, String userName, String emailId, Boolean enabled, String contactNumber, String role, String alternateContact, String addressOne, String addressTwo, Long zipCode, String city, String state, String country, String expectedPayRange, byte[] userImage, byte[] userProfile, String errorMessage,Collection<TechnicalScreenerSkills> technicalScreenerDetailsSkillsSet) {
         this.id=id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -124,7 +124,7 @@ public class User extends BaseEntity {
     private String country;
 
     @Column(length = 255, nullable = true)
-    private Long expectedPayRange;
+    private String expectedPayRange;
 
     @Lob
     @Column(name = "userImage",length = 20971520,  columnDefinition = "mediumblob")
@@ -136,7 +136,6 @@ public class User extends BaseEntity {
 
     @Transient
     private String errorMessage;
-
 
     @ManyToMany(mappedBy = "userSet"
             , targetEntity = Groups.class
@@ -321,11 +320,11 @@ public class User extends BaseEntity {
         this.country = country;
     }
 
-    public Long getExpectedPayRange() {
+    public String getExpectedPayRange() {
         return expectedPayRange;
     }
 
-    public void setExpectedPayRange(Long expectedPayRange) {
+    public void setExpectedPayRange(String expectedPayRange) {
         this.expectedPayRange = expectedPayRange;
     }
 
