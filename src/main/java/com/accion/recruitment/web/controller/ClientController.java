@@ -3,6 +3,7 @@ package com.accion.recruitment.web.controller;
 import com.accion.recruitment.common.constants.*;
 import com.accion.recruitment.common.enums.ClientHttpStatusEnums;
 import com.accion.recruitment.common.enums.UserHttpStatusEnums;
+import com.accion.recruitment.common.helper.PasswordGeneratorHelper;
 import com.accion.recruitment.jpa.entities.*;
 import com.accion.recruitment.service.ClientService;
 import com.accion.recruitment.service.UserService;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,13 +40,18 @@ public class ClientController {
     @Autowired
     private UserService userService;
 
+    private PasswordGeneratorHelper passwordGeneratorHelper=new PasswordGeneratorHelper();
+
+    private final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+
+
     @ApiOperation(value = "Create the new Client ",  code = 201, httpMethod="POST")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Client Created Successfully"),
             @ApiResponse(code = 200, message = "Successful Respond Send")
             , @ApiResponse(code = 500, message = "Internal Server Error")})
 
     @RequestMapping(value = ClientRestURIConstants.CREATE_CLIENT,produces = MediaType.APPLICATION_JSON_VALUE ,method = RequestMethod.POST)
-    public  ResponseEntity<String> createUser(@RequestBody ClientDetailsContact clientDetailsContact,
+    public  ResponseEntity<String> createClient(@RequestBody ClientDetailsContact clientDetailsContact,
                                               final Principal principal) {
 
         try{
@@ -73,6 +80,42 @@ public class ClientController {
             }
 
 
+            if((!clientDetails.getEngagementModelOther().equals(null)) || (!clientDetails.getEngagementModelOther().equals(""))){
+                clientDetails.setEngagementModel(clientDetails.getEngagementModelOther());
+                EngagementModel engagementModel=new EngagementModel();
+                engagementModel.setEngagementModel(clientDetails.getEngagementModelOther());
+                try{
+                    this.clientService.saveEngagementModel(engagementModel);
+                }catch (Exception e){e.printStackTrace();}
+            }
+            if((!clientDetails.getIndustryOther().equals(null)) || (!clientDetails.getIndustryOther().equals(""))){
+                clientDetails.setIndustry(clientDetails.getIndustryOther());
+                Industry industry=new Industry();
+                industry.setIndustry(clientDetails.getIndustryOther());
+                try{
+                    this.clientService.saveIndustry(industry);
+                }catch (Exception e){e.printStackTrace();}
+            }
+
+            clientDetails.getClientContacts().add(clientContacts);
+            String password=this.passwordGeneratorHelper.generatePassword();
+            user.setPassword(this.encoder.encodePassword(password, null));
+            user.setRole("Client");
+            clientContacts.setContactFullName(clientContacts.getFirstName()+" "+clientContacts.getLastName());
+            String isEmailSent = clientContacts.getSendUserEmail();
+
+            User actMgr=this.userService.findUserByPropertyName("userName",principal.getName());
+            actMgr.getAccountManagerClients().add(clientDetails);
+
+            if (isEmailSent!=null){
+
+
+
+            }
+            this.userService.saveUserGroups(user);
+            this.userService.saveUser(actMgr);
+            this.clientService.saveClientDetails(clientDetails);
+            this.clientService.saveClientContacts(clientContacts);
 
         }catch (Exception e){
 
@@ -121,7 +164,7 @@ public class ClientController {
                 return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg());
             }
         }
-        if(clientContacts != null && clientContacts.getUserName() != null && (!clientContacts.getUserName().isEmpty())){
+       /* if(clientContacts != null && clientContacts.getUserName() != null && (!clientContacts.getUserName().isEmpty())){
             try{
                 User userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,clientContacts.getUserName());
                 if(userObject != null)
@@ -153,7 +196,7 @@ public class ClientController {
             }catch (Exception e){
                 return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.EXIST, ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg());
             }
-        }
+        }*/
         return (HashMap<String, String>) clientDetailsMap.put(HookedOnConstants.NOT_EXIST,"");
 
     }

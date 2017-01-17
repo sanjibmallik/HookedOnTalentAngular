@@ -1,6 +1,7 @@
 package com.accion.recruitment.dao.impl;
 
 import com.accion.recruitment.dao.ClientServiceDAO;
+import com.accion.recruitment.jpa.entities.ClientContacts;
 import com.accion.recruitment.jpa.entities.ClientDetails;
 import com.accion.recruitment.jpa.entities.User;
 import org.hibernate.Criteria;
@@ -44,4 +45,29 @@ public class ClientServiceDAOImpl implements ClientServiceDAO {
         criteria.add(Restrictions.eq(propName, propValue));
         return (ClientDetails) criteria.uniqueResult();
     }
+
+    @Override
+    public Boolean saveClientDetails(ClientDetails clientDetails){
+        final Session session = getSession();
+        session.saveOrUpdate(clientDetails);
+        return true;
+    }
+
+
+    @Override
+    public Boolean saveClientContacts(ClientContacts clientContacts){
+        final Session session = getSession();
+        session.saveOrUpdate(clientContacts);
+        return true;
+    }
+
+    @Override
+    public Boolean saveObject(Object o){
+        final Session session = getSession();
+        session.saveOrUpdate(o);
+        return true;
+    }
+
+
+
 }

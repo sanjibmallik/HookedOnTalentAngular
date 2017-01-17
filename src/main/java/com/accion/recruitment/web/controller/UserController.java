@@ -622,7 +622,7 @@ public class UserController {
                 HashMap hashMap = primarySkillsArrayList.get(i);
                 if(hashMap.containsKey("skills") && hashMap.containsKey("years") && hashMap.containsKey("months")){
                     TechnicalScreenerSkills technicalScreenerSkills=new TechnicalScreenerSkills();
-                    technicalScreenerSkills.setPrimarySkills(hashMap.get("skills").toString());
+                    technicalScreenerSkills.setSkills(hashMap.get("skills").toString());
                     technicalScreenerSkills.setYears(Long.valueOf(hashMap.get("years").toString()));
                     technicalScreenerSkills.setMonths(Long.valueOf(hashMap.get("months").toString()));
                     technicalScreenerSkills.setSkillType(UserEnums.PrimarySkill.toString());
@@ -636,7 +636,7 @@ public class UserController {
                 HashMap hashMap = secondarySkillsArrayList.get(i);
                 if(hashMap.containsKey("skills") && hashMap.containsKey("years") && hashMap.containsKey("months")){
                     TechnicalScreenerSkills technicalScreenerSkills=new TechnicalScreenerSkills();
-                    technicalScreenerSkills.setPrimarySkills(hashMap.get("skills").toString());
+                    technicalScreenerSkills.setSkills(hashMap.get("skills").toString());
                     technicalScreenerSkills.setYears(Long.valueOf(hashMap.get("years").toString()));
                     technicalScreenerSkills.setMonths(Long.valueOf(hashMap.get("months").toString()));
                     technicalScreenerSkills.setSkillType(UserEnums.SecondarySkill.toString());
