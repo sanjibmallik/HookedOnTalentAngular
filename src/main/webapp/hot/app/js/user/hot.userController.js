@@ -213,6 +213,8 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
        $rootScope.users = [];
        $scope.showUser="all";
 
+       $scope.activeMenu = 'Home';
+
      angular.element(document).ready(function(){$http({
          method : 'GET',
          url : 'users'
