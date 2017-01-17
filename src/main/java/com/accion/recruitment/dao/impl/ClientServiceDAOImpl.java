@@ -1,15 +1,16 @@
 package com.accion.recruitment.dao.impl;
 
 import com.accion.recruitment.dao.ClientServiceDAO;
-import com.accion.recruitment.jpa.entities.ClientDetails;
-import com.accion.recruitment.jpa.entities.User;
+import com.accion.recruitment.jpa.entities.*;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -44,4 +45,43 @@ public class ClientServiceDAOImpl implements ClientServiceDAO {
         criteria.add(Restrictions.eq(propName, propValue));
         return (ClientDetails) criteria.uniqueResult();
     }
+
+    @Override
+    public Boolean saveClientDetails(ClientDetails clientDetails){
+        final Session session = getSession();
+        session.saveOrUpdate(clientDetails);
+        return true;
+    }
+
+
+    @Override
+    public Boolean saveClientContacts(ClientContacts clientContacts){
+        final Session session = getSession();
+        session.saveOrUpdate(clientContacts);
+        return true;
+    }
+
+    @Override
+    public Boolean saveObject(Object o){
+        final Session session = getSession();
+        session.saveOrUpdate(o);
+        return true;
+    }
+
+    @Override
+    public List<EngagementModel> findAllEngagementModel() {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(EngagementModel.class);
+        List<EngagementModel> rList = criteria.list();
+        return rList;
+    }
+
+    @Override
+    public List<Industry> findAllIndustry() {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(Industry.class);
+        List<Industry> rList = criteria.list();
+        return rList;
+    }
+
 }

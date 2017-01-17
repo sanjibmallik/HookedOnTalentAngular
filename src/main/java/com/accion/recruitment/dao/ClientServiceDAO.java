@@ -1,8 +1,12 @@
 package com.accion.recruitment.dao;
 
+import com.accion.recruitment.jpa.entities.ClientContacts;
 import com.accion.recruitment.jpa.entities.ClientDetails;
+import com.accion.recruitment.jpa.entities.EngagementModel;
+import com.accion.recruitment.jpa.entities.Industry;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author Mudassir Hussain
@@ -24,4 +28,57 @@ public interface ClientServiceDAO {
      *         it return null.
      */
     public ClientDetails findClientDetailsByPropertyName(final String propName,final Object propValue) ;
+
+    /**
+     * saveClientDetails() provide the specification for persisting
+     * the User object in the database.
+     *
+     * @param clientDetails accept the instance of the ClientDetails class
+     *             containing data.
+     * @return status of the persisting operation.
+     */
+
+    public Boolean saveClientDetails(final ClientDetails clientDetails) throws SQLException;
+
+    /**
+     * saveClientContacts() provide the specification for persisting
+     * the User object in the database.
+     *
+     * @param clientContacts accept the instance of the ClientContacts class
+     *             containing data.
+     * @return status of the persisting operation.
+     */
+
+    public Boolean saveClientContacts(final ClientContacts clientContacts) throws SQLException;
+
+    /**
+     * saveObject() provide the specification for persisting
+     * the User object in the database.
+     *
+     * @param o accept the instance of the Object class
+     *             containing data.
+     * @return status of the persisting operation.
+     */
+
+    public Boolean saveObject(final Object o) throws SQLException;
+
+    /**
+     * findAllEngagementModel() provide the specification
+     * for getting all EngagementModel.
+
+     * the instance of the java.util.List containing
+     *         the EngagementModel Names.
+     */
+
+    public List<EngagementModel> findAllEngagementModel() throws SQLException;
+
+    /**
+     * findAllIndustry() provide the specification
+     * for getting all EngagementModel.
+
+     * the instance of the java.util.List containing
+     *         the EngagementModel Names.
+     */
+
+    public List<Industry> findAllIndustry() throws SQLException;
 }

@@ -86,6 +86,12 @@ public class ClientDetails extends BaseEntity {
     @Transient
     private String note;
 
+    @Transient
+    private String engagementModelOther;
+
+    @Transient
+    private String industryOther;
+
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany( cascade = CascadeType.REMOVE)
@@ -256,6 +262,22 @@ public class ClientDetails extends BaseEntity {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getEngagementModelOther() {
+        return engagementModelOther;
+    }
+
+    public void setEngagementModelOther(String engagementModelOther) {
+        this.engagementModelOther = engagementModelOther;
+    }
+
+    public String getIndustryOther() {
+        return industryOther;
+    }
+
+    public void setIndustryOther(String industryOther) {
+        this.industryOther = industryOther;
     }
 
     public Collection<ClientContacts> getClientContacts() {

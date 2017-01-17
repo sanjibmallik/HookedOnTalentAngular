@@ -56,7 +56,6 @@ public class UserController {
 
     private PasswordGeneratorHelper passwordGeneratorHelper=new PasswordGeneratorHelper();
 
-
     private final SimpleDateFormat sdf = new SimpleDateFormat(UserConstants.DATE_FORMAT);
 
 
@@ -299,6 +298,10 @@ public class UserController {
             }
 
             try{
+                user.setId(oldUser.getId());
+                user.setPassword(oldUser.getPassword());
+                user.setCreatedBy(oldUser.getCreatedBy());
+                user.setCreatedDate(oldUser.getCreatedDate());
                 user.setUpdatedBy(principal.getName());
             }catch (Exception e){
 
@@ -306,11 +309,23 @@ public class UserController {
             user.setUpdatedDate(new Date(sdf.format(currentDate)));
 
             if(user.getRole().equals(oldUser.getRole())){
-                if(this.userService.saveUser(user)){
-                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_UPDATED.ResponseMsg()), HttpStatus.OK);
-                }else {
-                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                if(userSkills.getTechnicalScreenerSkills()!=null){
+                    technicalScreenerSkills=userSkills.getTechnicalScreenerSkills();
+                    technicalScreenerSkillsList=this.getTechnicalSkillsObject(technicalScreenerSkills);
+                    user.getTechnicalScreenerDetailsDSkillsSet().addAll(technicalScreenerSkillsList);
+                    if(this.userService.saveUser(user)){
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_UPDATED.ResponseMsg()), HttpStatus.OK);
+                    }else {
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                    }
+                }else{
+                    if(this.userService.saveUser(user)){
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_UPDATED.ResponseMsg()), HttpStatus.OK);
+                    }else {
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                    }
                 }
+
             }else{
                 String deleteUserGroupQuery="delete  FROM default.user_group where userSet_id="+oldUser.getId();
                 if(this.userService.deleteRecordByQuery(deleteUserGroupQuery)){
@@ -622,7 +637,7 @@ public class UserController {
                 HashMap hashMap = primarySkillsArrayList.get(i);
                 if(hashMap.containsKey("skills") && hashMap.containsKey("years") && hashMap.containsKey("months")){
                     TechnicalScreenerSkills technicalScreenerSkills=new TechnicalScreenerSkills();
-                    technicalScreenerSkills.setPrimarySkills(hashMap.get("skills").toString());
+                    technicalScreenerSkills.setSkills(hashMap.get("skills").toString());
                     technicalScreenerSkills.setYears(Long.valueOf(hashMap.get("years").toString()));
                     technicalScreenerSkills.setMonths(Long.valueOf(hashMap.get("months").toString()));
                     technicalScreenerSkills.setSkillType(UserEnums.PrimarySkill.toString());
@@ -636,7 +651,7 @@ public class UserController {
                 HashMap hashMap = secondarySkillsArrayList.get(i);
                 if(hashMap.containsKey("skills") && hashMap.containsKey("years") && hashMap.containsKey("months")){
                     TechnicalScreenerSkills technicalScreenerSkills=new TechnicalScreenerSkills();
-                    technicalScreenerSkills.setPrimarySkills(hashMap.get("skills").toString());
+                    technicalScreenerSkills.setSkills(hashMap.get("skills").toString());
                     technicalScreenerSkills.setYears(Long.valueOf(hashMap.get("years").toString()));
                     technicalScreenerSkills.setMonths(Long.valueOf(hashMap.get("months").toString()));
                     technicalScreenerSkills.setSkillType(UserEnums.SecondarySkill.toString());
