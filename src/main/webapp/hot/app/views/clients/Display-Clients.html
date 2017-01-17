@@ -69,28 +69,25 @@
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="" ng-click="openAjaxModal('modal-5', 'user/'+user.id);" class="">Edit</a>
+                                <a href="" ng-click="openAjaxModal('modal-5', 'user/'+user.id);" class="">Edit Client</a>
+                            </li>
+
+                            <li class="divider"></li>
+                            <li>
+                                <a href="" ng-click="openAjaxModal('modal-7', 'user/'+user.id);" class="">Edit Contact</a>
                             </li>
 
                             <li class="divider"></li>
 
-                            <li ng-show="user.enabled==true">
-                                <a href="" ng-click="openAjaxModal('modal-1','user/'+user.id)" class="">Disable</a>
-                            </li>
-
-
-                            <li ng-show="user.enabled==false">
-                                <a href="" ng-click="openAjaxModal('modal-1','user/'+user.id)" class="">Enable</a>
+                            <li>
+                                <a href="" ng-click="openAjaxModal('modal-1','user/'+user.id)" class="">Activate</a>
                             </li>
 
                             <!--<li class="divider"></li>
                             <li>
                                 <a href="" ng-click="openModal('modal-3')" class="">Delete</a>
                             </li>-->
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openAjaxModal('modal-4','user/'+user.id)" class="">Reset Password</a>
-                            </li>
+
 
                         </ul>
                     </div>
@@ -282,7 +279,7 @@
 <script type="text/ng-template" id="modal-5">
     <div class="modal-header">
         <button type="button" class="close" ng-click="currentModal.close();" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Edit User Details</h4>
+        <h4 class="modal-title">Edit Client Details</h4>
     </div>
 
     <div class="modal-body">
@@ -418,3 +415,139 @@
         <button type="button" class="btn btn-info" ng-click="currentModal.dismiss();">Save changes</button>
     </div>
 </script>
+
+<script type="text/ng-template" id="modal-7">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="currentModal.close();" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Edit Client Contact</h4>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="row">
+             <div class="col-md-6">
+                 <div class="form-group">
+                     <label for="field-1" class="control-label">First Name</label>
+                     <input type="text" class="form-control" placeholder="First Name">
+                 </div>
+             </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="field-1" class="control-label">Last Name</label>
+                    <input type="text" class="form-control" placeholder="Last Name">
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="field-1" class="control-label">Contact No.</label>
+                    <input type="text" class="form-control" placeholder="Primary Conatact">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="field-2" class="control-label">Alternate Contact</label>
+                    <input type="text" class="form-control"  placeholder="Alternate contact">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="field-1" class="control-label">User Name</label>
+                    <input type="text" class="form-control" placeholder="User name">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="field-2" class="control-label">email Id</label>
+                    <input type="text" class="form-control"  placeholder="abc@xyz.com">
+                </div>
+
+            </div>
+        </div>
+
+       <!-- <div class="row">
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label for="field-3" class="control-label">Address 1</label>
+
+                    <textarea rows="4" type="text" ng-model="responseData.addressOne" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"></textarea>
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label for="field-3" class="control-label">Address 2</label>
+
+                    <textarea rows="4" type="text" ng-model="responseData.addressTwo" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc"></textarea>
+                </div>
+
+            </div>
+        </div>-->
+
+        <!--<div class="row">
+            <div class="col-md-3">
+
+                <div class="form-group">
+                    <label for="field-4" class="control-label">City</label>
+
+                    <input type="text" ng-model="responseData.city" class="form-control" id="field-4" placeholder="Pitsburg">
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="form-group">
+                    <label for="field-4" class="control-label">State</label>
+
+                    <input type="text" ng-model="responseData.city" class="form-control" id="field-4" placeholder="CA">
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="form-group">
+                    <label for="field-5" class="control-label">Country</label>
+
+                    <input type="text" ng-model="responseData.country" class="form-control" id="field-5" placeholder="United States">
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="form-group">
+                    <label for="field-6" class="control-label">Zip</label>
+
+                    <input type="text" ng-model="responseData.zipCode" class="form-control" id="field-6" placeholder="123456">
+                </div>
+
+            </div>
+
+        </div>-->
+
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-white" ng-click="currentModal.close();">Close</button>
+        <button type="button" class="btn btn-info" ng-click="currentModal.dismiss();">Save changes</button>
+    </div>
+</script>
+
