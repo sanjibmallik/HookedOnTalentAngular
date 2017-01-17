@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author Mudassir Hussain
@@ -57,4 +58,15 @@ public class ClientServiceImpl implements ClientService {
         return bolValue;
     }
 
+    @Override
+    public List<EngagementModel> findAllEngagementModel() throws SQLException{
+        return this.clientServiceDAO.findAllEngagementModel();
+
+    }
+
+    @Override
+    public List<Industry> findAllIndustry() throws SQLException{
+        return this.clientServiceDAO.findAllIndustry();
+
+    }
 }
