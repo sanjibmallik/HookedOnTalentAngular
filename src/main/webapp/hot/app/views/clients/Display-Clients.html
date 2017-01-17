@@ -1,5 +1,6 @@
 
 
+
 <page-title ng-if="layoutOptions.pageTitles" title="Clients" description=""></page-title>
 <style>
     body {
@@ -19,89 +20,77 @@
         padding: 0px;
 
     }
+    .modal-backdrop {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: -1000px;
+        background-color: #000;
+    }
+
 </style>
 
 <!-- Custom column filtering -->
-<div class="panel panel-default" ng-controller="">
-
-
+<div class="panel panel-default" ng-controller="viewAllUserCtrl" ng-cloak >
     <!--panel started here-->
     <div class="panel-heading">
         <h3 class="panel-title">Showing All Clients</h3>
-
-
-        <div class="panel-options">
-            <a href="" data-toggle="panel">
-                <span class="collapse-icon">&ndash;</span>
-                <span class="expand-icon">+</span>
-            </a>
-            <a href="" data-toggle="remove">
-                &times;
-            </a>
-        </div>
     </div>
     <div class="panel-body">
+        <table  ng-table="usersTable" show-filter="true" class="table table-striped table-bordered" id="example-3">
 
-        <script type="text/javascript">
-            jQuery(document).ready(function($)
-            {
-                $("#example-3").dataTable().yadcf([
-                    {column_number : 0, filter_type: 'text'},
-                    {column_number : 1, filter_type: 'text'},
-                    {column_number : 2, filter_type: 'text'},
+            <tr ng-repeat="user in data">
 
-                    {column_number : 5}
-                ]);
-            });
-        </script>
+                <td data-title="'Client Name'" sortable="'clientName'" filter="{ 'clientName': 'text' }">
+                    {{user.firstName}}</td>
+                <td data-title="'Engagement Model'" sortable="'engagementModel'" filter="{ 'engagementModel': 'text' }">
+                    {{user.lastName}}</td>
+                <td data-title="'Federal Id'" sortable="'federalId'" filter="{ 'federalId': 'text' }">
+                    {{user.userName}}</td>
+                <td data-title="'City'" sortable="'city'" filter="{ 'city': 'text' }">
+                    {{user.emailId}}</td>
+                <td data-title="'Contact Number'" sortable="'contactNumber'" filter="{ 'contactNumber': 'text' }">
+                    {{user.contactNumber}}</td>
 
-        <table class="table table-striped table-bordered" id="example-3">
-            <thead>
-            <tr class="replace-inputs">
-                <th>Client Name</th>
-                <th>Phone No</th>
-                <th>Federal Id</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>{{client.name}}</td>
-
-                <td>{{client.phoneNo}}</td>
-                <td>{{client.federalId}}</td>
-
-                <td>
+                <td data-title="'Actions'">
                     <div class="btn-group" dropdown>
-                        <button type="button" class="btn btn-gray dropdown-toggle" data-toggle="dropdown" style="font-size: 11px;">
+                        <button type="button" class="btn btn-gray dropdown-toggle" style="font-size: 11px;">
                             Action <span class="caret"></span>
                         </button>
-                        <!-- style="font-size: 10px;background-color: #2c2e2f;color: white;"-->
+
                         <ul class="dropdown-menu dropdown-gray" role="menu" style="font-size: 11px;">
                             <li>
-                                <a href="" ng-click="openModal('modal-2')" class="">Client Details</a>
+                                <a href="" ng-click="openAjaxModal('modal-2','user/'+user.id)" class="">Client Details</a>
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="" ng-click="openModal('modal-2')" class="">Contact Details</a>
+                                <a href="" ng-click="openAjaxModal('modal-6','user/'+user.id)" class="">Contact Details</a>
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="" ng-click="openModal('modal-5', 'lg');" class="">Edit</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-1')" class="">Activate</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-3')" class="">Delete</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="" ng-click="openModal('modal-4')" class="">Reset Password</a>
+                                <a href="" ng-click="openAjaxModal('modal-5', 'user/'+user.id);" class="">Edit</a>
                             </li>
 
+                            <li class="divider"></li>
+
+                            <li ng-show="user.enabled==true">
+                                <a href="" ng-click="openAjaxModal('modal-1','user/'+user.id)" class="">Disable</a>
+                            </li>
+
+
+                            <li ng-show="user.enabled==false">
+                                <a href="" ng-click="openAjaxModal('modal-1','user/'+user.id)" class="">Enable</a>
+                            </li>
+
+                            <!--<li class="divider"></li>
+                            <li>
+                                <a href="" ng-click="openModal('modal-3')" class="">Delete</a>
+                            </li>-->
+                            <li class="divider"></li>
+                            <li>
+                                <a href="" ng-click="openAjaxModal('modal-4','user/'+user.id)" class="">Reset Password</a>
+                            </li>
 
                         </ul>
                     </div>
@@ -109,14 +98,10 @@
 
             </tr>
 
-
-
-            </tbody>
         </table>
 
     </div>
 </div>
-
 
 
 
@@ -194,33 +179,92 @@
         <table class="table responsive">
             <thead>
             <tr>
-
                 <th>Client Name</th>
-                <th>azhar</th>
+                <th>Sandesh Sukumaran</th>
             </tr>
             </thead>
 
             <tbody>
-
-
-
-
             <tr>
-
-                <td>email</td>
-                <td>azhar.liaquat@accionlabs.com</td>
+                <td>Industry</td>
+                <td>Information Technology</td>
             </tr>
-
             <tr>
-
+                <td>Engagement Model</td>
+                <td>Full Time</td>
+            </tr>
+            <tr>
                 <td>Contact No.</td>
                 <td>9844580058</td>
             </tr>
-
             <tr>
-
                 <td>Alternate Contact</td>
                 <td>NA</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>Accion Labs, 7th Floor, Gamma Block,<br/>
+                    Sigma Soft Tech Park, Varthur Kodi,<br/>
+                    Bangalore - 560066<br/>
+                    Karnataka, India
+                </td>
+            </tr>
+            <tr>
+                <td>Website</td>
+                <td>www.accionlabs.com</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-white" ng-click="currentModal.close();">Close</button>
+        <!--  <button type="button" class="btn btn-info" ng-click="currentModal.dismiss();">Save changes</button>-->
+    </div>
+
+</script>
+
+<script type="text/ng-template" id="modal-6">
+
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="currentModal.close();" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Client Contacts</h4>
+    </div>
+
+    <div class="modal-body">
+        <table class="table responsive">
+            <thead>
+            <tr>
+
+                <th>Name</th>
+                <th>Azhar Liaquat</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>User Name</td>
+                <td>azhar99</td>
+            </tr>
+            <tr>
+                <td>email</td>
+                <td>azhar.liaquat@accionlabs.com</td>
+            </tr>
+            <tr>
+                <td>Contact No.</td>
+                <td>9844580058</td>
+            </tr>
+            <tr>
+                <td>Alternate Contact</td>
+                <td>NA</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>Accion Labs, 7th Floor, Gamma Block,<br/>
+                    Sigma Soft Tech Park, Varthur Kodi,<br/>
+                    Bangalore - 560066<br/>
+                    Karnataka, India
+                </td>
             </tr>
             </tbody>
         </table>
@@ -235,8 +279,6 @@
 </script>
 
 
-
-
 <script type="text/ng-template" id="modal-5">
     <div class="modal-header">
         <button type="button" class="close" ng-click="currentModal.close();" aria-hidden="true">&times;</button>
@@ -246,7 +288,9 @@
     <div class="modal-body">
 
         <div class="row">
-            <div class="col-md-6">
+           <!-- <div class="col-md-3">
+            </div>-->
+            <div class="col-md-12">
 
                 <div class="form-group">
                     <label for="field-1" class="control-label">Client Name</label>
@@ -256,33 +300,45 @@
 
             </div>
 
+        </div>
+
+        <div class="row">
             <div class="col-md-6">
-
                 <div class="form-group">
-                    <label for="field-2" class="control-label">Last Name</label>
+                    <label class="control-label">Engagement Model</label>
 
-                    <input type="text" class="form-control"  placeholder="Last Name">
+                    <select class="form-control" name="role" ng-options="" ng-model="" ng-change="">
+                        <option>Full Time</option>
+                        <option>Contract</option>
+                        <option>Contract to Hire</option>
+                        <option>Other</option>
+                    </select>
                 </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label">Industry</label>
 
+                        <select class="form-control" name="role" ng-options="" ng-model="" ng-change="">
+                            <option>Information Technology</option>
+                            <option>Human Resource</option>
+                            <option>Other</option>
+                        </select>
+                </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
-
                 <div class="form-group">
                     <label for="field-1" class="control-label">Contact No.</label>
-
                     <input type="text" class="form-control" placeholder="Primary Conatact">
                 </div>
-
             </div>
 
             <div class="col-md-6">
-
                 <div class="form-group">
-                    <label for="field-2" class="control-label">Alternate Contact</label>
-
+                    <label for="field-2" class="control-label">Fax Number</label>
                     <input type="text" class="form-control"  placeholder="Alternate contact">
                 </div>
 
@@ -290,49 +346,69 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
 
                 <div class="form-group">
-                    <label for="field-3" class="control-label">Address</label>
+                    <label for="field-3" class="control-label">Address 1</label>
 
-                    <input type="text" class="form-control" id="field-3" placeholder="Address">
+                    <textarea rows="4" type="text" ng-model="responseData.addressOne" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"></textarea>
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label for="field-3" class="control-label">Address 2</label>
+
+                    <textarea rows="4" type="text" ng-model="responseData.addressTwo" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc"></textarea>
                 </div>
 
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
 
                 <div class="form-group">
                     <label for="field-4" class="control-label">City</label>
 
-                    <input type="text" class="form-control" id="field-4" placeholder="Pitsburg">
+                    <input type="text" ng-model="responseData.city" class="form-control" id="field-4" placeholder="Pitsburg">
                 </div>
 
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
+
+                <div class="form-group">
+                    <label for="field-4" class="control-label">State</label>
+
+                    <input type="text" ng-model="responseData.city" class="form-control" id="field-4" placeholder="CA">
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
 
                 <div class="form-group">
                     <label for="field-5" class="control-label">Country</label>
 
-                    <input type="text" class="form-control" id="field-5" placeholder="United States">
+                    <input type="text" ng-model="responseData.country" class="form-control" id="field-5" placeholder="United States">
                 </div>
 
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
 
                 <div class="form-group">
                     <label for="field-6" class="control-label">Zip</label>
 
-                    <input type="text" class="form-control" id="field-6" placeholder="123456">
+                    <input type="text" ng-model="responseData.zipCode" class="form-control" id="field-6" placeholder="123456">
                 </div>
 
             </div>
-        </div>
 
+        </div>
 
 
     </div>

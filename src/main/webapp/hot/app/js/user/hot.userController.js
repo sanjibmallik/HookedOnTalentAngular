@@ -103,6 +103,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
             $http.post('user/create', jsonUser)
                 .success(function (data, status, headers, config) {
+                    console.log(data);
 
                 })
                 .error(function (data, status, header, config){
@@ -228,6 +229,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
                  total:  $rootScope.users.length,
                  getData: function (params) {
                      $scope.data = $rootScope.users;
+                     $scope.data = params.sorting() ? $filter('orderBy')($scope.users, params.orderBy()) : $scope.users;
                      $scope.data = params.filter() ? $filter('filter')($scope.data, params.filter()) : $scope.data;
                      $scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
                      return $scope.data;
