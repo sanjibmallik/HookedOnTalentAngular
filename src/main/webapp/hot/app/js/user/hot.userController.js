@@ -72,6 +72,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
             var jsonUser = {
                 "user":{
+
                     "firstName":$scope.newUser.firstName,
                     "lastName":$scope.newUser.lastName,
                     "userName":$scope.newUser.userName,
@@ -84,14 +85,15 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
                     "zipCode":$scope.newUser.zipCode,
                     "city":$scope.newUser.city,
                     "state":$scope.newUser.state,
-                    "country":$scope.newUser.country
+                    "country":$scope.newUser.country,
+                    "expectedPayRange":$scope.newUser.expectedPayRange
+
 
                 },
 
                 "technicalScreenerSkills":{
                    "primarySkills":$scope.userPrimarySkills,
-                    "secondarySkills":$scope.userSecodarySkills,
-                    "expectedPayRange":$scope.newUser.expectedPayRange
+                    "secondarySkills":$scope.userSecodarySkills
 
                 }
             }
@@ -209,6 +211,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
    hotUserControllers.controller('viewAllUserCtrl',function($scope,$rootScope,$http, $filter, NgTableParams){
         $scope.test='test';
        $rootScope.users = [];
+       $scope.showUser="all";
 
      angular.element(document).ready(function(){$http({
          method : 'GET',
@@ -276,6 +279,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
 
            var jsonUser = {
                "user":{
+                   "id":$rootScope.responseData.id,
                    "firstName":$rootScope.responseData.firstName,
                    "lastName":$rootScope.responseData.lastName,
                    "userName":$rootScope.responseData.userName,
@@ -288,14 +292,15 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
                    "zipCode":$rootScope.responseData.zipCode,
                    "city":$rootScope.responseData.city,
                    "state":$rootScope.responseData.state,
-                   "country":$rootScope.responseData.country
+                   "country":$rootScope.responseData.country,
+                   "expectedPayRange":$rootScope.responseData.expectedPayRange
 
                },
 
                "technicalScreenerSkills":{
                    "primarySkills":$rootScope.userPrimarySkills,
-                   "secondarySkills":$rootScope.userSecodarySkills,
-                   "expectedPayRange":$rootScope.responseData.expectedPayRange
+                   "secondarySkills":$rootScope.userSecodarySkills
+
 
                }
 
