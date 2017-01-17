@@ -6,6 +6,7 @@ import com.accion.recruitment.jpa.entities.EngagementModel;
 import com.accion.recruitment.jpa.entities.Industry;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author Mudassir Hussain
@@ -61,5 +62,23 @@ public interface ClientServiceDAO {
 
     public Boolean saveObject(final Object o) throws SQLException;
 
+    /**
+     * findAllEngagementModel() provide the specification
+     * for getting all EngagementModel.
 
+     * the instance of the java.util.List containing
+     *         the EngagementModel Names.
+     */
+
+    public List<EngagementModel> findAllEngagementModel() throws SQLException;
+
+    /**
+     * findAllIndustry() provide the specification
+     * for getting all EngagementModel.
+
+     * the instance of the java.util.List containing
+     *         the EngagementModel Names.
+     */
+
+    public List<Industry> findAllIndustry() throws SQLException;
 }

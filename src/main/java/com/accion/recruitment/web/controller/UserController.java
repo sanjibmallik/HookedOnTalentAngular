@@ -56,7 +56,6 @@ public class UserController {
 
     private PasswordGeneratorHelper passwordGeneratorHelper=new PasswordGeneratorHelper();
 
-
     private final SimpleDateFormat sdf = new SimpleDateFormat(UserConstants.DATE_FORMAT);
 
 
