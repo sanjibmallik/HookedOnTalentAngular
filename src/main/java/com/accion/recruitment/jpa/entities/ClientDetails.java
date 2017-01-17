@@ -1,5 +1,7 @@
 package com.accion.recruitment.jpa.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -16,6 +18,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "client_details")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class ClientDetails extends BaseEntity {
 
     public ClientDetails() {
@@ -24,6 +28,11 @@ public class ClientDetails extends BaseEntity {
     public ClientDetails(Integer id,String clientName) {
         this.id=id;
         this.clientName = clientName;
+    }
+
+    public ClientDetails(String clientName, Collection<ClientContacts> clientContacts) {
+        this.clientName = clientName;
+        this.clientContacts = clientContacts;
     }
 
     @Id

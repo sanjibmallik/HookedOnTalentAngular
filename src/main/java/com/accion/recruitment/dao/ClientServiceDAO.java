@@ -13,7 +13,7 @@ import java.util.List;
  * @author $LastChangedBy: Mudassir Hussain $
  * $Date:: 10/01/17 00:11 AM#$
  */
-public interface ClientServiceDAO {
+public interface ClientServiceDAO<E> {
 
     /**
      * findClientDetailsByPropertyName() provide the specification for retrieval of the
@@ -38,7 +38,7 @@ public interface ClientServiceDAO {
      * @return status of the persisting operation.
      */
 
-    public Boolean saveClientDetails(final ClientDetails clientDetails) throws SQLException;
+    public Boolean saveClientDetails(final ClientDetails clientDetails) ;
 
     /**
      * saveClientContacts() provide the specification for persisting
@@ -49,7 +49,7 @@ public interface ClientServiceDAO {
      * @return status of the persisting operation.
      */
 
-    public Boolean saveClientContacts(final ClientContacts clientContacts) throws SQLException;
+    public Boolean saveClientContacts(final ClientContacts clientContacts);
 
     /**
      * saveObject() provide the specification for persisting
@@ -70,7 +70,7 @@ public interface ClientServiceDAO {
      *         the EngagementModel Names.
      */
 
-    public List<EngagementModel> findAllEngagementModel() throws SQLException;
+    public List<EngagementModel> findAllEngagementModel() ;
 
     /**
      * findAllIndustry() provide the specification
@@ -80,5 +80,15 @@ public interface ClientServiceDAO {
      *         the EngagementModel Names.
      */
 
-    public List<Industry> findAllIndustry() throws SQLException;
+    public List<Industry> findAllIndustry() ;
+
+    /**
+     * findAllClients() provide the specification for getting all the
+     * Client objects from the database.
+     *
+     * @return instance of the java.util.List containing the
+     *         Client object of the persisting state.
+     */
+
+    public List<E> findAllClients();
 }

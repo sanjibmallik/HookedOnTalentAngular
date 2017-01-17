@@ -8,6 +8,7 @@ import com.accion.recruitment.jpa.entities.*;
 import com.accion.recruitment.service.ClientService;
 import com.accion.recruitment.service.UserEmailNotificationService;
 import com.accion.recruitment.service.UserService;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.Gson;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -152,6 +153,32 @@ public class ClientController {
         }
         return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
     }
+
+    @ApiOperation(value = "Get All the Clients ", httpMethod="GET")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Clients Found "),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+
+    @RequestMapping(value = ClientRestURIConstants.GET_ALL_CLIENT, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.GET)
+    @ResponseBody
+    @JsonIgnore
+    public ResponseEntity<Set<ClientDetails>> getAllClients(){
+
+        try{
+            List<ClientDetails> clientDetailsList=this.clientService.findAllClients();
+            Set<ClientDetails> clients=new LinkedHashSet<ClientDetails>();
+            for(ClientDetails clientObject:clientDetailsList){
+                ClientDetails clientDetails=new ClientDetails(clientObject.getClientName(),clientObject.getClientContacts());
+                clients.add(clientDetails);
+            }
+            return new ResponseEntity<Set<ClientDetails>>(clients, HttpStatus.OK);
+        }catch (SQLException e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 
 
     @ApiOperation(value = "Get the Client Details based on ID  ", httpMethod="GET"

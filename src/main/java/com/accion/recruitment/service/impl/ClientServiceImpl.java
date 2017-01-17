@@ -61,12 +61,16 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public List<EngagementModel> findAllEngagementModel() throws SQLException{
         return this.clientServiceDAO.findAllEngagementModel();
-
     }
 
     @Override
     public List<Industry> findAllIndustry() throws SQLException{
         return this.clientServiceDAO.findAllIndustry();
+    }
 
+    @Override
+    public List<ClientDetails> findAllClients() throws SQLException{
+        List<ClientDetails> userList=this.clientServiceDAO.findAllClients();
+        return  userList;
     }
 }

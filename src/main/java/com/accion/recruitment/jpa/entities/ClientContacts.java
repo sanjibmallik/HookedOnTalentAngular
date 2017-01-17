@@ -1,5 +1,7 @@
 package com.accion.recruitment.jpa.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,7 +15,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "client_contacts")
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class ClientContacts  extends BaseEntity{
 
     @Id
@@ -72,12 +75,12 @@ public class ClientContacts  extends BaseEntity{
     @Column(length = 255,nullable = true)
     private String sendUserEmail;
 
-    @ManyToMany(mappedBy = "clientContacts"
+   /* @ManyToMany(mappedBy = "clientContacts"
             , targetEntity = ClientDetails.class
             , fetch = FetchType.EAGER
             , cascade = {CascadeType.PERSIST, CascadeType.MERGE })
     @org.hibernate.annotations.Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-    private Set<ClientDetails> clientDetails=new HashSet<ClientDetails>();
+    private Set<ClientDetails> clientDetails=new HashSet<ClientDetails>();*/
 
     public Integer getId() {
         return id;
@@ -223,11 +226,11 @@ public class ClientContacts  extends BaseEntity{
         this.sendUserEmail = sendUserEmail;
     }
 
-    public Set<ClientDetails> getClientDetails() {
+    /*public Set<ClientDetails> getClientDetails() {
         return clientDetails;
     }
 
     public void setClientDetails(Set<ClientDetails> clientDetails) {
         this.clientDetails = clientDetails;
-    }
+    }*/
 }

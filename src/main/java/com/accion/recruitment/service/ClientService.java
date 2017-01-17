@@ -93,4 +93,14 @@ public interface ClientService {
      */
 
     public List<Industry> findAllIndustry() throws SQLException;
+
+    /**
+     * findAllClients() provide the specification for getting all the
+     * Client objects from the database.
+     *
+     * @return instance of the java.util.List containing the
+     *         Client object of the persisting state.
+     */
+
+    public List<ClientDetails> findAllClients() throws SQLException;
 }
