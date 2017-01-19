@@ -35,6 +35,29 @@ public class ClientDetails extends BaseEntity {
         this.clientContacts = clientContacts;
     }
 
+    public ClientDetails(Integer id,String clientName, String industry, String engagementModel, String federalId, String faxNumber, String contactNumber, String alternateContact, String addressOne, String addressTwo, String city, String state, String country, Long zipCode, String websiteUrl, Boolean enable, String isUserActive, String owner, String note,  Collection<ClientContacts> clientContacts) {
+        this.id=id;
+        this.clientName = clientName;
+        this.industry = industry;
+        this.engagementModel = engagementModel;
+        this.federalId = federalId;
+        this.faxNumber = faxNumber;
+        this.contactNumber = contactNumber;
+        this.alternateContact = alternateContact;
+        this.addressOne = addressOne;
+        this.addressTwo = addressTwo;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.zipCode = zipCode;
+        this.websiteUrl = websiteUrl;
+        this.enable = enable;
+        this.isUserActive = isUserActive;
+        this.owner = owner;
+        this.note = note;
+        this.clientContacts = clientContacts;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="id" ,insertable = true, nullable = false, unique = true, updatable = true)

@@ -167,7 +167,10 @@ public class ClientController {
             List<ClientDetails> clientDetailsList=this.clientService.findAllClients();
             Set<ClientDetails> clients=new LinkedHashSet<ClientDetails>();
             for(ClientDetails clientObject:clientDetailsList){
-                ClientDetails clientDetails=new ClientDetails(clientObject.getClientName(),clientObject.getClientContacts());
+                ClientDetails clientDetails=new ClientDetails(clientObject.getId(),clientObject.getClientName(),clientObject.getIndustry(),clientObject.getEngagementModel(),clientObject.getFederalId(),clientObject.getFaxNumber()
+                ,clientObject.getContactNumber(),clientObject.getAlternateContact(),clientObject.getAddressOne(),clientObject.getAddressTwo(),clientObject.getCity(),
+                        clientObject.getState(),clientObject.getCountry(),clientObject.getZipCode(),clientObject.getWebsiteUrl(),clientObject.getEnable(),clientObject.getIsUserActive(),
+                        clientObject.getOwner(),clientObject.getNote(),clientObject.getClientContacts());
                 clients.add(clientDetails);
             }
             return new ResponseEntity<Set<ClientDetails>>(clients, HttpStatus.OK);
@@ -194,7 +197,10 @@ public class ClientController {
         try{
             clientDetailsObject=this.clientService.findClientDetailsByPropertyName(ClientConstants.CLIENT_ID,clientDetailsId);
             if(clientDetailsObject!=null){
-                ClientDetails clientDetails=new ClientDetails(clientDetailsObject.getId(),clientDetailsObject.getClientName());
+                ClientDetails clientDetails=new ClientDetails(clientDetailsObject.getId(),clientDetailsObject.getClientName(),clientDetailsObject.getIndustry(),clientDetailsObject.getEngagementModel(),clientDetailsObject.getFederalId(),clientDetailsObject.getFaxNumber()
+                        ,clientDetailsObject.getContactNumber(),clientDetailsObject.getAlternateContact(),clientDetailsObject.getAddressOne(),clientDetailsObject.getAddressTwo(),clientDetailsObject.getCity(),
+                        clientDetailsObject.getState(),clientDetailsObject.getCountry(),clientDetailsObject.getZipCode(),clientDetailsObject.getWebsiteUrl(),clientDetailsObject.getEnable(),clientDetailsObject.getIsUserActive(),
+                        clientDetailsObject.getOwner(),clientDetailsObject.getNote(),clientDetailsObject.getClientContacts());
                 return new ResponseEntity<Object>(clientDetails, HttpStatus.OK);
             }
         }catch (SQLException sql){
@@ -220,7 +226,10 @@ public class ClientController {
         try{
             clientDetailsObject=this.clientService.findClientDetailsByPropertyName(ClientConstants.CLIENT_NAME,clientName);
             if(clientDetailsObject!=null){
-                ClientDetails clientDetails=new ClientDetails(clientDetailsObject.getId(),clientDetailsObject.getClientName());
+                ClientDetails clientDetails=new ClientDetails(clientDetailsObject.getId(),clientDetailsObject.getClientName(),clientDetailsObject.getIndustry(),clientDetailsObject.getEngagementModel(),clientDetailsObject.getFederalId(),clientDetailsObject.getFaxNumber()
+                        ,clientDetailsObject.getContactNumber(),clientDetailsObject.getAlternateContact(),clientDetailsObject.getAddressOne(),clientDetailsObject.getAddressTwo(),clientDetailsObject.getCity(),
+                        clientDetailsObject.getState(),clientDetailsObject.getCountry(),clientDetailsObject.getZipCode(),clientDetailsObject.getWebsiteUrl(),clientDetailsObject.getEnable(),clientDetailsObject.getIsUserActive(),
+                        clientDetailsObject.getOwner(),clientDetailsObject.getNote(),clientDetailsObject.getClientContacts());
                 return new ResponseEntity<Object>(clientDetails, HttpStatus.OK);
             }
         }catch (SQLException sql){
@@ -244,7 +253,10 @@ public class ClientController {
         try{
             clientDetailsObject=this.clientService.findClientDetailsByPropertyName(ClientConstants.FEDERAL_ID,federalId);
             if(clientDetailsObject!=null){
-                ClientDetails clientDetails=new ClientDetails(clientDetailsObject.getId(),clientDetailsObject.getClientName());
+                ClientDetails clientDetails=new ClientDetails(clientDetailsObject.getId(),clientDetailsObject.getClientName(),clientDetailsObject.getIndustry(),clientDetailsObject.getEngagementModel(),clientDetailsObject.getFederalId(),clientDetailsObject.getFaxNumber()
+                        ,clientDetailsObject.getContactNumber(),clientDetailsObject.getAlternateContact(),clientDetailsObject.getAddressOne(),clientDetailsObject.getAddressTwo(),clientDetailsObject.getCity(),
+                        clientDetailsObject.getState(),clientDetailsObject.getCountry(),clientDetailsObject.getZipCode(),clientDetailsObject.getWebsiteUrl(),clientDetailsObject.getEnable(),clientDetailsObject.getIsUserActive(),
+                        clientDetailsObject.getOwner(),clientDetailsObject.getNote(),clientDetailsObject.getClientContacts());
                 return new ResponseEntity<Object>(clientDetails, HttpStatus.OK);
             }
         }catch (SQLException sql){

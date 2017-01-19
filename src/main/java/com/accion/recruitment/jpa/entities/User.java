@@ -96,13 +96,13 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private Boolean enabled=Boolean.TRUE;
 
-    @Column(unique = true,length = 12, nullable = false)
+    @Column(unique = true,length = 255, nullable = false)
     private String contactNumber;
 
     @Column(length = 255, nullable = false)
     private String role;
 
-    @Column(length = 12, nullable = true)
+    @Column(length = 255, nullable = true)
     private String alternateContact;
 
     @Column(length = 255, nullable = true)
