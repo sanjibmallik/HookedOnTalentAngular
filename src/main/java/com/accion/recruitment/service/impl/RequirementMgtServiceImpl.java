@@ -1,7 +1,15 @@
 package com.accion.recruitment.service.impl;
 
+import com.accion.recruitment.service.RequirementMgtService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 /**
- * Created by AL1028 on 1/11/17.
+ * Created by MoinGodil on 1/11/17.
  */
-public class RequirementMgtServiceImpl {
+
+@Service("requirementMgtService")
+@Transactional
+public class RequirementMgtServiceImpl implements RequirementMgtService{
+
 }
