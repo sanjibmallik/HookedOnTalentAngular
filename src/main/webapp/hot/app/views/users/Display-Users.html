@@ -63,10 +63,7 @@
         <table  ng-table="usersTable" show-filter="true" class="table table-striped table-bordered">
 
             <tr ng-repeat="user in data">
-
-
-
-                <td data-title="'First Name'" sortable="'firstName'" filter="{ 'firstName': 'text' }">
+                 <td data-title="'First Name'" sortable="'firstName'" filter="{ 'firstName': 'text' }">
                 {{user.firstName}}</td>
                 <td data-title="'Last Name'" sortable="'lastName'" filter="{ 'lastName': 'text' }">
                 {{user.lastName}}</td>

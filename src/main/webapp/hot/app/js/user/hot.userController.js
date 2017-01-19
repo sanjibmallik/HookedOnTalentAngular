@@ -1,9 +1,9 @@
 'use strict'
 
-var hotUserControllers = angular.module('hot.userControllers',['ui.bootstrap','ngTable']);
+var hotUserControllers = angular.module('hot.userControllers',['ui.bootstrap','ngTable','ui.router']);
 
 
-hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
+hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
 
 
     $scope.allSkills = [{}];
@@ -104,6 +104,10 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http){
             $http.post('user/create', jsonUser)
                 .success(function (data, status, headers, config) {
                     console.log(data);
+                    console.log(status);
+                    if(status==201){
+                      $state.go('app.users-Display-Users', {});
+                    }
 
                 })
                 .error(function (data, status, header, config){
