@@ -15,13 +15,14 @@
                 <tr data-ng-repeat="skill in responseData.technicalScreenerDetailsDSkillsSet">
                     <td>
                         <select class="form-control" ng-model="skill.skillType">
+                        <option value="">Select</option>
                         <option value="PrimarySkill">Primary Skill</option>
                         <option value="SecondarySkill">Secondary Skill</option>
                         </select>
                     </td>
                     <td><input type="text" class="form-control" ng-model="skill.skills" placeholder="Skill" ></td>
-                    <td><input type="number" class="form-control" ng-model="skill.years" placeholder="Years" ></td>
-                    <td><input type="number" class="form-control" ng-model="skill.months" placeholder="Months" ></td>
+                    <td><input type="number"  class="form-control" ng-model="skill.years" placeholder="Years" ></td>
+                    <td><input type="number"  class="form-control" ng-model="skill.months" placeholder="Months" ></td>
                 </tr>
 
                 </tbody>
