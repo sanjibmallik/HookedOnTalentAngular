@@ -1,6 +1,6 @@
 
 
-<page-title ng-if="layoutOptions.pageTitles" title="User Management" description=""></page-title>
+<page-title ng-if="layoutOptions.pageTitles" title="Manage Users" description=""></page-title>
 <style>
     body {
         width: 98%;
@@ -225,22 +225,21 @@
                 <td>{{responseData.contactNumber}}</td>
             </tr>
 
-            <tr>
-
+           <!-- <tr>
                 <td>Alternate Contact</td>
-                <td></td>
-            </tr>
+                <td>{{responseData.contactNumber}}</td>
+            </tr>-->
 
             <tr>
 
                 <td>City</td>
-                <td></td>
+                <td>{{responseData.city}}</td>
             </tr>
 
             <tr>
 
                 <td>Role</td>
-                <td></td>
+                <td>{{responseData.role}}</td>
             </tr>
 
 
@@ -296,6 +295,29 @@
             </div>
         </div>
 
+
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label for="field-1" class="control-label">User Name</label>
+
+                    <input type="text" ng-model="responseData.userName" readonly class="form-control" placeholder="First Name">
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label for="field-2" class="control-label">Email-Id</label>
+
+                    <input type="text" class="form-control" readonly ng-model="responseData.emailId"  placeholder="Last Name">
+                </div>
+
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-6">
 
@@ -344,35 +366,51 @@
 
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
 
                 <div class="form-group">
-                    <label for="field-4" class="control-label">City</label>
+                    <label for="field-4" class="control-label">Zip Code</label>
 
-                    <input type="text" ng-model="responseData.city" class="form-control" id="field-4" placeholder="Pitsburg">
+                    <input type="text" ng-model="responseData.zipCode" class="form-control" id="field-4" placeholder="123456">
                 </div>
 
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-6">
 
                 <div class="form-group">
-                    <label for="field-5" class="control-label">Country</label>
+                    <label for="field-5" class="control-label">City</label>
 
-                    <input type="text" ng-model="responseData.country" class="form-control" id="field-5" placeholder="United States">
+                    <input type="text" ng-model="responseData.city" class="form-control" id="field-5" placeholder="City">
+                </div>
+
+            </div>
+            </div>
+
+
+
+            <div class="row">
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label for="field-6" class="control-label">State</label>
+
+                    <input type="text" ng-model="responseData.state" class="form-control" maxlength="6" id="field-6" placeholder="State">
                 </div>
 
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-6">
 
                 <div class="form-group">
-                    <label for="field-6" class="control-label">Zip</label>
+                    <label for="field-6" class="control-label">Country</label>
 
-                    <input type="text" ng-model="responseData.zipCode" class="form-control" id="field-6" placeholder="123456">
+                    <input type="text" ng-model="responseData.country" class="form-control" maxlength="6" id="field-6" placeholder="Country">
                 </div>
 
             </div>
+
+
 
         </div>
    </div>
