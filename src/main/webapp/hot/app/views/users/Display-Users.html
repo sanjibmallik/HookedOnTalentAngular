@@ -324,7 +324,7 @@
                 <div class="form-group">
                     <label for="field-1" class="control-label">Contact No.</label>
 
-                    <input type="text" ng-model="responseData.contactNumber" class="form-control" placeholder="Your Primary Contact number">
+                    <input type="text" readonly ng-model="responseData.contactNumber" class="form-control" placeholder="Your Primary Contact number">
                 </div>
 
             </div>
@@ -348,7 +348,7 @@
                 <div class="form-group">
                     <label for="field-3" class="control-label">Address 1</label>
 
-                    <textarea rows="4" type="text" ng-model="responseData.addressOne" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"></textarea>
+                    <textarea style="resize: none;" rows="4" type="text" ng-model="responseData.addressOne" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"></textarea>
                 </div>
 
             </div>
@@ -358,7 +358,7 @@
                 <div class="form-group">
                     <label for="field-3" class="control-label">Address 2</label>
 
-                    <textarea rows="4" type="text" ng-model="responseData.addressTwo" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc"></textarea>
+                    <textarea rows="4" style="resize: none;"  type="text" ng-model="responseData.addressTwo" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc"></textarea>
                 </div>
 
             </div>
@@ -371,7 +371,7 @@
                 <div class="form-group">
                     <label for="field-4" class="control-label">Zip Code</label>
 
-                    <input type="text" ng-model="responseData.zipCode" class="form-control" id="field-4" placeholder="123456">
+                    <input type="text" ng-model="responseData.zipCode" maxlength="6" class="form-control" id="field-4" placeholder="123456">
                 </div>
 
             </div>
@@ -395,7 +395,7 @@
                 <div class="form-group">
                     <label for="field-6" class="control-label">State</label>
 
-                    <input type="text" ng-model="responseData.state" class="form-control" maxlength="6" id="field-6" placeholder="State">
+                    <input type="text" ng-model="responseData.state" class="form-control" id="field-6" placeholder="State">
                 </div>
 
             </div>
@@ -405,7 +405,7 @@
                 <div class="form-group">
                     <label for="field-6" class="control-label">Country</label>
 
-                    <input type="text" ng-model="responseData.country" class="form-control" maxlength="6" id="field-6" placeholder="Country">
+                    <input type="text" ng-model="responseData.country" class="form-control" id="field-6" placeholder="Country">
                 </div>
 
             </div>
