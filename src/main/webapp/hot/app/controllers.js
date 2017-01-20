@@ -293,6 +293,8 @@ var hotMainController = angular.module('hot.controllers', []);
 						return $http.get(url_location).then(function(response){
 
                             $rootScope.responseData = response.data;
+
+                            $rootScope.responseDataCopy = angular.copy($rootScope.responseData);
                             console.log($rootScope.responseData);
 							/*$rootScope.modalContent = $sce.trustAsHtml(response.data);
 */
