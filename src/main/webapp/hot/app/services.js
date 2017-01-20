@@ -84,8 +84,8 @@ angular.module('hot.services', []).
 		this.prepareSidebarMenu = function()
 		{
 			var dashboard    = this.addItem('Dashboard', 		'/app/dashboard', 			'linecons-cog');
-			var users    = this.addItem('Users', 		'/app/users', 			'linecons-user');
-            var clients    = this.addItem('Clients', 		'/app/clients', 			'linecons-heart');
+			var users    = this.addItem('User Management', 		'/app/users', 			'linecons-user');
+            var clients    = this.addItem('Client Mangement', 		'/app/clients', 			'linecons-heart');
 			var requirements    = this.addItem('Requirements', 		'/app/requirements', 			'linecons-tag');
 			var candidates    = this.addItem('Candidates', 		'/app/candidates', 			'linecons-graduation-cap');
 			var questionBank    = this.addItem('Question Bank', 		'/app/questionBank', 			'linecons-lightbulb');
