@@ -213,7 +213,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
 
 
 
-   hotUserControllers.controller('viewAllUserCtrl',function($scope,$rootScope,$http, $filter, NgTableParams){
+   hotUserControllers.controller('viewAllUserCtrl',function($scope,$rootScope,$http, $filter, NgTableParams,$state){
         $scope.test='test';
        $rootScope.users = [];
        $scope.showUser="all";
@@ -322,6 +322,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
            $http.put('user/update/',jsonUser)
                .success(function (data, status, headers, config) {
                    console.log(data);
+                   $state.go($state.current, {}, {reload: true});
                })
                .error(function (data, status, header, config) {
                });
@@ -338,6 +339,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
            $http.put('user/status/'+userId+'/'+status)
                .success(function (data, status, headers, config) {
                    console.log(data);
+                   $state.go($state.current, {}, {reload: true});
                })
                .error(function (data, status, header, config) {
                });
