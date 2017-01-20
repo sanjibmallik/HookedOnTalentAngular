@@ -22,22 +22,6 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
 
     $scope.submitNewClient = function(){
 
-        $scope.userPrimarySkills = [];
-        $scope.userSecodarySkills = [];
-
-
-        for(var i=0;$scope.allSkills.length>i;i++){
-
-            if($scope.allSkills[i].skillType=="PrimarySkill"){
-
-                $scope.userPrimarySkills.push($scope.allSkills[i]);
-
-            }else{
-
-                $scope.userSecodarySkills.push($scope.allSkills[i])
-
-            }
-        }
 
 
         var data = $scope.newUser;
@@ -86,6 +70,8 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
                     "<hr />config: " + config;
             });
     };
+
+
 
 
 
