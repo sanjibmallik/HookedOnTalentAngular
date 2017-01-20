@@ -30,15 +30,15 @@
                             <tr data-ng-repeat="skill in allSkills">
                                 <td>
 
-                                    <select class="form-control" ng-model="skill.skillType">
+                                    <select required="true" class="form-control" ng-model="skill.skillType">
                                         <option value="">Select</option>
                                         <option value="PrimarySkill">Primary Skill</option>
                                         <option value="SecondarySkill">Secondary Skill</option>
                                     </select>
                                 </td>
-                                <td><input type="text" class="form-control" ng-model="skill.skills" placeholder="Skill"></td>
-                                <td><input type="number" min="0" class="form-control" ng-model="skill.years" placeholder="Years"></td>
-                                <td><input type="number" min="0" class="form-control" ng-model="skill.months" placeholder="Months"></td>
+                                <td><input required="true" type="text" class="form-control" ng-model="skill.skills" placeholder="Skill"></td>
+                                <td><input required="true" type="number" min="0" class="form-control" ng-model="skill.years" placeholder="Years"></td>
+                                <td><input required="true" type="number" min="0" class="form-control" ng-model="skill.months" placeholder="Months"></td>
                             </tr>
 
 
@@ -57,13 +57,24 @@
             <div class="form-group-separator"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Expected Pay Range</label>
-                <div class="col-sm-5">
+                <div class="col-sm-2">
                     <div class="input-group input-group-sm input-group-minimal">
 	    					<span class="input-group-addon">
-		    					<i class="linecons-user"></i>
+		    					<i class="linecons-money"></i>
 			    			</span>
-                        <input type="text" name="expectedPayRange" class="form-control" ng-model="newUser.expectedPayRange" placeholder="$"
-                               inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true">
+                        <input type="number" name="expectedPayRange" class="form-control" ng-model="newUser.expectedPayRangeFrom" placeholder="$ From"
+                               inputmask data-is-regex="true" required="true" min="0">
+                    </div>
+
+                </div>
+                <label style="text-align: center;margin-top: 5px;margin-left: -40px;margin-right: -40px;" class="col-sm-1">to</label>
+                <div class="col-sm-2">
+                    <div class="input-group input-group-sm input-group-minimal">
+	    					<span class="input-group-addon">
+		    					<i class="linecons-money"></i>
+			    			</span>
+                        <input type="number" name="expectedPayRange" class="form-control" ng-model="newUser.expectedPayRangeTo" placeholder="$ To"
+                               inputmask data-is-regex="true" required="true" min="0">
                     </div>
 
                 </div>
