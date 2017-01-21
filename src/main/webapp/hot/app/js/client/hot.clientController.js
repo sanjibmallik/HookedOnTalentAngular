@@ -28,33 +28,48 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
 
 
         var jsonUser = {
-            "user":{
+            "clientDetails":{
 
-                "firstName":$scope.newUser.firstName,
-                "lastName":$scope.newUser.lastName,
-                "userName":$scope.newUser.userName,
-                "emailId":$scope.newUser.emailId,
-                "contactNumber":$scope.newUser.contactNumber,
-                "role":$scope.newUser.role,
-                "alternateContact":$scope.newUser.alternateContact,
-                "addressOne":$scope.newUser.addressOne,
-                "addressTwo":$scope.newUser.addressTwo,
-                "zipCode":$scope.newUser.zipCode,
-                "city":$scope.newUser.city,
-                "state":$scope.newUser.state,
-                "country":$scope.newUser.country,
-                "expectedPayRange":$scope.newUser.expectedPayRange
+                "clientName":$scope.newClient.clientName,
+                "industry":$scope.newClient.industry,
+                "engagementModel":$scope.newClient.engagementModel,
+                "federalId":$scope.newClient.federalId,
+                "faxNumber":$scope.newClient.faxNumber,
+                "contactNumber":$scope.newClient.contactNumber,
+                "alternateContact":$scope.newClient.alternateContact,
+                "addressOne":$scope.newClient.addressOne,
+                "addressTwo":$scope.newClient.addressTwo,
+                "zipCode":$scope.newClient.zipCode,
+                "city":$scope.newClient.city,
+                "state":$scope.newClient.state,
+                "country":$scope.newClient.country,
+                "note":$scope.newClient.note
 
 
             },
+            "clientContacts":{
+                "userName":$scope.newClient.userName,
+                "firstName":$scope.newClient.firstName,
+                "contactFullName":$scope.newClient.contactFullName,
+                "contactNumber":$scope.newClient.contactNumber,
+                "alternateContact":$scope.newClient.alternateContact,
+                "emailId":$scope.newClient.emailId,
+                "faxNumber":$scope.newClient.faxNumber,
+                "addressOne":$scope.newClient.addressOne,
+                "addressTwo":$scope.newClient.addressTwo,
+                "zipCode":$scope.newClient.zipCode,
+                "city":$scope.newClient.city,
+                "state":$scope.newClient.state,
+                "country":$scope.newClient.country,
+                "note":$scope.newClient.note,
+                "sendUserEmail":$scope.newClient.sendUserEmail
 
-            "technicalScreenerSkills":{
-                "primarySkills":$scope.userPrimarySkills,
-                "secondarySkills":$scope.userSecodarySkills
 
-            }
+            },
+            "user":{}
+
+
         }
-
 
         console.log(jsonUser);
 
