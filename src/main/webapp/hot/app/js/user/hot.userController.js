@@ -24,9 +24,12 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
         $scope.allSkills.push({});
     };
 
+
     $scope.removeRow = function() {
+        if($scope.allSkills.length>1){
         var lastItem =  $scope.allSkills.length-1;
         $scope.allSkills.splice(lastItem);
+        }
     };
 
 
@@ -368,8 +371,10 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
 
 
        $rootScope.removeRow = function() {
-           var lastItem =  $rootScope.responseData.technicalScreenerDetailsDSkillsSet.length-1;
-           $rootScope.responseData.technicalScreenerDetailsDSkillsSet.splice(lastItem);
+           if($rootScope.responseData.technicalScreenerDetailsDSkillsSet.length>1) {
+               var lastItem = $rootScope.responseData.technicalScreenerDetailsDSkillsSet.length - 1;
+               $rootScope.responseData.technicalScreenerDetailsDSkillsSet.splice(lastItem);
+           }
        };
 
 
