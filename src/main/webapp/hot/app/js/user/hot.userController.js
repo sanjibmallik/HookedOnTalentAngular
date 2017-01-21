@@ -100,7 +100,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
                     "city":$scope.newUser.city,
                     "state":$scope.newUser.state,
                     "country":$scope.newUser.country,
-                    "expectedPayRange":$scope.newUser.expectedPayRangeFrom+"-"+$scope.newUser.expectedPayRangeTo
+                    "expectedPayRange":$scope.newUser.expectedPayRangeFrom+"-"+$scope.newUser.expectedPayRangeTo+"-"+$scope.newUser.expectedPayRangeCurrency
 
 
                 },
@@ -315,7 +315,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
                    "city":$rootScope.responseData.city,
                    "state":$rootScope.responseData.state,
                    "country":$rootScope.responseData.country,
-                   "expectedPayRange":$scope.newUser.expectedPayRangeFrom+"-"+$scope.newUser.expectedPayRangeTo
+                   "expectedPayRange":$scope.newUser.expectedPayRangeFrom+"-"+$scope.newUser.expectedPayRangeTo+"-"+$scope.newUser.expectedPayRangeCurrency
 
                },
 
