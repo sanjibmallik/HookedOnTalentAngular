@@ -3,7 +3,7 @@
 <script type="text/ng-template"></script>
 
 <form role="form" name="newUserForm" ng-submit="disableClick(newUserForm.$valid)"
-      class="form-horizontal" ng-submit="submitNewUser()">
+      class="form-horizontal" ng-submit="submitNewUser()" ng-cloak>
 
 <div class="row">
     <div class="col-sm-12">
@@ -26,7 +26,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Select Role</label>
                     <div class="col-sm-5">
-                        <select required class="form-control" name="role" ng-options="role as role for role in roles"
+                        <select ng-cloak required class="form-control" name="role" ng-options="role as role for role in roles"
                                ng-model="newUser.role" ng-change="update();"></select>
                     </div>
                 </div>
