@@ -2,7 +2,8 @@
 <div ng-controller="createNewUserCtrl">
 <script type="text/ng-template"></script>
 
-<form role="form" name="newUserForm" class="form-horizontal" ng-submit="submitNewUser()">
+<form role="form" name="newUserForm" ng-submit="disableClick(newUserForm.$valid)"
+      class="form-horizontal" ng-submit="submitNewUser()">
 
 <div class="row">
     <div class="col-sm-12">
@@ -38,7 +39,7 @@
                                 <i class="linecons-user"></i>
                             </span>
                             <input type="text" name="firstName" class="form-control" ng-model="newUser.firstName"
-                                   placeholder="First Name" maxlength="32"
+                                   placeholder="First Name" maxlength="64"
                                 inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true">
                         </div>
                     </div>
@@ -52,7 +53,7 @@
 		    					<i class="linecons-user"></i>
 			    			</span>
 				    		<input type="text" name="lastName" class="form-control" ng-model="newUser.lastName"
-                                   placeholder="Last Name" maxlength="32"
+                                   placeholder="Last Name" maxlength="64"
                                 inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true">
 					   	</div>
                         <ng-messages>
@@ -71,7 +72,7 @@
                             <input type="text" name="userName" class="form-control" ng-model="newUser.userName"
                                    placeholder="User Name" inputmask
                                    data-mask="^[a-zA-Z0-9]*([.&_]+)$"
-                                   data-is-regex="true" maxlength="32" ng-minlength="1" required="true"
+                                   data-is-regex="true" maxlength="64" ng-minlength="1" required="true"
                                    ng-blur="checkUserExist(newUser.userName)">
                         </div>
                         <div ng-show="userNameExist" style="color: red;">{{userNameErrorMessage}}</div>
@@ -86,7 +87,7 @@
 								<i class="linecons-mail"></i>
 							</span>
 							<input type="email" class="form-control" name="emailId" ng-model="newUser.emailId"
-                                   placeholder="Enter your email Id" maxlength="48" required="true"
+                                   placeholder="Enter your email Id" maxlength="64" required="true"
                                    ng-blur="checkEmailExist(newUser.emailId)">
 						</div>
                         <div ng-show="emailExist" style="color: red;">{{emailErrorMessage}}</div>
@@ -102,7 +103,7 @@
 							</span>
 							<input type="text" class="form-control" required="true" ng-model="newUser.contactNumber"
                                    name="contactNumber" ng-blur="checkContactNumberExist(newUser.contactNumber)"
-                                   inputmask data-mask="phone" />
+                                   inputmask data-mask="phone" minlength="10" />
 						</div>
                         <div ng-show="contactNumberExist" style="color: red;">{{contactNumberErrorMessage}}</div>
                     </div>
@@ -257,7 +258,7 @@
     <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-body" style="text-align: center;">
-                <input class="btn btn-info btn-icon" type="submit" value="Submit"/>
+                <input ng-disabled="isDisabled" class="btn btn-info btn-icon" type="submit" value="Submit"/>
                 <input type="button" class="btn btn-warning btn-icon" ng-click="resetUserForm();" value="Reset">
                 <!--<a href="" id="success_msg_1" class="btn btn-success">Success Message</a>
                 <a href="" id="danger_msg_1" class="btn btn-danger">Danger Message</a>

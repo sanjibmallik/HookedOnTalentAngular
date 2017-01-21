@@ -5,6 +5,17 @@ var hotUserControllers = angular.module('hot.userControllers',['ui.bootstrap','n
 
 hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
 
+/*To disable button start*/
+    $scope.isDisabled = false;
+    $scope.disableClick = function(valid) {
+        if(valid && !$scope.isDisabled) {
+            $scope.isDisabled = true;
+        }
+        return false;
+    }
+    /*To disable button end*/
+
+
 
     $scope.allSkills = [{}];
 
