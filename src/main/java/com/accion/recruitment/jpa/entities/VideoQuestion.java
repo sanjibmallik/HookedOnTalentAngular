@@ -36,7 +36,7 @@ public class VideoQuestion extends BaseEntity{
             joinColumns = @JoinColumn(name = "video_question_id"),
             inverseJoinColumns = @JoinColumn(name = "position_id"))
 
-    private Set<Positions> videoQuestionPositionsSet=new HashSet<>();
+    private Set<Positions> videoQuestionPositionsSet=new HashSet<Positions>();
 
     public Set<Positions> getVideoQuestionPositionsSet() {
         return videoQuestionPositionsSet;
