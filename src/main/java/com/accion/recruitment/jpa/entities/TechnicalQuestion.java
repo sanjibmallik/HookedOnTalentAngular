@@ -64,7 +64,7 @@ public class TechnicalQuestion extends BaseEntity {
             joinColumns = @JoinColumn(name = "technical_question_id"),
             inverseJoinColumns = @JoinColumn(name = "position_id"))
 
-    private Set<Positions> technicalQuestionPositionsSet=new HashSet<>();
+    private Set<Positions> technicalQuestionPositionsSet=new HashSet<Positions>();
 
     public Set<Positions> getTechnicalQuestionPositionsSet() {
         return technicalQuestionPositionsSet;
