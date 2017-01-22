@@ -122,7 +122,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,U
 
 
                 },
-ßß
+
                 "technicalScreenerSkills":{
                    "primarySkills":$scope.userPrimarySkills,
                     "secondarySkills":$scope.userSecodarySkills
