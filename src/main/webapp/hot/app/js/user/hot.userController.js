@@ -1,6 +1,6 @@
 'use strict'
 
-var hotUserControllers = angular.module('hot.userControllers',['ui.bootstrap','ngTable','ui.router']);
+var hotUserControllers = angular.module('hot.userControllers',['ui.bootstrap','ngTable','ui.router','ngImgCrop']);
 
 
 hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
@@ -16,6 +16,23 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
     /*To disable button end*/
 
 
+
+    /*Image crop start*/
+    $scope.myImage='';
+    $scope.myCroppedImage='';
+
+    var handleFileSelect=function(evt) {
+        var file=evt.currentTarget.files[0];
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            $scope.$apply(function($scope){
+                $scope.myImage=evt.target.result;
+            });
+        };
+        reader.readAsDataURL(file);
+    };
+    angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
+    /*Image crop end*/
 
     $scope.allSkills = [{}];
 

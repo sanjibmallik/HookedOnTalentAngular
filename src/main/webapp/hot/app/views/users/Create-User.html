@@ -2,6 +2,15 @@
 <div ng-controller="createNewUserCtrl">
 <script type="text/ng-template"></script>
 
+<style>
+    .cropArea {
+        background: #E4E4E4;
+        overflow: hidden;
+        width:500px;
+        height:350px;
+    }
+</style>
+
 <form role="form" name="newUserForm" ng-submit="disableClick(newUserForm.$valid)"
       class="form-horizontal" ng-submit="submitNewUser()" ng-cloak>
 
@@ -256,6 +265,28 @@
         </div>
     </div>
 </div>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">File Upload</h3>
+            </div>
+            <div class="panel-body" style="text-align: center;">
+                <div>Select an image file: <input type="file" id="fileInput" /></div>
+                <div class="cropArea">
+                    <img-crop image="myImage" result-image="myCroppedImage"
+                              area-type="square"
+                            ></img-crop>
+                </div>
+                <input type="button" value="Crop" class="btn btn-blue">
+                <div>Cropped Image:</div>
+                <div><img ng-src="{{myCroppedImage}}" /></div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-sm-12">
         <div class="panel panel-default">
@@ -341,4 +372,26 @@
             toastr.warning("Warning", null, opts);
         });
     });
+</script>
+
+
+<script type="text/ng-template" id="modal-4">
+
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="currentModal.close();" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Reset Password</h4>
+    </div>
+
+    <div class="modal-body">
+
+        <h4>Are you sure you want to Reset password for this user?</h4>
+    </div>
+    <br/>
+
+    <div class="modal-footer">
+
+        <button type="button" class="btn btn-info" ng-click="resetUserPassword(responseData.id);">Yes</button>
+        <button type="button" class="btn btn-red" ng-click="currentModal.close();">No</button>
+    </div>
+
 </script>
