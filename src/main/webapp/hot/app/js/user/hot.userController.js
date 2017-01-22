@@ -1,9 +1,9 @@
 'use strict'
 
-var hotUserControllers = angular.module('hot.userControllers',['ui.bootstrap','ngTable','ui.router','ngImgCrop']);
+var hotUserControllers = angular.module('hot.userControllers',['ui.bootstrap','ngTable','ui.router','ngImgCrop','ngFileUpload']);
 
 
-hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
+hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,Upload){
 
 /*To disable button start*/
     $scope.isDisabled = false;
@@ -122,12 +122,13 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
 
 
                 },
-
+ßß
                 "technicalScreenerSkills":{
                    "primarySkills":$scope.userPrimarySkills,
                     "secondarySkills":$scope.userSecodarySkills
 
-                }
+                },
+                "profile":$scope.myCroppedImage
             }
 
 
