@@ -4,11 +4,13 @@
 
 <style>
     .cropArea {
-        background: #E4E4E4;
+        background: #eeeeee;
         overflow: hidden;
-        width:500px;
-        height:350px;
+        width:200px;
+        height:200px;
+        border-style: ridge;
     }
+
 </style>
 
 <form role="form" name="newUserForm" ng-submit="disableClick(newUserForm.$valid)"
@@ -251,6 +253,27 @@
                     </div>
                 </div>
                 <div class="form-group-separator"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Profile Picture</label>
+                    <div class="col-sm-5">
+                        <div class="cropArea" ng-hide="imageHide">
+                            <img-crop image="myImage" result-image="myCroppedImage" area-type="square">
+                            </img-crop>
+                        </div>
+                        <div style="text-align: left" ng-show="imageHide">
+
+                            <img ng-src="{{myCroppedImage}}" />
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <input type="file" ng-click="imageHide=false" id="fileInput" />
+                            <input style="margin-top: 5px; margin-left: -175px" type="button" value="Select" ng-click="imageHide=true" class="btn btn-blue">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group-separator"></div>
+
                 <!--<div class="form-group-separator"></div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Upload Photo</label>
@@ -267,31 +290,7 @@
 </div>
 
 
-<div class="row">
-    <div class="col-sm-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">File Upload</h3>
-            </div>
-            <div class="panel-body" style="text-align: center;">
-                <div>Select an image file: <input type="file" ng-click="imageHide=false" id="fileInput" /></div>
-                <div class="cropArea" ng-hide="imageHide">
-                  
-                    <img-crop image="myImage" result-image="myCroppedImage"
-                              area-type="square">
 
-                    </img-crop>
-                </div>
-                <input type="button" value="Crop" ng-click="imageHide=true" class="btn btn-blue">
-
-                <div ng-show="imageHide">
-                    <div>Cropped Image:</div>
-                    <img ng-src="{{myCroppedImage}}" />
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="row">
     <div class="col-sm-12">
         <div class="panel panel-default">
