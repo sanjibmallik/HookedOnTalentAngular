@@ -274,14 +274,25 @@
                 <h3 class="panel-title">File Upload</h3>
             </div>
             <div class="panel-body" style="text-align: center;">
-                <div>Select an image file: <input type="file" ng-click="imageHide=false" id="fileInput" /></div>
+                <div>Select an image file: <input type="file" ngf-select="uploadFiles($file, $invalidFiles)"
+                                                  accept="image/*" ngf-max-height="1000" ngf-max-size="1MB" ng-click="imageHide=false" id="fileInput" /></div>
                 <div class="cropArea" ng-hide="imageHide">
-                  
+
                     <img-crop image="myImage" result-image="myCroppedImage"
                               area-type="square">
 
                     </img-crop>
                 </div>
+
+                <div>{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
+                    <span class="progress" ng-show="f.progress >= 0">
+          <div style="width:{{f.progress}}%"
+               ng-bind="f.progress + '%'"></div>
+                    </span>
+                </div>
+                {{errorMsg}}
+
+
                 <input type="button" value="Crop" ng-click="imageHide=true" class="btn btn-blue">
 
                 <div ng-show="imageHide">

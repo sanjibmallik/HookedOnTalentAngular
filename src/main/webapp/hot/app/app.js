@@ -17,7 +17,8 @@ var app = angular.module('hot-app', [
     'hot.userFactory',
     'hot.userFilter',
     'ngTable',
-    'ngImgCrop'
+    'ngImgCrop',
+    'ngFileUpload'
 
 
 ]);
