@@ -18,6 +18,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
 
 
     /*Image crop start*/
+    $scope.imageHide=false;
     $scope.myImage='';
     $scope.myCroppedImage='';
 
