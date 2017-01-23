@@ -5,7 +5,8 @@ package com.accion.recruitment.common.enums;
  */
 public enum CandidateEnums {
 
-    CANDIDATE_CREATED("Candidate Created");
+    CANDIDATE_CREATED("Candidate Created"),
+    CANDIDATE_ENABLED("Candidate Enabled");
 
     private String responseMsg;
 
