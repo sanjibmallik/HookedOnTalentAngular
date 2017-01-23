@@ -66,7 +66,24 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
 
 
             },
-            "user":{}
+            "user":{
+                "userName":$scope.newClient.userName,
+                "firstName":$scope.newClient.firstName,
+                "contactFullName":$scope.newClient.contactFullName,
+                "contactNumber":$scope.newClient.contactNumber,
+                "alternateContact":$scope.newClient.alternateContact,
+                "emailId":$scope.newClient.emailId,
+                "faxNumber":$scope.newClient.faxNumber,
+                "addressOne":$scope.newClient.addressOne,
+                "addressTwo":$scope.newClient.addressTwo,
+                "zipCode":$scope.newClient.zipCode,
+                "city":$scope.newClient.city,
+                "state":$scope.newClient.state,
+                "country":$scope.newClient.country,
+                "note":$scope.newClient.note,
+                "sendUserEmail":$scope.newClient.sendUserEmail
+
+            }
 
 
         }
