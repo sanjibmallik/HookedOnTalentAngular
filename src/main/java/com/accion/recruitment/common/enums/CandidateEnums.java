@@ -6,7 +6,11 @@ package com.accion.recruitment.common.enums;
 public enum CandidateEnums {
 
     CANDIDATE_CREATED("Candidate Created"),
-    CANDIDATE_ENABLED("Candidate Enabled");
+    RESUME_DOWNLOAD("Resume Downloaded"),
+    CANDIDATE_ENABLED("Candidate Enabled"),
+    VIDEO_COMPARED("Video Compared"),
+    LINKS_GENERATED("Link Generated Successfully"),
+    NOTES_UPDATED("Notes Updated");
 
     private String responseMsg;
 
