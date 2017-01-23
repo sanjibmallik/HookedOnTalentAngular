@@ -128,7 +128,8 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,U
                     "secondarySkills":$scope.userSecodarySkills
 
                 },
-                "profile":$scope.myCroppedImage
+                "userProfile":$scope.myCroppedImage,
+                "userImage":$scope.image
             }
 
 
