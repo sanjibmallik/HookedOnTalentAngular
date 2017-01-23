@@ -221,7 +221,7 @@ hotClientControllers.controller('viewAllClientCtrl',function($scope,$rootScope,$
 
 
 
-    /*$rootScope.updateUser= function(){
+    $rootScope.updateUser= function(){
         console.log("updateUser function");
 
         $rootScope.userPrimarySkills = [];
@@ -320,7 +320,6 @@ hotClientControllers.controller('viewAllClientCtrl',function($scope,$rootScope,$
 
 
 
-    */
 
 
 });
