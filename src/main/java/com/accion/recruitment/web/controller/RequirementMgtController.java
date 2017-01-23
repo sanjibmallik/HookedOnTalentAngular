@@ -42,7 +42,7 @@ public class RequirementMgtController {
     @ResponseBody
     public ResponseEntity<Object> createRequirement(@RequestBody Positions positions) {
 
-        return new ResponseEntity<Object>(ReqtMgtEnums.REQT_CREATED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<Object>(ReqtMgtEnums.REQT_CREATED.ResponseMsg(), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Display Requirement", httpMethod="POST"

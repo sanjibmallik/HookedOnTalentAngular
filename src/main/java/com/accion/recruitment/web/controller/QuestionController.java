@@ -30,15 +30,15 @@ public class QuestionController {
     QuestionService questionService;
 
     @ApiOperation(value = "Created ", httpMethod="POST"
-            , notes = "Creates Position/Requirement")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "Requirement Created "),
+            , notes = "Creates Question")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Question Created "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
     @RequestMapping(value = RequirementMgtConstants.REQUIREMENT_CREATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Object> createRequirement(@RequestBody Positions positions) {
 
-        return new ResponseEntity<Object>(ReqtMgtEnums.REQT_CREATED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<Object>(ReqtMgtEnums.REQT_CREATED.ResponseMsg(), HttpStatus.OK      );
     }
 
 
