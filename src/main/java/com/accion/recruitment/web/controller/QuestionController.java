@@ -26,6 +26,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class QuestionController {
 
+
+
+    //Duplicate code from requirement page.. caused running  problem 
+/*
+
     @Autowired
     QuestionService questionService;
 
@@ -40,6 +45,7 @@ public class QuestionController {
 
         return new ResponseEntity<Object>(ReqtMgtEnums.REQT_CREATED.ResponseMsg(), HttpStatus.OK      );
     }
+*/
 
 
 }

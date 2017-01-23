@@ -135,6 +135,7 @@ public class ClientController {
                             this.userService.saveUser(actMgr);
                             this.clientService.saveClientDetails(clientDetails);
                             this.clientService.saveClientContacts(clientContacts);
+                            user.setPassword(password);
                             this.userEmailNotificationService.sendUserCredentials(user);
                             return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_SAVED.ResponseMsg()), HttpStatus.CREATED);
                     }else{
@@ -183,6 +184,38 @@ public class ClientController {
 
 
 
+    @ApiOperation(value = "Activate the  Client  based on ID  ", httpMethod="PUT")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Activate Client "),
+            @ApiResponse(code = 404, message = "Client not found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = ClientRestURIConstants.CLIENT_ACTIVATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity<Object> activateClient(@PathVariable("id") final Integer clientDetailsId,
+                                                 Principal principal) {
+
+        ClientDetails clientDetailsObject;
+        try{
+            clientDetailsObject=this.clientService.findClientDetailsByPropertyName(ClientConstants.CLIENT_ID,clientDetailsId);
+            List<ClientContacts> clientContactsList= (List<ClientContacts>) clientDetailsObject.getClientContacts();
+            for(ClientContacts clientContacts:clientContactsList){
+                if(clientContacts.getSendUserEmail().equals("No")){
+                    User user=this.userService.findUserByPropertyName(UserConstants.USER_NAME,clientContacts.getUserName());
+                    String password=this.passwordGeneratorHelper.generatePassword();
+                    user.setPassword(this.encoder.encodePassword(password, null));
+                    if(this.userService.saveUserGroups(user)){
+                        user.setPassword(password);
+                        this.clientService.saveClientContacts(clientContacts);
+                        this.userEmailNotificationService.sendUserCredentials(user);
+                        return new ResponseEntity<Object>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_ACTIVATE_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
+                    }
+                }
+            }
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @ApiOperation(value = "Get the Client Details based on ID  ", httpMethod="GET"
             , notes = "Return the matched Client")

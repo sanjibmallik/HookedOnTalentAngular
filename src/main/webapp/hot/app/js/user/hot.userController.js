@@ -1,10 +1,39 @@
 'use strict'
 
-var hotUserControllers = angular.module('hot.userControllers',['ui.bootstrap','ngTable','ui.router']);
+var hotUserControllers = angular.module('hot.userControllers',['ui.bootstrap','ngTable','ui.router','ngImgCrop','ngFileUpload']);
 
 
-hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
+hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,Upload){
 
+/*To disable button start*/
+    $scope.isDisabled = false;
+    $scope.disableClick = function(valid) {
+        if(valid && !$scope.isDisabled) {
+            $scope.isDisabled = true;
+        }
+        return false;
+    }
+    /*To disable button end*/
+
+
+
+    /*Image crop start*/
+    $scope.imageHide=false;
+    $scope.myImage='';
+    $scope.myCroppedImage='';
+
+    var handleFileSelect=function(evt) {
+        var file=evt.currentTarget.files[0];
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            $scope.$apply(function($scope){
+                $scope.myImage=evt.target.result;
+            });
+        };
+        reader.readAsDataURL(file);
+    };
+    angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
+    /*Image crop end*/
 
     $scope.allSkills = [{}];
 
@@ -13,9 +42,12 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
         $scope.allSkills.push({});
     };
 
+
     $scope.removeRow = function() {
+        if($scope.allSkills.length>1){
         var lastItem =  $scope.allSkills.length-1;
         $scope.allSkills.splice(lastItem);
+        }
     };
 
 
@@ -86,7 +118,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
                     "city":$scope.newUser.city,
                     "state":$scope.newUser.state,
                     "country":$scope.newUser.country,
-                    "expectedPayRange":$scope.newUser.expectedPayRangeFrom+"-"+$scope.newUser.expectedPayRangeTo
+                    "expectedPayRange":$scope.newUser.expectedPayRangeFrom+"-"+$scope.newUser.expectedPayRangeTo+"-"+$scope.newUser.expectedPayRangeCurrency
 
 
                 },
@@ -95,7 +127,9 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
                    "primarySkills":$scope.userPrimarySkills,
                     "secondarySkills":$scope.userSecodarySkills
 
-                }
+                },
+                "userProfile":$scope.myCroppedImage,
+                "userImage":$scope.image
             }
 
 
@@ -301,7 +335,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
                    "city":$rootScope.responseData.city,
                    "state":$rootScope.responseData.state,
                    "country":$rootScope.responseData.country,
-                   "expectedPayRange":$scope.newUser.expectedPayRangeFrom+"-"+$scope.newUser.expectedPayRangeTo
+                   "expectedPayRange":$scope.newUser.expectedPayRangeFrom+"-"+$scope.newUser.expectedPayRangeTo+"-"+$scope.newUser.expectedPayRangeCurrency
 
                },
 
@@ -357,8 +391,10 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state){
 
 
        $rootScope.removeRow = function() {
-           var lastItem =  $rootScope.responseData.technicalScreenerDetailsDSkillsSet.length-1;
-           $rootScope.responseData.technicalScreenerDetailsDSkillsSet.splice(lastItem);
+           if($rootScope.responseData.technicalScreenerDetailsDSkillsSet.length>1) {
+               var lastItem = $rootScope.responseData.technicalScreenerDetailsDSkillsSet.length - 1;
+               $rootScope.responseData.technicalScreenerDetailsDSkillsSet.splice(lastItem);
+           }
        };
 
 

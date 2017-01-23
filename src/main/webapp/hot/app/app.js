@@ -16,7 +16,9 @@ var app = angular.module('hot-app', [
     'hot.clientControllers',
     'hot.userFactory',
     'hot.userFilter',
-    'ngTable'
+    'ngTable',
+    'ngImgCrop',
+    'ngFileUpload'
 
 
 ]);
@@ -98,7 +100,8 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
 						ASSETS.forms.multiSelect,
 						ASSETS.forms.datepicker,
 						ASSETS.forms.selectboxit,
-						ASSETS.forms.formWizard
+						ASSETS.forms.formWizard/*,
+                        ASSETS.imageCrop.crop*/
 					]);
 				},
 				dxCharts: function($ocLazyLoad){
@@ -106,7 +109,8 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
 						ASSETS.charts.dxCharts
 					]);
 				}
-			}
+			},
+            controller: 'UIModalsCtrl'
 		}).
 		
 		state('app.users-Display-Users', {
@@ -450,6 +454,13 @@ app.constant('ASSETS', {
 		'htmleditor': appHelper.assetPath('js/uikit/js/addons/htmleditor.min.js'),
 		'nestable': appHelper.assetPath('js/uikit/js/addons/nestable.min.js')
 	},
+
+   /* 'imageCrop': {
+        'crop': [
+            appHelper.assetPath('js/cropImage/ng-img-crop.js'),
+            appHelper.assetPath('css/cropImage/ng-img-crop.css')
+            ]
+    },*/
 
 	'extra': {
 		'tocify': appHelper.assetPath('js/tocify/jquery.tocify.min.js'),

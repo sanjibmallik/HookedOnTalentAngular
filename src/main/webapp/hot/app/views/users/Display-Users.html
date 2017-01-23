@@ -36,7 +36,7 @@
 
     <!--panel started here-->
     <div class="panel-heading">
-        <h3 class="panel-title">Showing All Users</h3>
+        <h3 class="panel-title"></h3>
 
         <!--<div style="margin-top: -10px;">
         <input style="margin-left: 25px;" type="button" value="Show All" class="btn btn-primary"
@@ -57,6 +57,12 @@
                 &times;
             </a>
         </div>-->
+
+
+        <a ui-sref="app.users-Create-User"><input style="float: right; margin-top: -5px;" class="btn btn-info btn-icon"
+                                            type="button" value="Create User"/>
+        </a>
+
     </div>
     <div class="panel-body">
 
@@ -279,7 +285,7 @@
                 <div class="form-group">
                     <label for="field-1" class="control-label">First Name</label>
 
-                    <input type="text" ng-model="responseData.firstName" class="form-control" placeholder="First Name">
+                    <input type="text" required ng-model="responseData.firstName" class="form-control" placeholder="First Name">
                 </div>
 
             </div>
@@ -289,7 +295,7 @@
                 <div class="form-group">
                     <label for="field-2" class="control-label">Last Name</label>
 
-                    <input type="text" class="form-control" ng-model="responseData.lastName"  placeholder="Last Name">
+                    <input type="text" required class="form-control" ng-model="responseData.lastName"  placeholder="Last Name">
                 </div>
 
             </div>
