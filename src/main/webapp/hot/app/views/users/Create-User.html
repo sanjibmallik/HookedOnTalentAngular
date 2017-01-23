@@ -337,7 +337,11 @@
             <div class="panel-body" style="text-align: center;">
                 <input ng-disabled="isDisabled" class="btn btn-info btn-icon" type="submit" value="Submit"/>
                 <input type="button" class="btn btn-warning btn-icon" ng-click="resetUserForm();" value="Reset">
-                <input type="button" class="btn btn-danger btn-icon" ng-click="" value="Cancel">
+               <!-- <input type="button" class="btn btn-danger btn-icon" ng-click="" value="Cancel">-->
+
+                <a ui-sref="app.users-Display-Users"><input class="btn btn-danger btn-icon"
+                                                          type="button" value="Cancel"/>
+                </a>
                 <!--<a href="" id="success_msg_1" class="btn btn-success">Success Message</a>
                 <a href="" id="danger_msg_1" class="btn btn-danger">Danger Message</a>
                 <a href="" id="warning_msg_1" class="btn btn-warning">Warning Message</a>-->
