@@ -61,7 +61,7 @@
 
                         <ul class="dropdown-menu dropdown-gray" role="menu" style="font-size: 11px;">
                             <li>
-                                <a href="" ng-click="openAjaxModal('modal-2','user/'+user.id)" class="">Client Details</a>
+                                <a href="" ng-click="openAjaxModal('modal-2','client/'+user.id)" class="">Client Details</a>
                             </li>
                             <li class="divider"></li>
                             <li>
@@ -169,7 +169,7 @@
 
     <div class="modal-header">
         <button type="button" class="close" ng-click="currentModal.close();" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Details</h4>
+        <h4 class="modal-title">{{responseDataCopy.clientName}} Details</h4>
     </div>
 
     <div class="modal-body">
@@ -177,38 +177,40 @@
             <thead>
             <tr>
                 <th>Client Name</th>
-                <th>Sandesh Sukumaran</th>
+                <th>{{responseData.clientName}}</th>
             </tr>
             </thead>
 
             <tbody>
             <tr>
                 <td>Industry</td>
-                <td>Information Technology</td>
+                <td>{{responseData.industry}}</td>
             </tr>
             <tr>
                 <td>Engagement Model</td>
-                <td>Full Time</td>
+                <td>{{responseData.engagementModel}}</td>
             </tr>
             <tr>
                 <td>Contact No.</td>
-                <td>9844580058</td>
+                <td>{{responseData.contactNumber}}</td>
             </tr>
             <tr>
                 <td>Alternate Contact</td>
-                <td>NA</td>
+                <td>{{responseData.alternateContact}}</td>
             </tr>
             <tr>
-                <td>Address</td>
-                <td>Accion Labs, 7th Floor, Gamma Block,<br/>
-                    Sigma Soft Tech Park, Varthur Kodi,<br/>
-                    Bangalore - 560066<br/>
-                    Karnataka, India
+                <td>Address one</td>
+                <td>{{responseData.addressOne}}
+                </td>
+            </tr>
+            <tr>
+                <td>Address two</td>
+                <td>{{responseData.addressTwo}}
                 </td>
             </tr>
             <tr>
                 <td>Website</td>
-                <td>www.accionlabs.com</td>
+                <td>{{responseData.websiteUrl}}</td>
             </tr>
             </tbody>
         </table>
@@ -226,7 +228,7 @@
 
     <div class="modal-header">
         <button type="button" class="close" ng-click="currentModal.close();" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Client Contacts</h4>
+        <h4 class="modal-title">{{responseDataCopy.clientName}} Contacts</h4>
     </div>
 
     <div class="modal-body">
@@ -279,7 +281,7 @@
 <script type="text/ng-template" id="modal-5">
     <div class="modal-header">
         <button type="button" class="close" ng-click="currentModal.close();" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Edit Client Details</h4>
+        <h4 class="modal-title">Edit {{responseDataCopy.clientName}} Details</h4>
     </div>
 
     <div class="modal-body">
@@ -292,7 +294,7 @@
                 <div class="form-group">
                     <label for="field-1" class="control-label">Client Name</label>
 
-                    <input type="text" class="form-control" placeholder="First Name">
+                    <input type="text" ng-model="responseData.clientName" class="form-control" placeholder="First Name">
                 </div>
 
             </div>
@@ -329,7 +331,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="field-1" class="control-label">Contact No.</label>
-                    <input type="text" class="form-control" placeholder="Primary Conatact">
+                    <input type="text" ng-model="responseData.contactNumber" class="form-control" placeholder="Primary Conatact">
                 </div>
             </div>
 
