@@ -9,4 +9,5 @@ public class RequirementURIConstants {
     public static final String GET_ALL_REQUIREMENT = "/hot/requirements";
     public static final String REQUIREMENT_UPDATE = "/hot/requirement/update";
     public static final String GET_BY_ID = "/hot/requirement/{id}";
+    public static final String  REQUIREMENT_CANDIDATES = "/hot/requirement/candidates/{id}";
 }
