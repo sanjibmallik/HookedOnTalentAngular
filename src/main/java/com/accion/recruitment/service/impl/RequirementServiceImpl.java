@@ -39,6 +39,10 @@ public class RequirementServiceImpl implements RequirementService {
         return  requirementList;
     }
 
+    @Override
+    public Positions findRequirementById(final int positionId )throws SQLException{
+        return (Positions) this.requirementServiceDAO.findRequirementById(positionId);
+    }
 
 
 }

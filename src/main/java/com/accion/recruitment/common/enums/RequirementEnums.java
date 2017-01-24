@@ -5,7 +5,7 @@ package com.accion.recruitment.common.enums;
  */
 public enum RequirementEnums {
 
-    REQUIREMENT_CREATED("Requirement Created"),
+    REQUIREMENT_CREATED("Requirement Created Successfully"),
 
     DURATION("Enter the duration correctly"),
     BILL_RATE("Enter the Bill Rate correctly"),
@@ -13,9 +13,10 @@ public enum RequirementEnums {
 
     CLIENT_NOT_EXIST("The client name you selected is not exist"),
 
-    REQUIREMENT_NOT_CREATED("Problem with saving the Requirement. Try again.");
+    REQUIREMENT_NOT_CREATED("Problem with saving the Requirement. Try again."),
 
-
+    REQUIREMENT_UPDATED("Requirement Updated Successfully."),
+    REQUIREMENT_NOT_UPDATED("Problem with Updating the Requirement. Try again.");
 
     private String responseMsg;
 

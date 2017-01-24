@@ -21,10 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.sql.SQLException;
@@ -56,10 +53,8 @@ public class RequirementMgtController {
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Requirement Created "),
             @ApiResponse(code = 200, message = "Successful respond send "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
-
     @RequestMapping(value = RequirementURIConstants.REQUIREMENT_CREATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
-
     public ResponseEntity<Object> createRequirement(@RequestBody Positions requirements,
                                                     Principal principal) {
         try{
@@ -136,67 +131,127 @@ public class RequirementMgtController {
 
      }
 
-        @ApiOperation(value = "Get All the  Requirements", httpMethod="GET"
+
+    @ApiOperation(value = "Get All the  Requirements", httpMethod="GET"
                 , notes = "Display Position/Requirement")
-        @ApiResponses(value = {@ApiResponse(code = 200, message = "Display ALL the  Requirement"),
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Display ALL the  Requirement"),
                 @ApiResponse(code = 500, message = "Internal Server Error")})
-
-        @RequestMapping(value = RequirementURIConstants.REQUIREMENT_DISPLAY, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-        @ResponseBody
-        public ResponseEntity<Set<Positions>> getAllRequirement(Principal principal) {
-
-            try {
-                List<Positions> requirementList=this.requirementService.findAllRequirement();
-                Set<Positions> requirementSet=new LinkedHashSet<Positions>();
-                for(Positions requirementObject:requirementList){
-                    Positions requirement=new Positions(requirementObject.getClientName(),requirementObject.getContactPerson(),requirementObject.getDuration(),requirementObject.getStartDate(),
-                            requirementObject.getClientLocation(),requirementObject.getBroadcastLocation(),requirementObject.getTypeOfReq(),requirementObject.getPriority(),requirementObject.getJobTitle(),
-                            requirementObject.getOpenPositions(),requirementObject.getAddNoMoreCandidates(),requirementObject.getBillRate(),requirementObject.getPayRate(),requirementObject.getJobDescription(),
-                            requirementObject.getPrimarySkill(),requirementObject.getSecondarySkill(),requirementObject.getIsQuestionAdded(),requirementObject.getRecruiter(),
-                            requirementObject.getTechnicalScreener(),requirementObject.getAccountManager(),requirementObject.getStatus(),requirementObject.getReadyForInterview(),
-                            requirementObject.getBillRatePeriod(),requirementObject.getDurationPeriod(),requirementObject.getPayRatePeriod(),requirementObject.getIsApprovedCandidateEmailSent(),
-                            requirementObject.getIsCandidateAnswered());
-
-                    requirementSet.add(requirement);
-                }
-                return new ResponseEntity<Set<Positions>>(requirementSet, HttpStatus.OK);
-            }catch (SQLException e){
-                return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-            }catch (Exception e){
-                return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    @RequestMapping(value = RequirementURIConstants.GET_ALL_REQUIREMENT, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Set<Positions>> getAllRequirement(Principal principal) {
+        try {
+            List<Positions> requirementList=this.requirementService.findAllRequirement();
+            Set<Positions> requirementSet=new LinkedHashSet<Positions>();
+            for(Positions requirementObject:requirementList){
+                Positions requirement=new Positions(requirementObject.getPositionId(),requirementObject.getClientName(),requirementObject.getContactPerson(),requirementObject.getDuration(),requirementObject.getStartDate(),
+                        requirementObject.getClientLocation(),requirementObject.getBroadcastLocation(),requirementObject.getTypeOfReq(),requirementObject.getPriority(),requirementObject.getJobTitle(),
+                        requirementObject.getOpenPositions(),requirementObject.getAddNoMoreCandidates(),requirementObject.getBillRate(),requirementObject.getPayRate(),requirementObject.getJobDescription(),
+                        requirementObject.getPrimarySkill(),requirementObject.getSecondarySkill(),requirementObject.getIsQuestionAdded(),requirementObject.getRecruiter(),
+                        requirementObject.getTechnicalScreener(),requirementObject.getAccountManager(),requirementObject.getStatus(),requirementObject.getReadyForInterview(),
+                        requirementObject.getBillRatePeriod(),requirementObject.getDurationPeriod(),requirementObject.getPayRatePeriod(),requirementObject.getIsApprovedCandidateEmailSent(),
+                        requirementObject.getIsCandidateAnswered());
+                requirementSet.add(requirement);
             }
-        }
-
-        @ApiOperation(value = "Edit Requirement", httpMethod="POST"
-                , notes = "Edit Position/Requirement")
-        @ApiResponses(value = {@ApiResponse(code = 200, message = "Edit Requirement"),
-                @ApiResponse(code = 500, message = "Internal Server Error")})
-
-        @RequestMapping(value = RequirementURIConstants.REQUIREMENT_EDIT, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-        @ResponseBody
-        public ResponseEntity<Object> editRequirement(@RequestBody Positions positions) {
-
-            return new ResponseEntity<Object>(positions, HttpStatus.OK);
-        }
-
-        @ApiOperation(value = "Requirement Detail", httpMethod="POST"
-                , notes = "Position/Requirement Detail")
-        @ApiResponses(value = {@ApiResponse(code = 200, message = "Requirement Detail"),
-                @ApiResponse(code = 500, message = "Internal Server Error")})
-
-        @RequestMapping(value = RequirementURIConstants.REQUIREMENT_DETAIL, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-        @ResponseBody
-        public ResponseEntity<Object> fetchRequirementDetails(Integer reqtId) {
-
-            Positions tempReqt = new Positions();
-            tempReqt.setAccountManager("Dummy Manager1");
-            tempReqt.setClientName("Dummy Client Name1");
-            tempReqt.setCreatedBy("HookedonTalent1");
-            tempReqt.setPrimarySkill("AngularJS1");
-            tempReqt.setSecondarySkill("Core Java1");
-            tempReqt.setCreatedDate(new Date());
-            tempReqt.setPriority("Critical");
-            tempReqt.setPositionId(reqtId);
-            return new ResponseEntity<Object>(tempReqt, HttpStatus.OK);
+            return new ResponseEntity<Set<Positions>>(requirementSet, HttpStatus.OK);
+        }catch (SQLException e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @ApiOperation(value = "Edit Requirement", httpMethod="PUT"
+            , notes = "Edit Position/Requirement")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Updated Requirement Successfully"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.REQUIREMENT_UPDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity<Object> editRequirement(@RequestBody Positions requirements,
+                                                  Principal principal) {
+        final Date currentDate = new Date();
+        Positions oldRequirements=new Positions();
+        try{
+            try{
+                 oldRequirements= this.requirementService.findRequirementById(requirements.getPositionId());
+                 if(oldRequirements==null)
+                     return new ResponseEntity<Object>(RequirementEnums.REQUIREMENT_NOT_UPDATED.ResponseMsg(), HttpStatus.OK);
+            }catch (Exception e){
+                return new ResponseEntity<Object>(RequirementEnums.REQUIREMENT_NOT_UPDATED.ResponseMsg(), HttpStatus.OK);
+            }
+
+
+            requirements.setStatus(oldRequirements.getStatus());
+            requirements.setCreatedDate(oldRequirements.getCreatedDate());
+            requirements.setCreatedBy(oldRequirements.getCreatedBy());
+            requirements.setReadyForInterview(oldRequirements.getReadyForInterview());
+            requirements.setIsQuestionAdded(oldRequirements.getIsQuestionAdded());
+            requirements.setTechnicalScreener(oldRequirements.getTechnicalScreener());
+            requirements.setRecruiter(oldRequirements.getRecruiter());
+            requirements.setAddNoMoreCandidates(oldRequirements.getAddNoMoreCandidates());
+
+            try{
+                requirements.setUpdatedBy(principal.getName());
+            }catch (Exception e){
+                return new ResponseEntity<Object>(RequirementEnums.REQUIREMENT_NOT_UPDATED.ResponseMsg(), HttpStatus.OK);
+            }
+
+            requirements.setUpdatedDate(new Date(sdf.format(currentDate)));
+
+            try{
+                requirements.setDuration(requirements.getDuration().concat(" ").concat(requirements.getDurationPeriod()));
+            }catch (Exception e){
+                return new ResponseEntity<Object>(RequirementEnums.DURATION.ResponseMsg(), HttpStatus.OK);
+            }
+            try{
+                requirements.setBillRate(requirements.getBillRate().concat(" ").concat(requirements.getBillRatePeriod()));
+            }catch(Exception e){
+                return new ResponseEntity<Object>(RequirementEnums.BILL_RATE.ResponseMsg(), HttpStatus.OK);
+            }
+            try{
+                requirements.setPayRate(requirements.getPayRate().concat(" ").concat(requirements.getPayRatePeriod()));
+            }catch(Exception e){
+                return new ResponseEntity<Object>(RequirementEnums.PAY_RATE.ResponseMsg(), HttpStatus.OK);
+            }
+
+            if(this.requirementService.saveRequirements(requirements))
+                return new ResponseEntity<Object>(RequirementEnums.REQUIREMENT_UPDATED.ResponseMsg(), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Object>(RequirementEnums.REQUIREMENT_NOT_UPDATED.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<Object>(RequirementEnums.REQUIREMENT_NOT_UPDATED.ResponseMsg(), HttpStatus.OK);
+
+    }
+
+
+    @ApiOperation(value = "Get the Requirement based on positionId", httpMethod="GET"
+            , notes = "Position/Requirement Detail")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Requirement Detail"),
+                @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.GET_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> getRequirementById(@PathVariable("id") final int requirementId) {
+
+        Positions requirementObject;
+        try{
+            requirementObject=this.requirementService.findRequirementById(requirementId);
+            if(requirementObject!=null){
+                Positions requirement=new Positions(requirementObject.getPositionId(),requirementObject.getClientName(),requirementObject.getContactPerson(),requirementObject.getDuration(),requirementObject.getStartDate(),
+                        requirementObject.getClientLocation(),requirementObject.getBroadcastLocation(),requirementObject.getTypeOfReq(),requirementObject.getPriority(),requirementObject.getJobTitle(),
+                        requirementObject.getOpenPositions(),requirementObject.getAddNoMoreCandidates(),requirementObject.getBillRate(),requirementObject.getPayRate(),requirementObject.getJobDescription(),
+                        requirementObject.getPrimarySkill(),requirementObject.getSecondarySkill(),requirementObject.getIsQuestionAdded(),requirementObject.getRecruiter(),
+                        requirementObject.getTechnicalScreener(),requirementObject.getAccountManager(),requirementObject.getStatus(),requirementObject.getReadyForInterview(),
+                        requirementObject.getBillRatePeriod(),requirementObject.getDurationPeriod(),requirementObject.getPayRatePeriod(),requirementObject.getIsApprovedCandidateEmailSent(),
+                        requirementObject.getIsCandidateAnswered());
+                return new ResponseEntity<Object>(requirement, HttpStatus.OK);
+            }
+        }catch (SQLException e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+}

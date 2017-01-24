@@ -6,7 +6,7 @@ package com.accion.recruitment.common.constants;
 public class RequirementURIConstants {
 
     public static final String REQUIREMENT_CREATE = "/hot/requirement/create";
-    public static final String REQUIREMENT_DISPLAY = "/hot/requirement/display";
-    public static final String REQUIREMENT_DETAIL = "/hot/requirement/detail";
-    public static final String REQUIREMENT_EDIT = "/hot/requirement/edit";
+    public static final String GET_ALL_REQUIREMENT = "/hot/requirements";
+    public static final String REQUIREMENT_UPDATE = "/hot/requirement/update";
+    public static final String GET_BY_ID = "/hot/requirement/{id}";
 }

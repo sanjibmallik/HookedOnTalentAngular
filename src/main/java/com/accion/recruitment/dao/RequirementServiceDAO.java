@@ -31,4 +31,17 @@ public interface RequirementServiceDAO<E> {
      */
 
     public List<E> findAllRequirement();
+
+    /**
+     * findRequirementById() provide the specification for retrieval of the
+     * Positions object from the database based on the positionId.
+     *
+     * @param positionId accept the java.lang.int type of positionId
+     *                  which is having position ID value
+     *
+     * @return instance of Positions having persisting state otherwise
+     *         it return null.
+     */
+    public Positions findRequirementById(final int positionId);
+
 }

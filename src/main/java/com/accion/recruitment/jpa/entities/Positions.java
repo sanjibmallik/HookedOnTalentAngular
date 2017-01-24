@@ -27,12 +27,13 @@ public class Positions extends BaseEntity{
     public Positions() {
     }
 
-    public Positions(String clientName, String contactPerson, String duration, String startDate, String clientLocation, String broadcastLocation,
+    public Positions(Integer positionId,String clientName, String contactPerson, String duration, String startDate, String clientLocation, String broadcastLocation,
                      String typeOfReq, String priority, String jobTitle, String openPositions, String addNoMoreCandidates, String billRate, String payRate,
                      String jobDescription, String primarySkill, String secondarySkill, String isQuestionAdded,
                      String recruiter, String technicalScreener, String accountManager,
                      String status, String readyForInterview, String billRatePeriod, String durationPeriod, String payRatePeriod,
                      String isApprovedCandidateEmailSent, String isCandidateAnswered) {
+        this.positionId=positionId;
         this.clientName = clientName;
         this.contactPerson = contactPerson;
         this.duration = duration;

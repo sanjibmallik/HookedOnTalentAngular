@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -48,8 +49,16 @@ public class RequirementServiceDAOImpl<R> implements RequirementServiceDAO {
         final Session session = getSession();
         final Criteria criteria = session.createCriteria(Positions.class);
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-        criteria.addOrder(Order.desc("id"));
+        criteria.addOrder(Order.desc("positionId"));
         List<R> rList = criteria.list();
         return rList;
+    }
+
+    @Override
+    public Positions findRequirementById(final int positionId) {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(Positions.class);
+        criteria.add(Restrictions.eq("positionId", positionId));
+        return (Positions) criteria.uniqueResult();
     }
 }
