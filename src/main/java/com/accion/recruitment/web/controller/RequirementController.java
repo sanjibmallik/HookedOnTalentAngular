@@ -5,10 +5,7 @@ import com.accion.recruitment.common.constants.RequirementConstants;
 import com.accion.recruitment.common.constants.RequirementURIConstants;
 import com.accion.recruitment.common.constants.UserConstants;
 import com.accion.recruitment.common.enums.RequirementEnums;
-import com.accion.recruitment.jpa.entities.ClientDetails;
-import com.accion.recruitment.jpa.entities.GeneralQuestion;
-import com.accion.recruitment.jpa.entities.Positions;
-import com.accion.recruitment.jpa.entities.User;
+import com.accion.recruitment.jpa.entities.*;
 import com.accion.recruitment.service.ClientService;
 import com.accion.recruitment.service.QuestionService;
 import com.accion.recruitment.service.RequirementService;
@@ -276,5 +273,86 @@ public class RequirementController {
         }
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ApiOperation(value = "Add No more Candidate", httpMethod="GET")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Maximum Resum Limit Reached"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.ADD_NO_MORE_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> addNoMoreCandidate(@PathVariable("id") final int requirementId) {
+
+
+        return new ResponseEntity<Object>(RequirementEnums.ADD_NO_MORE_CANDIDATE.ResponseMsg(), HttpStatus.CREATED);
+    }
+
+    @ApiOperation(value = "Open Close Requirement", httpMethod="GET")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Open or Close Requirement"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.OPEN_CLOSE_REQUIREMENT, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> openCloseRequirement(@PathVariable("id") final int requirementId) {
+
+
+        return new ResponseEntity<Object>(RequirementEnums.REQUIREMENT_UPDATED.ResponseMsg(), HttpStatus.CREATED);
+    }
+
+    @ApiOperation(value = "Add Technical Screener to Requirement", httpMethod="POST")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Add Technical Screener to Requirement"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.ADD_TECH_SCREENER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> addTSToRequirement(@RequestBody User user) {
+        return new ResponseEntity<Object>(RequirementEnums.ADD_TS_TO_REQT.ResponseMsg(), HttpStatus.CREATED);
+    }
+
+    @ApiOperation(value = "Add Recruiter to Requirement", httpMethod="POST")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Add Recruiters to Requirement"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.ADD_RECRUITER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> addRecruiterToRequirement(@RequestBody User user) {
+        return new ResponseEntity<Object>(RequirementEnums.ADD_RECRUITER_TO_REQT.ResponseMsg(), HttpStatus.CREATED);
+    }
+
+    @ApiOperation(value = "Add Candidate to Requirement", httpMethod="GET")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Add Candidate to Requirement"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.ADD_CANDIDATE_TO_REQT, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> addCandidateToRequirement(@PathVariable String candidateID, @PathVariable String PositionId) {
+        return new ResponseEntity<Object>(RequirementEnums.ADD_CANDIDATE_TO_REQT.ResponseMsg(), HttpStatus.CREATED);
+    }
+
+    @ApiOperation(value = "Fetches Candidate from DB", httpMethod="POST")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Fetches Candidate from DB"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.ADD_CANDIDATE_FROM_DB, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> addCandidateFromDB() {
+
+        List<Candidates> candidatesList = new ArrayList<Candidates>();
+        Candidates candidate = new Candidates();
+        Candidates candidates = new Candidates();
+        candidates.setFirstName("Azhar");
+        candidates.setLastName("Liaqat");
+        candidates.setCellPhoneNumber("999999999");
+        candidates.setPrimarySkill("Java");
+        candidates.setSecondarySkill("AngularJs");
+        candidates.setNote("MyNote");
+        candidates.setBillRate("24$");
+        candidates.setPayRate("12$");
+        candidates.setImmigrationStatus("L1");
+        candidates.setAddedBy("Moin");
+        candidates.setAddress("BTM");
+        candidates.setCreatedBy("REcruiter");
+        candidates.setCreatedDate(new Date());
+        candidates.setAddress2("Layout");
+        candidates.setCity("Bengaluru");
+        candidates.setState("Karnataka");
+        candidates.setCountry("India");
+        candidatesList.add(candidate);
+        return new ResponseEntity<Object>(candidatesList, HttpStatus.CREATED);
+    }
+
 
 }

@@ -6,6 +6,10 @@ package com.accion.recruitment.common.enums;
 public enum RequirementEnums {
 
     REQUIREMENT_CREATED("Requirement Created Successfully"),
+    ADD_NO_MORE_CANDIDATE("No More Candidate can be added for this position"),
+    ADD_TS_TO_REQT("Technical Screener added for this requirement"),
+    ADD_RECRUITER_TO_REQT("Recruiter added for this requirement"),
+    ADD_CANDIDATE_TO_REQT("Candidate added for this requirement"),
 
     DURATION("Enter the duration correctly"),
     BILL_RATE("Enter the Bill Rate correctly"),
