@@ -1,11 +1,8 @@
 package com.accion.recruitment.web.controller;
 
 import com.accion.recruitment.common.constants.CandidateConstants;
-import com.accion.recruitment.common.constants.RequirementMgtConstants;
 import com.accion.recruitment.common.enums.CandidateEnums;
-import com.accion.recruitment.common.enums.ReqtMgtEnums;
 import com.accion.recruitment.jpa.entities.Candidates;
-import com.accion.recruitment.jpa.entities.Positions;
 import com.accion.recruitment.service.CandidateService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
