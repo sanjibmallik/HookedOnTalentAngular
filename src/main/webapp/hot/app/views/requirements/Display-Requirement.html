@@ -35,55 +35,36 @@
 </style>
 
 <!-- Custom column filtering -->
-<div class="panel panel-default" ng-controller="viewAllUserCtrl" ng-cloak >
+<div class="panel panel-default" ng-controller="viewAllRequirementsCtrl" ng-cloak >
 
 
     <!--panel started here-->
     <div class="panel-heading">
         <h3 class="panel-title">Showing All Users</h3>
 
-        <!--<div style="margin-top: -10px;">
-        <input style="margin-left: 25px;" type="button" value="Show All" class="btn btn-primary"
-               ng-class="{actives : activeMenu === 'All'}" ng-click="activeMenu = 'All'"/>
-        <input type="button" value="Active" class="btn btn-primary"
-               ng-class="{actives : activeMenu === 'Active'}" ng-click="activeMenu = 'Active'"/>
-        <input type="button" value="Inactive" class="btn btn-primary"
-               ng-class="{actives : activeMenu === 'Inactive'}" ng-click="activeMenu = 'Inactive'"/>
-        </div>
-
--->
-        <!--<div class="panel-options">
-            <a href="" data-toggle="panel">
-                <span class="collapse-icon">&ndash;</span>
-                <span class="expand-icon">+</span>
-            </a>
-            <a href="" data-toggle="remove">
-                &times;
-            </a>
-        </div>-->
     </div>
     <div class="panel-body">
 
 
 
-        <table  ng-table="usersTable" show-filter="true" class="table table-striped table-bordered" id="example-3">
+        <table  ng-table="requirementsTable" show-filter="true" class="table table-striped table-bordered" id="example-3">
 
             <tr ng-repeat="user in data">
 
-                <td data-title="'Requisition #'" sortable="'reqNo'" filter="{ 'reqNo': 'text' }">
-                    1</td>
-                <td data-title="'Requirement Name'" sortable="'reqName'" filter="{ 'reqName': 'text' }">
-                    Java Developer</td>
+                <td data-title="'Requisition #'" sortable="'positionId'" filter="{ 'positionId': 'text' }">
+                    {{user.positionId}}</td>
+                <td data-title="'Requirement Name'" sortable="'jobTitle'" filter="{ 'jobTitle': 'text' }">
+                    {{user.jobTitle}}</td>
                 <td data-title="'Client Name'" sortable="'clientName'" filter="{ 'clientName': 'text' }">
-                    Accion Labs</td>
-                <td data-title="'Skills'" sortable="'skills'" filter="{ 'skills': 'text' }">
-                    Spring, Hibernate</td>
+                    {{user.clientName}}</td>
+                <td data-title="'Skills'" sortable="'primarySkill'" filter="{ 'primarySkill': 'text' }">
+                    {{user.primarySkill}}</td>
                 <td data-title="'Created By'" sortable="'createdBy'" filter="{ 'createdBy': 'text' }">
-                    Azhar Liaquat</td>
+                    {{user.createdBy}}</td>
                 <td data-title="'Priority'" sortable="'priority'" filter="{ 'priority': 'text' }">
-                    High</td>
+                    {{user.priority}}</td>
                 <td data-title="'Current Status'" sortable="'status'" filter="{ 'status': 'text' }">
-                    High</td>
+                    {{user.status}}</td>
 
 
                 <td data-title="'Actions'">
