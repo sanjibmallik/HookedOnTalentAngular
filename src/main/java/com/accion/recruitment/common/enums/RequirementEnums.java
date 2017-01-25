@@ -11,6 +11,9 @@ public enum RequirementEnums {
     ADD_RECRUITER_TO_REQT("Recruiter added for this requirement"),
     ADD_CANDIDATE_TO_REQT("Candidate added for this requirement"),
 
+    SHORTLIST_CANDIDATE("Candidate Shortlisted for this requirement"),
+    SUBMIT_TO_CLIENT("Candidate submitted to Client"),
+
     DURATION("Enter the duration correctly"),
     BILL_RATE("Enter the Bill Rate correctly"),
     PAY_RATE("Enter the Pay Rate correctly"),

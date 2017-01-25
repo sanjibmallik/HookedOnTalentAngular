@@ -14,7 +14,7 @@ import java.util.Set;
 @Entity
 @Table(name = "video_question")
 
-public class VideoQuestion extends BaseEntity{
+public class VideoQuestion extends QuestionBaseClass{
 
 
     @Id

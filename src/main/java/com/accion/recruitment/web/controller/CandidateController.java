@@ -311,4 +311,6 @@ public class CandidateController {
         return new ResponseEntity<Object>(CandidateEnums.LINKS_GENERATED, HttpStatus.OK);
 
     }
+
+
 }

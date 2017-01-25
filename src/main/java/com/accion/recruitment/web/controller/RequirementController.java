@@ -1,9 +1,6 @@
 package com.accion.recruitment.web.controller;
 
-import com.accion.recruitment.common.constants.ClientConstants;
-import com.accion.recruitment.common.constants.RequirementConstants;
-import com.accion.recruitment.common.constants.RequirementURIConstants;
-import com.accion.recruitment.common.constants.UserConstants;
+import com.accion.recruitment.common.constants.*;
 import com.accion.recruitment.common.enums.RequirementEnums;
 import com.accion.recruitment.jpa.entities.*;
 import com.accion.recruitment.service.ClientService;
@@ -354,5 +351,79 @@ public class RequirementController {
         return new ResponseEntity<Object>(candidatesList, HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "Fetches Questions from DB", httpMethod="POST")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Fetches Questions from DB"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.ADD_QUESTION_FROM_DB, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> addQuestionsFromDB(@PathVariable String questionType) {
 
+        ArrayList<QuestionBaseClass> questions = new ArrayList<QuestionBaseClass>();
+        if (questionType.equals(HookedOnConstants.QUESTION_TYPE_GENERAL))
+        {
+            //TODO Fetching logic from DB
+            GeneralQuestion generalQuestion = new GeneralQuestion();
+            generalQuestion.setCreatedBy("Moin");
+            generalQuestion.setAnswer("Human");
+            generalQuestion.setOption1("Why");
+            generalQuestion.setOption2("Whom");
+            generalQuestion.setOption3("How");
+            generalQuestion.setOption4("When");
+            generalQuestion.setOption5("Human");
+            generalQuestion.setOption6("Whatever");
+            generalQuestion.setSubAnswer("Ok");
+            generalQuestion.setQuestionName("GENERAL");
+            generalQuestion.setId(1);
+            questions.add(generalQuestion);//TODO add all question to return object
+        }
+        else if (questionType.equals(HookedOnConstants.QUESTION_TYPE_TECHNICAL))
+        {
+            //TODO Fetching logic from DB
+            TechnicalQuestion techQuestion = new TechnicalQuestion();
+            techQuestion.setCreatedBy("Moin");
+            techQuestion.setAnswer("Human");
+            techQuestion.setOption1("Why");
+            techQuestion.setOption2("Whom");
+            techQuestion.setOption3("How");
+            techQuestion.setOption4("When");
+            techQuestion.setOption5("Human");
+            techQuestion.setOption6("Whatever");
+            techQuestion.setSubAnswer("Ok");
+            techQuestion.setId(2);
+            techQuestion.setQuestionName("TECHNICAL");
+            techQuestion.setDomain("JAVA");
+            techQuestion.setLevel("Expert");
+            questions.add(techQuestion);//TODO add all question to return object
+        }
+        else if (questionType.equals(HookedOnConstants.QUESTION_TYPE_VIDEO))
+        {
+            //TODO Fetching logic from DB
+            VideoQuestion vidQuestion = new VideoQuestion();
+            vidQuestion.setCreatedBy("Moin");
+            vidQuestion.setQuestionName("VIDEO");
+            vidQuestion.setDomain("Angular");
+            vidQuestion.setId(3);
+            questions.add(vidQuestion);//TODO add all question to return object
+        }
+
+        return new ResponseEntity<Object>(questions, HttpStatus.CREATED);
+    }
+
+    @ApiOperation(value = "ShortList Candidate for Requirement", httpMethod="GET")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "ShortList Candidate for Requirement"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.SHORTLIST_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> shortlistCandidate(@PathVariable String candidateID, @PathVariable String PositionId) {
+        return new ResponseEntity<Object>(RequirementEnums.SHORTLIST_CANDIDATE.ResponseMsg(), HttpStatus.CREATED);
+    }
+
+    @ApiOperation(value = "Submit Candidate to Client", httpMethod="GET")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Submit Candidate to Client"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.SUBMIT_TO_CLIENT, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> submitToClient(@PathVariable String candidateID, @PathVariable String PositionId) {
+        return new ResponseEntity<Object>(RequirementEnums.SUBMIT_TO_CLIENT.ResponseMsg(), HttpStatus.CREATED);
+    }
 }

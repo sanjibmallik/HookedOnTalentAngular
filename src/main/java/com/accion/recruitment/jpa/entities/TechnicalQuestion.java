@@ -16,7 +16,7 @@ import java.util.Set;
 @Table(name = "technical_question")
 
 
-public class TechnicalQuestion extends BaseEntity {
+public class TechnicalQuestion extends QuestionBaseClass {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
