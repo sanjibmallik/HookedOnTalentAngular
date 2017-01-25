@@ -125,8 +125,9 @@
     <br/>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" ng-click="currentModal.close();">Close</button>
+
         <button type="button" class="btn btn-info" ng-click="clientActivate(responseData.id);">Yes</button>
+        <button type="button" class="btn btn-red" ng-click="currentModal.close();">No</button>
     </div>
 
 </script>
@@ -442,13 +443,13 @@
              <div class="col-md-6">
                  <div class="form-group">
                      <label for="field-1" class="control-label">First Name</label>
-                     <input type="text" ng-model="responseBody.clientContacts[0].contactFullName" class="form-control" placeholder="First Name">
+                     <input type="text" ng-model="responseData.clientContacts[0].firstName" class="form-control" placeholder="First Name">
                  </div>
              </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="field-1" class="control-label">Last Name</label>
-                    <input type="text" class="form-control" placeholder="Last Name">
+                    <input type="text" class="form-control" placeholder="Last Name" ng-model="responseData.clientContacts[0].lastName">
                 </div>
 
             </div>
@@ -461,14 +462,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="field-1" class="control-label">Contact No.</label>
-                    <input type="text" class="form-control" placeholder="Primary Conatact">
+                    <input type="text" class="form-control" ng-model="responseData.clientContacts[0].contactNumber" placeholder="Primary Conatact">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="field-2" class="control-label">Alternate Contact</label>
-                    <input type="text" class="form-control"  placeholder="Alternate contact">
+                    <input type="text" class="form-control" ng-model="responseData.clientContacts[0].alternateContact" placeholder="Alternate contact">
                 </div>
 
             </div>
@@ -478,14 +479,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="field-1" class="control-label">User Name</label>
-                    <input type="text" class="form-control" placeholder="User name">
+                    <input type="text" class="form-control" ng-model="responseData.clientContacts[0].userName" placeholder="User name">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="field-2" class="control-label">email Id</label>
-                    <input type="text" class="form-control"  placeholder="abc@xyz.com">
+                    <input type="text" class="form-control" ng-model="responseData.clientContacts[0].emailId" placeholder="abc@xyz.com">
                 </div>
 
             </div>
