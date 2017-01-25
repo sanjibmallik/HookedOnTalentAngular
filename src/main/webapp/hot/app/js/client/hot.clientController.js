@@ -336,6 +336,20 @@ hotClientControllers.controller('viewAllClientCtrl',function($scope,$rootScope,$
     };
 
 
+    $rootScope.clientActivate = function (clientId) {
+
+        console.log(clientId);
+        $http.put('client/activate/'+clientId)
+            .success(function (data, status, headers, config) {
+                console.log(data);
+                $state.go($state.current, {}, {reload: true});
+            })
+            .error(function (data, status, header, config) {
+            });
+        $rootScope.currentModal.dismiss();
+    }
+
+
 
 
 
