@@ -351,6 +351,12 @@ hotClientControllers.controller('viewAllClientCtrl',function($scope,$rootScope,$
 
 
 
+    $rootScope.updateClientContactDetails = function () {
+        console.log("client contact detils");
+
+    }
+
+
 
 
 });
