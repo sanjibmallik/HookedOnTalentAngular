@@ -4,6 +4,8 @@ package com.accion.recruitment.jpa.entities;
 import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
@@ -21,6 +23,62 @@ import java.util.Set;
 @Table(name = "candidates")
 
 public class Candidates extends BaseEntity{
+
+    public Candidates() {
+    }
+
+    public Candidates(Integer candidateId,String firstName, String middleName, String lastName, String candidateName, String cellPhoneNumber,
+                      String homePhoneNumber, String emailId, String jobTitle, String primarySkill, String secondarySkill, String currentLocation,
+                      String totalExperience, String totalExperiencePeriod, String usExperience, String usExperiencePeriod, String address,
+                      String immigrationStatus, String address2, String city, String state, String country, String currentEmployer, String status,
+                      String billRate, String billRateCurrency, String payRate, String payRateCurrency, String note,
+                      String allReadyAdded, String evaluatedByTS, String finalVerdict, Integer linkCount, String addedBy, String isShortListed,
+                      String screenedStatus, String enableDisableStatus, String comment, String interviewStatus, String score, Integer positionId,
+                      String positionName) {
+        this.candidateId=candidateId;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.candidateName = candidateName;
+        this.cellPhoneNumber = cellPhoneNumber;
+        this.homePhoneNumber = homePhoneNumber;
+        this.emailId = emailId;
+        this.jobTitle = jobTitle;
+        this.primarySkill = primarySkill;
+        this.secondarySkill = secondarySkill;
+        this.currentLocation = currentLocation;
+        this.totalExperience = totalExperience;
+        this.totalExperiencePeriod = totalExperiencePeriod;
+        this.usExperience = usExperience;
+        this.usExperiencePeriod = usExperiencePeriod;
+        this.address = address;
+        this.immigrationStatus = immigrationStatus;
+        this.address2 = address2;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.currentEmployer = currentEmployer;
+        this.status = status;
+        this.billRate = billRate;
+        this.billRateCurrency = billRateCurrency;
+        this.payRate = payRate;
+        this.payRateCurrency = payRateCurrency;
+        this.note = note;
+        this.allReadyAdded = allReadyAdded;
+        this.evaluatedByTS = evaluatedByTS;
+        this.finalVerdict = finalVerdict;
+        this.linkCount = linkCount;
+        this.addedBy = addedBy;
+        this.isShortListed = isShortListed;
+        this.screenedStatus = screenedStatus;
+        this.enableDisableStatus = enableDisableStatus;
+        this.comment = comment;
+        this.interviewStatus = interviewStatus;
+        this.score = score;
+        this.positionId = positionId;
+        this.positionName = positionName;
+
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -160,6 +218,9 @@ public class Candidates extends BaseEntity{
 
     @Transient
     private String positionName;
+
+    @Transient
+    MultipartFile profileResume;
 
     @OneToMany(mappedBy = "candidates",fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private Set<PositionCandidates> positionCandidatesSet = new HashSet<PositionCandidates>();
@@ -540,6 +601,14 @@ public class Candidates extends BaseEntity{
 
     public void setPositionName(String positionName) {
         this.positionName = positionName;
+    }
+
+    public MultipartFile getProfileResume() {
+        return profileResume;
+    }
+
+    public void setProfileResume(MultipartFile profileResume) {
+        this.profileResume = profileResume;
     }
 
     public Set<PositionCandidates> getPositionCandidatesSet() {

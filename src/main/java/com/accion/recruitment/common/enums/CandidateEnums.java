@@ -5,7 +5,11 @@ package com.accion.recruitment.common.enums;
  */
 public enum CandidateEnums {
 
-    CANDIDATE_CREATED("Candidate Created"),
+    CANDIDATE_CREATED("Candidate Created Successfully"),
+    CANDIDATE_NOT_CREATED("Problem with saving the Candidate. Try again."),
+    CANDIDATE_PROFILE_EXCEPTION("Problem with uploading the profile. Try another"),
+
+
     RESUME_DOWNLOAD("Resume Downloaded"),
     CANDIDATE_ENABLED("Candidate Enabled"),
     VIDEO_COMPARED("Video Compared"),

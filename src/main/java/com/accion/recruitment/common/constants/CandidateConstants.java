@@ -6,6 +6,9 @@ package com.accion.recruitment.common.constants;
 public class CandidateConstants {
 
     public static final String CANDIDATE_CREATE = "/hot/candidate/create";
+    public static final String GET_BY_ID = "/hot/candidate/{id}";
+
+
     public static final String SCREENED_CANDIDATE = "/hot/candidate/screened";
     public static final String UNSCREENED_CANDIDATE = "/hot/candidate/unscreened";
     public static final String APPROVED_CANDIDATE = "/hot/candidate/approved";
