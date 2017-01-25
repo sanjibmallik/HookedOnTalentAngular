@@ -1,5 +1,5 @@
 <page-title ng-if="layoutOptions.pageTitles" title="Create New Client" description=""></page-title>
-<div ng-controller="">
+<div ng-controller="createNewClientCtrl">
 <script type="text/ng-template"></script>
 
 
@@ -64,7 +64,7 @@
                 <span class="input-group-addon">
                     <i class="linecons-doc"></i>
                 </span>
-                <input type="text" ng-model="newClient.zipCode" name="Federal Id" class="form-control"
+                <input type="text" ng-model="newClient.federalId" name="Federal Id" class="form-control"
                        placeholder="Federal Id"
                        inputmask data-mask="[0-9]*" data-is-regex="true"
                        ng-maxlength="35" ng-minlength="1" ng-required="true">
@@ -99,7 +99,7 @@
                     <i class="linecons-mobile"></i>
                 </span>
                 <input type="text" class="form-control"
-                       ng-maxlength="35" ng-minlength="1" ng-model="newClient.alternateContact"
+                       ng-maxlength="35" ng-minlength="1" ng-model="newClient.faxNumber"
                        name="alternateContact" inputmask data-mask="phone" />
             </div>
         </div>
@@ -225,7 +225,7 @@
                                         <span class="input-group-addon">
                                             <i class="linecons-tv"></i>
                                         </span>
-                                <input type="text" ng-model="newClient.country" name="country" class="form-control"
+                                <input type="text" ng-model="newClient.websitw" name="country" class="form-control"
                                        placeholder="www.abc.com"
                                        inputmask data-mask="[a-zA-Z.]*" data-is-regex="true"
                                        ng-maxlength="35" ng-minlength="1" ng-required="true">
@@ -346,7 +346,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label"></label>
                         <div class="col-sm-5">
-                            <input type="checkbox" class="cbr" name="" value="" ng-model="newClient.activeClientUser"/>
+                            <input type="checkbox" class="cbr" name="" value="" ng-model="newClient.sendUserEmail"/>
                             <label>Activate this Contact Person</label>
                         </div>
                     </div>
@@ -359,6 +359,7 @@
         </div>
     </div>
 </div>
+    {{newClient}}
 
 
 <div class="row">

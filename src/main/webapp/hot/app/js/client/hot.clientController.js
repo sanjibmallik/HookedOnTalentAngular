@@ -24,7 +24,7 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
 
 
 
-        var data = $scope.newUser;
+        var data = $scope.newClient;
 
 
         var jsonUser = {
@@ -90,7 +90,7 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
 
         console.log(jsonUser);
 
-        $http.post('user/create', jsonUser)
+        $http.post('client/create', jsonUser)
             .success(function (data, status, headers, config) {
                 console.log(data);
 
