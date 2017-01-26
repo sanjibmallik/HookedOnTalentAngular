@@ -200,11 +200,7 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
 
 
 hotClientControllers.controller('viewAllClientCtrl',function($scope,$rootScope,$http, $filter, NgTableParams){
-    $scope.test='test';
-    $rootScope.users = [];
-    $scope.showUser="all";
 
-    $scope.activeMenu = 'All';
 
     angular.element(document).ready(function(){$http({
         method : 'GET',
@@ -238,102 +234,7 @@ hotClientControllers.controller('viewAllClientCtrl',function($scope,$rootScope,$
 
 
 
-    $rootScope.updateUser= function(){
-        console.log("updateUser function");
 
-        $rootScope.userPrimarySkills = [];
-        $rootScope.userSecodarySkills = [];
-
-
-        for(var i=0;$rootScope.responseData.technicalScreenerDetailsDSkillsSet.length>i;i++){
-
-
-            if($rootScope.responseData.technicalScreenerDetailsDSkillsSet[i].skillType=="PrimarySkill"){
-
-                $rootScope.userPrimarySkills.push($scope.responseData.technicalScreenerDetailsDSkillsSet[i]);
-
-            }else{
-
-                $rootScope.userSecodarySkills.push($scope.responseData.technicalScreenerDetailsDSkillsSet[i])
-
-            }
-        }
-
-
-
-        var jsonUser = {
-            "user":{
-                "id":$rootScope.responseData.id,
-                "firstName":$rootScope.responseData.firstName,
-                "lastName":$rootScope.responseData.lastName,
-                "userName":$rootScope.responseData.userName,
-                "emailId":$rootScope.responseData.emailId,
-                "contactNumber":$rootScope.responseData.contactNumber,
-                "role":$rootScope.responseData.role,
-                "alternateContact":$rootScope.responseData.alternateContact,
-                "addressOne":$rootScope.responseData.addressOne,
-                "addressTwo":$rootScope.responseData.addressTwo,
-                "zipCode":$rootScope.responseData.zipCode,
-                "city":$rootScope.responseData.city,
-                "state":$rootScope.responseData.state,
-                "country":$rootScope.responseData.country,
-                "expectedPayRange":$rootScope.responseData.expectedPayRange
-
-            },
-
-            "technicalScreenerSkills":{
-                "primarySkills":$rootScope.userPrimarySkills,
-                "secondarySkills":$rootScope.userSecodarySkills
-
-
-            }
-
-
-        }
-
-        console.log(jsonUser);
-
-
-
-        $http.put('user/update/',jsonUser)
-            .success(function (data, status, headers, config) {
-                console.log(data);
-            })
-            .error(function (data, status, header, config) {
-            });
-        $rootScope.currentModal.dismiss();
-
-    }
-
-
-
-
-
-
-    $rootScope.enableDisableUser = function(userId,status){
-        $http.put('user/status/'+userId+'/'+status)
-            .success(function (data, status, headers, config) {
-                console.log(data);
-            })
-            .error(function (data, status, header, config) {
-            });
-        $rootScope.currentModal.dismiss();
-
-    }
-    $rootScope.addNewRow = function(){
-        console.log($rootScope.responseData.technicalScreenerDetailsDSkillsSet.length);
-
-        var newItemNo =  $rootScope.responseData.technicalScreenerDetailsDSkillsSet.length+1;
-        $rootScope.responseData.technicalScreenerDetailsDSkillsSet.push({});
-        console.log($rootScope.responseData.technicalScreenerDetailsDSkillsSet);
-    };
-
-
-
-    $rootScope.removeRow = function() {
-        var lastItem =  $rootScope.responseData.technicalScreenerDetailsDSkillsSet.length-1;
-        $rootScope.responseData.technicalScreenerDetailsDSkillsSet.splice(lastItem);
-    };
 
 
     $rootScope.clientActivate = function (clientId) {
@@ -348,6 +249,7 @@ hotClientControllers.controller('viewAllClientCtrl',function($scope,$rootScope,$
             });
         $rootScope.currentModal.dismiss();
     }
+
 
 
 
