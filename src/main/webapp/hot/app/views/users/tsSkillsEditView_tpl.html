@@ -15,7 +15,7 @@
                 <tr data-ng-repeat="skill in responseData.technicalScreenerDetailsDSkillsSet">
                     <td>
                         <select class="form-control" ng-model="skill.skillType">
-                        <option value="">Select</option>
+                            <option value='' disabled selected>Select</option>
                         <option value="PrimarySkill">Primary Skill</option>
                         <option value="SecondarySkill">Secondary Skill</option>
                         </select>

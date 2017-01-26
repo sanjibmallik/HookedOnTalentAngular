@@ -4,7 +4,7 @@
 <page-title ng-if="layoutOptions.pageTitles" title="Clients" description=""></page-title>
 <style>
     body {
-        width: 98%;
+        width: 100%;
     }
     .clickableRow {
         cursor: pointer;
@@ -13,9 +13,9 @@
         font-variant: small-caps !important;
         text-rendering: auto;
     }
-    td, th {
+    /*td, th {
         font-size: 8pt;
-    }
+    }*/
     table {
         padding: 0px;
 
@@ -284,8 +284,7 @@
     <div class="modal-body">
 
         <div class="row">
-           <!-- <div class="col-md-3">
-            </div>-->
+
             <div class="col-md-12">
 
                 <div class="form-group">
@@ -296,14 +295,14 @@
 
             </div>
         </div>
-        
+
 
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label">Engagement Model</label>
 
-                    <select class="form-control" name="role" ng-options="" ng-model="" ng-change="">
+                    <select class="form-control" name="role">
                         <option>Full Time</option>
                         <option>Contract</option>
                         <option>Contract to Hire</option>
@@ -315,7 +314,7 @@
                 <div class="form-group">
                     <label class="control-label">Industry</label>
 
-                        <select class="form-control" name="role" ng-options="" ng-model="" ng-change="">
+                        <select class="form-control" name="role">
                             <option>Information Technology</option>
                             <option>Human Resource</option>
                             <option>Other</option>
@@ -412,8 +411,9 @@
 
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" ng-click="currentModal.dismiss();">Close</button>
-        <button type="button" class="btn btn-info" ng-click="currentModal.dismiss();">Save changes</button>
+        <button type="button" class="btn btn-white" ng-click="currentModal.close();">Close</button>
+        <button type="button" class="btn btn-info" ng-click="currentModal.close();">Save changes</button>
+
     </div>
 
 </script>
@@ -551,8 +551,8 @@
     </div>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" ng-click="currentModal.dismiss();">Close</button>
-        <button type="button" class="btn btn-info" ng-click="currentModal.dismiss();">Save changes</button>
+        <button type="button" class="btn btn-white" ng-click="currentModal.close();">Close</button>
+        <button type="button" class="btn btn-info" ng-click="currentModal.close();">Save changes</button>
     </div>
 </script>
 

@@ -1,9 +1,14 @@
-
-
 <page-title ng-if="layoutOptions.pageTitles" title="Manage Users" description=""></page-title>
+<div class="" style="margin-top: -25px; margin-bottom: -15px;">
+    <ol class="breadcrumb bc-1"  xe-breadcrumb>
+        <li> <a href="index.html#/app/dashboard"><i class="fa-home"></i>Dashboard</a> </li>
+        <li> <a href="">Users</a> </li>
+        <li class="active"> <strong>Display User</strong> </li>
+    </ol>
+</div>
 <style>
     body {
-        width: 98%;
+        width: 100%;
     }
     .clickableRow {
         cursor: pointer;
@@ -12,9 +17,7 @@
         font-variant: small-caps !important;
         text-rendering: auto;
     }
-    td, th {
-        font-size: 8pt;
-    }
+
     table {
         padding: 0px;
 
@@ -29,6 +32,10 @@
     }
 
 </style>
+
+<div class="row">
+<div class="col-sm-12">
+<div class="panel panel-default">
 
 <!-- Custom column filtering -->
 <div class="panel panel-default" ng-controller="viewAllUserCtrl" ng-cloak >
@@ -75,10 +82,10 @@
                 {{user.lastName}}</td>
                 <td data-title="'User Name'" sortable="'userName'" filter="{ 'userName': 'text' }">
                 {{user.userName}}</td>
-                <td data-title="'Email-Id'" sortable="'emailId'" filter="{ 'emailId': 'text' }">
+                <!--<td data-title="'Email-Id'" sortable="'emailId'" filter="{ 'emailId': 'text' }">
                 {{user.emailId}}</td>
-                <td data-title="'Contact Number'" sortable="'contactNumber'" filter="{ 'contactNumber': 'text' }">
-                {{user.contactNumber}}</td>
+                <td data-title="'Contact No.'" sortable="'contactNumber'" filter="{ 'contactNumber': 'text' }">
+                {{user.contactNumber}}</td>-->
                 <td data-title="'Role'" sortable="'role'" filter="{ 'role': 'text' }">
                 {{user.role}}</td>
                 <td data-title="'Status'" sortable="'enabled'" filter="{ 'enabled': 'select' }" filter-data="[{id: true, title: 'Active'}, { id: false, title: 'Inactive'}]" >
@@ -129,6 +136,9 @@
         </table>
 
     </div>
+</div>
+</div>
+</div>
 </div>
 
 

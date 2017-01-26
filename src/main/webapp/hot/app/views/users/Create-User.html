@@ -1,4 +1,11 @@
 <page-title ng-if="layoutOptions.pageTitles" title="Create New User" description=""></page-title>
+<div class="" style="margin-top: -25px; margin-bottom: -15px;">
+    <ol class="breadcrumb bc-1"  xe-breadcrumb>
+        <li> <a href="index.html#/app/dashboard"><i class="fa-home"></i>Dashboard</a> </li>
+        <li> <a href="">Users</a> </li>
+        <li class="active"> <strong>Create User</strong> </li>
+    </ol>
+</div>
 <div ng-controller="createNewUserCtrl">
 <script type="text/ng-template"></script>
 
@@ -16,6 +23,8 @@
     }
 
 </style>
+
+
 
 <form role="form" name="newUserForm" ng-submit="disableClick(newUserForm.$valid)"
       class="form-horizontal" ng-submit="submitNewUser()" ng-cloak>
@@ -120,7 +129,9 @@
 							</span>
 							<input type="text" class="form-control" required="true" ng-model="newUser.contactNumber"
                                    name="contactNumber" ng-blur="checkContactNumberExist(newUser.contactNumber)"
-                                   inputmask data-mask="phone" minlength="10" />
+                                   inputmask data-mask="phone" data-validate="minlength[10]" />
+
+
 						</div>
                         <div ng-show="contactNumberExist" style="color: red;">{{contactNumberErrorMessage}}</div>
                     </div>
