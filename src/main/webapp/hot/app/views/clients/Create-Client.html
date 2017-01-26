@@ -1,4 +1,16 @@
 <page-title ng-if="layoutOptions.pageTitles" title="Create New Client" description=""></page-title>
+        <style>
+            .mandatory{
+                color: red;
+            }
+        </style>
+<div class="" style="margin-top: -25px; margin-bottom: -15px;">
+    <ol class="breadcrumb bc-1"  xe-breadcrumb>
+        <li> <a href="index.html#/app/dashboard"><i class="fa-home"></i>Dashboard</a> </li>
+        <li> <a href="">Clients</a> </li>
+        <li class="active"> <strong>Create Client</strong> </li>
+    </ol>
+</div>
 <div ng-controller="createNewClientCtrl">
 <script type="text/ng-template"></script>
 
@@ -15,15 +27,15 @@
 
 <div class="panel-body">
     <div class="form-group">
-        <label class="col-sm-3 control-label">Client Name</label>
+        <label class="col-sm-3 control-label">Client Name<span class="mandatory">&nbsp;*</span></label>
         <div class="col-sm-5">
             <div class="input-group input-group-sm input-group-minimal">
                 <span class="input-group-addon">
                     <i class="linecons-user"></i>
                 </span>
                 <input type="text" name="clientName" class="form-control" ng-model="newClient.clientName"
-                       placeholder="Client Name"
-                       inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true">
+                       placeholder="Client Name" maxlength="64"
+                       inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
             </div>
         </div>
     </div>
@@ -67,7 +79,7 @@
                 <input type="text" ng-model="newClient.federalId" name="Federal Id" class="form-control"
                        placeholder="Federal Id"
                        inputmask data-mask="[0-9]*" data-is-regex="true"
-                       ng-maxlength="35" ng-minlength="1" ng-required="true">
+                       maxlength="9" ng-minlength="1" ng-required="true">
             </div>
         </div>
     </div>
@@ -75,7 +87,7 @@
     <div class="form-group-separator"></div>
 
     <div class="form-group">
-        <label class="col-sm-3 control-label">Contact number</label>
+        <label class="col-sm-3 control-label">Contact number<span class="mandatory">&nbsp;*</span></label>
         <div class="col-sm-5">
             <div class="input-group input-group-sm input-group-minimal">
     			<span class="input-group-addon">
@@ -129,7 +141,7 @@
                         </span>
                         <input type="text" name="addressOne" ng-model="newClient.addressOne"
                                class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"
-                               inputmask data-mask="[a-zA-Z][a-zA-Z ][0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
+                               maxlength="64">
                     </div>
                 </div>
             </div>
@@ -145,8 +157,7 @@
                         </span>
                         <input type="text" name="addressTwo" ng-model="newClient.addressTwo" class="form-control"
                                placeholder="Apartment, Suit, Unit, Building, Floor, etc"
-                               inputmask data-mask="[a-zA-Z][a-zA-Z ][0-9]*" data-is-regex="true"
-                               ng-maxlength="35" ng-minlength="1" ng-required="true">
+                               maxlength="64">
                     </div>
                 </div>
             </div>
@@ -162,7 +173,7 @@
                         </span>
                         <input type="text" ng-model="newClient.zipCode" name="zipCode" class="form-control"
                                placeholder="Zipcode" inputmask data-mask="[0-9]*" data-is-regex="true"
-                               ng-maxlength="35" ng-minlength="1" ng-required="true">
+                               maxlength="6">
                     </div>
                 </div>
             </div>
@@ -178,7 +189,7 @@
                                         <i class="linecons-location"></i>
                                     </span>
                                 <input ng-model="newClient.city" name="city" type="text" class="form-control" placeholder="City"
-                                       inputmask data-mask="[a-zA-Z]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
+                                       inputmask data-mask="[a-zA-Z]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1">
                             </div>
                         </div>
                     </div>
@@ -194,7 +205,7 @@
                                         <i class="linecons-location"></i>
                                     </span>
                                 <input ng-model="newClient.state" name="state" type="text" class="form-control" placeholder="State"
-                                       inputmask data-mask="[a-zA-Z]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
+                                       inputmask data-mask="[a-zA-Z]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1">
                             </div>
                         </div>
                     </div>
@@ -226,9 +237,7 @@
                                             <i class="linecons-tv"></i>
                                         </span>
                                 <input type="text" ng-model="newClient.websitw" name="country" class="form-control"
-                                       placeholder="www.abc.com"
-                                       inputmask data-mask="[a-zA-Z.]*" data-is-regex="true"
-                                       ng-maxlength="35" ng-minlength="1" ng-required="true">
+                                       placeholder="www.abc.com">
                             </div>
                         </div>
                     </div>
@@ -249,14 +258,15 @@
             <div class="panel-body">
                 <div class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">First Name</label>
+                        <label class="col-sm-3 control-label">First Name<span class="mandatory">&nbsp;*</span></label>
                         <div class="col-sm-5">
                             <div class="input-group input-group-sm input-group-minimal">
                                     <span class="input-group-addon">
                                         <i class="linecons-user"></i>
                                     </span>
                                 <input type="text" name="firstName" class="form-control" ng-model="newClient.firstName" placeholder="First Name"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true">
+                                       inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true"
+                                        maxlength="64">
                             </div>
                         </div>
                     </div>
@@ -264,14 +274,15 @@
                     <div class="form-group-separator"></div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Last Name</label>
+                        <label class="col-sm-3 control-label">Last Name<span class="mandatory">&nbsp;*</span></label>
                         <div class="col-sm-5">
                             <div class="input-group input-group-sm input-group-minimal">
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
                                 <input type="text" name="lastName" class="form-control" ng-model="newClient.lastName" placeholder="Last Name"
-                                       inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true">
+                                       inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true"
+                                        maxlength="64">
                             </div>
                             <ng-messages>
                             </ng-messages>
@@ -281,14 +292,15 @@
                     <div class="form-group-separator"></div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">User Name</label>
+                        <label class="col-sm-3 control-label">User Name<span class="mandatory">&nbsp;*</span></label>
                         <div class="col-sm-5">
                             <div class="input-group input-group-sm input-group-minimal">
 							<span class="input-group-addon">
 								<i class="linecons-user"></i>
 							</span>
                                 <input type="text" name="userName" class="form-control" ng-model="newClient.userName" placeholder="User Name"
-                                       inputmask data-mask="^[a-zA-Z0-9]*$" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true"  ng-blur="checkUserExist(newUser.userName)">
+                                       inputmask data-mask="^[a-zA-Z0-9]*([.&_]*)$" data-is-regex="true"
+                                       maxlength="64" required  ng-blur="checkUserExist(newUser.userName)">
                             </div>
                             <!--<div ng-show="userNameExist" style="color: red;">{{userNameErrorMessage}}</div>-->
                         </div>
@@ -297,13 +309,15 @@
                     <div class="form-group-separator"></div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Email Id</label>
+                        <label class="col-sm-3 control-label">Email Id<span class="mandatory">&nbsp;*</span></label>
                         <div class="col-sm-5">
                             <div class="input-group input-group-sm input-group-minimal">
 							<span class="input-group-addon">
 								<i class="linecons-mail"></i>
 							</span>
-                                <input type="email" class="form-control" name="emailId" ng-model="newClient.emailId" placeholder="Enter your email Id" ng-maxlength="35" ng-minlength="1" ng-required="true" ng-blur="checkEmailExist(newUser.emailId)">
+                                <input type="email" class="form-control" name="emailId" ng-model="newClient.emailId"
+                                       placeholder="Enter your email Id"
+                                       maxlength="64" required ng-blur="checkEmailExist(newUser.emailId)">
                             </div>
                             <!--<div ng-show="emailExist" style="color: red;">{{emailErrorMessage}}</div>-->
                         </div>
@@ -311,14 +325,14 @@
 
                     <div class="form-group-separator"></div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Contact number</label>
+                        <label class="col-sm-3 control-label">Contact number<span class="mandatory">&nbsp;*</span></label>
                         <div class="col-sm-5">
                             <div class="input-group input-group-sm input-group-minimal">
 							<span class="input-group-addon">
 								<i class="linecons-mobile"></i>
 							</span>
                                 <input type="text" class="form-control" data-mask="phone"
-                                       ng-required="true" ng-model="newClient.contactNumber" name="contactNumber"
+                                       required ng-model="newClient.contactNumber" name="contactNumber"
                                        ng-blur="checkContactNumberExist(newUser.contactNumber)" />
                             </div>
                             <!--<div ng-show="contactNumberExist" style="color: red;">{{contactNumberErrorMessage}}</div>-->
@@ -335,7 +349,7 @@
                                         <i class="linecons-mobile"></i>
                                     </span>
                                 <input type="text" class="form-control"
-                                       ng-maxlength="35" ng-minlength="1" ng-model="newClient.alternateContact"
+                                       ng-model="newClient.alternateContact"
                                        name="alternateContact" inputmask data-mask="phone" />
                             </div>
                         </div>
@@ -359,7 +373,7 @@
         </div>
     </div>
 </div>
-    {{newClient}}
+    <!--{{newClient}}-->
 
 
 <div class="row">

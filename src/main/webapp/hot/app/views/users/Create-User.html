@@ -97,7 +97,7 @@
 							</span>
                             <input type="text" name="userName" class="form-control" ng-model="newUser.userName"
                                    placeholder="User Name" inputmask
-                                   data-mask="^[a-zA-Z0-9]*([.&_]+)$"
+                                   data-mask="^[a-zA-Z0-9]*([.&_]*)$"
                                    data-is-regex="true" maxlength="64" ng-minlength="1" required="true"
                                    ng-blur="checkUserExist(newUser.userName)">
                         </div>
@@ -178,7 +178,7 @@
                                 <input type="text" name="addressOne" ng-model="newUser.addressOne" class="form-control"
                                        placeholder="Street Address, P.O.Box, Company Name, C/o"
                                        inputmask data-is-regex="true"
-                                       maxlength="35" minlength="1">
+                                       maxlength="64" >
                             </div>
                         </div>
                     </div>
@@ -191,7 +191,7 @@
                                                     <i class="linecons-truck"></i>
                                                 </span>
                                 <input type="text" name="addressTwo" ng-model="newUser.addressTwo" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc"
-                                       inputmask data-is-regex="true" ng-maxlength="35" ng-minlength="1">
+                                       inputmask data-is-regex="true" maxlength="64">
                             </div>
                         </div>
                     </div>

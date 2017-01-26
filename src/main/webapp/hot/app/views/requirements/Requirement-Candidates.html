@@ -1,3 +1,12 @@
+<page-title ng-if="layoutOptions.pageTitles" title="Candidates" description=""></page-title>
 
-
-<div ng-if="" ng-include src="'app/views/candidates/candidatesList_tpl.html'"></div>
+<!-- Custom column filtering -->
+<div class="panel panel-default" ng-controller="viewAllUserCtrl" ng-cloak >
+    <!--panel started here-->
+    <div class="panel-heading">
+        <h3 class="panel-title">Requirement Candidates</h3>
+    </div>
+    <div class="panel-body">
+        <div ng-include src="'app/views/candidates/candidatesList_tpl.html'"></div>
+    </div>
+</div>

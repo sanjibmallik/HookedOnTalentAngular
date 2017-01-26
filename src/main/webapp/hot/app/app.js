@@ -279,6 +279,19 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
             controller: 'UIModalsCtrl'
         }).
 
+        state('app.requirements-Requirement-Candidates', {
+            url: '/requirements-Requirement-Candidates',
+            templateUrl: appHelper.templatePath('requirements/Requirement-Candidates'),
+            resolve: {
+                deps: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.tables.datatables
+                    ]);
+                }
+            },
+            controller: 'UIModalsCtrl'
+        }).
+
         state('app.profile', {
             url: '/profile',
             templateUrl: appHelper.templatePath('profile'),

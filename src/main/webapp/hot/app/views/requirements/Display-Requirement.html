@@ -12,9 +12,7 @@
         font-variant: small-caps !important;
         text-rendering: auto;
     }
-    td, th {
-        font-size: 8pt;
-    }
+
     table {
         padding: 0px;
 
@@ -53,7 +51,7 @@
 
                 <td data-title="'Requisition #'" sortable="'positionId'" filter="{ 'positionId': 'text' }">
                     {{user.positionId}}</td>
-                <td data-title="'Requirement Name'" sortable="'jobTitle'" filter="{ 'jobTitle': 'text' }">
+                <td ui-sref="app.requirements-Requirement-Candidates" data-title="'Requirement Name'" sortable="'jobTitle'" filter="{ 'jobTitle': 'text' }">
                     {{user.jobTitle}}</td>
                 <td data-title="'Client Name'" sortable="'clientName'" filter="{ 'clientName': 'text' }">
                     {{user.clientName}}</td>
