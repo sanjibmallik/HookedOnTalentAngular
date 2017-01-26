@@ -1,8 +1,6 @@
-package com.accion.recruitment.service;
+package com.accion.recruitment.dao;
 
 import com.accion.recruitment.jpa.entities.Candidates;
-import com.accion.recruitment.jpa.entities.Positions;
-import com.accion.recruitment.jpa.entities.User;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -12,8 +10,7 @@ import java.util.List;
  * @author $LastChangedBy: Mudassir Hussain $
  * $Date:: 25/01/17 00:11 AM#$
  */
-public interface CandidateService {
-
+public interface CandidateServiceDAO<E> {
 
     /**
      * saveCandidates() provide the specification for persisting
@@ -24,7 +21,7 @@ public interface CandidateService {
      * @return status of the persisting operation.
      */
 
-    public Boolean saveCandidates(final Candidates candidates) throws SQLException;
+    public Boolean saveCandidates(final Candidates candidates);
 
     /**
      * findAllCandidates() provide the specification for getting all the
@@ -34,7 +31,7 @@ public interface CandidateService {
      *         Candidates object of the persisting state.
      */
 
-    public List<Candidates> findAllCandidates() throws SQLException;
+    public List<E> findAllCandidates() ;
 
     /**
      * findCandidatesByPropertyName() provide the specification for retrieval of the
@@ -48,7 +45,7 @@ public interface CandidateService {
      * @return instance of Candidates having persisting state otherwise
      *         it return null.
      */
-    public Candidates findCandidatesByPropertyName(final String propName,final Object propValue) throws SQLException;
+    public Candidates findCandidatesByPropertyName(final String propName,final Object propValue) ;
 
     /**
      * findCandidatesById() provide the specification for retrieval of the
@@ -60,5 +57,5 @@ public interface CandidateService {
      * @return instance of User having persisting state otherwise
      *         it return null.
      */
-    public Candidates findCandidatesById(final int candidateId) throws SQLException;
+    public Candidates findCandidatesById(final int candidateId);
 }

@@ -79,9 +79,13 @@
 
                             <li class="divider"></li>
 
-                            <li>
+                            <li ng-show="user.active==1">
+                                <a href="" ng-click="openAjaxModal('modal-1','client/'+user.id)" class="">De-activate</a>
+                            </li>
+                            <li ng-show="user.active==0">
                                 <a href="" ng-click="openAjaxModal('modal-1','client/'+user.id)" class="">Activate</a>
                             </li>
+
 
                             <!--<li class="divider"></li>
                             <li>
@@ -109,21 +113,27 @@
 
     <div class="modal-header">
         <button type="button" class="close" ng-click="currentModal.close();" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Activate User</h4>
+        <h4 class="modal-title" ng-show="responseData.active==1">De-activate {{responseData.clientName}} </h4>
+        <h4 class="modal-title" ng-show="responseData.active==0">Activate {{responseData.clientName}} </h4>
     </div>
 
     <div class="modal-body">
 
-        <h4>Are you sure you want to Activate this Client?</h4>
+        <h4 ng-show="responseData.active==1">Are you sure you want to De-Activate this Client: {{responseData.clientName}} ?</h4>
+        <h4 ng-show="responseData.active==0">Are you sure you want to Activate this Client: {{responseData.clientName}} ?</h4>
     </div>
     <br/>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" ng-click="currentModal.close();">Close</button>
-        <button type="button" class="btn btn-info" ng-click="currentModal.dismiss();">Yes</button>
+
+        <button type="button" class="btn btn-info" ng-click="clientActivate(responseData.id);">Yes</button>
+        <button type="button" class="btn btn-red" ng-click="currentModal.close();">No</button>
     </div>
 
 </script>
+
+
+
 
 <script type="text/ng-template" id="modal-3">
 
@@ -224,6 +234,10 @@
 
 </script>
 
+
+
+
+
 <script type="text/ng-template" id="modal-6">
 
     <div class="modal-header">
@@ -275,7 +289,9 @@
 </script>
 
 
+
 <script type="text/ng-template" id="modal-5">
+
     <div class="modal-header">
         <button type="button" class="close" ng-click="currentModal.close();" aria-hidden="true">&times;</button>
         <h4 class="modal-title">Edit {{responseDataCopy.clientName}} Details</h4>
@@ -326,7 +342,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="field-1" class="control-label">Contact No.</label>
+                    <label class="control-label">Contact No.</label>
                     <input type="text" ng-model="responseData.contactNumber" class="form-control" placeholder="Primary Conatact">
                 </div>
             </div>
@@ -410,13 +426,19 @@
 
 
 
+
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" ng-click="currentModal.close();">Close</button>
-        <button type="button" class="btn btn-info" ng-click="currentModal.close();">Save changes</button>
+
+        <input type="submit" class="btn btn-info" value="Save changes">
+        <input type="button" class="btn btn-red" ng-click="currentModal.close();" value="Cancel">
 
     </div>
 
 </script>
+
+
+
+
 
 
 
@@ -427,19 +449,22 @@
         <h4 class="modal-title">Edit {{responseDataCopy.clientName}} Contact</h4>
     </div>
 
+
+    <form ng-submit="updateClientContactDetails();" name="editClientContact" role="form" class="form-horizontal" >
+
     <div class="modal-body">
 
         <div class="row">
              <div class="col-md-6">
                  <div class="form-group">
                      <label for="field-1" class="control-label">First Name</label>
-                     <input type="text" ng-model="responseBody.clientContacts[0].contactFullName" class="form-control" placeholder="First Name">
+                     <input type="text" ng-model="responseData.clientContacts[0].firstName" class="form-control" placeholder="First Name">
                  </div>
              </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="field-1" class="control-label">Last Name</label>
-                    <input type="text" class="form-control" placeholder="Last Name">
+                    <input type="text" class="form-control" placeholder="Last Name" ng-model="responseData.clientContacts[0].lastName">
                 </div>
 
             </div>
@@ -452,14 +477,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="field-1" class="control-label">Contact No.</label>
-                    <input type="text" class="form-control" placeholder="Primary Conatact">
+                    <input type="text" class="form-control" ng-model="responseData.clientContacts[0].contactNumber" placeholder="Primary Conatact">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="field-2" class="control-label">Alternate Contact</label>
-                    <input type="text" class="form-control"  placeholder="Alternate contact">
+                    <input type="text" class="form-control" ng-model="responseData.clientContacts[0].alternateContact" placeholder="Alternate contact">
                 </div>
 
             </div>
@@ -469,14 +494,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="field-1" class="control-label">User Name</label>
-                    <input type="text" class="form-control" placeholder="User name">
+                    <input type="text" class="form-control" ng-model="responseData.clientContacts[0].userName" placeholder="User name">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="field-2" class="control-label">email Id</label>
-                    <input type="text" class="form-control"  placeholder="abc@xyz.com">
+                    <input type="text" class="form-control" ng-model="responseData.clientContacts[0].emailId" placeholder="abc@xyz.com">
                 </div>
 
             </div>
@@ -549,10 +574,11 @@
 
 
     </div>
-
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" ng-click="currentModal.close();">Close</button>
-        <button type="button" class="btn btn-info" ng-click="currentModal.close();">Save changes</button>
+
+        <input type="submit" class="btn btn-info" value="Save changes">
+        <input type="button" class="btn btn-red" ng-click="currentModal.close();" value="Cancel">
     </div>
+</form>
 </script>
 

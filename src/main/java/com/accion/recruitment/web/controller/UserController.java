@@ -66,9 +66,7 @@ public class UserController {
 
     @RequestMapping(value = UserRestURIConstants.CREATE_USER,produces = MediaType.APPLICATION_JSON_VALUE ,method = RequestMethod.POST)
     public  ResponseEntity<String> createUser(@RequestBody UserSkills userSkills,
-                              final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
-                              final @RequestParam(required = false, value = "userProfile") MultipartFile userProfile,
-                              final Principal principal) {
+                                                final Principal principal) {
 
         try{
             final Date currentDate = new Date();
@@ -89,9 +87,9 @@ public class UserController {
                 return new ResponseEntity<String>(new Gson().toJson(userDetailsExistMap.get(HookedOnConstants.EXIST)), HttpStatus.OK);
             }
 
-            if (user != null && userImage != null && !userImage.isEmpty()) {
+            if (user != null && userSkills.getUserImage() != null && !userSkills.getUserImage().isEmpty()) {
                 try {
-                    byte[] bytes = userImage.getBytes();
+                    byte[] bytes = userSkills.getUserImage().getBytes();
                     user.setUserImage(bytes);
                 } catch (IOException e) {
                     return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_IMAGE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
@@ -99,9 +97,9 @@ public class UserController {
                     return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
                 }
             }
-            if (user != null && userProfile != null && !userProfile.isEmpty()) {
+            if (user != null && userSkills.getUserProfile() != null && !userSkills.getUserProfile().isEmpty()) {
                 try {
-                    byte[] bytes = userProfile.getBytes();
+                    byte[] bytes = userSkills.getUserProfile().getBytes();
                     user.setUserProfile(bytes);
                 } catch (IOException e) {
                     return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_PROFILE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
@@ -214,8 +212,6 @@ public class UserController {
     @RequestMapping(value = UserRestURIConstants.UPDATE_USER, method = RequestMethod.PUT)
     @JsonIgnore
     public  ResponseEntity<String> updateUser(@RequestBody UserSkills userSkills,
-                                              final @RequestParam(required = false, value = "userImage") MultipartFile userImage,
-                                              final @RequestParam(required = false, value = "userProfile") MultipartFile userProfile,
                                               final Principal principal) {
 
         try{
@@ -272,9 +268,9 @@ public class UserController {
                     return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
                 }
             }
-            if (user != null && userImage != null && !userImage.isEmpty()) {
+            if (user != null && userSkills.getUserImage() != null && !userSkills.getUserImage().isEmpty()) {
                 try {
-                    byte[] bytes = userImage.getBytes();
+                    byte[] bytes = userSkills.getUserImage().getBytes();
                     user.setUserImage(bytes);
                 } catch (IOException e) {
                     return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_IMAGE_EXCEPTION.ResponseMsg()), HttpStatus.OK);
@@ -284,9 +280,9 @@ public class UserController {
             }else{
                 user.setUserImage(oldUser.getUserImage());
             }
-            if (user != null && userProfile != null && !userProfile.isEmpty()) {
+            if (user != null && userSkills.getUserProfile() != null && !userSkills.getUserProfile().isEmpty()) {
                 try {
-                    byte[] bytes = userProfile.getBytes();
+                    byte[] bytes = userSkills.getUserProfile().getBytes();
                     user.setUserProfile(bytes);
                 } catch (IOException e) {
                     return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_PROFILE_EXCEPTION.ResponseMsg()), HttpStatus.OK);

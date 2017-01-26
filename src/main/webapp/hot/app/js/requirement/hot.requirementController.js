@@ -1,9 +1,9 @@
 'use strict'
 
-var hotClientControllers = angular.module('hot.clientControllers',['ui.bootstrap','ngTable']);
+var hotRequirementControllers = angular.module('hot.requirementControllers',['ui.bootstrap','ngTable']);
 
 
-hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
+hotClientControllers.controller('createNewRequirementCtrl',function($scope,$http){
 
 
     $scope.newClient = {};
@@ -24,7 +24,7 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
 
 
 
-        var data = $scope.newClient;
+        var data = $scope.newUser;
 
 
         var jsonUser = {
@@ -90,7 +90,7 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
 
         console.log(jsonUser);
 
-        $http.post('client/create', jsonUser)
+        $http.post('user/create', jsonUser)
             .success(function (data, status, headers, config) {
                 console.log(data);
 
@@ -199,24 +199,25 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
 
 
 
-hotClientControllers.controller('viewAllClientCtrl',function($scope,$rootScope,$http, $filter, NgTableParams){
+hotClientControllers.controller('viewAllRequirementsCtrl',function($scope,$rootScope,$http, $filter, NgTableParams){
 
+    $rootScope.users = [];
 
     angular.element(document).ready(function(){$http({
         method : 'GET',
-        url : 'clients'
+        url : 'requirements'
     }).then(function successCallback(response) {
 
-            $rootScope.clients=response.data;
-            console.log( $rootScope.clients);
-            $rootScope.clientsTable = new NgTableParams({
+            $rootScope.requirements=response.data;
+            console.log( $rootScope.requirements);
+            $rootScope.requirementsTable = new NgTableParams({
                 page: 1,
                 count: 10
             } , {
-                total:  $rootScope.clients.length,
+                total:  $rootScope.requirements.length,
                 getData: function (params) {
-                    $scope.data = $rootScope.clients;
-                    $scope.data = params.sorting() ? $filter('orderBy')($scope.clients, params.orderBy()) : $scope.clients;
+                    $scope.data = $rootScope.requirements;
+                    $scope.data = params.sorting() ? $filter('orderBy')($scope.requirements, params.orderBy()) : $scope.requirements;
                     $scope.data = params.filter() ? $filter('filter')($scope.data, params.filter()) : $scope.data;
                     $scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
                     return $scope.data;
@@ -231,33 +232,6 @@ hotClientControllers.controller('viewAllClientCtrl',function($scope,$rootScope,$
         });
 
     });
-
-
-
-
-
-
-    $rootScope.clientActivate = function (clientId) {
-
-        console.log(clientId);
-        $http.put('client/activate/'+clientId)
-            .success(function (data, status, headers, config) {
-                console.log(data);
-                $state.go($state.current, {}, {reload: true});
-            })
-            .error(function (data, status, header, config) {
-            });
-        $rootScope.currentModal.dismiss();
-    }
-
-
-
-
-    $rootScope.updateClientContactDetails = function () {
-        console.log("client contact detils");
-
-    }
-
 
 
 

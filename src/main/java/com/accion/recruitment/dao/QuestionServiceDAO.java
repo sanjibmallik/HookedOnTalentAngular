@@ -1,8 +1,7 @@
-package com.accion.recruitment.service;
+package com.accion.recruitment.dao;
 
 import com.accion.recruitment.jpa.entities.GeneralQuestion;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -10,7 +9,7 @@ import java.util.List;
  * @author $LastChangedBy: Mudassir Hussain $
  * $Date:: 23/01/17 00:11 AM#$
  */
-public interface QuestionService  {
+public interface QuestionServiceDAO<E> {
 
     /**
      * saveGeneralQuestion() provide the specification for persisting
@@ -20,17 +19,16 @@ public interface QuestionService  {
      *             containing data.
      * @return status of the persisting operation.
      */
-    public Boolean saveGeneralQuestion(final GeneralQuestion generalQuestion)throws SQLException;
-
-
+    public Boolean saveGeneralQuestion(final GeneralQuestion generalQuestion);
 
     /**
-     * findRequirementGenericGeneralQuestion() get the list requirement generic question
+     * findRequirementGenericGeneralQuestion() get the requirement generic question
      *
      * @param addToPositionStatus accept the java.lang.String type
      *                  which is having Database Query
      *
      * @return returns the list of generic general questions
      */
-    public List<GeneralQuestion> findRequirementGenericGeneralQuestion(String addToPositionStatus) throws SQLException;
+    public List<GeneralQuestion> findRequirementGenericGeneralQuestion(String addToPositionStatus);
+
 }
