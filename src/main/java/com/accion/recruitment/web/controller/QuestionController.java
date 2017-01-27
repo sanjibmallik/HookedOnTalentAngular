@@ -99,7 +99,7 @@ public class QuestionController {
     @ApiOperation(value = "Approve Question", httpMethod="POST")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Approve Question"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
-    @RequestMapping(value = QuestionRestURIConstants.QUESTION_DELETE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = QuestionRestURIConstants.QUESTION_APPROVE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Object> approveQuestion(@PathVariable String questionId, @PathVariable String questionType,@PathVariable String PositionId) {
 

@@ -8,6 +8,7 @@ public class QuestionRestURIConstants {
     public static final String QUESTION_CREATE = "/hot/question/create";
     public static final String QUESTION_EDIT = "/hot/question/edit";
     public static final String QUESTION_DELETE = "/hot/question/delete";
+    public static final String QUESTION_APPROVE = "/hot/question/approve";
    // public static final String ADD_QUESTION_FROM_DB = "/hot/question/addfromdb";
 
 }
