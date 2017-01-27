@@ -1,5 +1,6 @@
-package com.accion.recruitment.jpa.entities;
+package com.accion.recruitment.beans;
 
+import com.accion.recruitment.jpa.entities.User;
 import com.sun.javafx.collections.MappingChange;
 import org.springframework.web.multipart.MultipartFile;
 

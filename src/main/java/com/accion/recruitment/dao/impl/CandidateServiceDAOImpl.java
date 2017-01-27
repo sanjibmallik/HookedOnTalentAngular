@@ -5,6 +5,7 @@ import com.accion.recruitment.jpa.entities.Candidates;
 import com.accion.recruitment.jpa.entities.Positions;
 import com.accion.recruitment.jpa.entities.User;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -73,4 +74,14 @@ public class CandidateServiceDAOImpl<R> implements CandidateServiceDAO {
         criteria.add(Restrictions.eq("candidateId",candidateId));
         return (Candidates) criteria.uniqueResult();
     }
+
+    @Override
+    public List<Candidates> searchCandidatesByQuery(String sqlQuery) {
+        final Session session = getSession();
+        List<Candidates> list = null;
+        Query query = session.createSQLQuery(sqlQuery).addEntity(Candidates.class);
+        list = query.list();
+        return list;
+    }
+
 }

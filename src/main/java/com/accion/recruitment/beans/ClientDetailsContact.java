@@ -1,4 +1,8 @@
-package com.accion.recruitment.jpa.entities;
+package com.accion.recruitment.beans;
+
+import com.accion.recruitment.jpa.entities.ClientContacts;
+import com.accion.recruitment.jpa.entities.ClientDetails;
+import com.accion.recruitment.jpa.entities.User;
 
 /**
  * @author Mudassir Hussain

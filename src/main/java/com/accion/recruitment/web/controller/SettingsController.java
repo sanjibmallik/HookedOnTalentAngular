@@ -1,27 +1,19 @@
 package com.accion.recruitment.web.controller;
 
 import com.accion.recruitment.common.constants.SettingsRestURIConstants;
-import com.accion.recruitment.common.constants.UserRestURIConstants;
 import com.accion.recruitment.jpa.entities.Settings;
-import com.accion.recruitment.jpa.entities.User;
-import com.accion.recruitment.jpa.entities.UserSkills;
 import com.accion.recruitment.service.SettingsService;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
-import java.sql.SQLException;
-import java.util.Set;
 
 /**
  * @author Mudassir Hussain

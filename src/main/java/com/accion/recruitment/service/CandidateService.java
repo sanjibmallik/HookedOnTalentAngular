@@ -61,4 +61,18 @@ public interface CandidateService {
      *         it return null.
      */
     public Candidates findCandidatesById(final int candidateId) throws SQLException;
+
+
+    /**
+     * searchCandidatesByQuery() provide the specification for retrieval of the
+     * Candidates object from the database based on the search query.
+     *
+     * @param query accept the java.lang.String type of query
+     *                  which is having query
+     *
+     * @return instance of Candidates having persisting state otherwise
+     *         it return null.
+     */
+
+    public List<Candidates> searchCandidatesByQuery(String query) throws SQLException;
 }

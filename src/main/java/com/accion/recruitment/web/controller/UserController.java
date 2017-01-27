@@ -3,21 +3,17 @@ package com.accion.recruitment.web.controller;
 import com.accion.recruitment.common.constants.HookedOnConstants;
 import com.accion.recruitment.common.constants.UserConstants;
 import com.accion.recruitment.common.constants.UserRestURIConstants;
-import com.accion.recruitment.common.enums.ClientHttpStatusEnums;
 import com.accion.recruitment.common.enums.UserHttpStatusEnums;
 import com.accion.recruitment.common.enums.UserEnums;
 import com.accion.recruitment.common.helper.PasswordGeneratorHelper;
 import com.accion.recruitment.jpa.entities.TechnicalScreenerSkills;
 import com.accion.recruitment.jpa.entities.User;
-import com.accion.recruitment.jpa.entities.UserSkills;
+import com.accion.recruitment.beans.UserSkills;
 import com.accion.recruitment.service.UserEmailNotificationService;
 import com.accion.recruitment.service.UserService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.Gson;
 import io.swagger.annotations.*;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,16 +21,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Mudassir Hussain
@@ -205,7 +197,7 @@ public class UserController {
 
 
 
-    @ApiOperation(value = "Update/Edit the  User ",  code = 201, httpMethod="PUT")
+    @ApiOperation(value = "Update/Edit the  User ",  code = 200, httpMethod="PUT")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Updated User Successfully")
             , @ApiResponse(code = 500, message = "Internal Server Error")})
 

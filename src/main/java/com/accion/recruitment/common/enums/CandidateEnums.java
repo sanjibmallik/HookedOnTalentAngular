@@ -9,6 +9,9 @@ public enum CandidateEnums {
     CANDIDATE_NOT_CREATED("Problem with saving the Candidate. Try again."),
     CANDIDATE_PROFILE_EXCEPTION("Problem with uploading the profile. Try another"),
 
+    CANDIDATE_NOT_UPDATED("Problem with updating the Candidate. Try again."),
+    CANDIDATE_UPDATED("Candidate Updated Successfully"),
+
 
     RESUME_DOWNLOAD("Resume Downloaded"),
     CANDIDATE_ENABLED("Candidate Enabled"),

@@ -49,4 +49,8 @@ public class CandidateServiceImpl implements CandidateService {
         return (Candidates) this.candidateServiceDAO.findCandidatesById(candidateId);
     }
 
+    @Override
+    public List<Candidates> searchCandidatesByQuery(String query) throws SQLException{
+        return this.candidateServiceDAO.searchCandidatesByQuery(query);
+    }
 }
