@@ -65,9 +65,6 @@ public class ClientController {
             ClientDetails clientDetails;
             ClientContacts clientContacts;
             User user;
-            HashMap<String,String> clientDetailsExistMap;
-            HashMap<String,String> userDetailsExistMap=null;
-            UserController userController=new UserController();
 
             if(clientDetailsContact.getClientDetails()!=null && clientDetailsContact.getClientContacts()!=null && clientDetailsContact.getUser()!=null){
                 clientDetails=clientDetailsContact.getClientDetails();
@@ -76,8 +73,6 @@ public class ClientController {
             }else{
                 return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
             }
-
-            clientDetailsExistMap=this.checkClientDetailsExist(clientDetails,clientContacts);
 
             if(user != null && user.getUserName() != null && (!user.getUserName().isEmpty())){
                 try{

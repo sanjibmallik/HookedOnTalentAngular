@@ -1,6 +1,8 @@
 package com.accion.recruitment.jpa.entities;
 
 
+import com.accion.recruitment.beans.QuestionBaseClass;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +16,7 @@ import java.util.Set;
 @Entity
 @Table(name = "general_question")
 
-public class GeneralQuestion extends QuestionBaseClass {
+public class GeneralQuestion extends BaseEntity {
 
 
     @Id
@@ -24,24 +26,36 @@ public class GeneralQuestion extends QuestionBaseClass {
 
     @Column(length=1000)
     private String questionName;
+
     @Column(length=500)
     private  String option1;
+
     @Column(length=500)
     private  String option2;
+
     @Column(length=500)
     private  String option3;
+
     @Column(length=500)
     private  String option4;
+
     @Column(length=500)
     private  String option5;
+
     @Column(length=500)
     private  String option6;
 
+    @Column(length=500)
     private  String answer;
 
+    @Column(length=255)
+    private String type;
+
+    @Column(length=500)
     private String addToPosition;
 
-
+    @Transient
+    private String subAnswer;
 
 
     @ManyToMany(targetEntity = Positions.class , fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
@@ -50,20 +64,10 @@ public class GeneralQuestion extends QuestionBaseClass {
             inverseJoinColumns = @JoinColumn(name = "position_id"))
     private Set<Positions> generalQuestionPositionsSet=new HashSet<Positions>();
 
-    public Set<Positions> getGeneralQuestionPositionsSet() {
-        return generalQuestionPositionsSet;
-    }
-
-    public void setGeneralQuestionPositionsSet(Set<Positions> generalQuestionPositionsSet) {
-        this.generalQuestionPositionsSet = generalQuestionPositionsSet;
-    }
 
     public void setPositions(Positions positions) {
         this.generalQuestionPositionsSet.add(positions) ;
     }
-
-    @Transient
-    private String subAnswer;
 
     public Integer getId() {
         return id;
@@ -73,7 +77,69 @@ public class GeneralQuestion extends QuestionBaseClass {
         this.id = id;
     }
 
-    private String type;
+    public String getQuestionName() {
+        return questionName;
+    }
+
+    public void setQuestionName(String questionName) {
+        this.questionName = questionName;
+    }
+
+    public String getOption1() {
+        return option1;
+    }
+
+    public void setOption1(String option1) {
+        this.option1 = option1;
+    }
+
+    public String getOption2() {
+        return option2;
+    }
+
+    public void setOption2(String option2) {
+        this.option2 = option2;
+    }
+
+    public String getOption3() {
+        return option3;
+    }
+
+    public void setOption3(String option3) {
+        this.option3 = option3;
+    }
+
+    public String getOption4() {
+        return option4;
+    }
+
+    public void setOption4(String option4) {
+        this.option4 = option4;
+    }
+
+    public String getOption5() {
+        return option5;
+    }
+
+    public void setOption5(String option5) {
+        this.option5 = option5;
+    }
+
+    public String getOption6() {
+        return option6;
+    }
+
+    public void setOption6(String option6) {
+        this.option6 = option6;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
 
     public String getType() {
         return type;
@@ -81,6 +147,14 @@ public class GeneralQuestion extends QuestionBaseClass {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getAddToPosition() {
+        return addToPosition;
+    }
+
+    public void setAddToPosition(String addToPosition) {
+        this.addToPosition = addToPosition;
     }
 
     public String getSubAnswer() {
@@ -91,76 +165,12 @@ public class GeneralQuestion extends QuestionBaseClass {
         this.subAnswer = subAnswer;
     }
 
-    public String getQuestionName() {
-        return questionName;
+    public Set<Positions> getGeneralQuestionPositionsSet() {
+        return generalQuestionPositionsSet;
     }
 
-    public String getOption1() {
-        return option1;
-    }
-
-    public String getOption2() {
-        return option2;
-    }
-
-    public String getOption3() {
-        return option3;
-    }
-
-    public String getOption4() {
-        return option4;
-    }
-
-    public String getOption5() {
-        return option5;
-    }
-
-    public String getOption6() {
-        return option6;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setQuestionName(String questionName) {
-        this.questionName = questionName;
-    }
-
-    public void setOption1(String option1) {
-        this.option1 = option1;
-    }
-
-    public void setOption2(String option2) {
-        this.option2 = option2;
-    }
-
-    public void setOption3(String option3) {
-        this.option3 = option3;
-    }
-
-    public void setOption4(String option4) {
-        this.option4 = option4;
-    }
-
-    public void setOption5(String option5) {
-        this.option5 = option5;
-    }
-
-    public void setOption6(String option6) {
-        this.option6 = option6;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
-    public String getAddToPosition() {
-        return addToPosition;
-    }
-
-    public void setAddToPosition(String addToPosition) {
-        this.addToPosition = addToPosition;
+    public void setGeneralQuestionPositionsSet(Set<Positions> generalQuestionPositionsSet) {
+        this.generalQuestionPositionsSet = generalQuestionPositionsSet;
     }
 
     @Override

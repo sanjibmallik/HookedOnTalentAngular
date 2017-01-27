@@ -1,5 +1,6 @@
 package com.accion.recruitment.web.controller;
 
+import com.accion.recruitment.beans.QuestionBaseClass;
 import com.accion.recruitment.common.constants.*;
 import com.accion.recruitment.common.enums.RequirementEnums;
 import com.accion.recruitment.jpa.entities.*;
@@ -112,7 +113,7 @@ public class RequirementController {
                     List<GeneralQuestion> generalQuestionList= this.questionService.findRequirementGenericGeneralQuestion(RequirementConstants.YES);
                     for(GeneralQuestion generalQuestion:generalQuestionList){
                         generalQuestion.getGeneralQuestionPositionsSet().add(requirements);
-                        this.questionService.saveGeneralQuestion(generalQuestion);
+                        this.questionService.saveQuestion(generalQuestion);
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -374,7 +375,7 @@ public class RequirementController {
             generalQuestion.setSubAnswer("Ok");
             generalQuestion.setQuestionName("GENERAL");
             generalQuestion.setId(1);
-            questions.add(generalQuestion);//TODO add all question to return object
+            /*questions.add(generalQuestion)*///TODO add all question to return object
         }
         else if (questionType.equals(HookedOnConstants.QUESTION_TYPE_TECHNICAL))
         {
@@ -393,7 +394,7 @@ public class RequirementController {
             techQuestion.setQuestionName("TECHNICAL");
             techQuestion.setDomain("JAVA");
             techQuestion.setLevel("Expert");
-            questions.add(techQuestion);//TODO add all question to return object
+           /* questions.add(techQuestion);*///TODO add all question to return object
         }
         else if (questionType.equals(HookedOnConstants.QUESTION_TYPE_VIDEO))
         {
@@ -403,7 +404,7 @@ public class RequirementController {
             vidQuestion.setQuestionName("VIDEO");
             vidQuestion.setDomain("Angular");
             vidQuestion.setId(3);
-            questions.add(vidQuestion);//TODO add all question to return object
+          /*  questions.add(vidQuestion);*///TODO add all question to return object
         }
 
         return new ResponseEntity<Object>(questions, HttpStatus.CREATED);

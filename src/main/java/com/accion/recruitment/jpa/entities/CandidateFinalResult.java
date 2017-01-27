@@ -3,6 +3,16 @@ package com.accion.recruitment.jpa.entities;
 
 import javax.persistence.*;
 
+
+
+/**
+ * @author Mudassir Hussain
+ * @author $LastChangedBy: Mudassir Hussain $
+ * $Date:: 27/01/17 00:11 AM#$
+ */
+
+
+
 @Entity
 @Table(name = "candidate_final_result")
 

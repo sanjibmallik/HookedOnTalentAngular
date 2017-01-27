@@ -12,7 +12,7 @@ public class CandidateRestURIConstants {
     public static final String UPDATE_CANDIDATE = "/hot/candidate/update";
     public static final String GET_ALL_CANDIDATE = "/hot/candidates";
     public static final String SEARCH_CANDIDATE = "/hot/candidate/search";
-    public static final String CANDIDATE_HISTORY = "/hot/candidate/history{id}";
+    public static final String CANDIDATE_HISTORY = "/hot/candidate/history/{id}";
     public static final String DOWNLOAD_RESUME = "/hot/candidate/resume/{id}";
 
     public static final String SCREENED_CANDIDATE = "/hot/candidate/screened";

@@ -1,9 +1,7 @@
 package com.accion.recruitment.dao.impl;
 
 import com.accion.recruitment.dao.QuestionServiceDAO;
-import com.accion.recruitment.jpa.entities.GeneralQuestion;
-import com.accion.recruitment.jpa.entities.Positions;
-import com.accion.recruitment.jpa.entities.User;
+import com.accion.recruitment.jpa.entities.*;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -38,13 +36,21 @@ public class QuestionServiceDAOImpl<R> implements QuestionServiceDAO {
         this.sessionFactory = sessionFactory;
     }
 
-    public Boolean saveGeneralQuestion(final GeneralQuestion generalQuestion){
+    @Override
+    public Boolean saveQuestion(final Object question){
         final Session session = getSession();
-        session.saveOrUpdate(generalQuestion);
+        session.saveOrUpdate(question);
         return true;
     }
 
+    @Override
+    public Boolean saveDomain(final Domain domain){
+        final Session session = getSession();
+        session.saveOrUpdate(domain);
+        return true;
+    }
 
+    @Override
     public List<GeneralQuestion> findRequirementGenericGeneralQuestion(String addToPositionStatus) {
         final Session session = getSession();
         final Criteria criteria = session.createCriteria(GeneralQuestion.class);
@@ -52,5 +58,15 @@ public class QuestionServiceDAOImpl<R> implements QuestionServiceDAO {
         List<GeneralQuestion> list = criteria.list();
         return list;
     }
+
+
+    @Override
+    public Object findQuestionById(final int questionId) {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(Object.class);
+        criteria.add(Restrictions.eq("id",questionId));
+        return (Object) criteria.uniqueResult();
+    }
+
 
 }

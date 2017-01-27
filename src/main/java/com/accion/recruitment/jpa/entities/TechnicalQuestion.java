@@ -2,6 +2,8 @@ package com.accion.recruitment.jpa.entities;
 
 
 
+import com.accion.recruitment.beans.QuestionBaseClass;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,40 +18,57 @@ import java.util.Set;
 @Table(name = "technical_question")
 
 
-public class TechnicalQuestion extends QuestionBaseClass {
+public class TechnicalQuestion extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="id" ,insertable = true, nullable = false, unique = true, updatable = true)
     protected Integer id;
 
-    private String domain;
-
-    private String level;
-
-    private String type;
-
     @Column(length=1000)
     private String questionName;
 
     @Column(length=500)
+    private String domain;
+
+    @Column(length=500)
+    private String level;
+
+    @Column(length=500)
+    private String type;
+
+    @Column(length=500)
     private  String option1;
+
     @Column(length=500)
     private  String option2;
+
     @Column(length=500)
     private  String option3;
+
     @Column(length=500)
     private  String option4;
+
     @Column(length=500)
     private  String option5;
+
     @Column(length=500)
     private  String option6;
+
     @Column(length=1000)
     private  String answer;
 
     @Transient
     private String subAnswer;
 
+    @Transient
+    private String otherDomain;
+
+    @ManyToMany(targetEntity = Positions.class , fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
+    @JoinTable(name = "position_technical_question",
+            joinColumns = @JoinColumn(name = "technical_question_id"),
+            inverseJoinColumns = @JoinColumn(name = "position_id"))
+    private Set<Positions> technicalQuestionPositionsSet=new HashSet<Positions>();
 
     public Integer getId() {
         return id;
@@ -59,19 +78,92 @@ public class TechnicalQuestion extends QuestionBaseClass {
         this.id = id;
     }
 
-    @ManyToMany(targetEntity = Positions.class , fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
-    @JoinTable(name = "position_technical_question",
-            joinColumns = @JoinColumn(name = "technical_question_id"),
-            inverseJoinColumns = @JoinColumn(name = "position_id"))
-
-    private Set<Positions> technicalQuestionPositionsSet=new HashSet<Positions>();
-
-    public Set<Positions> getTechnicalQuestionPositionsSet() {
-        return technicalQuestionPositionsSet;
+    public String getQuestionName() {
+        return questionName;
     }
 
-    public void setTechnicalQuestionPositionsSet(Set<Positions> technicalQuestionPositionsSet) {
-        this.technicalQuestionPositionsSet = technicalQuestionPositionsSet;
+    public void setQuestionName(String questionName) {
+        this.questionName = questionName;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getOption1() {
+        return option1;
+    }
+
+    public void setOption1(String option1) {
+        this.option1 = option1;
+    }
+
+    public String getOption2() {
+        return option2;
+    }
+
+    public void setOption2(String option2) {
+        this.option2 = option2;
+    }
+
+    public String getOption3() {
+        return option3;
+    }
+
+    public void setOption3(String option3) {
+        this.option3 = option3;
+    }
+
+    public String getOption4() {
+        return option4;
+    }
+
+    public void setOption4(String option4) {
+        this.option4 = option4;
+    }
+
+    public String getOption5() {
+        return option5;
+    }
+
+    public void setOption5(String option5) {
+        this.option5 = option5;
+    }
+
+    public String getOption6() {
+        return option6;
+    }
+
+    public void setOption6(String option6) {
+        this.option6 = option6;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     public String getSubAnswer() {
@@ -82,92 +174,20 @@ public class TechnicalQuestion extends QuestionBaseClass {
         this.subAnswer = subAnswer;
     }
 
-    public String getDomain() {
-        return domain;
+    public String getOtherDomain() {
+        return otherDomain;
     }
 
-    public String getLevel() {
-        return level;
+    public void setOtherDomain(String otherDomain) {
+        this.otherDomain = otherDomain;
     }
 
-    public String getType() {
-        return type;
+    public Set<Positions> getTechnicalQuestionPositionsSet() {
+        return technicalQuestionPositionsSet;
     }
 
-    public String getQuestionName() {
-        return questionName;
-    }
-
-    public String getOption1() {
-        return option1;
-    }
-
-    public String getOption2() {
-        return option2;
-    }
-
-    public String getOption3() {
-        return option3;
-    }
-
-    public String getOption4() {
-        return option4;
-    }
-
-    public String getOption5() {
-        return option5;
-    }
-
-    public String getOption6() {
-        return option6;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setQuestionName(String questionName) {
-        this.questionName = questionName;
-    }
-
-    public void setOption1(String option1) {
-        this.option1 = option1;
-    }
-
-    public void setOption2(String option2) {
-        this.option2 = option2;
-    }
-
-    public void setOption3(String option3) {
-        this.option3 = option3;
-    }
-
-    public void setOption4(String option4) {
-        this.option4 = option4;
-    }
-
-    public void setOption5(String option5) {
-        this.option5 = option5;
-    }
-
-    public void setOption6(String option6) {
-        this.option6 = option6;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setTechnicalQuestionPositionsSet(Set<Positions> technicalQuestionPositionsSet) {
+        this.technicalQuestionPositionsSet = technicalQuestionPositionsSet;
     }
 
     @Override

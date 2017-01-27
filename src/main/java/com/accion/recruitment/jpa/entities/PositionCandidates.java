@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity
 @Table(name = "position_candidates")
 
-public class PositionCandidates{
+public class PositionCandidates extends BaseEntity{
 
 
     @Id
@@ -65,31 +65,6 @@ public class PositionCandidates{
 
     public void setAutoReminderCount(Integer autoReminderCount) {
         this.autoReminderCount = autoReminderCount;
-    }
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "UPDATED_DATE", nullable = true, length = 7)
-    private Date updatedDate = new Date();
-
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CREATED_DATE", nullable = true, length = 7)
-    private Date createdDate = new Date();
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public void setUpdatedDate(Date updatedDate) {
-        this.updatedDate = updatedDate;
     }
 
     public String getAddedBy() {

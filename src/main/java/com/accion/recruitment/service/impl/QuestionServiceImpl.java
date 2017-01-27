@@ -2,8 +2,7 @@ package com.accion.recruitment.service.impl;
 
 import com.accion.recruitment.dao.QuestionServiceDAO;
 import com.accion.recruitment.dao.RequirementServiceDAO;
-import com.accion.recruitment.jpa.entities.GeneralQuestion;
-import com.accion.recruitment.jpa.entities.Positions;
+import com.accion.recruitment.jpa.entities.*;
 import com.accion.recruitment.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,13 +25,24 @@ public class QuestionServiceImpl implements QuestionService{
     private QuestionServiceDAO questionServiceDAO;
 
     @Override
-    public Boolean saveGeneralQuestion(final GeneralQuestion generalQuestion) throws SQLException{
-        Boolean bolValue=this.questionServiceDAO.saveGeneralQuestion(generalQuestion);
+    public Boolean saveQuestion(final Object question) throws SQLException{
+        Boolean bolValue=this.questionServiceDAO.saveQuestion(question);
+        return bolValue;
+    }
+
+    @Override
+    public Boolean saveDomain(final Domain domain) throws SQLException{
+        Boolean bolValue=this.questionServiceDAO.saveDomain(domain);
         return bolValue;
     }
 
 
     public List<GeneralQuestion> findRequirementGenericGeneralQuestion(String addToPositionStatus) throws SQLException{
         return this.questionServiceDAO.findRequirementGenericGeneralQuestion(addToPositionStatus);
+    }
+
+    @Override
+    public Object findQuestionById(final int questionId) throws SQLException{
+        return (Candidates) this.questionServiceDAO.findQuestionById(questionId);
     }
 }

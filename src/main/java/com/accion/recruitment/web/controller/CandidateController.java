@@ -260,9 +260,11 @@ public class CandidateController {
                         candidatePastHistory.setAverage(score);
                         candidatePastHistory.setFinalVerdict(candidateFinalResult.getFinalVerdict());
                         candidatePastHistory.setEvaluatedBy(candidateFinalResult.getEvalutedByTS());
-                        PositionCandidates positionCandidates= (PositionCandidates) candidatePastHistory.getCandidatePastHistory().getPositionCandidatesSet();
-                        candidatePastHistory.setAddedBy(positionCandidates.getAddedBy());
-                        candidatePastHistory.setCreatedDate(positionCandidates.getCreatedDate());
+                        Set<PositionCandidates> positionCandidatesSet=  candidatePastHistory.getCandidatePastHistory().getPositionCandidatesSet();
+                        for(PositionCandidates positionCandidates:positionCandidatesSet){
+                            candidatePastHistory.setAddedBy(positionCandidates.getAddedBy());
+                            candidatePastHistory.setCreatedDate(positionCandidates.getCreatedDate());
+                        }
                         candidatePastHistoryFinalList.add(candidatePastHistory);
                     }catch (Exception e){
                         e.printStackTrace();

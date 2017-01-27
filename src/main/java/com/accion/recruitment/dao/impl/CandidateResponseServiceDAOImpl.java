@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * @author $LastChangedBy: Mudassir Hussain $
  * $Date:: 27/01/17 00:11 AM#$
  */
-@Repository(value = "candidateServiceDAOImpl")
+@Repository(value = "candidateResponseServiceDAOImpl")
 public class CandidateResponseServiceDAOImpl<R> implements CandidateResponseServiceDAO {
 
     protected Logger logger;
