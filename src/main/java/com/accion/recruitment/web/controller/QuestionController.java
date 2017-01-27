@@ -139,7 +139,7 @@ public class QuestionController {
     @ApiOperation(value = "Question Details By Id and Question Type", httpMethod="GET")
     @ApiResponses(value = {@ApiResponse(code = 200, message = " Question Details Send"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
-    @RequestMapping(value = QuestionRestURIConstants.QUESTION_UPDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = QuestionRestURIConstants.QUESTION_DETAILS, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Object> questionDetails(@PathVariable("questionType") String questionType,
                                                   @PathVariable("id") Integer questionId) {

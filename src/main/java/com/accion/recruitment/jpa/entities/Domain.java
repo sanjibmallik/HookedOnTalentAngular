@@ -1,8 +1,7 @@
 package com.accion.recruitment.jpa.entities;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author Mudassir Hussain
@@ -16,8 +15,21 @@ import javax.persistence.Table;
 
 public class Domain extends BaseEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="id" ,insertable = true, nullable = false, unique = true, updatable = true)
+    protected Integer id;
 
     private String domain;
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getDomain() {
         return domain;
