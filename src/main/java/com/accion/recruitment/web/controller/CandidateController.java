@@ -2,12 +2,11 @@ package com.accion.recruitment.web.controller;
 
 import com.accion.recruitment.beans.CandidateSearch;
 import com.accion.recruitment.common.constants.CandidateConstants;
+import com.accion.recruitment.common.constants.CandidateRestURIConstants;
 import com.accion.recruitment.common.constants.UserConstants;
 import com.accion.recruitment.common.enums.CandidateEnums;
-import com.accion.recruitment.common.enums.RequirementEnums;
-import com.accion.recruitment.jpa.entities.Candidates;
-import com.accion.recruitment.jpa.entities.Positions;
-import com.accion.recruitment.jpa.entities.User;
+import com.accion.recruitment.jpa.entities.*;
+import com.accion.recruitment.service.CandidateResponseService;
 import com.accion.recruitment.service.CandidateService;
 import com.accion.recruitment.service.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -31,7 +30,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * Created by MoinGodil on 1/20/17.
+ * @author Mudassir Hussain
+ * @author $LastChangedBy: Mudassir Hussain $
+ * $Date:: 25/01/17 00:11 AM#$
  */
 
 @Controller
@@ -39,6 +40,9 @@ public class CandidateController {
 
     @Autowired
     CandidateService candidateService;
+
+    @Autowired
+    CandidateResponseService candidateResponseService;
 
     @Autowired
     private UserService userService;
@@ -51,7 +55,7 @@ public class CandidateController {
             @ApiResponse(code = 201, message = " Successful Respond Send "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = CandidateConstants.CREATE_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @RequestMapping(value = CandidateRestURIConstants.CREATE_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Object> createCandidate(@RequestBody Candidates candidates,
                                                     Principal principal) {
@@ -102,7 +106,7 @@ public class CandidateController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "All Candidate Details"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = CandidateConstants.GET_ALL_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = CandidateRestURIConstants.GET_ALL_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Set<Candidates>> getAllCandidates(Principal principal) {
 
@@ -137,7 +141,7 @@ public class CandidateController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = " Candidate Updated Successfully "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = CandidateConstants.UPDATE_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
+    @RequestMapping(value = CandidateRestURIConstants.UPDATE_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<Object> updateCandidate(@RequestBody Candidates candidates,
                                                     Principal principal) {
@@ -198,7 +202,7 @@ public class CandidateController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Search Candidate Details "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = CandidateConstants.SEARCH_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @RequestMapping(value = CandidateRestURIConstants.SEARCH_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Object> searchCandidate(@RequestBody CandidateSearch candidateSearch) {
         List<Candidates> candidatesList=new ArrayList<Candidates>();
@@ -223,14 +227,61 @@ public class CandidateController {
         }
     }
 
+    @ApiOperation(value = "Candidate History List", httpMethod="GET"
+            , notes = "Search Candidate")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = " Candidate  History Details "),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
 
+    @RequestMapping(value = CandidateRestURIConstants.CANDIDATE_HISTORY, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Set<CandidatePastHistory>> candidateHistory(@PathVariable("id") Integer candidateId,
+                                                   Principal principal) {
+
+        Candidates candidateObject;
+        try{
+            candidateObject=this.candidateService.findCandidatesById(candidateId);
+            if(candidateObject!=null){
+                Set<CandidatePastHistory> candidatePastHistoryList=  candidateObject.getCandidatePastHistorySet();
+                Set<CandidatePastHistory> candidatePastHistoryFinalList= new HashSet<CandidatePastHistory>();
+
+                for(CandidatePastHistory candidatePastHistory:candidatePastHistoryList){
+                    CandidateFinalResult candidateFinalResult=this.candidateResponseService.findCandidateFinalResultByPositionIdAndCandidateId(candidatePastHistory.getPositionId(),candidateId);
+                    try{
+                        String score="Pending";
+                        try{
+                            score=String.valueOf(candidateFinalResult.getAverage());
+                        }catch (Exception e){e.printStackTrace();
+                            score="";
+                        }
+
+                        if(score.equals("null")||score.equals("")){
+                            score="Pending";
+                        }
+                        candidatePastHistory.setAverage(score);
+                        candidatePastHistory.setFinalVerdict(candidateFinalResult.getFinalVerdict());
+                        candidatePastHistory.setEvaluatedBy(candidateFinalResult.getEvalutedByTS());
+                        PositionCandidates positionCandidates= (PositionCandidates) candidatePastHistory.getCandidatePastHistory().getPositionCandidatesSet();
+                        candidatePastHistory.setAddedBy(positionCandidates.getAddedBy());
+                        candidatePastHistory.setCreatedDate(positionCandidates.getCreatedDate());
+                        candidatePastHistoryFinalList.add(candidatePastHistory);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+                return new ResponseEntity<Set<CandidatePastHistory>>(candidatePastHistoryFinalList, HttpStatus.OK);
+            }
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @ApiOperation(value = "Download Resume ", httpMethod="GET"
             , notes = "Download Resume")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Download Resume "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = CandidateConstants.DOWNLOAD_RESUME, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = CandidateRestURIConstants.DOWNLOAD_RESUME, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Object> getCandidateResume(@PathVariable("id")Integer candidateId,
                                                      HttpServletResponse response) {
@@ -267,7 +318,7 @@ public class CandidateController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Candidate Details"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = CandidateConstants.GET_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = CandidateRestURIConstants.GET_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Object> getCandidateDetailsById(@PathVariable("id") final int candidateId) {
 
@@ -294,7 +345,67 @@ public class CandidateController {
     }
 
 
+    @ApiOperation(value = "Get the Candidate Details By EmailId ", httpMethod="GET"
+            , notes = "Candidate Details")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Candidate Details"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
 
+    @RequestMapping(value = CandidateRestURIConstants.GET_BY_EMAIL, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> getCandidateDetailsByEmailId(@PathVariable("emailId") final String emailId) {
+
+        Candidates candidateObject;
+        try{
+            candidateObject=this.candidateService.findCandidatesByPropertyName(CandidateConstants.EMAIL_ID, emailId);
+            if(candidateObject!=null){
+                Candidates candidates=new Candidates(candidateObject.getCandidateId(),candidateObject.getEmailId(),candidateObject.getMiddleName(),candidateObject.getLastName(),candidateObject.getFirstName(),
+                        candidateObject.getCellPhoneNumber(),candidateObject.getHomePhoneNumber(),candidateObject.getLastName(),candidateObject.getJobTitle(),candidateObject.getPrimarySkill(),
+                        candidateObject.getSecondarySkill(),candidateObject.getCurrentLocation(),candidateObject.getTotalExperience(),candidateObject.getTotalExperiencePeriod(),candidateObject.getUsExperience(),
+                        candidateObject.getUsExperiencePeriod(),candidateObject.getAddress(),candidateObject.getImmigrationStatus(),candidateObject.getAddress2(),candidateObject.getCity(),
+                        candidateObject.getState(),candidateObject.getCountry(),candidateObject.getCurrentEmployer(),candidateObject.getStatus(),candidateObject.getBillRate(),
+                        candidateObject.getBillRateCurrency(),candidateObject.getPayRate(),candidateObject.getPayRateCurrency(),candidateObject.getNote(),candidateObject.getAllReadyAdded(),candidateObject.getEvaluatedByTS(),candidateObject.getFinalVerdict(),
+                        candidateObject.getLinkCount(),candidateObject.getAddedBy(),candidateObject.getIsShortListed(),candidateObject.getScreenedStatus(),candidateObject.getEnableDisableStatus(),
+                        candidateObject.getComment(),candidateObject.getInterviewStatus(),candidateObject.getScore(),candidateObject.getPositionId(),candidateObject.getPositionName());
+                return new ResponseEntity<Object>(candidates, HttpStatus.OK);
+            }
+        }catch (SQLException e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ApiOperation(value = "Get the Candidate Details By Contact Number ", httpMethod="GET"
+            , notes = "Candidate Details")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Candidate Details"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+
+    @RequestMapping(value = CandidateRestURIConstants.GET_BY_CONTACT_NUMBER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> getCandidateDetailsByContactNumber(@PathVariable("contactNumber") final String contactNumber) {
+
+        Candidates candidateObject;
+        try{
+            candidateObject=this.candidateService.findCandidatesByPropertyName(CandidateConstants.CONTACT_NUMBER, contactNumber);
+            if(candidateObject!=null){
+                Candidates candidates=new Candidates(candidateObject.getCandidateId(),candidateObject.getEmailId(),candidateObject.getMiddleName(),candidateObject.getLastName(),candidateObject.getFirstName(),
+                        candidateObject.getCellPhoneNumber(),candidateObject.getHomePhoneNumber(),candidateObject.getLastName(),candidateObject.getJobTitle(),candidateObject.getPrimarySkill(),
+                        candidateObject.getSecondarySkill(),candidateObject.getCurrentLocation(),candidateObject.getTotalExperience(),candidateObject.getTotalExperiencePeriod(),candidateObject.getUsExperience(),
+                        candidateObject.getUsExperiencePeriod(),candidateObject.getAddress(),candidateObject.getImmigrationStatus(),candidateObject.getAddress2(),candidateObject.getCity(),
+                        candidateObject.getState(),candidateObject.getCountry(),candidateObject.getCurrentEmployer(),candidateObject.getStatus(),candidateObject.getBillRate(),
+                        candidateObject.getBillRateCurrency(),candidateObject.getPayRate(),candidateObject.getPayRateCurrency(),candidateObject.getNote(),candidateObject.getAllReadyAdded(),candidateObject.getEvaluatedByTS(),candidateObject.getFinalVerdict(),
+                        candidateObject.getLinkCount(),candidateObject.getAddedBy(),candidateObject.getIsShortListed(),candidateObject.getScreenedStatus(),candidateObject.getEnableDisableStatus(),
+                        candidateObject.getComment(),candidateObject.getInterviewStatus(),candidateObject.getScore(),candidateObject.getPositionId(),candidateObject.getPositionName());
+                return new ResponseEntity<Object>(candidates, HttpStatus.OK);
+            }
+        }catch (SQLException e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
 
 
@@ -304,7 +415,7 @@ public class CandidateController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Enable/Disable Candidate "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = CandidateConstants.CANDIDATE_ENABLE_DISABLE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @RequestMapping(value = CandidateRestURIConstants.CANDIDATE_ENABLE_DISABLE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Object> enableDisableCandidate(@RequestBody String candidateId) {
 
@@ -318,7 +429,7 @@ public class CandidateController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Approved Candidate "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = CandidateConstants.APPROVED_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @RequestMapping(value = CandidateRestURIConstants.APPROVED_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Object> fetchApprovedCandidate(@RequestBody String PositionId) {
 
@@ -349,7 +460,7 @@ public class CandidateController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Screened Candidate "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = CandidateConstants.SCREENED_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @RequestMapping(value = CandidateRestURIConstants.SCREENED_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Object> fetchScreenedCandidate(@RequestBody String PositionId) {
 
@@ -380,7 +491,7 @@ public class CandidateController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Unscreened Candidate "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = CandidateConstants.UNSCREENED_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @RequestMapping(value = CandidateRestURIConstants.UNSCREENED_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Object> fetchUnscreenedCandidate(@RequestBody String PositionId) {
 
@@ -413,7 +524,7 @@ public class CandidateController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Add/View Notes"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = CandidateConstants.ADD_VIEW_NOTES, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @RequestMapping(value = CandidateRestURIConstants.ADD_VIEW_NOTES, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Object> addViewNotes(@RequestBody String candidateId,@RequestBody String userid) {
 
@@ -426,7 +537,7 @@ public class CandidateController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Video Comparison"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = CandidateConstants.CANDIDATE_VIDEO_COMPARISON, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @RequestMapping(value = CandidateRestURIConstants.CANDIDATE_VIDEO_COMPARISON, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Object> compareCandidateVideos(@RequestBody String candidateId,@RequestBody String userid) {
 
@@ -439,7 +550,7 @@ public class CandidateController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Regenerate Link"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = CandidateConstants.REGENERATE_LINK, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @RequestMapping(value = CandidateRestURIConstants.REGENERATE_LINK, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Object> regenerateLink(@RequestBody String candidateId,@RequestBody String userid) {
 

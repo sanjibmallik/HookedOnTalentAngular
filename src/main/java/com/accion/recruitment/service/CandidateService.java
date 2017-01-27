@@ -55,7 +55,7 @@ public interface CandidateService {
      * Candidates object from the database based on the User name.
      *
      * @param candidateId accept the java.lang.int type of userId
-     *                  which is having user ID value
+     *                  which is having candidateId ID value
      *
      * @return instance of User having persisting state otherwise
      *         it return null.

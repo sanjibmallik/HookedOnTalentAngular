@@ -210,7 +210,7 @@ public class ClientController {
                         try{
                             this.userService.saveUser(actMgr);
                         }catch (Exception e){
-                            
+
                         }
                         this.clientService.saveClientDetails(clientDetails);
                         this.clientService.saveClientContacts(clientContacts);
