@@ -194,7 +194,12 @@ public class ClientController {
             try{
                 if(this.userService.saveUserGroups(user)){
                     if (isEmailSent!=null){
-                            this.userService.saveUser(actMgr);
+                            try{
+                                this.userService.saveUser(actMgr);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+
                             this.clientService.saveClientDetails(clientDetails);
                             this.clientService.saveClientContacts(clientContacts);
                             user.setPassword(password);
@@ -443,7 +448,7 @@ public class ClientController {
                     User user=this.userService.findUserByPropertyName(UserConstants.USER_NAME,clientContacts.getUserName());
                     String password=this.passwordGeneratorHelper.generatePassword();
                     user.setPassword(this.encoder.encodePassword(password, null));
-                    if(this.userService.saveUserGroups(user)){
+                    if(this.userService.saveUser(user)){
                         user.setPassword(password);
                         this.clientService.saveClientContacts(clientContacts);
                         this.userEmailNotificationService.sendUserCredentials(user);
