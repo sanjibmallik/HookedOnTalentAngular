@@ -2,9 +2,14 @@ package com.accion.recruitment.web.controller;
 
 
 import com.accion.recruitment.common.constants.LoginRestURIConstants;
+import com.accion.recruitment.common.constants.UserConstants;
 import com.accion.recruitment.common.enums.UserHttpStatusEnums;
+import com.accion.recruitment.common.helper.PasswordGeneratorHelper;
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.LoginService;
+import com.accion.recruitment.service.UserEmailNotificationService;
+import com.accion.recruitment.service.UserService;
+import com.google.gson.Gson;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -19,7 +24,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.sql.SQLException;
 
 /**
@@ -34,8 +38,16 @@ public class LoginController{
     @Autowired
     private LoginService loginService;
 
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserEmailNotificationService userEmailNotificationService;
+
     final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 
+    final PasswordGeneratorHelper passwordGeneratorHelper=new PasswordGeneratorHelper();
 
     @ApiOperation(value = "Login  based on UserName OR EmailId and Password   ", httpMethod="POST"
             , notes = "Return the Login User")
@@ -59,6 +71,42 @@ public class LoginController{
         }catch (Exception e){
             return new ResponseEntity<Object>(UserHttpStatusEnums.LOGIN_ERROR.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+
+    @ApiOperation(value = "forgot the Password   ", httpMethod="POST")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Password Changed Successfully"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+
+    @RequestMapping(value = LoginRestURIConstants.FORGOT_PASSWORD, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Object> forgotPassword(@PathVariable("emailId") final String emailId) {
+        User userObject;
+        try{
+            userObject=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID, emailId);
+            if(userObject!=null){
+                String password=this.passwordGeneratorHelper.generatePassword();
+                userObject.setPassword(this.encoder.encodePassword(password, null));
+                if(this.userService.saveUser(userObject)){
+                    userObject.setPassword(password);
+                    if(this.userEmailNotificationService.sendUserResetPassword(userObject)){
+                        return new ResponseEntity<Object>(new Gson().toJson(UserHttpStatusEnums.PASSWORD_CHANGED_EMAIL_SEND.ResponseMsg()), HttpStatus.OK);
+                    }else{
+                        return new ResponseEntity<Object>(new Gson().toJson(UserHttpStatusEnums.PASSWORD_CHANGED_EMAIL_NOT_SEND.ResponseMsg()), HttpStatus.OK);
+                    }
+                }else{
+                    return new ResponseEntity<Object>(new Gson().toJson(UserHttpStatusEnums.PASSWORD_NOT_CHANGED.ResponseMsg()), HttpStatus.OK);
+                }
+            }else{
+                return new ResponseEntity<Object>(UserHttpStatusEnums.EMAIL_ID_NOT_FOUND, HttpStatus.OK);
+            }
+        }catch (SQLException e){
+            return new ResponseEntity<Object>(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity<Object>(UserHttpStatusEnums.LOGIN_ERROR.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 

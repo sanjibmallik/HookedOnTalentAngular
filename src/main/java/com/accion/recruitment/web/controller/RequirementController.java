@@ -4,10 +4,7 @@ import com.accion.recruitment.beans.QuestionBaseClass;
 import com.accion.recruitment.common.constants.*;
 import com.accion.recruitment.common.enums.RequirementEnums;
 import com.accion.recruitment.jpa.entities.*;
-import com.accion.recruitment.service.ClientService;
-import com.accion.recruitment.service.QuestionService;
-import com.accion.recruitment.service.RequirementService;
-import com.accion.recruitment.service.UserService;
+import com.accion.recruitment.service.*;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -43,6 +40,10 @@ public class RequirementController {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private RequirementEmailNotificationService requirementEmailNotificationService;
+
 
     private final SimpleDateFormat sdf = new SimpleDateFormat(UserConstants.DATE_FORMAT);
 
@@ -252,6 +253,78 @@ public class RequirementController {
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ApiOperation(value = "Open Close Requirement", httpMethod="PUT")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Open or Close Requirement"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.OPEN_CLOSE_REQUIREMENT, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity<Object> openCloseRequirement(@PathVariable("id") final int requirementId,
+                                                       @PathVariable("status") final String status,
+                                                       Principal principal) {
+        final Date currentDate = new Date();
+        List<String> toUser= new ArrayList<String>();
+
+        try{
+            Positions requirements=this.requirementService.findRequirementById(requirementId);
+            if(requirements!=null){
+                try {
+                    List<User> tsUserList = (List<User>) requirements.getTechnicalScreenerPositions();
+                    for(User tsUser:tsUserList)
+                        toUser.add(tsUser.getEmailId());
+                }catch (Exception e){
+                    return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+
+                try{
+                    List<User> recUserList = (List<User>) requirements.getRecruiterPositions();
+                    for(User recUser:recUserList)
+                            toUser.add(recUser.getEmailId());
+                }catch (Exception e){
+                    return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+
+                try{
+                    User amUser= this.userService.findUserByPropertyName(UserConstants.USER_NAME,requirements.getCreatedBy());
+                    toUser.add(amUser.getEmailId());
+                }catch (Exception e){
+                    return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+
+                try{
+                    List<User> adminUserList=this.userService.findUserByRole(UserConstants.ADMIN);
+                    for (User user: adminUserList)
+                        toUser.add(user.getEmailId());
+                }catch (Exception e){
+                    return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+
+                try{
+                    requirements.setUpdatedBy(principal.getName());
+                    requirements.setUpdatedDate(new Date(sdf.format(currentDate)));
+                }catch (Exception e){
+                    return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+
+                if(this.requirementService.saveRequirements(requirements)){
+                    if(status.equals(RequirementConstants.OPEN)){
+                        requirements.setStatus(RequirementConstants.OPEN);
+                        this.requirementEmailNotificationService.sendRequirementOpenStatus(requirements,toUser);
+                    }if(status.equals(RequirementConstants.CLOSED)){
+                        requirements.setStatus(RequirementConstants.CLOSED);
+                        this.requirementEmailNotificationService.sendRequirementCloseStatus(requirements,toUser);
+                    }
+                    return new ResponseEntity(HttpStatus.OK);
+                }
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
     @ApiOperation(value = "Get the Requirement Candidates based on positionId", httpMethod="GET")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Requirement Candidates List"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
@@ -281,17 +354,6 @@ public class RequirementController {
 
 
         return new ResponseEntity<Object>(RequirementEnums.ADD_NO_MORE_CANDIDATE.ResponseMsg(), HttpStatus.CREATED);
-    }
-
-    @ApiOperation(value = "Open Close Requirement", httpMethod="GET")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "Open or Close Requirement"),
-            @ApiResponse(code = 500, message = "Internal Server Error")})
-    @RequestMapping(value = RequirementURIConstants.OPEN_CLOSE_REQUIREMENT, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity<Object> openCloseRequirement(@PathVariable("id") final int requirementId) {
-
-
-        return new ResponseEntity<Object>(RequirementEnums.REQUIREMENT_UPDATED.ResponseMsg(), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Add Technical Screener to Requirement", httpMethod="POST")
