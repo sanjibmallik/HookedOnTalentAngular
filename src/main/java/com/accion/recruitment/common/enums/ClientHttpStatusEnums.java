@@ -16,6 +16,10 @@ public enum ClientHttpStatusEnums {
     CLIENT_SAVED("Client Saved  Successfully."),
     CLIENT_SAVED_EMAIL_NOT_SEND("Client saved and Email Not Send ."),
 
+    CLIENT_UPDATED("Client updated successfully"),
+    CLIENT_NOT_UPDATED("Problem with updating the Client. Try again."),
+
+
     CLIENT_ACTIVATE_EMAIL_SEND("Client is activated and Email Send Successfully."),
 
     DATABASE_EXCEPTION("Database connectivity issue. Try again.");

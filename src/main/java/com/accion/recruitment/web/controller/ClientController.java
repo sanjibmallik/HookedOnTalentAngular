@@ -250,6 +250,179 @@ public class ClientController {
     }
 
 
+    @ApiOperation(value = "Update the  Client ",  code = 201, httpMethod="POST")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Client Updated Successfully")
+            , @ApiResponse(code = 500, message = "Internal Server Error")})
+
+    @RequestMapping(value = ClientRestURIConstants.UPDATE_CLIENT,produces = MediaType.APPLICATION_JSON_VALUE ,method = RequestMethod.POST)
+    public  ResponseEntity<String> updateClient(@RequestBody ClientDetailsContact clientDetailsContact,
+                                                final Principal principal) {
+
+        try{
+            final Date currentDate = new Date();
+            ClientDetails clientDetails;
+            ClientContacts clientContacts;
+            User user;
+            User oldUser;
+            ClientDetails oldClient;
+
+            if(clientDetailsContact.getClientDetails()!=null && clientDetailsContact.getClientContacts()!=null && clientDetailsContact.getUser()!=null){
+                clientDetails=clientDetailsContact.getClientDetails();
+                clientContacts=clientDetailsContact.getClientContacts();
+                user=clientDetailsContact.getUser();
+            }else{
+                return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+            }
+
+            try{
+                oldClient=this.clientService.findClientDetailsByPropertyName(ClientConstants.CLIENT_ID, clientDetails.getId());
+                if(oldClient==null)
+                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+
+                oldUser=this.userService.findUserById(user.getId());
+                if(oldUser==null)
+                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+            }catch (Exception e){
+                return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+            }
+
+
+
+
+
+            if(user != null && user.getUserName() != null && (!user.getUserName().isEmpty()) && (!oldUser.getUserName().equals(user.getUserName()))){
+                try{
+                    User userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME,user.getUserName());
+                    if(userObject != null)
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NAME_EXIST.ResponseMsg()), HttpStatus.OK);
+                }catch (SQLException e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NAME_EXIST.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.USER_NAME_EXIST.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+            if(user != null && user.getEmailId() != null && (!user.getEmailId().isEmpty())  && (!oldUser.getEmailId().equals(user.getEmailId()))){
+                try{
+                    User userObject=this.userService.findUserByPropertyName(UserConstants.EMAIL_ID,user.getEmailId());
+                    if(userObject != null)
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.EMAIlID_EXIST.ResponseMsg()), HttpStatus.OK);
+
+                }catch (SQLException e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.EMAIlID_EXIST.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.EMAIlID_EXIST.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+            if(user != null && user.getContactNumber() != null && (!user.getContactNumber().isEmpty()) &&(!oldUser.getContactNumber().equals(user.getContactNumber()))){
+                try{
+                    User userObject=this.userService.findUserByPropertyName(UserConstants.CONTACT_NUMBER,user.getContactNumber());
+                    if(userObject != null)
+                        return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg()), HttpStatus.OK);
+
+                }catch (SQLException e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(UserHttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+
+            if(clientDetails != null && clientDetails.getClientName() != null && (!clientDetails.getClientName().isEmpty()) &&(!oldClient.getClientName().equals(clientDetails.getClientName()))){
+                try{
+                    ClientDetails clientObject=this.clientService.findClientDetailsByPropertyName(ClientConstants.CLIENT_NAME, clientDetails.getClientName());
+                    if(clientObject != null)
+                        return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NAME_EXIST.ResponseMsg()), HttpStatus.OK);
+
+                }catch (SQLException e){
+                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NAME_EXIST.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NAME_EXIST.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+            if(clientDetails != null && clientDetails.getContactNumber() != null && (!clientDetails.getContactNumber().isEmpty()) &&(!oldClient.getContactNumber().equals(clientDetails.getContactNumber()))){
+                try{
+                    ClientDetails clientObject=this.clientService.findClientDetailsByPropertyName(ClientConstants.CONTACT_NUMBER, clientDetails.getContactNumber());
+                    if(clientObject != null)
+                        return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg()), HttpStatus.OK);
+
+                }catch (SQLException e){
+                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CONTACT_NUMBER_EXIST.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+            if(clientDetails != null && clientDetails.getFederalId() != null && (!clientDetails.getFederalId().isEmpty()) &&(!oldClient.getFederalId().equals(clientDetails.getFederalId()))){
+                try{
+                    ClientDetails clientObject=this.clientService.findClientDetailsByPropertyName(ClientConstants.FEDERAL_ID, clientDetails.getFederalId());
+                    if(clientObject != null)
+                        return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.FEDERAL_ID_EXIST.ResponseMsg()), HttpStatus.OK);
+
+                }catch (SQLException e){
+                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.FEDERAL_ID_EXIST.ResponseMsg()), HttpStatus.OK);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.FEDERAL_ID_EXIST.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+
+
+            if((clientDetails.getEngagementModel()==null) || (clientDetails.getEngagementModel().equals(""))){
+                clientDetails.setEngagementModel(clientDetails.getEngagementModelOther());
+                EngagementModel engagementModel=new EngagementModel();
+                engagementModel.setEngagementModel(clientDetails.getEngagementModelOther());
+                try{
+                    this.clientService.saveEngagementModel(engagementModel);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+            if((clientDetails.getIndustry()==null) || (clientDetails.getIndustry().equals(""))){
+                clientDetails.setIndustry(clientDetails.getIndustryOther());
+                Industry industry=new Industry();
+                industry.setIndustry(clientDetails.getIndustryOther());
+                try{
+                    this.clientService.saveIndustry(industry);
+                }catch (Exception e){
+                    return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                }
+            }
+
+            clientDetails.getClientContacts().add(clientContacts);
+            String password=this.passwordGeneratorHelper.generatePassword();
+            user.setPassword(this.encoder.encodePassword(password, null));
+            user.setRole("Client");
+            clientContacts.setContactFullName(clientContacts.getFirstName()+" "+clientContacts.getLastName());
+            String isEmailSent = clientContacts.getSendUserEmail();
+            try{
+                user.setUpdatedBy(principal.getName());
+            }catch (Exception e){
+            }
+            user.setUpdatedDate(new Date(sdf.format(currentDate)));
+
+
+            try{
+                if(this.userService.saveUserGroups(user)){
+                    if (isEmailSent!=null){
+                        this.clientService.saveClientDetails(clientDetails);
+                        this.clientService.saveClientContacts(clientContacts);
+                        user.setPassword(password);
+                        this.userEmailNotificationService.sendUserCredentials(user);
+                        return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                    }else{
+                        clientContacts.setSendUserEmail("No");
+                        this.clientService.saveClientDetails(clientDetails);
+                        this.clientService.saveClientContacts(clientContacts);
+                        return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_UPDATED.ResponseMsg()), HttpStatus.OK);
+                    }
+                }
+            }catch (Exception e){
+                return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+        }
+        return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_UPDATED.ResponseMsg()), HttpStatus.OK);
+    }
+
 
     @ApiOperation(value = "Activate the  Client  based on ID  ", httpMethod="PUT")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Activate Client "),

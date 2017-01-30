@@ -8,6 +8,7 @@ package com.accion.recruitment.common.constants;
 public class ClientRestURIConstants {
 
     public static final String CREATE_CLIENT = "/hot/client/create";
+    public static final String UPDATE_CLIENT = "/hot/client/update";
     public static final String GET_BY_ID = "/hot/client/{id}";
     public static final String GET_ALL_CLIENT = "/hot/clients";
     public static final String CLIENT_ACTIVATE = "/hot/client/activate/{id}";
