@@ -199,9 +199,8 @@ public class ClientController {
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
-
-                            this.clientService.saveClientDetails(clientDetails);
                             this.clientService.saveClientContacts(clientContacts);
+                            this.clientService.saveClientDetails(clientDetails);
                             user.setPassword(password);
                             this.userEmailNotificationService.sendUserCredentials(user);
                             return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_SAVED.ResponseMsg()), HttpStatus.CREATED);
