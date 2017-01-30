@@ -253,37 +253,6 @@ public class RequirementController {
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ApiOperation(value = "Get the Requirement Candidates based on positionId", httpMethod="GET")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "Requirement Candidates List"),
-            @ApiResponse(code = 500, message = "Internal Server Error")})
-    @RequestMapping(value = RequirementURIConstants.REQUIREMENT_CANDIDATES, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity<Object> getRequirementCandidates(@PathVariable("id") final int requirementId) {
-
-        Positions requirementObject;
-        try{
-            requirementObject=this.requirementService.findRequirementById(requirementId);
-
-
-        }catch (SQLException e){
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-        }catch (Exception e){
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ApiOperation(value = "Add No more Candidate", httpMethod="GET")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "Maximum Resum Limit Reached"),
-            @ApiResponse(code = 500, message = "Internal Server Error")})
-    @RequestMapping(value = RequirementURIConstants.ADD_NO_MORE_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity<Object> addNoMoreCandidate(@PathVariable("id") final int requirementId) {
-
-
-        return new ResponseEntity<Object>(RequirementEnums.ADD_NO_MORE_CANDIDATE.ResponseMsg(), HttpStatus.CREATED);
-    }
-
     @ApiOperation(value = "Open Close Requirement", httpMethod="PUT")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Open or Close Requirement"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
@@ -353,6 +322,38 @@ public class RequirementController {
         }
 
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+    @ApiOperation(value = "Get the Requirement Candidates based on positionId", httpMethod="GET")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Requirement Candidates List"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.REQUIREMENT_CANDIDATES, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> getRequirementCandidates(@PathVariable("id") final int requirementId) {
+
+        Positions requirementObject;
+        try{
+            requirementObject=this.requirementService.findRequirementById(requirementId);
+
+
+        }catch (SQLException e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ApiOperation(value = "Add No more Candidate", httpMethod="GET")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Maximum Resum Limit Reached"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.ADD_NO_MORE_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> addNoMoreCandidate(@PathVariable("id") final int requirementId) {
+
+
+        return new ResponseEntity<Object>(RequirementEnums.ADD_NO_MORE_CANDIDATE.ResponseMsg(), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Add Technical Screener to Requirement", httpMethod="POST")

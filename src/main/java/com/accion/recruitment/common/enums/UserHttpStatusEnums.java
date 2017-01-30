@@ -21,7 +21,9 @@ public enum UserHttpStatusEnums {
     /*Login Controller Status*/
 
     LOGIN_ERROR("Wrong  Credentials"),
-
+    PASSWORD_CHANGED("Password changed successfully"),
+    PASSWORD_NOT_MATCHED("Password didn't match"),
+    EMAIL_ID_NOT_FOUND("EmailId not Exist"),
 
 
     DATABASE_EXCEPTION("Database connectivity issue. Try again."),
@@ -35,7 +37,7 @@ public enum UserHttpStatusEnums {
     USER_DISABLED_EMAIL_NOT_SEND("User Enabled  and Email Not Send."),
     USER_STATUS_NOT_CHANGED("Status Not Changed."),
 
-    PASSWORD_NOT_CHANGED("Password Changed"),
+    PASSWORD_NOT_CHANGED("Password Not Changed"),
     PASSWORD_CHANGED_EMAIL_SEND("Password Changed and Email  Send Successfully."),
     PASSWORD_CHANGED_EMAIL_NOT_SEND("Password Changed and Email Not Send ."),
 
