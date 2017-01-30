@@ -59,6 +59,12 @@ public class UserServiceImpl implements UserService{
         return (User) this.userServiceDAO.findUserById(userId);
     }
 
+
+    @Override
+    public List<User> findUserByRole(final String role)throws SQLException{
+        return  this.userServiceDAO.findUserByRole(role);
+    }
+
     @Override
     public Boolean deleteRecordByQuery(final String query )throws SQLException{
         return  this.userServiceDAO.deleteRecordByQuery(query);

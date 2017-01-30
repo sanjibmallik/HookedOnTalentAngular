@@ -125,6 +125,15 @@ public class UserServiceDAOImpl<R> implements UserServiceDAO {
         return (User) criteria.uniqueResult();
     }
 
+
+    @Override
+    public List<User> findUserByRole(final String role) {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(User.class);
+        criteria.add(Restrictions.eq("role",role));
+        return  criteria.list();
+    }
+
     @Override
     public Boolean deleteRecordByQuery(final String query) {
         final Session session = getSession();

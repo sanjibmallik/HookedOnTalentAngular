@@ -2,6 +2,7 @@ package com.accion.recruitment.service.impl;
 
 import com.accion.recruitment.common.constants.EmailNotificationConstants;
 import com.accion.recruitment.common.helper.EmailNotificationHelper;
+import com.accion.recruitment.common.helper.SettingsHelper;
 import com.accion.recruitment.jpa.entities.Settings;
 import com.accion.recruitment.jpa.entities.User;
 import com.accion.recruitment.service.UserEmailNotificationService;
@@ -25,6 +26,8 @@ public class UserEmailNotificationServiceImpl implements UserEmailNotificationSe
     @Autowired
     private SettingsService settingsService;
 
+    private SettingsHelper settingsHelper;
+
     public  Boolean  sendUserCredentials(User user){
         try{
             String subject = "HookedOn Talent Login Credentials";
@@ -39,9 +42,9 @@ public class UserEmailNotificationServiceImpl implements UserEmailNotificationSe
             body += "Password :"+user.getPassword();
             body += "<br/></br>";
             body += "Please login to the application and change the password using the application link provided below..<br/></br>";
-            body+=this.getSettingsMap().get("link");
+            body+=this.settingsHelper.getSettingsMap().get("link");
             body+= EmailNotificationConstants.SIGNATURE;
-            return this.emailNotificationHelper.sendMail(user.getEmailId(),this.getSettingsMap().get("from"),subject,body);
+            return this.emailNotificationHelper.sendMail(user.getEmailId(), this.settingsHelper.getSettingsMap().get("from"), subject, body);
         }catch (Exception e){
             return false;
         }
@@ -56,7 +59,7 @@ public class UserEmailNotificationServiceImpl implements UserEmailNotificationSe
         body += "Your login credentials will be non-functional till next update. <br/><br/>";
         body += "Please contact admin for further details.<br/><br/>";
         body+= EmailNotificationConstants.SIGNATURE;
-        return this.emailNotificationHelper.sendMail(user.getEmailId(),this.getSettingsMap().get("from"),subject,body);
+        return this.emailNotificationHelper.sendMail(user.getEmailId(), this.settingsHelper.getSettingsMap().get("from"), subject, body);
 
     }
 
@@ -68,9 +71,9 @@ public class UserEmailNotificationServiceImpl implements UserEmailNotificationSe
         body += "This is a system generated email to inform you that your account has been Activated in HoT- HookedOn Talent Application<br/><br/>";
         body += "Your login credentials are enabled for HoT-HookedOn Talent Application.<br/><br/>";
         body += "Please login to the application using your user id & password using the application link provided below.<br/></br>";
-        body+=this.getSettingsMap().get("link");
+        body+=this.settingsHelper.getSettingsMap().get("link");
         body+= EmailNotificationConstants.SIGNATURE;
-        return this.emailNotificationHelper.sendMail(user.getEmailId(),this.getSettingsMap().get("from"),subject,body);
+        return this.emailNotificationHelper.sendMail(user.getEmailId(), this.settingsHelper.getSettingsMap().get("from"), subject, body);
 
     }
 
@@ -86,19 +89,10 @@ public class UserEmailNotificationServiceImpl implements UserEmailNotificationSe
         body += "<br/><br/>";
         body += "You are requested to login to HoT application with the new password and change it as per your convenience.";
         body += "<br/><br/>";
-        body+=this.getSettingsMap().get("link");
+        body+=this.settingsHelper.getSettingsMap().get("link");
         body+= EmailNotificationConstants.SIGNATURE;
-        return this.emailNotificationHelper.sendMail(user.getEmailId(),this.getSettingsMap().get("from"),subject,body);
+        return this.emailNotificationHelper.sendMail(user.getEmailId(), this.settingsHelper.getSettingsMap().get("from"), subject, body);
 
-    }
-
-    public HashMap<String,String> getSettingsMap(){
-        Settings settings=this.settingsService.findSettingsDetailsById(1);
-        HashMap<String,String> settingMap=new HashMap<String, String>();
-        String link= "Link: <a href=\""+settings.getDomainName()+""+EmailNotificationConstants.CHANGE_PASSWORD_URL+"\">"+settings.getDomainName()+""+EmailNotificationConstants.CHANGE_PASSWORD_URL+"\"</a> <br/><br/><br/>";
-        settingMap.put("from",settings.getEmailId());
-        settingMap.put("link",link);
-        return settingMap;
     }
 
 }

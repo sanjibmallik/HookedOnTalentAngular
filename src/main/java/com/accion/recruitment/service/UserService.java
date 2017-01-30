@@ -72,6 +72,18 @@ public interface UserService {
      */
     public User findUserById(final int userId) throws SQLException;
 
+    /**
+     * findUserByRole() provide the specification for retrieval of the
+     * List of User object from the database based on the role name.
+
+     * @param role accept the java.lang.String type of role
+     *                  which is having Role value
+     *
+     * @return instance of List of User having persisting state otherwise
+     *         it return null.
+     */
+    public List<User> findUserByRole(final String role) throws SQLException;
+
 
     /**
      * deleteUserByQuery() delete the record from the DB based
