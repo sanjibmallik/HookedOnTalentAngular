@@ -1,6 +1,7 @@
 package com.accion.recruitment.web.controller;
 
 import com.accion.recruitment.common.constants.HookedOnConstants;
+import com.accion.recruitment.common.constants.LoginRestURIConstants;
 import com.accion.recruitment.common.constants.UserConstants;
 import com.accion.recruitment.common.constants.UserRestURIConstants;
 import com.accion.recruitment.common.enums.UserHttpStatusEnums;
@@ -611,6 +612,35 @@ public class UserController {
         return userDetailsMap;
     }
 
+
+   /* @ApiOperation(value = "Change the Password   ", httpMethod="POST")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Password Changed Successfully"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+
+    @RequestMapping(value = LoginRestURIConstants.CHANGE_PASSWORD, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Object> changePassword(@PathVariable("currentPassword") final String currentPassword,
+                                                 @PathVariable("newPassword") final String newPassword,
+                                                 Principal principal) {
+        User userObject;
+        try{
+            userObject=this.userService.findUserByPropertyName(UserConstants.USER_NAME, principal.getName());
+            if(userObject!=null){
+                if(userObject.getPassword().equals(encoder.encodePassword(currentPassword, null))){
+                    userObject.setPassword(encoder.encodePassword(newPassword, null));
+                    this.userService.saveUser(userObject);
+                    return new ResponseEntity<Object>(UserHttpStatusEnums.PASSWORD_CHANGED, HttpStatus.OK);
+                }else{
+                    return new ResponseEntity<Object>(UserHttpStatusEnums.PASSWORD_NOT_MATCHED, HttpStatus.OK);
+                }
+            }
+        }catch (SQLException e){
+            return new ResponseEntity<Object>(UserHttpStatusEnums.DATABASE_EXCEPTION.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity<Object>(UserHttpStatusEnums.LOGIN_ERROR.ResponseMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<Object>(UserHttpStatusEnums.PASSWORD_NOT_MATCHED, HttpStatus.OK);
+    }*/
 
     public final List<TechnicalScreenerSkills> getTechnicalSkillsObject(HashMap<String,Object> technicalScreenerSkillsMap) throws ArrayIndexOutOfBoundsException{
 
