@@ -27,8 +27,71 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
         var data = $scope.newClient;
 
 
+        var jsonClient = {
+            "clientContacts": {
+
+                "addressOne": $scope.newClient.addressOne,
+                "addressTwo": $scope.newClient.addressTwo,
+                "alternateContact": $scope.newClient.alternateContact,
+                "city": $scope.newClient.city,
+                "contactFullName": $scope.newClient.firstName+$scope.newClient.lastName,
+                "contactNumber": $scope.newClient.contactNumber,
+                "country": $scope.newClient.country,
+                "emailId": $scope.newClient.emailId,
+                "faxNumber": $scope.newClient.faxNumber,
+                "firstName": $scope.newClient.firstName,
+                "lastName": $scope.newClient.lastName,
+
+                "sendUserEmail": $scope.newClient.sendUserEmail,
+                "state": $scope.newClient.state,
+
+                "userName": $scope.newClient.userName,
+                "zipCode": $scope.newClient.zipCode
+            },
+            "clientDetails": {
+
+                "addressOne": $scope.newClient.addressOne,
+                "addressTwo": $scope.newClient.addressTwo,
+                "alternateContact": $scope.newClient.alternateContact,
+                "city": $scope.newClient.city,
+
+                "clientName": $scope.newClient.clientName,
+                "contactNumber": $scope.newClient.contactNumber,
+                "country": $scope.newClient.country,
+
+                "engagementModel": $scope.newClient.engagementModel,
+                "faxNumber": $scope.newClient.faxNumber,
+                "federalId": $scope.newClient.federalId,
+                "industry": $scope.newClient.industry,
+
+                "state": $scope.newClient.state,
+                "websiteUrl": $scope.newClient.websiteUrl,
+                "zipCode": $scope.newClient.zipCode
+            },
+            "user": {
+                "addressOne": $scope.newClient.addressOne,
+                "addressTwo": $scope.newClient.addressTwo,
+                "alternateContact": $scope.newClient.alternateContact,
+                "city": $scope.newClient.city,
+                "contactNumber": $scope.newClient.contactNumber,
+                "country": $scope.newClient.country,
+
+                "emailId": $scope.newClient.emailId,
+
+                "firstName": $scope.newClient.firstName,
+                "lastName": $scope.newClient.lastName,
+                "userName": $scope.newClient.userName,
+
+                "role": "Client",
+                "state": $scope.newClient.state,
+                "zipCode": $scope.newClient.zipCode
+            }
+        }
+
+/*
+
         var jsonUser = {
-            "clientDetails":{
+            "clientContactss":{
 
                 "clientName":$scope.newClient.clientName,
                 "industry":$scope.newClient.industry,
@@ -43,27 +106,18 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
                 "city":$scope.newClient.city,
                 "state":$scope.newClient.state,
                 "country":$scope.newClient.country,
-                "note":$scope.newClient.note
+
 
 
             },
             "clientContacts":{
                 "userName":$scope.newClient.userName,
                 "firstName":$scope.newClient.firstName,
-                "contactFullName":$scope.newClient.contactFullName,
+                "lastName":$scope.newClient.lastName,
+                "contactFullName":$scope.newClient.firstName+$scope.newClient.lastName,
                 "contactNumber":$scope.newClient.contactNumber,
                 "alternateContact":$scope.newClient.alternateContact,
-                "emailId":$scope.newClient.emailId,
-                "faxNumber":$scope.newClient.faxNumber,
-                "addressOne":$scope.newClient.addressOne,
-                "addressTwo":$scope.newClient.addressTwo,
-                "zipCode":$scope.newClient.zipCode,
-                "city":$scope.newClient.city,
-                "state":$scope.newClient.state,
-                "country":$scope.newClient.country,
-                "note":$scope.newClient.note,
-                "sendUserEmail":$scope.newClient.sendUserEmail
-
+                "emailId":$scope.newClient.emailId
 
             },
             "user":{
@@ -79,18 +133,21 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
                 "zipCode":$scope.newClient.zipCode,
                 "city":$scope.newClient.city,
                 "state":$scope.newClient.state,
-                "country":$scope.newClient.country,
-                "note":$scope.newClient.note,
-                "sendUserEmail":$scope.newClient.sendUserEmail
+                "country":$scope.newClient.country
+*/
+/*
+                "sendUserEmail":$scope.newClient.sendUserEmail*//*
+
 
             }
 
 
         }
+*/
 
-        console.log(jsonUser);
+        console.log(jsonClient);
 
-        $http.post('client/create', jsonUser)
+        $http.post('client/create', jsonClient)
             .success(function (data, status, headers, config) {
                 console.log(data);
 
