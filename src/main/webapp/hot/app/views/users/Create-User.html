@@ -26,8 +26,8 @@
 
 
 
-<form role="form" name="newUserForm" ng-submit="disableClick(newUserForm.$valid)"
-      class="form-horizontal" ng-submit="submitNewUser()" ng-cloak>
+<form role="form" enctype="multipart/form-data" name="newUserForm" class="form-horizontal" ng-submit="submitNewUser();disableClick(newUserForm.$valid);" ng-cloak> <!--ng-submit="disableClick(newUserForm.$valid)"-->
+
 
 <div class="row">
     <div class="col-sm-12">
@@ -128,8 +128,8 @@
 								<i class="linecons-mobile"></i>
 							</span>
 							<input type="text" class="form-control" required="true" ng-model="newUser.contactNumber"
-                                   name="contactNumber" ng-blur="checkContactNumberExist(newUser.contactNumber)"
-                                   inputmask data-mask="phone" data-validate="minlength[10]" />
+                                   name="contactNumber" ng-blur="checkContactNumberExist(newUser.contactNumber)" inputmask data-mask="phone" data-validate="minlength[10]"
+                                   />  <!--inputmask data-mask="phone" data-validate="minlength[10]"-->
 
 
 						</div>
@@ -264,7 +264,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Upload Profile</label>
                     <div class="col-sm-5">
-                        <input type="file" class="form-control">
+                        <input type="file" ng-model="profile" class="form-control">
                     </div>
                 </div>
                 <div class="form-group-separator"></div>
@@ -346,7 +346,7 @@
     <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-body" style="text-align: center;">
-                <input ng-disabled="isDisabled" class="btn btn-info btn-icon" type="submit" value="Submit"/>
+                <input class="btn btn-info btn-icon" ng-disabled="isDisabled" type="submit" value="Submit"/>
                 <input type="button" class="btn btn-warning btn-icon" ng-click="resetUserForm();" value="Reset">
                 <a ui-sref="app.users-Display-Users"><input class="btn btn-danger btn-icon"
                                                           type="button" value="Cancel"/>
