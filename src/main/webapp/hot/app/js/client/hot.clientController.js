@@ -42,7 +42,7 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
                 "firstName": $scope.newClient.firstName,
                 "lastName": $scope.newClient.lastName,
 
-                "sendUserEmail": $scope.newClient.sendUserEmail,
+                "sendUserEmail": "No",
                 "state": $scope.newClient.state,
 
                 "userName": $scope.newClient.userName,
@@ -88,62 +88,6 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
             }
         }
 
-/*
-
-        var jsonUser = {
-            "clientContactss":{
-
-                "clientName":$scope.newClient.clientName,
-                "industry":$scope.newClient.industry,
-                "engagementModel":$scope.newClient.engagementModel,
-                "federalId":$scope.newClient.federalId,
-                "faxNumber":$scope.newClient.faxNumber,
-                "contactNumber":$scope.newClient.contactNumber,
-                "alternateContact":$scope.newClient.alternateContact,
-                "addressOne":$scope.newClient.addressOne,
-                "addressTwo":$scope.newClient.addressTwo,
-                "zipCode":$scope.newClient.zipCode,
-                "city":$scope.newClient.city,
-                "state":$scope.newClient.state,
-                "country":$scope.newClient.country,
-
-
-
-            },
-            "clientContacts":{
-                "userName":$scope.newClient.userName,
-                "firstName":$scope.newClient.firstName,
-                "lastName":$scope.newClient.lastName,
-                "contactFullName":$scope.newClient.firstName+$scope.newClient.lastName,
-                "contactNumber":$scope.newClient.contactNumber,
-                "alternateContact":$scope.newClient.alternateContact,
-                "emailId":$scope.newClient.emailId
-
-            },
-            "user":{
-                "userName":$scope.newClient.userName,
-                "firstName":$scope.newClient.firstName,
-                "contactFullName":$scope.newClient.contactFullName,
-                "contactNumber":$scope.newClient.contactNumber,
-                "alternateContact":$scope.newClient.alternateContact,
-                "emailId":$scope.newClient.emailId,
-                "faxNumber":$scope.newClient.faxNumber,
-                "addressOne":$scope.newClient.addressOne,
-                "addressTwo":$scope.newClient.addressTwo,
-                "zipCode":$scope.newClient.zipCode,
-                "city":$scope.newClient.city,
-                "state":$scope.newClient.state,
-                "country":$scope.newClient.country
-*/
-/*
-                "sendUserEmail":$scope.newClient.sendUserEmail*//*
-
-
-            }
-
-
-        }
-*/
 
         console.log(jsonClient);
 
