@@ -30,6 +30,7 @@ public class RequirementEmailNotificationServiceImpl implements RequirementEmail
 
     private SettingsHelper settingsHelper;
 
+    @Override
     public  Boolean  sendRequirementOpenStatus(Positions requirements,List<String> toUser){
         String subject = "Requirement: "+requirements.getJobTitle()+" is re-opened";
         String body = "<html><head>";
@@ -46,6 +47,7 @@ public class RequirementEmailNotificationServiceImpl implements RequirementEmail
 
     }
 
+    @Override
     public  Boolean  sendRequirementCloseStatus(Positions requirements,List<String> toUser){
         String subject = "Requirement: "+requirements.getJobTitle()+" is closed";
         String body = "<html><head>";
@@ -61,5 +63,19 @@ public class RequirementEmailNotificationServiceImpl implements RequirementEmail
 
     }
 
+    @Override
+    public  Boolean  sendRequirementMailToTs(Positions requirements,User toUser){
+        String subject = "Add Questions for New Requirement : "+requirements.getJobTitle();
+        String body = "<html><head>";
+        body += "Hello "+toUser.getFirstName()+",";
+        body += "<br/><br/>";
+        body += "A new Requirement : "+requirements.getJobTitle()+" is created for the Client: "+requirements.getClientName()+".<br/><br/>" ;
+        body += "We request you to add appropriate questions for this requirement.<br/><br/>";
+        body += "Please login to the application using your user id & password using the application link provided below.<br/></br>";
+        body+=this.settingsHelper.getSettingsMap().get("link");
+        body+= EmailNotificationConstants.SIGNATURE;
+        return this.emailNotificationHelper.sendMail(toUser.getEmailId(),this.settingsHelper.getSettingsMap().get("from"),subject,body);
+
+    }
 
 }

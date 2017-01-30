@@ -17,4 +17,5 @@ public interface RequirementEmailNotificationService {
 
     public  Boolean  sendRequirementCloseStatus(Positions requirements,List<String> toUser);
 
+    public  Boolean  sendRequirementMailToTs(Positions requirements,User toUser);
 }

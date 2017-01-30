@@ -359,18 +359,53 @@ public class RequirementController {
     @ApiOperation(value = "Add Technical Screener to Requirement", httpMethod="POST")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Add Technical Screener to Requirement"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
-    @RequestMapping(value = RequirementURIConstants.ADD_TECH_SCREENER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = RequirementURIConstants.ADD_TECH_SCREENER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Object> addTSToRequirement(@RequestBody User user) {
-        return new ResponseEntity<Object>(RequirementEnums.ADD_TS_TO_REQT.ResponseMsg(), HttpStatus.CREATED);
+    public ResponseEntity<Object> addTSToRequirement(@RequestParam(required = true,value="positionId") Integer requirementId,
+                                                     @RequestParam(required = true,value="technicalScreenerIds") String[] technicalScreenerIds) {
+
+        List<Integer> existingTsListId=new ArrayList<Integer>();
+        try{
+            Positions requirements=this.requirementService.findRequirementById(requirementId);
+            if(requirements!=null){
+
+                final List<User> userList= (List<User>) requirements.getTechnicalScreenerPositions();
+
+                for(User user:userList){
+                    existingTsListId.add(user.getId());
+                }
+                for(String technicalScreenerId:technicalScreenerIds){
+                    int tsId ;
+                    tsId=Integer.parseInt(technicalScreenerId);
+                    try{
+                        if(!(existingTsListId.contains(tsId))){
+                            User user=this.userService.findUserById(tsId);
+                            requirements.setTechnicalScreener(String.valueOf(technicalScreenerIds.length));
+                            requirements.getTechnicalScreenerPositions().add(user);
+                            if(this.requirementService.saveRequirements(requirements))
+                                this.requirementEmailNotificationService.sendRequirementMailToTs(requirements,user);
+                            userList.remove(user);
+                        }
+                    }catch (Exception e){
+                        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+                    }
+                }
+                return new ResponseEntity<Object>(RequirementEnums.ADD_TS_TO_REQT.ResponseMsg(), HttpStatus.OK);
+            }
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ApiOperation(value = "Add Recruiter to Requirement", httpMethod="POST")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Add Recruiters to Requirement"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
-    @RequestMapping(value = RequirementURIConstants.ADD_RECRUITER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = RequirementURIConstants.ADD_RECRUITER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Object> addRecruiterToRequirement(@RequestBody User user) {
+
         return new ResponseEntity<Object>(RequirementEnums.ADD_RECRUITER_TO_REQT.ResponseMsg(), HttpStatus.CREATED);
     }
 
