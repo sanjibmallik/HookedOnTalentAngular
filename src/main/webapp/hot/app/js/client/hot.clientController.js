@@ -3,7 +3,7 @@
 var hotClientControllers = angular.module('hot.clientControllers',['ui.bootstrap','ngTable']);
 
 
-hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
+hotClientControllers.controller('createNewClientCtrl',function($scope,$http,$state){
 
 
     $scope.newClient = {};
@@ -200,7 +200,7 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http){
 
 
 
-hotClientControllers.controller('viewAllClientCtrl',function($scope,$rootScope,$http, $filter, NgTableParams){
+hotClientControllers.controller('viewAllClientCtrl',function($scope,$rootScope,$http,$state, $filter, NgTableParams){
 
 
     angular.element(document).ready(function(){$http({
@@ -255,7 +255,166 @@ hotClientControllers.controller('viewAllClientCtrl',function($scope,$rootScope,$
 
 
     $rootScope.updateClientContactDetails = function () {
-        console.log("client contact detils");
+        console.log("client contact details");
+
+
+
+        var jsonClient = {
+            "clientContacts": {
+
+                "addressOne": $rootScope.responseData.clientContacts[0].addressOne,
+                "addressTwo": $rootScope.responseData.clientContacts[0].addressTwo,
+                "alternateContact": $rootScope.responseData.clientContacts[0].alternateContact,
+                "city": $rootScope.responseData.clientContacts[0].city,
+                "contactFullName": $rootScope.responseData.clientContacts[0].firstName+$rootScope.responseData.clientContacts[0].lastName,
+                "contactNumber": $rootScope.responseData.clientContacts[0].contactNumber,
+                "country": $rootScope.responseData.clientContacts[0].country,
+                "emailId": $rootScope.responseData.clientContacts[0].emailId,
+                "faxNumber": $rootScope.responseData.clientContacts[0].faxNumber,
+                "firstName": $rootScope.responseData.clientContacts[0].firstName,
+                "lastName": $rootScope.responseData.clientContacts[0].lastName,
+
+                "sendUserEmail": "No",
+                "state": $rootScope.responseData.clientContacts[0].state,
+
+                "userName": $rootScope.responseData.clientContacts[0].userName,
+                "zipCode": $rootScope.responseData.clientContacts[0].zipCode
+            },
+            "clientDetails": {
+
+                "addressOne": $rootScope.responseData.addressOne,
+                "addressTwo": $rootScope.responseData.addressTwo,
+                "alternateContact": $rootScope.responseData.alternateContact,
+                "city": $rootScope.responseData.city,
+
+                "clientName": $rootScope.responseData.clientName,
+                "contactNumber": $rootScope.responseData.contactNumber,
+                "country": $rootScope.responseData.country,
+
+                "engagementModel": $rootScope.responseData.engagementModel,
+                "faxNumber": $rootScope.responseData.faxNumber,
+                "federalId": $rootScope.responseData.federalId,
+                "industry": $rootScope.responseData.industry,
+
+                "state": $rootScope.responseData.state,
+                "websiteUrl": $rootScope.responseData.websiteUrl,
+                "zipCode": $rootScope.responseData.zipCode
+            },
+            "user": {
+                "addressOne": $rootScope.responseData.clientContacts[0].addressOne,
+                "addressTwo": $rootScope.responseData.clientContacts[0].addressTwo,
+                "alternateContact": $rootScope.responseData.clientContacts[0].alternateContact,
+                "city": $rootScope.responseData.clientContacts[0].city,
+                "contactNumber": $rootScope.responseData.clientContacts[0].contactNumber,
+                "country": $rootScope.responseData.clientContacts[0].country,
+
+                "emailId": $rootScope.responseData.clientContacts[0].emailId,
+
+                "firstName": $rootScope.responseData.clientContacts[0].firstName,
+                "lastName": $rootScope.responseData.clientContacts[0].lastName,
+                "userName": $rootScope.responseData.clientContacts[0].userName,
+
+                "role": "Client",
+                "state": $rootScope.responseData.clientContacts[0].state,
+                "zipCode": $rootScope.responseData.clientContacts[0].zipCode
+            }
+        }
+
+        console.log(jsonClient);
+
+
+
+        $http.post('client/update/',jsonClient)
+            .success(function (data, status, headers, config) {
+                console.log(data);
+                $state.go($state.current, {}, {reload: true});
+            })
+            .error(function (data, status, header, config) {
+            });
+
+        $rootScope.currentModal.dismiss();
+
+    }
+
+
+
+    $rootScope.updateClientDetails = function () {
+        console.log("client details edit");
+
+        var jsonClient = {
+            "clientContacts": {
+
+                "addressOne": $rootScope.responseData.clientContacts[0].addressOne,
+                "addressTwo": $rootScope.responseData.clientContacts[0].addressTwo,
+                "alternateContact": $rootScope.responseData.clientContacts[0].alternateContact,
+                "city": $rootScope.responseData.clientContacts[0].city,
+                "contactFullName": $rootScope.responseData.clientContacts[0].firstName+$rootScope.responseData.clientContacts[0].lastName,
+                "contactNumber": $rootScope.responseData.clientContacts[0].contactNumber,
+                "country": $rootScope.responseData.clientContacts[0].country,
+                "emailId": $rootScope.responseData.clientContacts[0].emailId,
+                "faxNumber": $rootScope.responseData.clientContacts[0].faxNumber,
+                "firstName": $rootScope.responseData.clientContacts[0].firstName,
+                "lastName": $rootScope.responseData.clientContacts[0].lastName,
+
+                "sendUserEmail": "No",
+                "state": $rootScope.responseData.clientContacts[0].state,
+
+                "userName": $rootScope.responseData.clientContacts[0].userName,
+                "zipCode": $rootScope.responseData.clientContacts[0].zipCode
+            },
+            "clientDetails": {
+
+                "addressOne": $rootScope.responseData.addressOne,
+                "addressTwo": $rootScope.responseData.addressTwo,
+                "alternateContact": $rootScope.responseData.alternateContact,
+                "city": $rootScope.responseData.city,
+
+                "clientName": $rootScope.responseData.clientName,
+                "contactNumber": $rootScope.responseData.contactNumber,
+                "country": $rootScope.responseData.country,
+
+                "engagementModel": $rootScope.responseData.engagementModel,
+                "faxNumber": $rootScope.responseData.faxNumber,
+                "federalId": $rootScope.responseData.federalId,
+                "industry": $rootScope.responseData.industry,
+
+                "state": $rootScope.responseData.state,
+                "websiteUrl": $rootScope.responseData.websiteUrl,
+                "zipCode": $rootScope.responseData.zipCode
+            },
+            "user": {
+                "addressOne": $rootScope.responseData.clientContacts[0].addressOne,
+                "addressTwo": $rootScope.responseData.clientContacts[0].addressTwo,
+                "alternateContact": $rootScope.responseData.clientContacts[0].alternateContact,
+                "city": $rootScope.responseData.clientContacts[0].city,
+                "contactNumber": $rootScope.responseData.clientContacts[0].contactNumber,
+                "country": $rootScope.responseData.clientContacts[0].country,
+
+                "emailId": $rootScope.responseData.clientContacts[0].emailId,
+
+                "firstName": $rootScope.responseData.clientContacts[0].firstName,
+                "lastName": $rootScope.responseData.clientContacts[0].lastName,
+                "userName": $rootScope.responseData.clientContacts[0].userName,
+
+                "role": "Client",
+                "state": $rootScope.responseData.clientContacts[0].state,
+                "zipCode": $rootScope.responseData.clientContacts[0].zipCode
+            }
+        }
+        console.log(jsonClient);
+
+        $http.post('client/update/',jsonClient)
+            .success(function (data, status, headers, config) {
+                console.log(data);
+                $state.go($state.current, {}, {reload: true});
+            })
+            .error(function (data, status, header, config) {
+            });
+
+
+
+
+        $rootScope.currentModal.dismiss();
 
     }
 

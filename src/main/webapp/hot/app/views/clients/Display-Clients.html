@@ -302,6 +302,7 @@
         <button type="button" class="close" ng-click="currentModal.close();" aria-hidden="true">&times;</button>
         <h4 class="modal-title">Edit {{responseDataCopy.clientName}} Details</h4>
     </div>
+    <form ng-submit="updateClientDetails();" role="form" name="editClientDetails">
 
     <div class="modal-body">
 
@@ -439,6 +440,7 @@
         <input type="button" class="btn btn-red" ng-click="currentModal.close();" value="Cancel">
 
     </div>
+    </form>
 
 </script>
 
