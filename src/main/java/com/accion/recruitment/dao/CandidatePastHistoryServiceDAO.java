@@ -18,5 +18,5 @@ public interface CandidatePastHistoryServiceDAO<E> {
      * @return status of the persisting operation.
      */
 
-    public Boolean saveCandidatePastHistory(final CandidatePastHistory candidatePastHistory)
+    public Boolean saveCandidatePastHistory(final CandidatePastHistory candidatePastHistory);
 }
