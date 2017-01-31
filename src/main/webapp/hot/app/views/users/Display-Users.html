@@ -286,7 +286,7 @@
         <h4 class="modal-title">Edit {{responseDataCopy.firstName}}'s Details</h4>
     </div>
 
-    <form ng-submit="updateUser();" name="editUser" role="form" class="form-horizontal" >
+    <form ng-submit="updateUser();currentModal.dismiss();" name="editUser" role="form" class="form-horizontal" >
     <div class="modal-body">
 
         <div class="row">
