@@ -1,5 +1,7 @@
 package com.accion.recruitment.service;
 
+import com.accion.recruitment.jpa.entities.Candidates;
+import com.accion.recruitment.jpa.entities.PositionCandidates;
 import com.accion.recruitment.jpa.entities.Positions;
 import com.accion.recruitment.jpa.entities.User;
 
@@ -18,4 +20,8 @@ public interface RequirementEmailNotificationService {
     public  Boolean  sendRequirementCloseStatus(Positions requirements,List<String> toUser);
 
     public  Boolean  sendRequirementMailToTs(Positions requirements,User toUser);
+
+    public  Boolean  sendRequirementMailToRecruiter(Positions requirements,User toUser);
+
+    public  Boolean  sendCandidateMail(List<String> bccUser,Positions requirements,Candidates candidates,PositionCandidates positionCandidates);
 }
