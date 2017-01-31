@@ -42,6 +42,16 @@ public class RequirementController {
     private QuestionService questionService;
 
     @Autowired
+    private PositionCandidatesService positionCandidatesService;
+
+    @Autowired
+    private CandidateService candidateService;
+
+    @Autowired
+    private CandidatePastHistoryService candidatePastHistoryService;
+
+
+    @Autowired
     private RequirementEmailNotificationService requirementEmailNotificationService;
 
 
@@ -361,7 +371,7 @@ public class RequirementController {
             @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = RequirementURIConstants.ADD_TECH_SCREENER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Object> addTSToRequirement(@RequestParam(required = true,value="positionId") Integer requirementId,
+    public ResponseEntity<Object> addTSToRequirement(@RequestParam(required = true,value="id") Integer requirementId,
                                                      @RequestParam(required = true,value="technicalScreenerIds") String[] technicalScreenerIds) {
 
         List<Integer> existingTsListId=new ArrayList<Integer>();
@@ -371,9 +381,9 @@ public class RequirementController {
 
                 final List<User> userList= (List<User>) requirements.getTechnicalScreenerPositions();
 
-                for(User user:userList){
+                for(User user:userList)
                     existingTsListId.add(user.getId());
-                }
+
                 for(String technicalScreenerId:technicalScreenerIds){
                     int tsId ;
                     tsId=Integer.parseInt(technicalScreenerId);
@@ -404,9 +414,42 @@ public class RequirementController {
             @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = RequirementURIConstants.ADD_RECRUITER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Object> addRecruiterToRequirement(@RequestBody User user) {
+    public ResponseEntity<Object> addRecruiterToRequirement(@RequestParam(required = true,value="id") Integer requirementId,
+                                                           @RequestParam(required = true,value="recruiterIdS") String[] recruiterIdS) {
 
-        return new ResponseEntity<Object>(RequirementEnums.ADD_RECRUITER_TO_REQT.ResponseMsg(), HttpStatus.CREATED);
+        List<Integer> integerList=new ArrayList<Integer>();
+        try{
+            Positions requirements=this.requirementService.findRequirementById(requirementId);
+            if(requirements!=null){
+                final List<User> recUserList= (List<User>) requirements.getRecruiterPositions();
+
+                for(User user:recUserList)
+                    integerList.add(user.getId());
+
+                for(String recruiterId:recruiterIdS){
+                    int rId ;
+                    rId=Integer.parseInt(recruiterId);
+                    try{
+                        if(!(integerList.contains(rId))){
+                            User user=this.userService.findUserById(rId);
+                            requirements.setRecruiter(String.valueOf(recruiterIdS.length));
+                            requirements.getRecruiterPositions().add(user);
+                            if(this.requirementService.saveRequirements(requirements))
+                                this.requirementEmailNotificationService.sendRequirementMailToRecruiter(requirements,user);
+                            recUserList.remove(user);
+                        }
+
+                    }catch (Exception e){
+                        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+                    }
+                }
+                return new ResponseEntity<Object>(RequirementEnums.ADD_RECRUITER_TO_REQT.ResponseMsg(), HttpStatus.OK);
+            }
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ApiOperation(value = "Add Candidate to Requirement", httpMethod="GET")
@@ -418,35 +461,101 @@ public class RequirementController {
         return new ResponseEntity<Object>(RequirementEnums.ADD_CANDIDATE_TO_REQT.ResponseMsg(), HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "Fetches Candidate from DB", httpMethod="POST")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "Fetches Candidate from DB"),
+    @ApiOperation(value = "Add multiple Candidate to requirement", httpMethod="POST")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Added successfully"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
-    @RequestMapping(value = RequirementURIConstants.ADD_CANDIDATE_FROM_DB, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = RequirementURIConstants.ADD_CANDIDATES_TO_REQ, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Object> addCandidateFromDB() {
+    public ResponseEntity<Object> addCandidateFromDB(@RequestParam(required = false,value="id") Integer requirementId,
+                                                     @RequestParam(required = false,value="candidateId") String[] candidatesId,
+                                                     Principal principal) {
 
-        List<Candidates> candidatesList = new ArrayList<Candidates>();
-        Candidates candidate = new Candidates();
-        Candidates candidates = new Candidates();
-        candidates.setFirstName("Azhar");
-        candidates.setLastName("Liaqat");
-        candidates.setCellPhoneNumber("999999999");
-        candidates.setPrimarySkill("Java");
-        candidates.setSecondarySkill("AngularJs");
-        candidates.setNote("MyNote");
-        candidates.setBillRate("24$");
-        candidates.setPayRate("12$");
-        candidates.setImmigrationStatus("L1");
-        candidates.setAddedBy("Moin");
-        candidates.setAddress("BTM");
-        candidates.setCreatedBy("REcruiter");
-        candidates.setCreatedDate(new Date());
-        candidates.setAddress2("Layout");
-        candidates.setCity("Bengaluru");
-        candidates.setState("Karnataka");
-        candidates.setCountry("India");
-        candidatesList.add(candidate);
-        return new ResponseEntity<Object>(candidatesList, HttpStatus.CREATED);
+        List<Integer> candidatesIdList=new ArrayList<Integer>();
+        List<String> toUser= new ArrayList<String>();
+        final Date currentDate = new Date();
+        final UUID randomNumber=UUID.randomUUID();
+
+        try{
+            Positions requirements=this.requirementService.findRequirementById(requirementId);
+
+            List<Candidates> positionsCandidatesList=(List)this.positionCandidatesService.findPositionCandidatesByRequirementId(requirementId);
+
+            for(Candidates candidates:positionsCandidatesList)
+                candidatesIdList.add(candidates.getCandidateId());
+
+            for(String candidateId:candidatesId){
+                int cId ;
+                cId=Integer.parseInt(candidateId);
+
+                if(!(candidatesIdList.contains(cId))){
+                    Candidates candidates=this.candidateService.findCandidatesById(cId);
+
+                    PositionCandidates positionCandidates=new PositionCandidates();
+                    positionCandidates.setCandidateLink(randomNumber.toString());
+                    positionCandidates.setCandidates(candidates);
+                    positionCandidates.setPositions(requirements);
+                    positionCandidates.setLinkValidity(PositionCandidatesConstant.ACTIVE);
+                    positionCandidates.setScreenedStatus(PositionCandidatesConstant.UN_SCREENED);
+                    positionCandidates.setCandidateEnableDisable(PositionCandidatesConstant.ENABLE);
+                    positionCandidates.setIsShortListed(PositionCandidatesConstant.NO);
+                    positionCandidates.setLinkCount(PositionCandidatesConstant.ONE);
+                    positionCandidates.setAutoReminderCount(PositionCandidatesConstant.ZERO);
+                    positionCandidates.setStatus(PositionCandidatesConstant.EMAIL_SENT);
+                    positionCandidates.setAddedBy(principal.getName());
+                    positionCandidates.setCreatedDate(currentDate);
+                    positionCandidates.setUpdatedDate(currentDate);
+                    positionCandidates.setUpdatedBy(principal.getName());
+
+                    CandidatePastHistory candidatePastHistory=new CandidatePastHistory();
+                    try{
+
+                        candidatePastHistory.setPositionName(requirements.getJobTitle());
+                        candidatePastHistory.setClientName(requirements.getClientName());
+                        candidatePastHistory.setPrimarySkill(requirements.getPrimarySkill());
+                        candidatePastHistory.setPositionId(requirementId);
+                        candidatePastHistory.setCandidatePastHistory(candidates);
+
+                        candidatePastHistory.setAddedBy(principal.getName());
+                        candidatePastHistory.setCreatedDate(currentDate);
+                        candidatePastHistory.setUpdatedDate(currentDate);
+                        candidatePastHistory.setUpdatedBy(principal.getName());
+
+                    }catch (Exception e){
+                        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+                    }
+
+                    try{
+                        User user = this.userService.findUserByPropertyName(UserConstants.USER_NAME,requirements.getCreatedBy());
+                        toUser.add(user.getEmailId());
+                    }catch (Exception e){
+                        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+                    }
+
+                    try{
+                        List<User> recUserList = (List<User>) requirements.getRecruiterPositions();
+                        for(User recUser:recUserList)
+                            toUser.add(recUser.getEmailId());
+                    }catch (Exception e){
+                        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+                    }
+
+                    try{
+
+                        this.candidatePastHistoryService.saveCandidatePastHistory(candidatePastHistory);
+                        if(this.positionCandidatesService.savePositionCandidates(positionCandidates))
+                            this.requirementEmailNotificationService.sendCandidateMail(toUser, requirements, candidates, positionCandidates);
+
+                    }catch (Exception e){
+                        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+                    }
+                }
+                return new ResponseEntity<Object>(HttpStatus.OK);
+            }
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ApiOperation(value = "Fetches Questions from DB", httpMethod="POST")

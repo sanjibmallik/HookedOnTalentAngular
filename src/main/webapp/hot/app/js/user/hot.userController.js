@@ -317,7 +317,44 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,U
                }
            }
 
+          if($rootScope.responseData.role!="TechnicalScreener"){
 
+           var jsonUser = {
+               "user":{
+                   "id":$rootScope.responseData.id,
+                   "firstName":$rootScope.responseData.firstName,
+                   "lastName":$rootScope.responseData.lastName,
+                   "userName":$rootScope.responseData.userName,
+                   "emailId":$rootScope.responseData.emailId,
+                   "contactNumber":$rootScope.responseData.contactNumber,
+                   "role":$rootScope.responseData.role,
+                   "alternateContact":$rootScope.responseData.alternateContact,
+                   "addressOne":$rootScope.responseData.addressOne,
+                   "addressTwo":$rootScope.responseData.addressTwo,
+                   "zipCode":$rootScope.responseData.zipCode,
+                   "city":$rootScope.responseData.city,
+                   "state":$rootScope.responseData.state,
+                   "country":$rootScope.responseData.country
+                  },
+               "technicalScreenerSkills":{
+
+
+               }
+              }
+
+           console.log(jsonUser);
+           $rootScope.currentModal.dismiss();
+
+             $http.put('user/update/',jsonUser)
+               .success(function (data, status, headers, config) {
+                   console.log(data);
+                   $state.go($state.current, {}, {reload: true});
+               })
+               .error(function (data, status, header, config) {
+               });
+
+
+          }else{
 
            var jsonUser = {
                "user":{
@@ -335,32 +372,27 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,U
                    "city":$rootScope.responseData.city,
                    "state":$rootScope.responseData.state,
                    "country":$rootScope.responseData.country,
-                   "expectedPayRange":$scope.newUser.expectedPayRangeFrom+"-"+$scope.newUser.expectedPayRangeTo+"-"+$scope.newUser.expectedPayRangeCurrency
+                   "expectedPayRange":$rootScope.responseData.expectedPayRangeFrom+"-"+$rootScope.responseData.expectedPayRangeTo+"-"+$rootScope.responseData.expectedPayRangeCurrency
 
                },
 
                "technicalScreenerSkills":{
                    "primarySkills":$rootScope.userPrimarySkills,
                    "secondarySkills":$rootScope.userSecodarySkills
-
-
-               }
-
-
-           }
+                        }
+                 }
 
            console.log(jsonUser);
-
-
-
-           $http.put('user/update/',jsonUser)
+           $rootScope.currentModal.dismiss();
+            $http.put('user/update/',jsonUser)
                .success(function (data, status, headers, config) {
                    console.log(data);
                    $state.go($state.current, {}, {reload: true});
                })
                .error(function (data, status, header, config) {
                });
-           $rootScope.currentModal.dismiss();
+
+          }
 
        }
 

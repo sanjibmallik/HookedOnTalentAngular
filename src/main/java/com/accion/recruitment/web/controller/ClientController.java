@@ -218,6 +218,7 @@ public class ClientController {
                     }
                 }
             }catch (Exception e){
+                e.printStackTrace();
                 return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
             }
         }catch (Exception e){
