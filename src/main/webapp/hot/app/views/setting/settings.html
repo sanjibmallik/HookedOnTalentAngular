@@ -1,0 +1,105 @@
+<page-title ng-if="layoutOptions.pageTitles" title="Settings" description=""></page-title>
+<div ng-controller="createNewUserCtrl">
+<script type="text/ng-template"></script>
+<div ng-controller="settingController">
+
+<form role="form" name="" class="form-horizontal" ng-submit="saveSetting();">
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Application Settings</h3>
+                <!-- <div class="panel-options">
+                    <a href="" data-toggle="panel">
+                        <span class="collapse-icon">&ndash;</span>
+                        <span class="expand-icon">+</span>
+                    </a>
+                    &lt;!&ndash;
+                    <a href="" data-toggle="remove">
+                            &times;
+                    </a>&ndash;&gt;
+                </div>-->
+            </div>
+
+            <div class="panel-body">
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Email Id</label>
+                    <div class="col-sm-5">
+                        <div class="input-group input-group-sm input-group-minimal">
+							<span class="input-group-addon">
+								<i class="linecons-mail"></i>
+							</span>
+                            <input type="email" readonly class="form-control" name="emailId" ng-model="settings.emailId"
+                                   placeholder="Enter email Id" ng-maxlength="35" ng-minlength="1" required="true">
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group-separator"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Domain Name/ IP Address</label>
+                    <div class="col-sm-5">
+                        <div class="input-group input-group-sm input-group-minimal">
+                            <span class="input-group-addon">
+                                <i class="linecons-user"></i>
+                            </span>
+                            <input type="text" name="firstName" class="form-control"
+                                   ng-model="settings.domainName" placeholder="Domain Name/ IP Address"
+                                    required="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group-separator"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Bucket Name</label>
+                    <div class="col-sm-5">
+                        <div class="input-group input-group-sm input-group-minimal">
+	    					<span class="input-group-addon">
+		    					<i class="linecons-user"></i>
+			    			</span>
+                            <input type="text" name="lastName" class="form-control"
+                                   ng-model="settings.bucketName" placeholder="Bucket Name"
+                                   required="true">
+                        </div>
+                        <ng-messages>
+                        </ng-messages>
+                    </div>
+                </div>
+                <div class="form-group-separator"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Bucket URL</label>
+                    <div class="col-sm-5">
+                        <div class="input-group input-group-sm input-group-minimal">
+							<span class="input-group-addon">
+								<i class="linecons-user"></i>
+							</span>
+                            <input type="text" name="userName" class="form-control"
+                                   ng-model="settings.bucketURL" placeholder="Bucket URL"
+                                   >
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body" style="text-align: center;">
+                <input class="btn btn-info btn-icon" type="submit" value="Save"/>
+                <!-- <input type="button" class="btn btn-warning btn-icon" ng-click="resetUserForm();" value="Reset">-->
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+</div>
+
+</div>

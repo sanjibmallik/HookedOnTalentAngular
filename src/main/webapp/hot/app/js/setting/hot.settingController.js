@@ -4,40 +4,35 @@ var hotSettingControllers = angular.module('hot.settingControllers',['ui.bootstr
 
 
 
-hotSettingControllers.controller('settingController',function($scope,$http,$state){
+hotSettingControllers.controller('settingController',function($scope,$http,$state,hotSettingFactory){
 
 
 
-    angular.element(document).ready(function(){$http({
-        method : 'GET',
-        url : 'settings'
-    }).then(function successCallback(response) {
+    angular.element(document).ready(function(){
 
-            $scope.settings=response.data;
+
+
+        hotSettingFactory.getSettings().then(function() {
+
+            $scope.settings = hotSettingFactory.data();
+
             console.log($scope.settings);
-
-            $scope.saveSetting
-
-        },function errorCallback(response) {
-            console.log(response.statusText);
         });
+
 
     });
 
-    $scope.saveSetting = function(){
-        console.log("setting page");
 
 
-        $http.put('settings/update/',$scope.settings)
-            .success(function (data, status, headers, config) {
-                console.log(data);
-                $state.go($state.current, {}, {reload: true});
-            })
-            .error(function (data, status, header, config) {
-            });
 
+    $scope.saveSetting = function() {
 
-    }
+           hotSettingFactory.saveSetting($scope.settings).then(function() {
+               $state.go($state.current, {}, {reload: true});
+               $scope.settings = hotSettingFactory.data();
+            console.log($scope.settings);
+        });
+    };
 
 
 
