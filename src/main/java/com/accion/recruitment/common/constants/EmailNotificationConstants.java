@@ -16,6 +16,9 @@ public class EmailNotificationConstants {
 
     public final static String CHANGE_PASSWORD_URL="/RecruitmentWeb/myProfile.do#changePassword";
 
+    public final static String INTERVIEW_URL="/RecruitmentWeb/myProfile.do#changePassword";
+
+
     public final static String SIGNATURE="Thanks,<br/>Team Accion Labs<br/>" +
             "<a href=\"http://www.accionlabs.com\"><img src=\"https://d2ue829my6ap69.cloudfront.net/images/AccionPNG.png\" height=\"40\" alt=\"\" /></a>" +
             "</html>";

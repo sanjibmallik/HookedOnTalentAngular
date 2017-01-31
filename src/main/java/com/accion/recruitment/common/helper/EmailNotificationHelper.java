@@ -86,6 +86,45 @@ public class EmailNotificationHelper {
             return false;
         }
     }
+
+    public Boolean sendMail(String to, List<String> bccList,String From,String subject, String body){
+
+        Properties props = System.getProperties();
+        props.put("mail.transport.protocol", EmailNotificationConstants.SMTP_PROTOCOL);
+        props.put("mail.smtp.port", EmailNotificationConstants.PORT);
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.starttls.required", "true");
+
+        Session session = Session.getDefaultInstance(props);
+        Message msg = new MimeMessage(session);
+
+        try {
+            msg.setFrom(new InternetAddress(From));
+            InternetAddress[] recipientAddress = new InternetAddress[bccList.size()];
+            int counter = 0;
+            for (String recipient : bccList) {
+                recipientAddress[counter] = new InternetAddress(recipient.trim());
+                counter++;
+            }
+            msg.setRecipients(Message.RecipientType.BCC, recipientAddress);
+
+            InternetAddress[] toAddresses = { new InternetAddress(to) };
+            msg.setRecipients(Message.RecipientType.TO, toAddresses);
+            msg.setSubject(subject);
+            msg.setSentDate(new Date());
+            msg.setContent(body, "text/html");
+            Transport transport = session.getTransport();
+            transport.connect(EmailNotificationConstants.AWS_HOST, EmailNotificationConstants.AWS_USERNAME, EmailNotificationConstants.AWS_PASSWORD);
+            transport.sendMessage(msg, msg.getAllRecipients());
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public void sendMail(final String[] to, final String[] cc, final String subject, final String body){
 
     }

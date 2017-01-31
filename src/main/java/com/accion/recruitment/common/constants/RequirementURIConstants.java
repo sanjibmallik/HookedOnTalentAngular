@@ -19,7 +19,7 @@ public class RequirementURIConstants {
     public static final String ADD_NO_MORE_CANDIDATE = "/hot/requirement/nomorecanidate/{id}";
     public static final String OPEN_CLOSE_REQUIREMENT = "/hot/requirement/openclose/{status}/{id}";
     public static final String ADD_CANDIDATE_TO_REQT = "/hot/requirement/addcandidate/{id}/{id}";
-    public static final String ADD_CANDIDATE_FROM_DB = "/hot/requirement/addcandidatefromdb";
+    public static final String ADD_CANDIDATES_TO_REQ = "/hot/requirement/addcandidates/{id}/{candidateIds}";
     public static final String ADD_QUESTION_FROM_DB = "/hot/requirement/addquestionfromdb";
 
     public static final String SHORTLIST_CANDIDATE = "/hot/requirement/shortlist";
