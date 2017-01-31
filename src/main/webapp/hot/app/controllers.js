@@ -16,6 +16,21 @@ var hotMainController = angular.module('hot.controllers', []);
         $scope.userName="";
         $scope.password="";
 
+
+        $rootScope.loginForm = true;
+        $rootScope.resetForm = false;
+        $rootScope.showResetForm = function(){
+            console.log("showResetForm");
+            $rootScope.loginForm = false;
+            $rootScope.resetForm = true;
+        }
+        $rootScope.ResetPasswordForm = function(){
+            console.log("ResetPasswordForm");
+            $rootScope.loginForm = true;
+            $rootScope.resetForm = false;
+        }
+
+
         $scope.submitUserLoginForm = function(){
 
             $http({
