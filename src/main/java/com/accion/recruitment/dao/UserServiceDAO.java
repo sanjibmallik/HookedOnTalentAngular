@@ -123,7 +123,7 @@ public interface UserServiceDAO<E> {
 
 
     /**
-     * deleteUserByQuery() delete the record from the DB based
+     * deleteRecordByQuery() delete the record from the DB based
      * on the Query.
      *
      * @param query accept the java.lang.String type

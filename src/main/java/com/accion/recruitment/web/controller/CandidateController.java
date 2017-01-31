@@ -547,18 +547,5 @@ public class CandidateController {
 
     }
 
-    @ApiOperation(value = "Regenerate Link", httpMethod="POST"
-            , notes = "Regenerate Link")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "Regenerate Link"),
-            @ApiResponse(code = 500, message = "Internal Server Error")})
-
-    @RequestMapping(value = CandidateRestURIConstants.REGENERATE_LINK, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<Object> regenerateLink(@RequestBody String candidateId,@RequestBody String userid) {
-
-        return new ResponseEntity<Object>(CandidateEnums.LINKS_GENERATED, HttpStatus.OK);
-
-    }
-
 
 }

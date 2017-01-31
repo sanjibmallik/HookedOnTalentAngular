@@ -40,4 +40,9 @@ public class PositionCandidatesServiceImpl implements PositionCandidatesService{
         return  this.positionCandidatesServiceDAO.findPositionCandidatesByRequirementId(requirementId);
     }
 
+    @Override
+    public PositionCandidates findPositionCandidatesByRequirementIdAndCandidateId(final int requirementId,final int candidateId )throws SQLException {
+        return  this.positionCandidatesServiceDAO.findPositionCandidatesByRequirementIdAndCandidateId(requirementId,candidateId);
+    }
+
 }

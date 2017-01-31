@@ -19,4 +19,16 @@ public interface CandidatePastHistoryServiceDAO<E> {
      */
 
     public Boolean saveCandidatePastHistory(final CandidatePastHistory candidatePastHistory);
+
+    /**
+     * deleteRecordByQuery() delete the record from the DB based
+     * on the Query.
+     *
+     * @param query accept the java.lang.String type
+     *                  which is having Database Query
+     *
+     * @return instance of Record having persisting state otherwise
+     *         it return null.
+     */
+    public Boolean deleteRecordByQuery(String query) ;
 }

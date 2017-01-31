@@ -36,4 +36,17 @@ public interface PositionCandidatesServiceDAO<E> {
      */
     public List<Candidates> findPositionCandidatesByRequirementId(final int requirementId);
 
+    /**
+     * findPositionCandidatesByRequirementIdAndCandidateId() provide the specification for retrieval of the
+     * PositionCandidates object from the database based on the position ID.
+     *
+     * @param requirementId accept the java.lang.int type of requirementId
+     *                  which is having position ID value
+     * * @param requirementId accept the java.lang.int type of candidateId
+     *                  which is having candidate ID value
+     * @return List of Candidates having persisting state otherwise
+     *         it return null.
+     */
+    public PositionCandidates findPositionCandidatesByRequirementIdAndCandidateId(final int requirementId,final int candidateId);
+
 }

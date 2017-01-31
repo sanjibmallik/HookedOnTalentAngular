@@ -22,4 +22,22 @@ public interface CandidatePastHistoryService {
      */
 
     public Boolean saveCandidatePastHistory(final CandidatePastHistory candidatePastHistory) throws SQLException;
+
+    /**
+     * deleteCandidatePastHistoryResponseByQuery() delete the record from the DB based
+     * on the Query.
+     *
+     * @param positionId accept the java.lang.int type of userId
+     *                  which is having positionId ID value
+     *
+     * @param candidateId accept the java.lang.int type of userId
+     *                  which is having candidateId ID value
+     *
+     *
+     * @return instance of Record having persisting state otherwise
+     *         it return null.
+     */
+
+    public Boolean deleteCandidatePastHistoryResponseByQuery(Integer positionId,Integer candidateId) throws SQLException;
+
 }

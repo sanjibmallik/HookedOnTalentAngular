@@ -9,6 +9,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -56,5 +57,17 @@ public class PositionCandidatesServiceDAOImpl<R> implements PositionCandidatesSe
         Query query = session.createSQLQuery(sqlQuery).addEntity(Candidates.class);
         return query.list();
     }
+
+    @Override
+    public PositionCandidates findPositionCandidatesByRequirementIdAndCandidateId(final int requirementId,final int candidateId) {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(PositionCandidates.class);
+        Criterion userNameCriteria= Restrictions.eq("positionId", requirementId);
+        Criterion emailIDCriteria=Restrictions.eq("candidateId", candidateId);
+        criteria.add(Restrictions.or(userNameCriteria, emailIDCriteria));
+        final PositionCandidates positionCandidates = (PositionCandidates) criteria.uniqueResult();
+        return positionCandidates;
+    }
+
 
 }

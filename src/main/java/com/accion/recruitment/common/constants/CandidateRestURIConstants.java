@@ -21,7 +21,7 @@ public class CandidateRestURIConstants {
     public static final String CANDIDATE_VIDEO_COMPARISON = "/hot/candidate/videocompare";
     public static final String ADD_VIEW_NOTES = "/hot/candidate/notes";
 
-    public static final String REGENERATE_LINK = "/hot/candidate/regeneratelink";
+
     public static final String CANDIDATE_EDIT = "/hot/candidate/edit";
     public static final String CANDIDATE_DETAILS = "/hot/candidate/details";
     public static final String CANDIDATE_ENABLE_DISABLE = "/hot/candidate/updatestatus";
