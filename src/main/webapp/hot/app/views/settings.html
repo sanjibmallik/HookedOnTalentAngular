@@ -1,8 +1,9 @@
 <page-title ng-if="layoutOptions.pageTitles" title="Settings" description=""></page-title>
 <div ng-controller="createNewUserCtrl">
 <script type="text/ng-template"></script>
+<div ng-controller="settingController">
 
-<form role="form" name="" class="form-horizontal" ng-submit="">
+<form role="form" name="" class="form-horizontal" ng-submit="saveSetting();">
 
 <div class="row">
     <div class="col-sm-12">
@@ -30,11 +31,11 @@
 							<span class="input-group-addon">
 								<i class="linecons-mail"></i>
 							</span>
-                            <input type="email" readonly class="form-control" name="emailId" ng-model="newUser.emailId"
-                                   placeholder="Enter email Id" ng-maxlength="35" ng-minlength="1" required="true"
-                                   ng-blur="checkEmailExist(newUser.emailId)">
+                            <input type="email" readonly class="form-control" name="emailId" ng-model="settings.emailId"
+                                   placeholder="Enter email Id" ng-maxlength="35" ng-minlength="1" required="true">
+
                         </div>
-                        <div ng-show="emailExist" style="color: red;">{{emailErrorMessage}}</div>
+
                     </div>
                 </div>
                 <div class="form-group-separator"></div>
@@ -47,8 +48,8 @@
                                 <i class="linecons-user"></i>
                             </span>
                             <input type="text" name="firstName" class="form-control"
-                                   ng-model="newUser.firstName" placeholder="Domain Name/ IP Address"
-                                   inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true">
+                                   ng-model="settings.domainName" placeholder="Domain Name/ IP Address"
+                                    required="true">
                         </div>
                     </div>
                 </div>
@@ -61,8 +62,8 @@
 		    					<i class="linecons-user"></i>
 			    			</span>
                             <input type="text" name="lastName" class="form-control"
-                                   ng-model="newUser.lastName" placeholder="Bucket Name"
-                                   inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true">
+                                   ng-model="settings.bucketName" placeholder="Bucket Name"
+                                   required="true">
                         </div>
                         <ng-messages>
                         </ng-messages>
@@ -77,12 +78,10 @@
 								<i class="linecons-user"></i>
 							</span>
                             <input type="text" name="userName" class="form-control"
-                                   ng-model="newUser.userName" placeholder="Bucket URL"
-                                   inputmask readonly data-mask="^[a-zA-Z0-9]*$" data-is-regex="true"
-                                   ng-maxlength="35" ng-minlength="1" required="true"
-                                   ng-blur="checkUserExist(newUser.userName)">
+                                   ng-model="settings.bucketURL" placeholder="Bucket URL"
+                                   >
                         </div>
-                        <div ng-show="userNameExist" style="color: red;">{{userNameErrorMessage}}</div>
+
                     </div>
                 </div>
 
@@ -101,4 +100,6 @@
     </div>
 </div>
 </form>
+</div>
+
 </div>
