@@ -285,9 +285,10 @@ public class ClientController {
                 if(oldClient==null)
                     return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
 
-                oldUser=this.userService.findUserById(user.getId());
+                oldUser=this.userService.findUserByPropertyName(UserConstants.USER_NAME,user.getUserName());
                 if(oldUser==null)
                     return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
+                user.setId(oldUser.getId());
             }catch (Exception e){
                 return new ResponseEntity<String>(new Gson().toJson(ClientHttpStatusEnums.CLIENT_NOT_SAVED.ResponseMsg()), HttpStatus.OK);
             }
@@ -394,7 +395,7 @@ public class ClientController {
             clientDetails.getClientContacts().add(clientContacts);
             String password=this.passwordGeneratorHelper.generatePassword();
             user.setPassword(this.encoder.encodePassword(password, null));
-            user.setRole("Client");
+            user.setRole(oldUser.getRole());
             clientContacts.setContactFullName(clientContacts.getFirstName()+" "+clientContacts.getLastName());
             String isEmailSent = clientContacts.getSendUserEmail();
             try{
@@ -405,8 +406,8 @@ public class ClientController {
 
 
             try{
-                if(this.userService.saveUserGroups(user)){
-                    if (isEmailSent!=null){
+                if(this.userService.saveUser(user)){
+                    if (clientContacts.getSendUserEmail().equals("No")){
                         this.clientService.saveClientDetails(clientDetails);
                         this.clientService.saveClientContacts(clientContacts);
                         user.setPassword(password);

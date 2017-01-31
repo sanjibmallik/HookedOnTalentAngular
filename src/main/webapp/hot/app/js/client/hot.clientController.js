@@ -261,7 +261,7 @@ hotClientControllers.controller('viewAllClientCtrl',function($scope,$rootScope,$
 
         var jsonClient = {
             "clientContacts": {
-
+                "id":$rootScope.responseData.clientContacts[0].id,
                 "addressOne": $rootScope.responseData.clientContacts[0].addressOne,
                 "addressTwo": $rootScope.responseData.clientContacts[0].addressTwo,
                 "alternateContact": $rootScope.responseData.clientContacts[0].alternateContact,
@@ -281,7 +281,7 @@ hotClientControllers.controller('viewAllClientCtrl',function($scope,$rootScope,$
                 "zipCode": $rootScope.responseData.clientContacts[0].zipCode
             },
             "clientDetails": {
-
+                "id":$rootScope.responseData.id,
                 "addressOne": $rootScope.responseData.addressOne,
                 "addressTwo": $rootScope.responseData.addressTwo,
                 "alternateContact": $rootScope.responseData.alternateContact,
@@ -343,7 +343,7 @@ hotClientControllers.controller('viewAllClientCtrl',function($scope,$rootScope,$
 
         var jsonClient = {
             "clientContacts": {
-
+                "id":$rootScope.responseData.clientContacts[0].id,
                 "addressOne": $rootScope.responseData.clientContacts[0].addressOne,
                 "addressTwo": $rootScope.responseData.clientContacts[0].addressTwo,
                 "alternateContact": $rootScope.responseData.clientContacts[0].alternateContact,
@@ -363,7 +363,7 @@ hotClientControllers.controller('viewAllClientCtrl',function($scope,$rootScope,$
                 "zipCode": $rootScope.responseData.clientContacts[0].zipCode
             },
             "clientDetails": {
-
+                "id":$rootScope.responseData.id,
                 "addressOne": $rootScope.responseData.addressOne,
                 "addressTwo": $rootScope.responseData.addressTwo,
                 "alternateContact": $rootScope.responseData.alternateContact,
