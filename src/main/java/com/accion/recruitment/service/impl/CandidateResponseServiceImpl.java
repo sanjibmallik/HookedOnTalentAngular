@@ -32,4 +32,36 @@ public class CandidateResponseServiceImpl implements CandidateResponseService {
     public CandidateFinalResult findCandidateFinalResultByPositionIdAndCandidateId(Integer positionId,Integer candidateId) throws SQLException {
         return this.candidateResponseServiceDAO.findCandidateFinalResultByPositionIdAndCandidateId(positionId,candidateId);
     }
+
+
+    @Override
+    public Boolean deleteCandidateGeneralQuestionResponseByQuery(Integer positionId,Integer candidateId) throws SQLException {
+        String query="delete  from default.candidate_general_question_response where positionId='"+positionId+"' and candidateId='"+candidateId+"'";
+        return this.candidateResponseServiceDAO.deleteRecordByQuery(query);
+    }
+
+    @Override
+    public Boolean deleteCandidateTechnicalQuestionResponseByQuery(Integer positionId,Integer candidateId) throws SQLException {
+        String query="delete  from default.candidate_technical_question_response where positionId='"+positionId+"' and candidateId='"+candidateId+"'";
+        return this.candidateResponseServiceDAO.deleteRecordByQuery(query);
+    }
+
+    @Override
+    public Boolean deleteCandidateVideoQuestionResponseByQuery(Integer positionId,Integer candidateId) throws SQLException {
+        String query="delete  from default.candidate_video_question_response where positionId='"+positionId+"' and candidateId='"+candidateId+"'";
+        return this.candidateResponseServiceDAO.deleteRecordByQuery(query);
+    }
+
+    @Override
+    public Boolean deleteCandidateSelfRatingResponseByQuery(Integer positionId,Integer candidateId) throws SQLException {
+        String query="delete  from default.candidate_self_rating_response where positionId='"+positionId+"' and candidateId='"+candidateId+"'";
+        return this.candidateResponseServiceDAO.deleteRecordByQuery(query);
+    }
+
+    @Override
+    public Boolean deleteCandidateFinalResultResponseByQuery(Integer positionId,Integer candidateId) throws SQLException {
+        String query="delete  from default.candidate_final_result where positionId='"+positionId+"' and candidateId='"+candidateId+"'";
+        return this.candidateResponseServiceDAO.deleteRecordByQuery(query);
+    }
+
 }

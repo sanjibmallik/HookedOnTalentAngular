@@ -3,6 +3,7 @@ package com.accion.recruitment.dao.impl;
 import com.accion.recruitment.dao.CandidatePastHistoryServiceDAO;
 import com.accion.recruitment.jpa.entities.CandidatePastHistory;
 import com.accion.recruitment.jpa.entities.PositionCandidates;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,15 @@ public class CandidatePastHistoryServiceDAOImpl<R> implements CandidatePastHisto
     public Boolean saveCandidatePastHistory(final CandidatePastHistory candidatePastHistory){
         final Session session = getSession();
         session.saveOrUpdate(candidatePastHistory);
+        return true;
+    }
+
+
+    @Override
+    public Boolean deleteRecordByQuery(final String query) {
+        final Session session = getSession();
+        final Query sqlQuery = session.createSQLQuery(query);
+        sqlQuery.executeUpdate();
         return true;
     }
 }

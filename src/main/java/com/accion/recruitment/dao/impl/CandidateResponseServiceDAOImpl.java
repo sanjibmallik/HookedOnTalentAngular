@@ -5,6 +5,7 @@ import com.accion.recruitment.jpa.entities.CandidateFinalResult;
 import com.accion.recruitment.jpa.entities.Candidates;
 import com.accion.recruitment.service.CandidateResponseService;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -43,4 +44,13 @@ public class CandidateResponseServiceDAOImpl<R> implements CandidateResponseServ
         criteria.add(Restrictions.eq("positionId", positionId));
         return (CandidateFinalResult) criteria.uniqueResult();
     }
+
+    @Override
+    public Boolean deleteRecordByQuery(final String query) {
+        final Session session = getSession();
+        final Query sqlQuery = session.createSQLQuery(query);
+        sqlQuery.executeUpdate();
+        return true;
+    }
+
 }

@@ -3,15 +3,13 @@ package com.accion.recruitment.service.impl;
 import com.accion.recruitment.common.constants.EmailNotificationConstants;
 import com.accion.recruitment.common.helper.EmailNotificationHelper;
 import com.accion.recruitment.common.helper.SettingsHelper;
-import com.accion.recruitment.jpa.entities.Candidates;
-import com.accion.recruitment.jpa.entities.PositionCandidates;
-import com.accion.recruitment.jpa.entities.Positions;
-import com.accion.recruitment.jpa.entities.User;
+import com.accion.recruitment.jpa.entities.*;
 import com.accion.recruitment.service.RequirementEmailNotificationService;
 import com.accion.recruitment.service.SettingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -43,9 +41,9 @@ public class RequirementEmailNotificationServiceImpl implements RequirementEmail
         body += "You can resume corresponding regular activity for the requirement.<br/><br/>";
         body += "For more details you can contact your Account Manager or Admin. <br/><br/>";
         body += "Please login to the application using your user id & password using the application link provided below.<br/></br>";
-        body+=this.settingsHelper.getSettingsMap().get("link");
+        body+=this.getSettingsMap().get("link");
         body+= EmailNotificationConstants.SIGNATURE;
-        return this.emailNotificationHelper.sendMail(toUser,this.settingsHelper.getSettingsMap().get("from"),subject,body);
+        return this.emailNotificationHelper.sendMail(toUser,this.getSettingsMap().get("from"),subject,body);
 
     }
 
@@ -59,9 +57,9 @@ public class RequirementEmailNotificationServiceImpl implements RequirementEmail
                 " There would not be any more activity for this requirement.<br/><br/>";
         body += "For more details you can contact your Account Manager or Admin.<br/><br/>";
         body += "Please login to the application using your user id & password using the application link provided below.<br/></br>";
-        body+=this.settingsHelper.getSettingsMap().get("link");
+        body+=this.getSettingsMap().get("link");
         body+= EmailNotificationConstants.SIGNATURE;
-        return this.emailNotificationHelper.sendMail(toUser,this.settingsHelper.getSettingsMap().get("from"),subject,body);
+        return this.emailNotificationHelper.sendMail(toUser,this.getSettingsMap().get("from"),subject,body);
 
     }
 
@@ -74,9 +72,9 @@ public class RequirementEmailNotificationServiceImpl implements RequirementEmail
         body += "A new Requirement : "+requirements.getJobTitle()+" is created for the Client: "+requirements.getClientName()+".<br/><br/>" ;
         body += "We request you to add appropriate questions for this requirement.<br/><br/>";
         body += "Please login to the application using your user id & password using the application link provided below.<br/></br>";
-        body+=this.settingsHelper.getSettingsMap().get("link");
+        body+=this.getSettingsMap().get("link");
         body+= EmailNotificationConstants.SIGNATURE;
-        return this.emailNotificationHelper.sendMail(toUser.getEmailId(),this.settingsHelper.getSettingsMap().get("from"),subject,body);
+        return this.emailNotificationHelper.sendMail(toUser.getEmailId(),this.getSettingsMap().get("from"),subject,body);
 
     }
 
@@ -90,9 +88,9 @@ public class RequirementEmailNotificationServiceImpl implements RequirementEmail
         body += "A new Requirement : "+requirements.getJobTitle()+" is created for the Client: "+requirements.getClientName()+".<br/><br/>" ;
         body += "You will be able to add candidates when the Questionnaire for this interview is ready.<br/><br/>";
         body += "Please login to the application using your user id & password using the application link provided below.<br/></br>";
-        body+=this.settingsHelper.getSettingsMap().get("link");
+        body+=this.getSettingsMap().get("link");
         body+= EmailNotificationConstants.SIGNATURE;
-        return this.emailNotificationHelper.sendMail(toUser.getEmailId(),this.settingsHelper.getSettingsMap().get("from"),subject,body);
+        return this.emailNotificationHelper.sendMail(toUser.getEmailId(),this.getSettingsMap().get("from"),subject,body);
 
     }
 
@@ -153,26 +151,39 @@ public class RequirementEmailNotificationServiceImpl implements RequirementEmail
                 "    <video width=\"200\" height=\"115\" controls>\n" +
                 "        <source src=\"https://d2ue829my6ap69.cloudfront.net/video/HoT_video.mp4\" type=\"video/mp4\">\n" +
 
-                "          "+this.settingsHelper.getSettingsMap().get("INTERVIEW_VIDEO_GUIDE")+
+                "          "+this.getSettingsMap().get("INTERVIEW_VIDEO_GUIDE")+
                 "            src=\"https://d2ue829my6ap69.cloudfront.net/images/dosDontPoster.jpg\" width=\"168\" /></a>\n" +
                 "    </video>\n" +
                 "</div>\n" +
                 "<div class=\"android\" style=\"display:none; width:0px; height:0px; overflow:hidden;\">\n" +
 
-                "   "+this.settingsHelper.getSettingsMap().get("INTERVIEW_VIDEO_GUIDE")+"<img height=\"94\" \n" +
+                "   "+this.getSettingsMap().get("INTERVIEW_VIDEO_GUIDE")+"<img height=\"94\" \n" +
                 "    src=\"https://d2ue829my6ap69.cloudfront.net/video/HoT_video.mp4\" width=\"168\" /></a>\n" +
                 "</div>";
 
         body += "Note: <ol><li>Candidates are requested to use GOOGLE CHROME BROWSER to take the interview<br/>";
         body += "If you are not using Chrome please <a href=\"https://www.google.co.in/chrome/\"><b>Download</b></a> the browser and install before taking the Interview. </li><br/>";
         body += "<li>Use 'GET IN TOUCH WITH US' functionality to state your problems faced in the Interview process and regeneration of Interview link.</li></ol>";
-        body += "To access your interview please click on the following link: <a href=\""+this.settingsHelper.getSettingsMap().get("domain")+"/RecruitmentWeb/"+positionCandidates.getCandidateLink()+"/interview.do\"><b>Interview Link</b></a><br/><br/>";
+        body += "To access your interview please click on the following link: <a href=\""+this.getSettingsMap().get("domain")+"/RecruitmentWeb/"+positionCandidates.getCandidateLink()+"/interview.do\"><b>Interview Link</b></a><br/><br/>";
         body += "If you have any questions, please contact: hookedontalent@accionlabs.com <br/><br/>";
         body += "All the Best !!!<br/><br/>";
         body+= EmailNotificationConstants.SIGNATURE;
-        return this.emailNotificationHelper.sendMail(candidates.getEmailId(),bccUser,this.settingsHelper.getSettingsMap().get("from"),subject,body);
+        return this.emailNotificationHelper.sendMail(candidates.getEmailId(),bccUser,this.getSettingsMap().get("from"),subject,body);
 
     }
 
+    public HashMap<String,String> getSettingsMap(){
+        Settings settings=this.settingsService.findSettingsDetailsById(1);
+        HashMap<String,String> settingMap=new HashMap<String, String>();
+        String link= "Link: <a href=\""+settings.getDomainName()+""+ EmailNotificationConstants.CHANGE_PASSWORD_URL+"\">"+settings.getDomainName()+""+EmailNotificationConstants.CHANGE_PASSWORD_URL+"\"</a> <br/><br/><br/>";
+        String INTERVIEW_VIDEO_GUIDE= " <a href=\""+settings.getDomainName()+""+ EmailNotificationConstants.INTERVIEW_URL+"\">"+settings.getDomainName()+""+EmailNotificationConstants.INTERVIEW_URL+"\"</a> <br/><br/><br/>";
 
+
+        settingMap.put("from",settings.getEmailId());
+        settingMap.put("domain",settings.getDomainName());
+        settingMap.put("link",link);
+        settingMap.put("INTERVIEW_VIDEO_GUIDE",INTERVIEW_VIDEO_GUIDE);
+
+        return settingMap;
+    }
 }

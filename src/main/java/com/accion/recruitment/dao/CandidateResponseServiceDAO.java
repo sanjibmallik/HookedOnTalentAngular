@@ -2,6 +2,8 @@ package com.accion.recruitment.dao;
 
 import com.accion.recruitment.jpa.entities.CandidateFinalResult;
 
+import java.sql.SQLException;
+
 /**
  * @author Mudassir Hussain
  * @author $LastChangedBy: Mudassir Hussain $
@@ -25,4 +27,16 @@ public interface CandidateResponseServiceDAO<E> {
      */
 
     public CandidateFinalResult findCandidateFinalResultByPositionIdAndCandidateId(Integer positionId,Integer candidateId);
+
+    /**
+     * deleteRecordByQuery() delete the record from the DB based
+     * on the Query.
+     *
+     * @param query accept the java.lang.String type
+     *                  which is having Database Query
+     *
+     * @return instance of Record having persisting state otherwise
+     *         it return null.
+     */
+    public Boolean deleteRecordByQuery(String query) ;
 }

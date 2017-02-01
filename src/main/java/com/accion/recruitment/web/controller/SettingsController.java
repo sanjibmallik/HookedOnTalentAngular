@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Date;
 
 /**
  * @author Mudassir Hussain
@@ -52,8 +53,15 @@ public class SettingsController {
     @RequestMapping(value = SettingsRestURIConstants.UPDATE_SETTINGS,produces = MediaType.APPLICATION_JSON_VALUE ,method = RequestMethod.PUT)
     public  ResponseEntity<String> createUser(@RequestBody Settings settings,
                                               final Principal principal) {
+        final Date currentDate = new Date();
         try{
             settings.setId(1);
+            try{
+                settings.setUpdatedBy(principal.getName());
+                settings.setUpdatedDate(currentDate);
+            }catch (Exception e){
+
+            }
             if(this.settingsService.saveSettings(settings))
                 return new ResponseEntity(HttpStatus.OK);
         }catch (Exception e){

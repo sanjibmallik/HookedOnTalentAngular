@@ -89,7 +89,11 @@
                 <td data-title="'Role'" sortable="'role'" filter="{ 'role': 'text' }">
                 {{user.role}}</td>
                 <td data-title="'Status'" sortable="'enabled'" filter="{ 'enabled': 'select' }" filter-data="[{id: true, title: 'Active'}, { id: false, title: 'Inactive'}]" >
-                    {{user.enabled}}</td>
+
+                   <span ng-show="user.enabled==true">Active</span>
+                    <span ng-show="user.enabled==false">Inactive</span>
+
+                    </td>
 
 
                 <td data-title="'Actions'">

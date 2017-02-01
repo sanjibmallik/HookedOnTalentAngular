@@ -33,4 +33,11 @@ public class CandidatePastHistoryServiceImpl implements CandidatePastHistoryServ
         return bolValue;
     }
 
+
+    @Override
+    public Boolean deleteCandidatePastHistoryResponseByQuery(Integer positionId,Integer candidateId) throws SQLException {
+        String query="delete  from default.candidate_past_history where positionId='"+positionId+"' and candidateId='"+candidateId+"'";
+        return this.candidatePastHistoryServiceDAO.deleteRecordByQuery(query);
+    }
+
 }

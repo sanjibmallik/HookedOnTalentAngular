@@ -1,6 +1,6 @@
 'use strict'
 
-var hotClientControllers = angular.module('hot.clientControllers',['ui.bootstrap','ngTable']);
+var hotClientControllers = angular.module('hot.clientControllers',['ui.bootstrap','ui.router','ngTable']);
 
 
 hotClientControllers.controller('createNewClientCtrl',function($scope,$http,$state){
