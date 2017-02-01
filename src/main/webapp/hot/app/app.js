@@ -292,6 +292,32 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
             controller: 'UIModalsCtrl'
         }).
 
+        state('app.requirements-Add-Resources', {
+            url: '/requirements-Add-Resources',
+            templateUrl: appHelper.templatePath('requirements/Add-Resources'),
+            resolve: {
+                deps: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.tables.datatables
+                    ]);
+                }
+            },
+            controller: 'UIModalsCtrl'
+        }).
+
+        state('app.requirements-Display-Resources', {
+            url: '/requirements-Display-Resources',
+            templateUrl: appHelper.templatePath('requirements/Display-Resources'),
+            resolve: {
+                deps: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.tables.datatables
+                    ]);
+                }
+            },
+            controller: 'UIModalsCtrl'
+        }).
+
         state('app.profile', {
             url: '/profile',
             templateUrl: appHelper.templatePath('profile'),
