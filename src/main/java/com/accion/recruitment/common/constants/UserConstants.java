@@ -14,6 +14,7 @@ public class UserConstants {
     public static final String USER_NAME = "userName";
     public static final String EMAIL_ID = "emailId";
     public static final String CONTACT_NUMBER = "contactNumber";
+    public static final String ROLE = "role";
     public static final String TRUE = "true";
     public static final String FALSE = "false";
     public static final String ADMIN = "admin";

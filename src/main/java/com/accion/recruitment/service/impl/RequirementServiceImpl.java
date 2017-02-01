@@ -44,5 +44,9 @@ public class RequirementServiceImpl implements RequirementService {
         return (Positions) this.requirementServiceDAO.findRequirementById(positionId);
     }
 
+    @Override
+    public Boolean deleteRecordByQuery(final String query )throws SQLException{
+        return  this.requirementServiceDAO.deleteRecordByQuery(query);
+    }
 
 }

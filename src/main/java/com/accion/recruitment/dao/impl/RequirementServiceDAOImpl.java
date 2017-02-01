@@ -4,6 +4,7 @@ import com.accion.recruitment.dao.RequirementServiceDAO;
 import com.accion.recruitment.jpa.entities.Positions;
 import com.accion.recruitment.jpa.entities.User;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -60,5 +61,13 @@ public class RequirementServiceDAOImpl<R> implements RequirementServiceDAO {
         final Criteria criteria = session.createCriteria(Positions.class);
         criteria.add(Restrictions.eq("positionId", positionId));
         return (Positions) criteria.uniqueResult();
+    }
+
+    @Override
+    public Boolean deleteRecordByQuery(final String query) {
+        final Session session = getSession();
+        final Query sqlQuery = session.createSQLQuery(query);
+        sqlQuery.executeUpdate();
+        return true;
     }
 }

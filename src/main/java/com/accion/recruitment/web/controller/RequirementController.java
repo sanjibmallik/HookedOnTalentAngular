@@ -363,7 +363,7 @@ public class RequirementController {
             @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = RequirementURIConstants.ADD_NO_MORE_CANDIDATE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Object> addNoMoreCandidate(@PathVariable("id") final int requirementId) {
+    public ResponseEntity<Object> addNoMoreCandidate(@PathVariable( "id") final int requirementId) {
 
 
         return new ResponseEntity<Object>(RequirementEnums.ADD_NO_MORE_CANDIDATE.ResponseMsg(), HttpStatus.CREATED);
@@ -572,6 +572,38 @@ public class RequirementController {
     }
 
 
+    @ApiOperation(value = "Display Requirement Technical Screener  ", httpMethod="GET")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Display Requirement Technical Screener"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.DISPLAY_TECH_SCREENER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> displayRequirementTS(@PathVariable(required = true,value="id") Integer requirementId) {
+
+        try{
+            Positions requirements=this.requirementService.findRequirementById(requirementId);
+
+            List<User> technicalScreenerUsersList= (List<User>) requirements.getTechnicalScreenerPositions();
+
+          /*  for(int i=0;i<technicalScreenerUsersList.size();i++){
+                Collection<TechnicalScreenerSkills> technicalScreenerSkillsList=technicalScreenerUsersList.get(i).getTechnicalScreenerDetailsDSkillsSet();
+                for(TechnicalScreenerSkills technicalScreenerSkills:technicalScreenerSkillsList){
+                    technicalScreenerUsersList.get(i).setPrimarySkills(technicalScreenerSkills.getPrimarySkills());
+                    technicalScreenerUsersList.get(i).setSecondarySkills(technicalScreenerSkills.getSecondarySkills());
+                }
+            }
+
+            Set<User> positionsHashSets = new HashSet<>();
+            positionsHashSets.addAll(technicalScreenerUsersList);
+            technicalScreenerUsersList.clear();
+            technicalScreenerUsersList.addAll(positionsHashSets);
+          */
+
+            return new ResponseEntity<Object>(technicalScreenerUsersList,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @ApiOperation(value = "Add Technical Screener to Requirement", httpMethod="POST")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Add Technical Screener to Requirement"),
@@ -579,7 +611,7 @@ public class RequirementController {
     @RequestMapping(value = RequirementURIConstants.ADD_TECH_SCREENER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Object> addTSToRequirement(@RequestParam(required = true,value="id") Integer requirementId,
-                                                     @RequestParam(required = true,value="technicalScreenerIds") String[] technicalScreenerIds) {
+                                                     @RequestParam(required = true,value="userIds") String[] technicalScreenerIds) {
 
         List<Integer> existingTsListId=new ArrayList<Integer>();
         try{
@@ -614,6 +646,49 @@ public class RequirementController {
         }
 
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ApiOperation(value = "Delete Requirement Technical Screener  ", httpMethod="DELETE")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Delete Requirement Technical Screener"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.DELETE_TECH_SCREENER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseEntity<Object> deleteRequirementTS(@PathVariable(required = true,value="id") Integer requirementId,
+                                                      @PathVariable(required = true,value="userId") Integer screenerId) {
+
+        try{
+            Positions requirements=this.requirementService.findRequirementById(requirementId);
+            String query="delete  FROM default.technical_screener_positions where position_id='"+requirementId+"' and user_id='"+screenerId+"'";
+            if(this.requirementService.deleteRecordByQuery(query)){
+                requirements.setTechnicalScreener(RequirementConstants.ZERO);
+                if(this.requirementService.saveRequirements(requirements))
+                    return new ResponseEntity(HttpStatus.OK);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+
+    @ApiOperation(value = "Display Requirement Recruiter  ", httpMethod="GET")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Display Requirement Recruiter"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.DISPLAY_RECRUITER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> displayRequirementRecruiter(@PathVariable(required = true,value="id") Integer requirementId) {
+
+        try{
+            Positions requirements=this.requirementService.findRequirementById(requirementId);
+
+            List<User> recruiterUsersList= (List<User>) requirements.getRecruiterPositions();
+
+            return new ResponseEntity<Object>(recruiterUsersList,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @ApiOperation(value = "Add Recruiter to Requirement", httpMethod="POST")
@@ -656,6 +731,28 @@ public class RequirementController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+
+    @ApiOperation(value = "Delete Requirement Recruiter  ", httpMethod="DELETE")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Delete Requirement Recruiter"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = RequirementURIConstants.DELETE_RECRUITER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseEntity<Object> deleteRequirementRecruiter(@PathVariable(required = true,value="id") Integer requirementId,
+                                                      @PathVariable(required = true,value="userId") Integer recruiterId) {
+
+        try{
+            String query="delete  FROM default.recruiter_positions where position_id='"+requirementId+"' and user_id='"+recruiterId+"'";
+            if(this.requirementService.deleteRecordByQuery(query)){
+                    return new ResponseEntity(HttpStatus.OK);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

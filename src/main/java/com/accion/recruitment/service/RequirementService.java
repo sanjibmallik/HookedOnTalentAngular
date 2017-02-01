@@ -48,4 +48,16 @@ public interface RequirementService {
      */
     public Positions findRequirementById(final int positionId) throws SQLException;
 
+    /**
+     * deleteUserByQuery() delete the record from the DB based
+     * on the Query.
+     *
+     * @param query accept the java.lang.String type
+     *                  which is having Database Query
+     *
+     * @return instance of Record having persisting state otherwise
+     *         it return null.
+     */
+    public Boolean deleteRecordByQuery(String query)throws SQLException;
+
 }

@@ -176,11 +176,11 @@ public class UserController {
     @RequestMapping(value = UserRestURIConstants.GET_ALL_USER, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.GET)
     @ResponseBody
     @JsonIgnore
-    public ResponseEntity<Set<User>> getAllUsers(){
+    public ResponseEntity<LinkedHashSet<User>> getAllUsers(){
 
         try{
             List<User> userList=this.userService.findAllUser();
-            Set<User> users=new LinkedHashSet<User>();
+            LinkedHashSet<User> users=new LinkedHashSet<User>();
             for(User userObject:userList){
                  User user= new User(userObject.getId(),userObject.getFirstName(),userObject.getLastName(),userObject.getUserName(),userObject.getEmailId(),userObject.getEnabled(),
                         userObject.getContactNumber(),userObject.getRole(),userObject.getAlternateContact(),userObject.getAddressOne(),userObject.getAddressTwo(),
@@ -188,7 +188,7 @@ public class UserController {
                         userObject.getUserProfile(),userObject.getErrorMessage(),userObject.getTechnicalScreenerDetailsDSkillsSet());
                 users.add(user);
             }
-            return new ResponseEntity<Set<User>>(users, HttpStatus.OK);
+            return new ResponseEntity<LinkedHashSet<User>>(users, HttpStatus.OK);
         }catch (SQLException e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
@@ -553,6 +553,33 @@ public class UserController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return  new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+    @ApiOperation(value = "Get the Users based on Role  ", httpMethod="GET")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Users Found "),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @RequestMapping(value = UserRestURIConstants.GET_ROLE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<LinkedHashSet<User>> findAllUserByRole(@PathVariable("role") final String role){
+
+        try{
+            List<User> userList=this.userService.findUserByRole(role);
+            LinkedHashSet<User> users=new LinkedHashSet<User>();
+            for(User userObject:userList){
+                User user= new User(userObject.getId(),userObject.getFirstName(),userObject.getLastName(),userObject.getUserName(),userObject.getEmailId(),userObject.getEnabled(),
+                        userObject.getContactNumber(),userObject.getRole(),userObject.getAlternateContact(),userObject.getAddressOne(),userObject.getAddressTwo(),
+                        userObject.getZipCode(),userObject.getCity(),userObject.getState(),userObject.getCountry(),userObject.getExpectedPayRange(),userObject.getUserImage(),
+                        userObject.getUserProfile(),userObject.getErrorMessage(),userObject.getTechnicalScreenerDetailsDSkillsSet());
+                users.add(user);
+            }
+            return new ResponseEntity<LinkedHashSet<User>>(users, HttpStatus.OK);
+        }catch (SQLException e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 
