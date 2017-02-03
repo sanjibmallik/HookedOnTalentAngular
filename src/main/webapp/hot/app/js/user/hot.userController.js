@@ -1,6 +1,6 @@
 'use strict'
 
-var hotUserControllers = angular.module('hot.userControllers',['ui.bootstrap','ngTable','ui.router','ngImgCrop','ngFileUpload']);
+var hotUserControllers = angular.module('hot.userControllers',['ui.bootstrap','ngTable','ui.router','ngImgCrop','ngFileUpload', 'ngAnimate', 'toastr']);
 
 
 hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,Upload){
@@ -247,14 +247,16 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,U
 
 
 
-   hotUserControllers.controller('viewAllUserCtrl',function($scope,$rootScope,$http, $filter, NgTableParams,$state){
+   hotUserControllers.controller('viewAllUserCtrl',function($scope,$rootScope,$http, $filter, NgTableParams,$state, toastr){
         $scope.test='test';
        $rootScope.users = [];
        $scope.showUser="all";
 
        $scope.activeMenu = 'Home';
 
-     angular.element(document).ready(function(){$http({
+     angular.element(document).ready(function(){
+
+         $http({
          method : 'GET',
          url : 'users'
      }).then(function successCallback(response) {
@@ -348,6 +350,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,U
              $http.put('user/update/',jsonUser)
                .success(function (data, status, headers, config) {
                    console.log(data);
+                     toastr.success('Hello world!', 'Toastr fun!');
                    $state.go($state.current, {}, {reload: true});
                })
                .error(function (data, status, header, config) {
@@ -388,6 +391,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,U
                .success(function (data, status, headers, config) {
                    console.log(data);
                    $state.go($state.current, {}, {reload: true});
+
                })
                .error(function (data, status, header, config) {
                });
