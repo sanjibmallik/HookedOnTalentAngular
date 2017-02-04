@@ -73,11 +73,11 @@
 
                         <ul class="dropdown-menu dropdown-gray" role="menu" style="font-size: 11px;">
                             <li>
-                                <a href="" ng-click="openAjaxModal('modal-2','user/'+user.id)" class="">Details</a>
+                                <a href="" ng-click="openAjaxModal('modal-2','requirement/'+user.positionId)" class="">Details</a>
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="" ng-click="openAjaxModal('modal-5', 'user/'+user.id);" class="">Edit</a>
+                                <a href="" ng-click="openAjaxModal('modal-5', 'requirement/'+user.positionId);" class="">Edit</a>
                             </li>
 
                             <li class="divider"></li>
@@ -92,7 +92,7 @@
 
                             <li class="divider"></li>
                             <li>
-                                <a href="" ng-click="openAjaxModal('modal-4','user/'+user.id)" class="">Close Requirement</a>
+                                <a href="" ng-click="openAjaxModal('modal-4','requirement/'+user.positionId)" class="">Close Requirement</a>
                             </li>
 
                         </ul>
@@ -168,7 +168,7 @@
 
     <div class="modal-header">
         <button type="button" class="close" ng-click="currentModal.close();" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Requirement Details</h4>
+        <h4 class="modal-title">{{responseDataCopy.jobTitle}} Details</h4>
     </div>
 
     <div class="modal-body">
@@ -177,54 +177,54 @@
             <tr>
 
                 <th>Requirement Name</th>
-                <th>Java Developer</th>
+                <th>{{responseData.jobTitle}}</th>
             </tr>
             </thead>
 
             <tbody>
             <tr>
                 <td>Client</td>
-                <td>Accion Labs</td>
+                <td>{{responseData.clientName}}</td>
             </tr>
             <tr>
                 <td>Contact Person</td>
-                <td>Sandesh Sukumaran</td>
+                <td>{{responseData.contactPerson}}</td>
             </tr>
             <tr>
                 <td>Priority</td>
-                <td>High</td>
+                <td>{{responseData.priority}}</td>
             </tr>
             <tr>
                 <td>Job Description</td>
-                <td>Having Good knowledge in Spring, Hibernate</td>
+                <td>{{responseData.jobDescription}}</td>
             </tr>
             <tr>
                 <td>Open Requirements</td>
-                <td>10</td>
+                <td>{{responseData.openPositions}}</td>
             </tr>
             <tr>
                 <td>Duration</td>
-                <td>5 Years</td>
+                <td>{{responseData.duration}}</td>
             </tr>
             <tr>
                 <td>Start Date</td>
-                <td>12/1/2017</td>
+                <td>{{responseData.startDate}}</td>
             </tr>
             <tr>
                 <td>Bill Rate</td>
-                <td>$100</td>
+                <td>{{responseData.billRate}}</td>
             </tr>
             <tr>
                 <td>Pay Rate</td>
-                <td>$80</td>
+                <td>{{responseData.payRate}}</td>
             </tr>
             <tr>
                 <td>Client Location</td>
-                <td>Varthur</td>
+                <td>{{responseData.clientLocation}}</td>
             </tr>
             <tr>
                 <td>Broadcast Location</td>
-                <td>Whitefield</td>
+                <td>{{responseData.broadcastLocation}}</td>
             </tr>
             <tr>
                 <td>Address</td>
