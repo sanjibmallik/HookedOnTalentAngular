@@ -283,7 +283,7 @@
 <script type="text/ng-template" id="modal-5">
     <div class="modal-header">
         <button type="button" class="close" ng-click="currentModal.close();" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Edit Requirement for Java Developer</h4>
+        <h4 class="modal-title">Edit Requirement for {{responseDataCopy.jobTitle}}</h4>
     </div>
 
     <form ng-submit="updateUser();" name="editUser" role="form" class="form-horizontal" >
@@ -295,10 +295,10 @@
                     <div class="form-group">
                         <label for="field-1" class="control-label">Priority</label>
 
-                        <select class="form-control" name="">
-                            <option>High</option>
-                            <option>Medium</option>
-                            <option>Low</option>
+                        <select class="form-control" name="" ng-model="responseData.priority">
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
                         </select>
                     </div>
 
@@ -325,7 +325,7 @@
                     <div class="form-group">
                         <label for="field-1" class="control-label">Job Title</label>
 
-                        <input type="text" ng-model="responseData.contactNumber" class="form-control" placeholder="Job Title">
+                        <input type="text" ng-model="responseData.jobTitle" class="form-control" placeholder="Job Title">
                     </div>
 
                 </div>
@@ -335,7 +335,7 @@
                     <div class="form-group">
                         <label for="field-2" class="control-label">Open Requirements</label>
 
-                        <input type="text" class="form-control"  placeholder="No. of open requirements">
+                        <input type="text" class="form-control" ng-model="responseData.openPositions" placeholder="No. of open requirements">
                     </div>
 
                 </div>
@@ -347,7 +347,7 @@
                     <div class="form-group">
                         <label for="field-1" class="control-label">Start Date</label>
 
-                        <input type="text" class="form-control datepicker" data-start-date="d" name="startDate" data-format="dd-mm-yyyy" >
+                        <input type="text" class="form-control datepicker" ng-model="responseData.startDate" data-start-date="d" name="startDate" data-format="dd-mm-yyyy" >
                     </div>
 
                 </div>
@@ -357,7 +357,7 @@
                     <div class="form-group">
                         <label for="field-2" class="control-label">Duration</label>
 
-                        <input type="text" class="form-control"  placeholder="Duration of the project">
+                        <input type="text" class="form-control" ng-model="responseData.duration" placeholder="Duration of the project">
                     </div>
 
                 </div>
@@ -371,7 +371,7 @@
 
 
                             <input style="width: 60%" type="text" name="addressOne" class="form-control" placeholder=""
-                                       inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
+                                       inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true" ng-model="responseData.billRate">
 
                             <select style="width: 40%" class="form-control" name="role" >
                                 <option>Per Hour</option>
@@ -413,7 +413,7 @@
                     <div class="form-group">
                         <label for="field-1" class="control-label">Client Location</label>
 
-                        <input type="text" class="form-control" placeholder="Client Location">
+                        <input type="text" class="form-control" ng-model="responseData.clientLocation" placeholder="Client Location">
                     </div>
 
                 </div>
@@ -423,7 +423,7 @@
                     <div class="form-group">
                         <label for="field-2" class="control-label">Broadcast Location</label>
 
-                        <input type="text" class="form-control"  placeholder="Broadcast Location">
+                        <input type="text" class="form-control" ng-model="responseData.broadcastLocation" placeholder="Broadcast Location">
                     </div>
 
                 </div>
@@ -467,7 +467,7 @@
                     <div class="form-group">
                         <label for="field-4" class="control-label">State</label>
 
-                        <input type="text" ng-model="responseData.city" class="form-control" id="field-4" placeholder="CA">
+                        <input type="text" ng-model="responseData.state" class="form-control" id="field-4" placeholder="CA">
                     </div>
 
                 </div>
