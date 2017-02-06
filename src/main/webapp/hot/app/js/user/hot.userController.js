@@ -262,6 +262,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,U
      }).then(function successCallback(response) {
 
              $rootScope.users=response.data;
+           /*  toastr.success('Get All users!');*/
              $rootScope.usersTable = new NgTableParams({
                  page: 1,
                  count: 10
@@ -290,6 +291,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,U
            $http.put('user/reset/'+userId)
                .success(function (data, status, headers, config) {
                    console.log(data);
+                   toastr.success('Successfully Updated!');
                })
                .error(function (data, status, header, config) {
                });
@@ -350,10 +352,11 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,U
              $http.put('user/update/',jsonUser)
                .success(function (data, status, headers, config) {
                    console.log(data);
-                     toastr.success('Hello world!', 'Toastr fun!');
+                     toastr.success('Successfully Updated!');
                    $state.go($state.current, {}, {reload: true});
                })
                .error(function (data, status, header, config) {
+                     toastr.error('Not updated!');
                });
 
 
