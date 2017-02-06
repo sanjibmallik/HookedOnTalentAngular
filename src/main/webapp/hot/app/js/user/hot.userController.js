@@ -140,11 +140,13 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,U
                     console.log(data);
                     console.log(status);
                     if(status==201){
+                      toastr.success('Successfully Created User!');
                       $state.go('app.users-Display-Users', {});
                     }
 
                 })
                 .error(function (data, status, header, config){
+                    toastr.error('Sorry! User not created!');
                     $scope.ResponseDetails = "Data: " + data +
                         "<hr />status: " + status +
                         "<hr />headers: " + header +
