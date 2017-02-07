@@ -16,20 +16,6 @@ var hotMainController = angular.module('hot.controllers', ['ngAnimate','toastr']
         $scope.userName="";
         $scope.password="";
 
-/*
-        $rootScope.loginForm = true;
-        $rootScope.resetForm = false;
-        $rootScope.showResetForm = function(){
-            console.log("showResetForm");
-            $rootScope.loginForm = false;
-            $rootScope.resetForm = true;
-        }*/
-       /* $rootScope.submitResetLoginForm = function(){
-            console.log("ResetPasswordForm");
-            $rootScope.loginForm = true;
-            $rootScope.resetForm = false;
-        }
-*/
         $scope.resetEmail = "";
 
 
@@ -43,8 +29,7 @@ var hotMainController = angular.module('hot.controllers', ['ngAnimate','toastr']
             }).then(function mySucces(response) {
                     console.log(response.data);
                  if("EMAIL_ID_NOT_FOUND"==response.data){
-                       /* $scope.errorMessageShow = true;
-                        $scope.errorMessage = response.data;*/
+
                         toastr.error("User not found");
 
                     }
@@ -58,9 +43,6 @@ var hotMainController = angular.module('hot.controllers', ['ngAnimate','toastr']
                     console.log(response);
 
                 });
-
-
-
 
     }
 
