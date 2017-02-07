@@ -3,7 +3,7 @@
  */
 'use strict'
 
-var hotProfileControllers = angular.module('hot.profileControllers',['ui.bootstrap','ui.router','ngImgCrop','ngFileUpload', 'ngAnimate', 'toastr']);
+var hotProfileControllers = angular.module('hot.profileControllers',['ui.bootstrap','ui.router','ngImgCrop','ngFileUpload', 'ngAnimate', 'toastr', 'hot.profileFactory' ]);
 
 
 hotProfileControllers.controller('profileCtrl',function($scope,$http,$state,Upload){

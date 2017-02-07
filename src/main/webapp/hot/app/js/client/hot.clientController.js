@@ -1,35 +1,26 @@
 'use strict'
 
-var hotClientControllers = angular.module('hot.clientControllers',['ui.bootstrap','ui.router','ngTable']);
+var hotClientControllers = angular.module('hot.clientControllers',['ui.bootstrap','ui.router','ngTable','hot.clientFactory','ngAnimate', 'toastr']);
 
 
-hotClientControllers.controller('createNewClientCtrl',function($scope,$http,$state){
-
-
+hotClientControllers.controller('createNewClientCtrl',function($scope,$http,$state,clientFactory,toastr){
     $scope.newClient = {};
     //Error messages
     $scope.emailErrorMessage = "email Id already exist";
     $scope.userNameErrorMessage = "username already exist";
+    $scope.clientNameErrorMessage = "Client Name already exist";
     $scope.contactNumberErrorMessage = "contact number already exist";
 
     //show hides
     $scope.emailExist = false;
     $scope.userNameExist = false;
+    $scope.clientNameExist = false;
     $scope.contactNumberExist = false;
-
-
-
 
     $scope.submitNewClient = function(){
 
-
-
-
-
-
         var jsonClient = {
             "clientContacts": {
-
                 "addressOne": $scope.newClient.addressOne,
                 "addressTwo": $scope.newClient.addressTwo,
                 "alternateContact": $scope.newClient.alternateContact,
@@ -41,10 +32,8 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http,$sta
                 "faxNumber": $scope.newClient.faxNumber,
                 "firstName": $scope.newClient.firstName,
                 "lastName": $scope.newClient.lastName,
-
                 "sendUserEmail": "No",
                 "state": $scope.newClient.state,
-
                 "userName": $scope.newClient.userName,
                 "zipCode": $scope.newClient.zipCode
             },
@@ -54,16 +43,13 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http,$sta
                 "addressTwo": $scope.newClient.addressTwo,
                 "alternateContact": $scope.newClient.alternateContact,
                 "city": $scope.newClient.city,
-
                 "clientName": $scope.newClient.clientName,
                 "contactNumber": $scope.newClient.contactNumber,
                 "country": $scope.newClient.country,
-
                 "engagementModel": $scope.newClient.engagementModel,
                 "faxNumber": $scope.newClient.faxNumber,
                 "federalId": $scope.newClient.federalId,
                 "industry": $scope.newClient.industry,
-
                 "state": $scope.newClient.state,
                 "websiteUrl": $scope.newClient.websiteUrl,
                 "zipCode": $scope.newClient.zipCode
@@ -86,34 +72,35 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http,$sta
                 "state": $scope.newClient.state,
                 "zipCode": $scope.newClient.zipCode
             }
-        }
+        };
 
 
         console.log(jsonClient);
 
-        $http.post('client/create', jsonClient)
-            .success(function (data, status, headers, config) {
-                console.log(data);
+        clientFactory.createClient(jsonClient)
+            .success(function(data, status, headers, config){
+                console.log(data+" and " +status);
+                if(status==201){
+                    toastr.success("Client Created Successfully");
+                    $state.go('app.clients-Display-Clients', {});
+                }
+                else{
+                    toastr.error("Client not Created");
+                }
 
             })
             .error(function (data, status, header, config){
+                toastr.error("Client not Created");
                 $scope.ResponseDetails = "Data: " + data +
                     "<hr />status: " + status +
                     "<hr />headers: " + header +
                     "<hr />config: " + config;
             });
-    };
-
-
-
-
+    }
 
     $scope.resetUserForm = function(){
         $scope.newClient={};
     }
-
-
-
 
     $scope.checkUserExist = function(userName){
         $scope.userNameExist = false;
@@ -126,7 +113,33 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http,$sta
                     $scope.userNameExist = false;
                 }else{
                     $scope.userNameExist = true
-                    $scope.newUser.userName="";
+                    $scope.newClient.userName="";
+
+                }
+
+            })
+            .error(function (data, status, header, config){
+                $scope.ResponseDetails = "Data: " + data +
+                    "<hr />status: " + status +
+                    "<hr />headers: " + header +
+                    "<hr />config: " + config;
+            });
+    };
+
+
+    $scope.checkClientNameExist = function(clientName){
+        console.log("check client Name");
+        $scope.ClientNameExist = false;
+
+        $http.get('client/clientName/'+ clientName)
+            .success(function (data, status, headers, config) {
+
+                console.log(data);
+                if(data.length==0){
+                    $scope.clientNameExist = false;
+                }else{
+                    $scope.clientNameExist = true
+                    $scope.newClient.clientName="";
 
                 }
 
@@ -151,7 +164,7 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http,$sta
                     $scope.emailExist = false;
                 }else{
                     $scope.emailExist = true;
-                    $scope.newUser.emailId="";
+                    $scope.newClient.emailId="";
 
                 }
 
@@ -165,11 +178,11 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http,$sta
     };
 
 
-    $scope.checkContactNumberExist = function(){
+       $scope.checkContactNumberExist = function(){
         $scope.contactNumberExist = false;
-        console.log($scope.newUser.contactNumber);
+        console.log($scope.newClient.contactNumber);
 
-        $http.get('user/contactNumber/'+ $scope.newUser.contactNumber)
+        $http.get('user/contactNumber/'+ $scope.newClient.contactNumber)
             .success(function (data, status, headers, config) {
 
                 console.log(data);
@@ -177,7 +190,7 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http,$sta
                     $scope.contactNumberExist = false;
                 }else{
                     $scope.contactNumberExist = true;
-                    $scope.newUser.contactNumber = "";
+                    $scope.newClient.contactNumber = "";
 
                 }
 
@@ -190,15 +203,7 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http,$sta
             });
     };
 
-
-
-
-
-
 });
-
-
-
 
 hotClientControllers.controller('viewAllClientCtrl',function($scope,$rootScope,$http,$state, $filter, NgTableParams){
 

@@ -35,8 +35,11 @@
                 </span>
                 <input type="text" name="clientName" class="form-control" ng-model="newClient.clientName"
                        placeholder="Client Name" maxlength="64"
-                       inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true">
+                       inputmask data-mask="[a-zA-Z][a-zA-Z0-9 ]*" data-is-regex="true" required="true" ng-blur="checkClientNameExist(newClient.clientName)">
             </div>
+
+        <div ng-show="clientNameExist" style="color: red;">{{clientNameErrorMessage}}</div>
+
         </div>
     </div>
 
@@ -300,10 +303,10 @@
 							</span>
                                 <input type="text" name="userName" class="form-control" ng-model="newClient.userName" placeholder="User Name"
                                        inputmask data-mask="^[a-zA-Z0-9]*([.&_]*)$" data-is-regex="true"
-                                       maxlength="64" required  ng-blur="checkUserExist(newUser.userName)">
+                                       maxlength="64" required  ng-blur="checkUserExist(newClient.userName)">
                             </div>
-                            <!--<div ng-show="userNameExist" style="color: red;">{{userNameErrorMessage}}</div>-->
-                        </div>
+                            <div ng-show="userNameExist" style="color: red;">{{userNameErrorMessage}}</div>
+                           </div>
                     </div>
 
                     <div class="form-group-separator"></div>
@@ -317,9 +320,9 @@
 							</span>
                                 <input type="email" class="form-control" name="emailId" ng-model="newClient.emailId"
                                        placeholder="Enter your email Id"
-                                       maxlength="64" required ng-blur="checkEmailExist(newUser.emailId)">
+                                       maxlength="64" required ng-blur="checkEmailExist(newClient.emailId)">
                             </div>
-                            <!--<div ng-show="emailExist" style="color: red;">{{emailErrorMessage}}</div>-->
+                            <div ng-show="emailExist" style="color: red;">{{emailErrorMessage}}</div>
                         </div>
                     </div>
 
@@ -333,9 +336,9 @@
 							</span>
                                 <input type="text" class="form-control" data-mask="phone"
                                        required ng-model="newClient.contactNumber" name="contactNumber"
-                                       ng-blur="checkContactNumberExist(newUser.contactNumber)" />
+                                       ng-blur="checkContactNumberExist(newClient.contactNumber)" />
                             </div>
-                            <!--<div ng-show="contactNumberExist" style="color: red;">{{contactNumberErrorMessage}}</div>-->
+                            <div ng-show="contactNumberExist" style="color: red;">{{contactNumberErrorMessage}}</div>
                         </div>
                     </div>
 
