@@ -16,20 +16,51 @@ var hotMainController = angular.module('hot.controllers', []);
         $scope.userName="";
         $scope.password="";
 
-
+/*
         $rootScope.loginForm = true;
         $rootScope.resetForm = false;
         $rootScope.showResetForm = function(){
             console.log("showResetForm");
             $rootScope.loginForm = false;
             $rootScope.resetForm = true;
-        }
-        $rootScope.ResetPasswordForm = function(){
+        }*/
+       /* $rootScope.submitResetLoginForm = function(){
             console.log("ResetPasswordForm");
             $rootScope.loginForm = true;
             $rootScope.resetForm = false;
         }
+*/
+        $scope.resetEmail = "";
 
+        $scope.submitResetLoginForm = function(){
+            console.log($scope.resetEmail);
+
+            $http({
+                method : 'POST',
+                url : 'login/'+$scope.resetEmail
+            }).then(function mySucces(response) {
+                    console.log("success");
+                    console.log(response);
+                    $scope.user = response.data;
+                    console.log($scope.user.errorMessage);
+
+                    if(null==response.data.errorMessage){
+                      /*  $state.go('login', {});*/
+                    }
+                    else{
+                        $scope.errorMessageShow = true;
+                        $scope.errorMessage = response.data.errorMessage;
+                    }
+                }, function myError(response) {
+                    console.log("error");
+                    console.log(response);
+
+                });
+
+
+
+
+    }
 
         $scope.submitUserLoginForm = function(){
 

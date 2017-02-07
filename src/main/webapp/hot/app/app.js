@@ -90,8 +90,20 @@ app.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ASS
                 }
             }
         }).
-		
-		state('app.users-Create-User', {
+       state('resetLoginPassword', {
+            url: '/resetLoginPassword',
+            templateUrl: 'app/views/common/resetLoginPassword.html',
+            controller: 'LoginCtrl',
+            resolve: {
+                resources: function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        ASSETS.forms.jQueryValidate,
+                        ASSETS.extra.toastr
+                    ]);
+                }
+            }
+        }).
+        state('app.users-Create-User', {
 			url: '/users-Create-User',
 			templateUrl: appHelper.templatePath('users/Create-User'),
 			resolve: {
