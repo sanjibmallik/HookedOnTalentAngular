@@ -2,6 +2,7 @@ package com.accion.recruitment.dao.impl;
 
 import com.accion.recruitment.dao.CandidateResponseServiceDAO;
 import com.accion.recruitment.jpa.entities.CandidateFinalResult;
+import com.accion.recruitment.jpa.entities.CandidateVideoQuestionResponse;
 import com.accion.recruitment.jpa.entities.Candidates;
 import com.accion.recruitment.service.CandidateResponseService;
 import org.hibernate.Criteria;
@@ -12,6 +13,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -53,4 +55,10 @@ public class CandidateResponseServiceDAOImpl<R> implements CandidateResponseServ
         return true;
     }
 
+    @Override
+    public List<Object[]> getCandidateVideoResponseByQuery(final String SqlQuery) {
+        final Session session = getSession();
+        Query query = session.createSQLQuery(SqlQuery).addEntity(CandidateVideoQuestionResponse.class);
+        return  query.list();
+    }
 }

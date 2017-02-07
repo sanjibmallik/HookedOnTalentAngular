@@ -1,8 +1,10 @@
 package com.accion.recruitment.service;
 
 import com.accion.recruitment.jpa.entities.CandidateFinalResult;
+import com.accion.recruitment.jpa.entities.CandidateVideoQuestionResponse;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author Mudassir Hussain
@@ -117,5 +119,23 @@ public interface CandidateResponseService {
 
     public Boolean deleteCandidateFinalResultResponseByQuery(Integer positionId,Integer candidateId) throws SQLException;
 
+
+    /**
+     * getCandidateVideoResponseByRequirementIdAndQuestionId() get  the list of record from the DB based
+     * on the requirementId and questionId.
+     *
+     * @param requirementId accept the java.lang.int type of userId
+     *                  which is having positionId ID value
+     *
+     * @param questionId accept the java.lang.int type of userId
+     *                  which is having questionId ID value
+     *
+     *
+     * @return instance of Record having persisting state otherwise
+     *         it return null.
+     */
+
+
+    public List<CandidateVideoQuestionResponse> getCandidateVideoResponseByRequirementIdAndQuestionId(Integer requirementId,Integer questionId)throws SQLException;
 
 }

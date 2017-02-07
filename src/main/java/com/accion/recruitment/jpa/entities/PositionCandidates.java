@@ -17,6 +17,24 @@ import java.util.Date;
 
 public class PositionCandidates extends BaseEntity{
 
+    public PositionCandidates() {
+    }
+
+    public PositionCandidates(String linkValidity, String candidateLink, String status, Double score, String screenedStatus, String candidateEnableDisable, String comment, String evalutedByTS, String isShortListed, Integer linkCount, String addedBy, String submitToClient, Integer autoReminderCount) {
+        this.linkValidity = linkValidity;
+        this.candidateLink = candidateLink;
+        this.status = status;
+        this.score = score;
+        this.screenedStatus = screenedStatus;
+        this.candidateEnableDisable = candidateEnableDisable;
+        this.comment = comment;
+        this.evalutedByTS = evalutedByTS;
+        this.isShortListed = isShortListed;
+        this.linkCount = linkCount;
+        this.addedBy = addedBy;
+        this.submitToClient = submitToClient;
+        this.autoReminderCount = autoReminderCount;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

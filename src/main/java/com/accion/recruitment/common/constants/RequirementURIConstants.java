@@ -24,7 +24,7 @@ public class RequirementURIConstants {
     public static final String DISPLAY_RECRUITER ="/hot/requirement/displayrecruiter/{id}";
     public static final String DELETE_RECRUITER ="/hot/requirement/deleterecruiter/{id}/{userId}";
 
-
+    public static final String CANDIDATE_VIDEO_COMPARISON = "/hot/requirement/compare/{id}";
 
     public static final String ADD_NO_MORE_CANDIDATE = "/hot/requirement/nomorecanidate/{id}";
 

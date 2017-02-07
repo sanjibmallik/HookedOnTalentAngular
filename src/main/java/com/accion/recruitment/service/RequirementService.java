@@ -1,8 +1,6 @@
 package com.accion.recruitment.service;
 
-import com.accion.recruitment.jpa.entities.ClientDetails;
-import com.accion.recruitment.jpa.entities.Positions;
-import com.accion.recruitment.jpa.entities.User;
+import com.accion.recruitment.jpa.entities.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -40,13 +38,13 @@ public interface RequirementService {
      * findRequirementById() provide the specification for retrieval of the
      * Positions object from the database based on the positionId.
      *
-     * @param positionId accept the java.lang.int type of positionId
+     * @param requirementId accept the java.lang.int type of positionId
      *                  which is having position ID value
      *
      * @return instance of Positions having persisting state otherwise
      *         it return null.
      */
-    public Positions findRequirementById(final int positionId) throws SQLException;
+    public Positions findRequirementById(final int requirementId) throws SQLException;
 
     /**
      * deleteUserByQuery() delete the record from the DB based
@@ -59,5 +57,27 @@ public interface RequirementService {
      *         it return null.
      */
     public Boolean deleteRecordByQuery(String query)throws SQLException;
+
+    /**
+     * findAllRequirementVideoQuestions() provide the specification for getting all the
+     * Requirement Video Question objects from the database.
+     *
+     * @param requirementId accept the java.lang.int type of positionId
+     *
+     * @return instance of the java.util.List containing the
+     *         Video Question object of the persisting state.
+     */
+    public List<VideoQuestion> findAllRequirementVideoQuestions(Integer requirementId);
+
+    /**
+     * findAllRequirementCandidateByRequirementId() provide the specification for getting all the
+     * Requirement Candidates objects from the database.
+     *
+     * @param requirementId accept the java.lang.int type of positionId
+     *
+     * @return instance of the java.util.List containing the
+     *         Video Question object of the persisting state.
+     */
+    public List<PositionCandidates> findAllRequirementCandidateByRequirementId(Integer requirementId);
 
 }
