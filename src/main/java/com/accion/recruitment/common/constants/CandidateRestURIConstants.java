@@ -18,7 +18,7 @@ public class CandidateRestURIConstants {
     public static final String SCREENED_CANDIDATE = "/hot/candidate/screened";
     public static final String UNSCREENED_CANDIDATE = "/hot/candidate/unscreened";
     public static final String APPROVED_CANDIDATE = "/hot/candidate/approved";
-    public static final String CANDIDATE_VIDEO_COMPARISON = "/hot/candidate/videocompare";
+
     public static final String ADD_VIEW_NOTES = "/hot/candidate/notes";
 
 

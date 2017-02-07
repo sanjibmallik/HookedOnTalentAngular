@@ -345,17 +345,24 @@ public class RequirementController {
     @ResponseBody
     public ResponseEntity<Object> getRequirementCandidates(@PathVariable("id") final int requirementId) {
 
-        Positions requirementObject;
+        List<PositionCandidates> positionCandidatesList;
+        List<PositionCandidates> positionCandidatesListObject=new LinkedList<PositionCandidates>();
         try{
-            requirementObject=this.requirementService.findRequirementById(requirementId);
+            positionCandidatesList=this.requirementService.findAllRequirementCandidateByRequirementId(requirementId);
+            for(PositionCandidates positionCandidates:positionCandidatesList){
+                PositionCandidates positionCandidatesObject=new PositionCandidates(positionCandidates.getLinkValidity(),positionCandidates.getCandidateLink(),positionCandidates.getStatus(),
+                        positionCandidates.getScore(),positionCandidates.getScreenedStatus(),positionCandidates.getCandidateEnableDisable(),positionCandidates.getComment(),
+                        positionCandidates.getEvalutedByTS(),positionCandidates.getIsShortListed(),positionCandidates.getLinkCount(),positionCandidates.getAddedBy(),
+                        positionCandidates.getSubmitToClient(),positionCandidates.getAutoReminderCount());
+                positionCandidatesListObject.add(positionCandidatesObject);
+            }
+            return new ResponseEntity<Object>(positionCandidatesListObject,HttpStatus.OK);
 
-
-        }catch (SQLException e){
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 
     @ApiOperation(value = "Add No more Candidate", httpMethod="GET")
@@ -577,28 +584,22 @@ public class RequirementController {
             @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = RequirementURIConstants.DISPLAY_TECH_SCREENER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Object> displayRequirementTS(@PathVariable(required = true,value="id") Integer requirementId) {
+    public ResponseEntity<LinkedHashSet<User>> displayRequirementTS(@PathVariable(required = true,value="id") Integer requirementId) {
 
         try{
             Positions requirements=this.requirementService.findRequirementById(requirementId);
 
             List<User> technicalScreenerUsersList= (List<User>) requirements.getTechnicalScreenerPositions();
 
-          /*  for(int i=0;i<technicalScreenerUsersList.size();i++){
-                Collection<TechnicalScreenerSkills> technicalScreenerSkillsList=technicalScreenerUsersList.get(i).getTechnicalScreenerDetailsDSkillsSet();
-                for(TechnicalScreenerSkills technicalScreenerSkills:technicalScreenerSkillsList){
-                    technicalScreenerUsersList.get(i).setPrimarySkills(technicalScreenerSkills.getPrimarySkills());
-                    technicalScreenerUsersList.get(i).setSecondarySkills(technicalScreenerSkills.getSecondarySkills());
-                }
+            LinkedHashSet<User> users=new LinkedHashSet<User>();
+            for(User userObject:technicalScreenerUsersList){
+                User user= new User(userObject.getId(),userObject.getFirstName(),userObject.getLastName(),userObject.getUserName(),userObject.getEmailId(),userObject.getEnabled(),
+                        userObject.getContactNumber(),userObject.getRole(),userObject.getAlternateContact(),userObject.getAddressOne(),userObject.getAddressTwo(),
+                        userObject.getZipCode(),userObject.getCity(),userObject.getState(),userObject.getCountry(),userObject.getExpectedPayRange(),userObject.getUserImage(),
+                        userObject.getUserProfile(),userObject.getErrorMessage(),userObject.getTechnicalScreenerDetailsDSkillsSet());
+                users.add(user);
             }
-
-            Set<User> positionsHashSets = new HashSet<>();
-            positionsHashSets.addAll(technicalScreenerUsersList);
-            technicalScreenerUsersList.clear();
-            technicalScreenerUsersList.addAll(positionsHashSets);
-          */
-
-            return new ResponseEntity<Object>(technicalScreenerUsersList,HttpStatus.OK);
+            return new ResponseEntity<LinkedHashSet<User>>(users, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -678,14 +679,24 @@ public class RequirementController {
             @ApiResponse(code = 500, message = "Internal Server Error")})
     @RequestMapping(value = RequirementURIConstants.DISPLAY_RECRUITER, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Object> displayRequirementRecruiter(@PathVariable(required = true,value="id") Integer requirementId) {
+    public ResponseEntity<LinkedHashSet<User>> displayRequirementRecruiter(@PathVariable(required = true,value="id") Integer requirementId) {
 
         try{
             Positions requirements=this.requirementService.findRequirementById(requirementId);
 
             List<User> recruiterUsersList= (List<User>) requirements.getRecruiterPositions();
 
-            return new ResponseEntity<Object>(recruiterUsersList,HttpStatus.OK);
+            LinkedHashSet<User> users=new LinkedHashSet<User>();
+
+            for(User userObject:recruiterUsersList){
+                User user= new User(userObject.getId(),userObject.getFirstName(),userObject.getLastName(),userObject.getUserName(),userObject.getEmailId(),userObject.getEnabled(),
+                        userObject.getContactNumber(),userObject.getRole(),userObject.getAlternateContact(),userObject.getAddressOne(),userObject.getAddressTwo(),
+                        userObject.getZipCode(),userObject.getCity(),userObject.getState(),userObject.getCountry(),userObject.getExpectedPayRange(),userObject.getUserImage(),
+                        userObject.getUserProfile(),userObject.getErrorMessage(),userObject.getTechnicalScreenerDetailsDSkillsSet());
+                users.add(user);
+            }
+            return new ResponseEntity<LinkedHashSet<User>>(users, HttpStatus.OK);
+
         }catch (Exception e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -754,6 +765,36 @@ public class RequirementController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+    @ApiOperation(value = "Candidate  Comparison ", httpMethod="GET"
+            , notes = "Candidate Comparison")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Candidate Comparison"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+
+    @RequestMapping(value = RequirementURIConstants.CANDIDATE_VIDEO_COMPARISON, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> compareCandidateVideos(@PathVariable("positionId") Integer requirementId,
+                                                         @PathVariable("questionId") Integer questionId) {
+
+        try{
+            List<VideoQuestion> videoQuestionsList=this.requirementService.findAllRequirementVideoQuestions(requirementId);;
+
+            List<CandidateVideoQuestionResponse>  candidateVideoQuestionResponses=this.candidateResponseService.getCandidateVideoResponseByRequirementIdAndQuestionId(requirementId,questionId);
+           /* List<Candidates>  candidates=this.candidateVideoQuestionResponseRepository.getCandidateVideoComparisonCandidateName(requirementId, questionId);
+
+
+            for(int i=0;i<candidates.size();i++){
+                String firstName=candidates.get(i).getFirstName();
+                candidateVideoQuestionResponses.get(i).setFirstName(firstName);
+
+            }*/
+            return new ResponseEntity<Object>(candidateVideoQuestionResponses,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 

@@ -1,6 +1,8 @@
 package com.accion.recruitment.dao;
 
+import com.accion.recruitment.jpa.entities.PositionCandidates;
 import com.accion.recruitment.jpa.entities.Positions;
+import com.accion.recruitment.jpa.entities.VideoQuestion;
 
 import java.util.List;
 
@@ -55,5 +57,29 @@ public interface RequirementServiceDAO<E> {
      *         it return null.
      */
     public Boolean deleteRecordByQuery(String query);
+
+    /**
+     * findAllRequirementVideoQuestions() provide the specification for getting all the
+     * Requirement Video Question objects from the database.
+     *
+     * @param query accept the java.lang.String type
+     *                  which is having Database Query
+     *
+     *
+     * @return instance of the java.util.List containing the
+     *         Video Question object of the persisting state.
+     */
+    public List<VideoQuestion> findAllRequirementVideoQuestions(String query);
+
+    /**
+     * findAllRequirementCandidateByRequirementId() provide the specification for getting all the
+     * Requirement Candidates objects from the database.
+     *
+     * @param requirementId accept the java.lang.int type of positionId
+     *
+     * @return instance of the java.util.List containing the
+     *         Video Question object of the persisting state.
+     */
+    public List<PositionCandidates> findAllRequirementCandidateByRequirementId(Integer requirementId);
 
 }

@@ -1,8 +1,10 @@
 package com.accion.recruitment.dao.impl;
 
 import com.accion.recruitment.dao.RequirementServiceDAO;
+import com.accion.recruitment.jpa.entities.PositionCandidates;
 import com.accion.recruitment.jpa.entities.Positions;
 import com.accion.recruitment.jpa.entities.User;
+import com.accion.recruitment.jpa.entities.VideoQuestion;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -70,4 +72,23 @@ public class RequirementServiceDAOImpl<R> implements RequirementServiceDAO {
         sqlQuery.executeUpdate();
         return true;
     }
+
+    @Override
+    public List<R> findAllRequirementVideoQuestions(String query){
+        final Session session = getSession();
+        final Query sqlQuery = session.createSQLQuery(query).addEntity(VideoQuestion.class);
+        List<R> rList = sqlQuery.list();
+        return rList;
+    }
+
+
+    @Override
+    public List<PositionCandidates> findAllRequirementCandidateByRequirementId(final Integer requirementId) {
+        final Session session = getSession();
+        String sqlQuery="select * from default.position_candidates where positionId='"+requirementId+"' ORDER BY position_candidates_id DESC";
+        Query query = session.createSQLQuery(sqlQuery).addEntity(PositionCandidates.class);
+        List<PositionCandidates> positionCandidatesList=query.list();
+        return positionCandidatesList;
+    }
+
 }

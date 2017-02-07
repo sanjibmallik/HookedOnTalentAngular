@@ -534,18 +534,7 @@ public class CandidateController {
 
     }
 
-    @ApiOperation(value = "Video Comparison ", httpMethod="POST"
-            , notes = "Video Comparison")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "Video Comparison"),
-            @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = CandidateRestURIConstants.CANDIDATE_VIDEO_COMPARISON, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<Object> compareCandidateVideos(@RequestBody String candidateId,@RequestBody String userid) {
-
-        return new ResponseEntity<Object>(CandidateEnums.VIDEO_COMPARED, HttpStatus.OK);
-
-    }
 
 
 }

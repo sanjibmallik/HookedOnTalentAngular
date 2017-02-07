@@ -3,6 +3,7 @@ package com.accion.recruitment.service.impl;
 import com.accion.recruitment.dao.CandidateResponseServiceDAO;
 import com.accion.recruitment.dao.CandidateServiceDAO;
 import com.accion.recruitment.jpa.entities.CandidateFinalResult;
+import com.accion.recruitment.jpa.entities.CandidateVideoQuestionResponse;
 import com.accion.recruitment.jpa.entities.Candidates;
 import com.accion.recruitment.service.CandidateResponseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,16 @@ public class CandidateResponseServiceImpl implements CandidateResponseService {
     public Boolean deleteCandidateFinalResultResponseByQuery(Integer positionId,Integer candidateId) throws SQLException {
         String query="delete  from default.candidate_final_result where positionId='"+positionId+"' and candidateId='"+candidateId+"'";
         return this.candidateResponseServiceDAO.deleteRecordByQuery(query);
+    }
+
+    @Override
+    public List<CandidateVideoQuestionResponse> getCandidateVideoResponseByRequirementIdAndQuestionId(Integer requirementId,Integer questionId) throws SQLException {
+        String query="SELECT *\n" +
+                "FROM default.candidate_video_question_response\n" +
+                "inner join default.candidates\n" +
+                "on candidate_video_question_response.candidateId=candidates.candidateId\n" +
+                "where candidate_video_question_response.positionId='"+requirementId+"' and candidate_video_question_response.questionId='"+questionId+"'";
+        return this.candidateResponseServiceDAO.getCandidateVideoResponseByQuery(query);
     }
 
 }
