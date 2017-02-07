@@ -8,6 +8,21 @@ var hotProfileControllers = angular.module('hot.profileControllers',['ui.bootstr
 
 hotProfileControllers.controller('profileCtrl',function($scope,$http,$state,Upload){
 
+    angular.element(document).ready(function(){
+
+        $scope.loginUser = {
+            "firstName":"Sanjib",
+            "lastName":"Mallik",
+            "userName":"Sanjib"
+
+        };
+    });
+
+    $scope.resetLoginForm = function(){
+        $scope.loginUser = {};
+
+    };
+
 
 
 
