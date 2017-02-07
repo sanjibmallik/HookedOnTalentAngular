@@ -24,7 +24,7 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http,$sta
 
 
 
-        var data = $scope.newClient;
+
 
 
         var jsonClient = {
@@ -109,7 +109,7 @@ hotClientControllers.controller('createNewClientCtrl',function($scope,$http,$sta
 
 
     $scope.resetUserForm = function(){
-        $scope.newUser={};
+        $scope.newClient={};
     }
 
 
