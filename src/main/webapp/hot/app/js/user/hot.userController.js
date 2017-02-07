@@ -296,6 +296,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,U
                    toastr.success('Successfully Updated!');
                })
                .error(function (data, status, header, config) {
+                   toastr.error('Unable to reset your password!');
                });
            $rootScope.currentModal.dismiss();
 

@@ -17,6 +17,7 @@ var app = angular.module('hot-app', [
     'hot.settingControllers',
     'hot.settingFactory',
     'hot.userFilter',
+    'hot.profileControllers',
     'ngTable',
     'ngImgCrop',
     'ngFileUpload',

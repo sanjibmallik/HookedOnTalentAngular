@@ -351,9 +351,7 @@
                 <a ui-sref="app.users-Display-Users"><input class="btn btn-danger btn-icon"
                                                           type="button" value="Cancel"/>
                 </a>
-                <!--<a href="" id="success_msg_1" class="btn btn-success">Success Message</a>
-                <a href="" id="danger_msg_1" class="btn btn-danger">Danger Message</a>
-                <a href="" id="warning_msg_1" class="btn btn-warning">Warning Message</a>-->
+
             </div>
         </div>
     </div>
@@ -361,76 +359,7 @@
 </form>
 </div>
 
-<script type="text/javascript">
-    jQuery(document).ready(function($)
-    {
-        $("#success_msg_1").click(function(ev)
-        {
-            ev.preventDefault();
 
-            var opts = {
-                "closeButton": true,
-                "debug": false,
-                "positionClass": "toast-top-right",
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "5000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            };
-
-            toastr.success("User Created successful.", "Successful", opts);
-        });
-
-        $("#danger_msg_1").click(function(ev)
-        {
-            ev.preventDefault();
-
-            var opts = {
-                "closeButton": true,
-                "debug": false,
-                "positionClass": "toast-top-full-width",
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "5000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            };
-
-            toastr.error("Error", opts);
-        });
-
-        $("#warning_msg_1").click(function(ev)
-        {
-            ev.preventDefault();
-
-            var opts = {
-                "closeButton": true,
-                "debug": false,
-                "positionClass": "toast-bottom-left",
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "5000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            };
-
-            toastr.warning("Warning", null, opts);
-        });
-    });
-</script>
 
 
 <script type="text/ng-template" id="modal-4">
