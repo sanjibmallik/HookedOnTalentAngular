@@ -59,7 +59,7 @@
                     {{user.primarySkill}}</td>
                 <td data-title="'Created By'" sortable="'createdBy'" filter="{ 'createdBy': 'text' }">
                     {{user.createdBy}}</td>
-                <td data-title="'Priority'" sortable="'priority'" filter="{ 'priority': 'text' }">
+                <td data-title="'Priority'" sortable="'priority'" filter="{ 'priority': 'select' }" filter-data="[{id: 'High', title: 'High'}, { id: 'Medium', title: 'Medium'},{ id: 'Low', title: 'Low'}]">
                     {{user.priority}}</td>
                 <td data-title="'Status'" sortable="'status'" filter="{ 'status': 'select' }" filter-data="[{id: 'Open', title: 'Open'}, { id: 'Closed', title: 'Closed'}]">
                     {{user.status}}</td>
