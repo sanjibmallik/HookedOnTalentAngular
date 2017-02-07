@@ -264,7 +264,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,U
      }).then(function successCallback(response) {
 
              $rootScope.users=response.data;
-           /*  toastr.success('Get All users!');*/
+
              $rootScope.usersTable = new NgTableParams({
                  page: 1,
                  count: 10
