@@ -1,6 +1,6 @@
 'use strict'
 
-var hotSettingControllers = angular.module('hot.settingControllers',['ui.bootstrap','ui.router']);
+var hotSettingControllers = angular.module('hot.settingControllers',['ui.bootstrap','ui.router','toastr','ngAnimate']);
 
 
 
@@ -10,33 +10,30 @@ hotSettingControllers.controller('settingController',function($scope,$http,$stat
 
     angular.element(document).ready(function(){
 
+        hotSettingFactory.getSettings().success(function(response){
+            console.log(response);
+            $scope.settings = response;
+        }).error(function(){
 
-
-        hotSettingFactory.getSettings().then(function() {
-
-            $scope.settings = hotSettingFactory.data();
-
-            console.log($scope.settings);
-        });
-
-
+            });
     });
-
-
 
 
     $scope.saveSetting = function() {
 
-           hotSettingFactory.saveSetting($scope.settings).then(function() {
-               $state.go($state.current, {}, {reload: true});
-               $scope.settings = hotSettingFactory.data();
-            console.log($scope.settings);
-        });
-    };
+        hotSettingFactory.saveSetting($scope.settings).success(function (response) {
+                             toastr.success("Setting saved successfully");
 
+                             $state.go($state.current, {}, {reload: true});
+                             }).error(function(){
+                             toastr.error("Setting not saved");
 
-
-
-
+            });
+    }
 });
+
+
+
+
+
 
