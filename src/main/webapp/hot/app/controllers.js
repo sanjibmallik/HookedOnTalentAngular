@@ -1,9 +1,9 @@
 'use strict';
 
-var hotMainController = angular.module('hot.controllers', []);
+var hotMainController = angular.module('hot.controllers', ['ngAnimate','toastr']);
 
 
-    hotMainController.controller('LoginCtrl', function($scope, $rootScope,$http,$state)
+    hotMainController.controller('LoginCtrl', function($scope, $rootScope,$http,$state,toastr)
 	{
         $rootScope.isLoginPage        = true;
         $rootScope.isLightLoginPage   = false;
@@ -32,6 +32,8 @@ var hotMainController = angular.module('hot.controllers', []);
 */
         $scope.resetEmail = "";
 
+
+
         $scope.submitResetLoginForm = function(){
             console.log($scope.resetEmail);
 
@@ -39,17 +41,17 @@ var hotMainController = angular.module('hot.controllers', []);
                 method : 'POST',
                 url : 'login/'+$scope.resetEmail
             }).then(function mySucces(response) {
-                    console.log("success");
-                    console.log(response);
-                    $scope.user = response.data;
-                    console.log($scope.user.errorMessage);
+                    console.log(response.data);
+                 if("EMAIL_ID_NOT_FOUND"==response.data){
+                       /* $scope.errorMessageShow = true;
+                        $scope.errorMessage = response.data;*/
+                        toastr.error("User not found");
 
-                    if(null==response.data.errorMessage){
-                      /*  $state.go('login', {});*/
                     }
                     else{
-                        $scope.errorMessageShow = true;
-                        $scope.errorMessage = response.data.errorMessage;
+                        toastr.success(response.data);
+                        $state.go('login', {});
+
                     }
                 }, function myError(response) {
                     console.log("error");
