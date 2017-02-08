@@ -188,14 +188,15 @@ hotRequirementControllers.controller('createNewRequirementCtrl',function($scope,
 
 
 
-hotClientControllers.controller('viewAllRequirementsCtrl',function($scope,$rootScope,$http, $filter, NgTableParams){
+hotClientControllers.controller('viewAllRequirementsCtrl',function($scope,$rootScope,$http, $filter, NgTableParams,hotRequirementFactory){
 
     $rootScope.users = [];
 
-    angular.element(document).ready(function(){$http({
-        method : 'GET',
-        url : 'requirements'
-    }).then(function successCallback(response) {
+    angular.element(document).ready(function(){
+
+        hotRequirementFactory.getAllRequirements()
+
+            .then(function successCallback(response) {
 
             $rootScope.requirements=response.data;
             console.log( $rootScope.requirements);
