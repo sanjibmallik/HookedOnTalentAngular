@@ -250,7 +250,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,U
 
 
    hotUserControllers.controller('viewAllUserCtrl',function($scope,$rootScope,$http, $filter, NgTableParams,$state, toastr){
-        $scope.test='test';
+       $scope.test='test';
        $rootScope.users = [];
        $scope.showUser="all";
 
@@ -264,6 +264,7 @@ hotUserControllers.controller('createNewUserCtrl',function($scope,$http,$state,U
      }).then(function successCallback(response) {
 
              $rootScope.users=response.data;
+             console.log( $rootScope.users.length);
 
              $rootScope.usersTable = new NgTableParams({
                  page: 1,
