@@ -11,6 +11,7 @@ public class ClientRestURIConstants {
     public static final String UPDATE_CLIENT = "/hot/client/update";
     public static final String GET_BY_ID = "/hot/client/{id}";
     public static final String GET_ALL_CLIENT = "/hot/clients";
+    public static final String GET_ALL_CLIENT_NAMES = "/hot/client/clientNames";
     public static final String CLIENT_ACTIVATE = "/hot/client/activate/{id}";
     public static final String GET_CLIENT_NAME = "/hot/client/clientName/{clientName}";
     public static final String GET_FEDERAL_ID = "/hot/client/federalId/{federalId}";
