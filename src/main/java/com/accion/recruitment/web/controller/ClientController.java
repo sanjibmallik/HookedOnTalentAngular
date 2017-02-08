@@ -235,19 +235,17 @@ public class ClientController {
     @RequestMapping(value = ClientRestURIConstants.GET_ALL_CLIENT, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.GET)
     @ResponseBody
     @JsonIgnore
-    public ResponseEntity<Set<ClientDetails>> getAllClients(){
+    public ResponseEntity<String> getAllClients(){
 
         try{
             List<ClientDetails> clientDetailsList=this.clientService.findAllClients();
-            Set<ClientDetails> clients=new LinkedHashSet<ClientDetails>();
-            for(ClientDetails clientObject:clientDetailsList){
-                ClientDetails clientDetails=new ClientDetails(clientObject.getId(),clientObject.getClientName(),clientObject.getIndustry(),clientObject.getEngagementModel(),clientObject.getFederalId(),clientObject.getFaxNumber()
-                ,clientObject.getContactNumber(),clientObject.getAlternateContact(),clientObject.getAddressOne(),clientObject.getAddressTwo(),clientObject.getCity(),
-                        clientObject.getState(),clientObject.getCountry(),clientObject.getZipCode(),clientObject.getWebsiteUrl(),clientObject.getEnable(),clientObject.getIsUserActive(),
-                        clientObject.getOwner(),clientObject.getNote(),clientObject.getClientContacts());
-                clients.add(clientDetails);
+            Set<String> clientSet=new HashSet<String>();
+            for(ClientDetails clientDetails:clientDetailsList){
+                clientSet.add(clientDetails.getClientName());
             }
-            return new ResponseEntity<Set<ClientDetails>>(clients, HttpStatus.OK);
+            String json = new Gson().toJson(clientSet);
+
+            return new ResponseEntity<String>(json, HttpStatus.OK);
         }catch (SQLException e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
