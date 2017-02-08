@@ -116,14 +116,15 @@ public class CandidateController {
             Set<Candidates> candidatesSet=new LinkedHashSet<Candidates>();
 
             for(Candidates candidateObject:candidatesList){
-                Candidates candidates=new Candidates(candidateObject.getCandidateId(),candidateObject.getEmailId(),candidateObject.getMiddleName(),candidateObject.getLastName(),candidateObject.getFirstName(),
-                        candidateObject.getCellPhoneNumber(),candidateObject.getHomePhoneNumber(),candidateObject.getLastName(),candidateObject.getJobTitle(),candidateObject.getPrimarySkill(),
-                        candidateObject.getSecondarySkill(),candidateObject.getCurrentLocation(),candidateObject.getTotalExperience(),candidateObject.getTotalExperiencePeriod(),candidateObject.getUsExperience(),
-                        candidateObject.getUsExperiencePeriod(),candidateObject.getAddress(),candidateObject.getImmigrationStatus(),candidateObject.getAddress2(),candidateObject.getCity(),
-                        candidateObject.getState(),candidateObject.getCountry(),candidateObject.getCurrentEmployer(),candidateObject.getStatus(),candidateObject.getBillRate(),
-                        candidateObject.getBillRateCurrency(),candidateObject.getPayRate(),candidateObject.getPayRateCurrency(),candidateObject.getNote(),candidateObject.getAllReadyAdded(),candidateObject.getEvaluatedByTS(),candidateObject.getFinalVerdict(),
-                        candidateObject.getLinkCount(),candidateObject.getAddedBy(),candidateObject.getIsShortListed(),candidateObject.getScreenedStatus(),candidateObject.getEnableDisableStatus(),
-                        candidateObject.getComment(),candidateObject.getInterviewStatus(),candidateObject.getScore(),candidateObject.getPositionId(),candidateObject.getPositionName());
+                Candidates candidates=new Candidates(candidateObject.getCandidateId(),candidateObject.getFirstName(),candidateObject.getMiddleName(),candidateObject.getLastName(),
+                        candidateObject.getCandidateName(),candidateObject.getCellPhoneNumber(),candidateObject.getHomePhoneNumber(),candidateObject.getEmailId(),candidateObject.getJobTitle(),
+                        candidateObject.getPrimarySkill(),candidateObject.getSecondarySkill(),candidateObject.getCurrentLocation(),candidateObject.getTotalExperience(),candidateObject.getTotalExperiencePeriod(),
+                        candidateObject.getUsExperience(),candidateObject.getUsExperiencePeriod(),candidateObject.getAddress(),candidateObject.getImmigrationStatus(),
+                        candidateObject.getAddress2(),candidateObject.getCity(),candidateObject.getState(),candidateObject.getCountry(),candidateObject.getCurrentEmployer(),
+                        candidateObject.getStatus(),candidateObject.getBillRate(),candidateObject.getBillRateCurrency(),candidateObject.getPayRate(),candidateObject.getPayRateCurrency(),
+                        candidateObject.getNote(),candidateObject.getAllReadyAdded(),candidateObject.getEvaluatedByTS(),candidateObject.getFinalVerdict(),candidateObject.getLinkCount(),
+                        candidateObject.getAddedBy(),candidateObject.getIsShortListed(),candidateObject.getScreenedStatus(),candidateObject.getEnableDisableStatus(),candidateObject.getComment(),
+                        candidateObject.getInterviewStatus(),candidateObject.getScore(),candidateObject.getPositionId(),candidateObject.getPositionName());
                 candidatesSet.add(candidates);
             }
             return new ResponseEntity<Set<Candidates>>(candidatesSet, HttpStatus.OK);
@@ -328,14 +329,15 @@ public class CandidateController {
         try{
             candidateObject=this.candidateService.findCandidatesById(candidateId);
             if(candidateObject!=null){
-                Candidates candidates=new Candidates(candidateObject.getCandidateId(),candidateObject.getEmailId(),candidateObject.getMiddleName(),candidateObject.getLastName(),candidateObject.getFirstName(),
-                        candidateObject.getCellPhoneNumber(),candidateObject.getHomePhoneNumber(),candidateObject.getLastName(),candidateObject.getJobTitle(),candidateObject.getPrimarySkill(),
-                        candidateObject.getSecondarySkill(),candidateObject.getCurrentLocation(),candidateObject.getTotalExperience(),candidateObject.getTotalExperiencePeriod(),candidateObject.getUsExperience(),
-                        candidateObject.getUsExperiencePeriod(),candidateObject.getAddress(),candidateObject.getImmigrationStatus(),candidateObject.getAddress2(),candidateObject.getCity(),
-                        candidateObject.getState(),candidateObject.getCountry(),candidateObject.getCurrentEmployer(),candidateObject.getStatus(),candidateObject.getBillRate(),
-                        candidateObject.getBillRateCurrency(),candidateObject.getPayRate(),candidateObject.getPayRateCurrency(),candidateObject.getNote(),candidateObject.getAllReadyAdded(),candidateObject.getEvaluatedByTS(),candidateObject.getFinalVerdict(),
-                        candidateObject.getLinkCount(),candidateObject.getAddedBy(),candidateObject.getIsShortListed(),candidateObject.getScreenedStatus(),candidateObject.getEnableDisableStatus(),
-                        candidateObject.getComment(),candidateObject.getInterviewStatus(),candidateObject.getScore(),candidateObject.getPositionId(),candidateObject.getPositionName());
+                Candidates candidates=new Candidates(candidateObject.getCandidateId(),candidateObject.getFirstName(),candidateObject.getMiddleName(),candidateObject.getLastName(),
+                        candidateObject.getCandidateName(),candidateObject.getCellPhoneNumber(),candidateObject.getHomePhoneNumber(),candidateObject.getEmailId(),candidateObject.getJobTitle(),
+                        candidateObject.getPrimarySkill(),candidateObject.getSecondarySkill(),candidateObject.getCurrentLocation(),candidateObject.getTotalExperience(),candidateObject.getTotalExperiencePeriod(),
+                        candidateObject.getUsExperience(),candidateObject.getUsExperiencePeriod(),candidateObject.getAddress(),candidateObject.getImmigrationStatus(),
+                        candidateObject.getAddress2(),candidateObject.getCity(),candidateObject.getState(),candidateObject.getCountry(),candidateObject.getCurrentEmployer(),
+                        candidateObject.getStatus(),candidateObject.getBillRate(),candidateObject.getBillRateCurrency(),candidateObject.getPayRate(),candidateObject.getPayRateCurrency(),
+                        candidateObject.getNote(),candidateObject.getAllReadyAdded(),candidateObject.getEvaluatedByTS(),candidateObject.getFinalVerdict(),candidateObject.getLinkCount(),
+                        candidateObject.getAddedBy(),candidateObject.getIsShortListed(),candidateObject.getScreenedStatus(),candidateObject.getEnableDisableStatus(),candidateObject.getComment(),
+                        candidateObject.getInterviewStatus(),candidateObject.getScore(),candidateObject.getPositionId(),candidateObject.getPositionName());
                 return new ResponseEntity<Object>(candidates, HttpStatus.OK);
             }
         }catch (SQLException e){
@@ -360,14 +362,15 @@ public class CandidateController {
         try{
             candidateObject=this.candidateService.findCandidatesByPropertyName(CandidateConstants.EMAIL_ID, emailId);
             if(candidateObject!=null){
-                Candidates candidates=new Candidates(candidateObject.getCandidateId(),candidateObject.getEmailId(),candidateObject.getMiddleName(),candidateObject.getLastName(),candidateObject.getFirstName(),
-                        candidateObject.getCellPhoneNumber(),candidateObject.getHomePhoneNumber(),candidateObject.getLastName(),candidateObject.getJobTitle(),candidateObject.getPrimarySkill(),
-                        candidateObject.getSecondarySkill(),candidateObject.getCurrentLocation(),candidateObject.getTotalExperience(),candidateObject.getTotalExperiencePeriod(),candidateObject.getUsExperience(),
-                        candidateObject.getUsExperiencePeriod(),candidateObject.getAddress(),candidateObject.getImmigrationStatus(),candidateObject.getAddress2(),candidateObject.getCity(),
-                        candidateObject.getState(),candidateObject.getCountry(),candidateObject.getCurrentEmployer(),candidateObject.getStatus(),candidateObject.getBillRate(),
-                        candidateObject.getBillRateCurrency(),candidateObject.getPayRate(),candidateObject.getPayRateCurrency(),candidateObject.getNote(),candidateObject.getAllReadyAdded(),candidateObject.getEvaluatedByTS(),candidateObject.getFinalVerdict(),
-                        candidateObject.getLinkCount(),candidateObject.getAddedBy(),candidateObject.getIsShortListed(),candidateObject.getScreenedStatus(),candidateObject.getEnableDisableStatus(),
-                        candidateObject.getComment(),candidateObject.getInterviewStatus(),candidateObject.getScore(),candidateObject.getPositionId(),candidateObject.getPositionName());
+                Candidates candidates=new Candidates(candidateObject.getCandidateId(),candidateObject.getFirstName(),candidateObject.getMiddleName(),candidateObject.getLastName(),
+                        candidateObject.getCandidateName(),candidateObject.getCellPhoneNumber(),candidateObject.getHomePhoneNumber(),candidateObject.getEmailId(),candidateObject.getJobTitle(),
+                        candidateObject.getPrimarySkill(),candidateObject.getSecondarySkill(),candidateObject.getCurrentLocation(),candidateObject.getTotalExperience(),candidateObject.getTotalExperiencePeriod(),
+                        candidateObject.getUsExperience(),candidateObject.getUsExperiencePeriod(),candidateObject.getAddress(),candidateObject.getImmigrationStatus(),
+                        candidateObject.getAddress2(),candidateObject.getCity(),candidateObject.getState(),candidateObject.getCountry(),candidateObject.getCurrentEmployer(),
+                        candidateObject.getStatus(),candidateObject.getBillRate(),candidateObject.getBillRateCurrency(),candidateObject.getPayRate(),candidateObject.getPayRateCurrency(),
+                        candidateObject.getNote(),candidateObject.getAllReadyAdded(),candidateObject.getEvaluatedByTS(),candidateObject.getFinalVerdict(),candidateObject.getLinkCount(),
+                        candidateObject.getAddedBy(),candidateObject.getIsShortListed(),candidateObject.getScreenedStatus(),candidateObject.getEnableDisableStatus(),candidateObject.getComment(),
+                        candidateObject.getInterviewStatus(),candidateObject.getScore(),candidateObject.getPositionId(),candidateObject.getPositionName());
                 return new ResponseEntity<Object>(candidates, HttpStatus.OK);
             }
         }catch (SQLException e){
@@ -391,14 +394,15 @@ public class CandidateController {
         try{
             candidateObject=this.candidateService.findCandidatesByPropertyName(CandidateConstants.CONTACT_NUMBER, contactNumber);
             if(candidateObject!=null){
-                Candidates candidates=new Candidates(candidateObject.getCandidateId(),candidateObject.getEmailId(),candidateObject.getMiddleName(),candidateObject.getLastName(),candidateObject.getFirstName(),
-                        candidateObject.getCellPhoneNumber(),candidateObject.getHomePhoneNumber(),candidateObject.getLastName(),candidateObject.getJobTitle(),candidateObject.getPrimarySkill(),
-                        candidateObject.getSecondarySkill(),candidateObject.getCurrentLocation(),candidateObject.getTotalExperience(),candidateObject.getTotalExperiencePeriod(),candidateObject.getUsExperience(),
-                        candidateObject.getUsExperiencePeriod(),candidateObject.getAddress(),candidateObject.getImmigrationStatus(),candidateObject.getAddress2(),candidateObject.getCity(),
-                        candidateObject.getState(),candidateObject.getCountry(),candidateObject.getCurrentEmployer(),candidateObject.getStatus(),candidateObject.getBillRate(),
-                        candidateObject.getBillRateCurrency(),candidateObject.getPayRate(),candidateObject.getPayRateCurrency(),candidateObject.getNote(),candidateObject.getAllReadyAdded(),candidateObject.getEvaluatedByTS(),candidateObject.getFinalVerdict(),
-                        candidateObject.getLinkCount(),candidateObject.getAddedBy(),candidateObject.getIsShortListed(),candidateObject.getScreenedStatus(),candidateObject.getEnableDisableStatus(),
-                        candidateObject.getComment(),candidateObject.getInterviewStatus(),candidateObject.getScore(),candidateObject.getPositionId(),candidateObject.getPositionName());
+                Candidates candidates=new Candidates(candidateObject.getCandidateId(),candidateObject.getFirstName(),candidateObject.getMiddleName(),candidateObject.getLastName(),
+                        candidateObject.getCandidateName(),candidateObject.getCellPhoneNumber(),candidateObject.getHomePhoneNumber(),candidateObject.getEmailId(),candidateObject.getJobTitle(),
+                        candidateObject.getPrimarySkill(),candidateObject.getSecondarySkill(),candidateObject.getCurrentLocation(),candidateObject.getTotalExperience(),candidateObject.getTotalExperiencePeriod(),
+                        candidateObject.getUsExperience(),candidateObject.getUsExperiencePeriod(),candidateObject.getAddress(),candidateObject.getImmigrationStatus(),
+                        candidateObject.getAddress2(),candidateObject.getCity(),candidateObject.getState(),candidateObject.getCountry(),candidateObject.getCurrentEmployer(),
+                        candidateObject.getStatus(),candidateObject.getBillRate(),candidateObject.getBillRateCurrency(),candidateObject.getPayRate(),candidateObject.getPayRateCurrency(),
+                        candidateObject.getNote(),candidateObject.getAllReadyAdded(),candidateObject.getEvaluatedByTS(),candidateObject.getFinalVerdict(),candidateObject.getLinkCount(),
+                        candidateObject.getAddedBy(),candidateObject.getIsShortListed(),candidateObject.getScreenedStatus(),candidateObject.getEnableDisableStatus(),candidateObject.getComment(),
+                        candidateObject.getInterviewStatus(),candidateObject.getScore(),candidateObject.getPositionId(),candidateObject.getPositionName());
                 return new ResponseEntity<Object>(candidates, HttpStatus.OK);
             }
         }catch (SQLException e){
