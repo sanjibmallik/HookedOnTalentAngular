@@ -256,6 +256,33 @@ public class ClientController {
     }
 
 
+
+    @ApiOperation(value = "Get All the Client Names ", httpMethod="GET")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Clients Names Found "),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+
+    @RequestMapping(value = ClientRestURIConstants.GET_ALL_CLIENT, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.GET)
+    @ResponseBody
+    @JsonIgnore
+    public ResponseEntity<Set<ClientDetails>> getAllClientNames(){
+
+        try{
+            List<ClientDetails> clientDetailsList=this.clientService.findAllClients();
+            Set<ClientDetails> clients=new LinkedHashSet<ClientDetails>();
+            for(ClientDetails clientObject:clientDetailsList){
+                ClientDetails clientDetails=new ClientDetails(clientObject.getId(),clientObject.getClientName());
+                clients.add(clientDetails);
+            }
+            return new ResponseEntity<Set<ClientDetails>>(clients, HttpStatus.OK);
+        }catch (SQLException e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
     @ApiOperation(value = "Update the  Client ",  code = 201, httpMethod="POST")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Client Updated Successfully")
             , @ApiResponse(code = 500, message = "Internal Server Error")})
