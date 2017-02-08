@@ -1,5 +1,5 @@
 <page-title ng-if="layoutOptions.pageTitles" title="Create New Requirement" description=""></page-title>
-<div ng-controller="createNewUserCtrl">
+<div ng-controller="createNewRequirementCtrl">
 <script type="text/ng-template"></script>
 
 <script>
@@ -17,7 +17,7 @@
 
                         '<label style="margin-top: -7px;" class="col-sm-3 control-label"></label>' +
                         '<div style="margin-left: 257px; width: 38.4%;">' +
-                        '   <input type="text" ng-model="newUser.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Add more Primary Skill">' +
+                        '   <input type="text" ng-model="newRequirement.primarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Add more Primary Skill">' +
                         '       <a href="#" class="remove_field">Remove</a>' +
 
                         '</div>'); //add input box
@@ -45,7 +45,7 @@
 
                         '<label style="margin-top: -7px;" class="col-sm-3 control-label"></label>' +
                         '<div style="margin-left: 257px; width: 38.4%;">' +
-                        '   <input type="text" ng-model="newUser.secondarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Add more Secondary Skill">' +
+                        '   <input type="text" ng-model="newRequirement.secondarySkills" class="form-control" ng-maxlength="35" ng-minlength="1" ng-required="true"  placeholder="Add more Secondary Skill">' +
                         '       <a href="#" class="remove_field">Remove</a>' +
 
                         '</div>'); //add input box
@@ -59,7 +59,12 @@
 </script>
 
 
-<form role="form" name="newUserForm" class="form-horizontal" ng-submit="submitNewUser()">
+
+
+
+
+
+<form role="form" name="newRequirementForm" class="form-horizontal" ng-submit="submitNewRequirement()">
 
 <div class="row">
 <div class="col-sm-12">
@@ -69,15 +74,6 @@
 <div class="panel-heading">
     <h3 class="panel-title">Enter Requirement Details</h3>
 
-    <!-- <div class="panel-options">
-         <a href="" data-toggle="panel">
-             <span class="collapse-icon">&ndash;</span>
-                            <span class="expand-icon">+</span>
-                        </a>
-                        &lt;!&ndash;<a href="" data-toggle="remove">
-                            &times;
-                        </a>&ndash;&gt;
-                    </div>-->
 </div>
 
 
@@ -113,7 +109,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-user"></i>
                                     </span>
-                <input type="text" name="firstName" class="form-control" ng-model="newUser.firstName" placeholder=""
+                <input type="text" name="firstName" class="form-control" ng-model="newRequirement.contactPerson" placeholder=""
                        inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true">
             </div>
         </div>
@@ -126,7 +122,7 @@
 
         <div class="col-sm-5">
 
-            <select class="form-control" name="">
+            <select class="form-control" name="" ng-model="newRequirement.priority">
                 <option>High</option>
                 <option>Medium</option>
                 <option>Low</option>
@@ -142,7 +138,7 @@
 
         <div class="col-sm-5">
 
-            <select class="form-control" name="">
+            <select class="form-control" name="" ng-model="newRequirement.typeOfRequirement">
                 <option>Contract</option>
                 <option>Contract to Hire</option>
                 <option>Full Time</option>
@@ -160,7 +156,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-star"></i>
 							</span>
-                <input type="text" name="lastName" class="form-control" ng-model="newUser.lastName" placeholder="Job Title"
+                <input type="text" name="lastName" ng-model="newRequirement.jobTitle" class="form-control" ng-model="newRequirement.lastName" placeholder="Job Title"
                        inputmask data-mask="[a-zA-Z][a-zA-Z ]*" data-is-regex="true" required="true">
             </div>
 
@@ -213,13 +209,13 @@
                                         <i class="linecons-calendar"></i>
                                     </span>
                 <input type="text" name="addressOne" class="form-control" placeholder=""
-                       inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
+                       inputmask data-mask="[0-9]*" ng-model="newRequirement.duration" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
             </div>
         </div>
 
         <div class="col-sm-2">
 
-            <select class="form-control" name="role" >
+            <select class="form-control" name="role" ng-model="newRequirement.contactPerson" >
 
                 <option>Years</option>
                 <option>Months</option>
@@ -237,7 +233,7 @@
         <div class="col-sm-5">
 
                 <textarea rows="5" type="text" name="addressOne" class="form-control" placeholder="Enter Job Description"
-                       inputmask data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true"></textarea>
+                       inputmask data-is-regex="true" ng-model="newRequirement.jobDescription" ng-maxlength="35" ng-minlength="1" ng-required="true"></textarea>
 
         </div>
     </div>
@@ -253,7 +249,7 @@
                                         <i class="linecons-tag"></i>
                                     </span>
                 <input type="text" name="" class="form-control"  placeholder="No of Open Req"
-                       inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
+                       inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true" ng-model="newRequirement.openRequirements">
             </div>
         </div>
     </div>
@@ -269,7 +265,7 @@
                                         <i class="linecons-money"></i>
                                     </span>
                 <input type="text" name="addressOne" class="form-control" placeholder=""
-                       inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
+                       inputmask data-mask="[0-9]*" ng-model="newRequirement.billRate" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
             </div>
         </div>
 
@@ -297,7 +293,7 @@
                                         <i class="linecons-money"></i>
                                     </span>
                 <input type="text" name="addressOne" class="form-control" placeholder=""
-                       inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
+                       inputmask data-mask="[0-9]*" data-is-regex="true" ng-model="newRequirement.payRate" ng-maxlength="35" ng-minlength="1" ng-required="true">
             </div>
         </div>
 
@@ -323,7 +319,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-calendar"></i>
                                     </span>
-                <input type="text" class="form-control datepicker" data-start-date="d" name="startDate" data-format="dd-mm-yyyy" >
+                <input type="text" ng-model="newRequirement.startDate" class="form-control datepicker" data-start-date="d" name="startDate" data-format="dd-mm-yyyy" >
             </div>
         </div>
     </div>
@@ -344,13 +340,7 @@
 
             <div class="panel-heading">
                 <h3 class="panel-title">Address (Optional)</h3>
-                <!--<div class="panel-options">
-                    <a href="" data-toggle="panel">
-                        <span class="collapse-icon">&ndash;</span>
-                                    <span class="expand-icon">+</span>
-                                </a>
 
-                            </div>-->
             </div>
 
             <div class="panel-body">
@@ -366,7 +356,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-location"></i>
                                     </span>
-                                <input type="text" name="addressOne" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"
+                                <input type="text" ng-model="newRequirement.clientLocation" name="addressOne" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"
                                        inputmask data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                             </div>
                         </div>
@@ -383,7 +373,7 @@
                                         <i class="linecons-location"></i>
                                     </span>
                                 <input type="text" name="addressOne" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"
-                                       inputmask data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
+                                       inputmask data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true" ng-model="newRequirement.broadcastLocation">
                             </div>
                         </div>
                     </div>
@@ -398,7 +388,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-location"></i>
                                     </span>
-                                <input type="text" name="addressOne" ng-model="newUser.addressOne" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"
+                                <input type="text" name="addressOne" ng-model="newRequirement.addressOne" class="form-control" placeholder="Street Address, P.O.Box, Company Name, C/o"
                                        inputmask data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                             </div>
                         </div>
@@ -414,7 +404,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-location"></i>
                                     </span>
-                                <input type="text" name="addressTwo" ng-model="newUser.addressTwo" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc"
+                                <input type="text" name="addressTwo" ng-model="newRequirement.addressTwo" class="form-control" placeholder="Apartment, Suit, Unit, Building, Floor, etc"
                                        inputmask data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                             </div>
                         </div>
@@ -430,7 +420,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-location"></i>
                                     </span>
-                                <input type="text" ng-model="newUser.zipCode" name="zipCode" class="form-control"  placeholder="Zipcode"
+                                <input type="text" ng-model="newRequirement.zipCode" name="zipCode" class="form-control"  placeholder="Zipcode"
                                        inputmask data-mask="[0-9]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                             </div>
                         </div>
@@ -446,7 +436,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-location"></i>
                                     </span>
-                                <input ng-model="newUser.city" name="city" type="text" class="form-control" placeholder="City"
+                                <input ng-model="newRequirement.city" name="city" type="text" class="form-control" placeholder="City"
                                        inputmask data-mask="[a-zA-Z]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                             </div>
                         </div>
@@ -462,7 +452,7 @@
                                     <span class="input-group-addon">
                                         <i class="linecons-location"></i>
                                     </span>
-                                <input ng-model="newUser.state" name="state" type="text" class="form-control" placeholder="State"
+                                <input ng-model="newRequirement.state" name="state" type="text" class="form-control" placeholder="State"
                                        inputmask data-mask="[a-zA-Z]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                             </div>
                         </div>
@@ -478,7 +468,7 @@
                                         <span class="input-group-addon">
                                             <i class="linecons-globe"></i>
                                         </span>
-                                <input type="text" ng-model="newUser.country" name="country" class="form-control"  placeholder="Country"
+                                <input type="text" ng-model="newRequirement.country" name="country" class="form-control"  placeholder="Country"
                                        inputmask data-mask="[a-zA-Z]*" data-is-regex="true" ng-maxlength="35" ng-minlength="1" ng-required="true">
                             </div>
                         </div>
@@ -494,28 +484,13 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="panel panel-default">
-
-
             <div class="panel-body" style="text-align: center;">
-
                 <input class="btn btn-info btn-icon" type="submit" value="Submit"/>
-
-
-
-                <input type="button" class="btn btn-warning btn-icon" ng-click="resetUserForm();" value="Reset">
-
-
-
-
+                <input type="button" class="btn btn-warning btn-icon" ng-click="resetRequirementForm();" value="Reset">
             </div>
         </div>
     </div>
 </div>
-
-</div>
-</div>
-</div>
-
 
 </form>
 

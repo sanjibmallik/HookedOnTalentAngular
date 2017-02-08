@@ -1,33 +1,22 @@
 'use strict'
 
-var hotRequirementControllers = angular.module('hot.requirementControllers',['ui.bootstrap','ngTable']);
+var hotRequirementControllers = angular.module('hot.requirementControllers',['ui.bootstrap','ngTable','ui.router', 'ngAnimate', 'toastr']);
 
 
-hotClientControllers.controller('createNewRequirementCtrl',function($scope,$http){
-
-
-    $scope.newClient = {};
-    //Error messages
-    $scope.emailErrorMessage = "email Id already exist";
-    $scope.userNameErrorMessage = "username already exist";
-    $scope.contactNumberErrorMessage = "contact number already exist";
-
-    //show hides
-    $scope.emailExist = false;
-    $scope.userNameExist = false;
-    $scope.contactNumberExist = false;
+hotRequirementControllers.controller('createNewRequirementCtrl',function($scope,$http,hotRequirementFactory){
 
 
 
+    hotRequirementFactory.getAllClientDetails().success(function(response){
+        console.log("client details");
+        console.log(response);
 
-    $scope.submitNewClient = function(){
+    }).error(function(data, status, headers, config){
 
+        });
 
-
-        var data = $scope.newUser;
-
-
-        var jsonUser = {
+    $scope.submitNewRequirement = function(){
+            var jsonRequirement = {
             "clientDetails":{
 
                 "clientName":$scope.newClient.clientName,
@@ -88,9 +77,9 @@ hotClientControllers.controller('createNewRequirementCtrl',function($scope,$http
 
         }
 
-        console.log(jsonUser);
+        console.log(jsonRequirement);
 
-        $http.post('user/create', jsonUser)
+        $http.post('requirement/create', jsonRequirement)
             .success(function (data, status, headers, config) {
                 console.log(data);
 
