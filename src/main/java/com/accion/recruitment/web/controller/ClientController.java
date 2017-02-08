@@ -261,7 +261,7 @@ public class ClientController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Clients Names Found "),
             @ApiResponse(code = 500, message = "Internal Server Error")})
 
-    @RequestMapping(value = ClientRestURIConstants.GET_ALL_CLIENT, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.GET)
+    @RequestMapping(value = ClientRestURIConstants.GET_ALL_CLIENT_NAMES, produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.GET)
     @ResponseBody
     @JsonIgnore
     public ResponseEntity<Set<ClientDetails>> getAllClientNames(){
