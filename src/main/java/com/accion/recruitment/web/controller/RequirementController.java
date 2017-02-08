@@ -1,5 +1,6 @@
 package com.accion.recruitment.web.controller;
 
+import com.accion.recruitment.beans.CandidateSubjectiveAnswer;
 import com.accion.recruitment.beans.QuestionBaseClass;
 import com.accion.recruitment.common.constants.*;
 import com.accion.recruitment.common.enums.CandidateEnums;
@@ -779,7 +780,7 @@ public class RequirementController {
                                                          @PathVariable("questionId") Integer questionId) {
 
         try{
-            List<VideoQuestion> videoQuestionsList=this.requirementService.findAllRequirementVideoQuestions(requirementId);;
+            List<VideoQuestion> videoQuestionsList=this.requirementService.findAllRequirementVideoQuestions(requirementId);
 
             List<CandidateVideoQuestionResponse>  candidateVideoQuestionResponses=this.candidateResponseService.getCandidateVideoResponseByRequirementIdAndQuestionId(requirementId,questionId);
            /* List<Candidates>  candidates=this.candidateVideoQuestionResponseRepository.getCandidateVideoComparisonCandidateName(requirementId, questionId);
@@ -795,6 +796,53 @@ public class RequirementController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+
+    @ApiOperation(value = "Candidate  Response ", httpMethod="GET"
+            , notes = "Candidate Response")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Candidate Response"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+
+    @RequestMapping(value = RequirementURIConstants.CANDIDATE_RESPONSE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> candidateResponseEvaluation(@PathVariable("id") Integer requirementId,
+                                                              @PathVariable("candidateId") Integer candidateId) {
+
+        try{
+            List<CandidateGeneralQuestionResponse> candidateGeneralQuestionResponseList=this.candidateResponseService.findCandidateGeneralQuestionResponseByPositionIdAndCandidateId(requirementId, candidateId);
+            List<CandidateTechnicalQuestionResponse> candidateTechnicalQuestionResponseList=this.candidateResponseService.findCandidateTechnicalQuestionResponseByPositionIdAndCandidateId(requirementId, candidateId);
+            List<CandidateVideoQuestionResponse> candidateVideoQuestionResponseList=this.candidateResponseService.findCandidateVideoQuestionResponseByPositionIdAndCandidateId(requirementId, candidateId);
+            List<CandidateSelfRatingResponse> candidateSelfRatingResponsesList=this.candidateResponseService.findCandidateSelfRatingResponseByPositionIdAndCandidateId(requirementId, candidateId);
+            CandidateFinalResult candidateFinalResultList=this.candidateResponseService.findCandidateFinalResultByPositionIdAndCandidateId(requirementId, candidateId);
+            List<VideoQuestion> videoQuestionsList=this.requirementService.findAllRequirementVideoQuestions(requirementId);
+            List<CandidateUserNotes> candidateUserNotesList=this.candidateResponseService.findCandidateUserNotesByPositionAndCandidateId(requirementId, candidateId);
+
+
+            return new ResponseEntity<Object>(candidateGeneralQuestionResponseList,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    @ApiOperation(value = "Candidate  Subjective Answer ", httpMethod="POST"
+            , notes = "Candidate Subjective Answer")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Candidate Subjective Answer"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+
+    @RequestMapping(value = RequirementURIConstants.CANDIDATE_SUBJECTIVE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Object> candidateSubjectiveAnswer(@RequestBody CandidateSubjectiveAnswer candidateSubjectiveAnswer) {
+
+        try{
+            /*
+            CandidateTechnicalQuestionResponse candidateGTechnicalQuestionResponse=this.candidateResponseService.findCandidateTQRByPositionIdAndCandidateIdAndQuestionId()
+            return new ResponseEntity<Object>(candidateGeneralQuestionResponseList,HttpStatus.OK);*/
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 

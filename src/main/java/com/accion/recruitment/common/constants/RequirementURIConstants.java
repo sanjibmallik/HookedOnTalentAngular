@@ -26,6 +26,10 @@ public class RequirementURIConstants {
 
     public static final String CANDIDATE_VIDEO_COMPARISON = "/hot/requirement/compare/{id}";
 
+    public static final String CANDIDATE_RESPONSE = "/hot/requirement/candidate/response/{id}/{candidateId}";
+    public static final String CANDIDATE_SUBJECTIVE = "/hot/requirement/candidate/response/subjective";
+
+
     public static final String ADD_NO_MORE_CANDIDATE = "/hot/requirement/nomorecanidate/{id}";
 
     public static final String ADD_CANDIDATE_TO_REQT = "/hot/requirement/addcandidate/{id}/{id}";

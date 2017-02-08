@@ -2,9 +2,7 @@ package com.accion.recruitment.service.impl;
 
 import com.accion.recruitment.dao.CandidateResponseServiceDAO;
 import com.accion.recruitment.dao.CandidateServiceDAO;
-import com.accion.recruitment.jpa.entities.CandidateFinalResult;
-import com.accion.recruitment.jpa.entities.CandidateVideoQuestionResponse;
-import com.accion.recruitment.jpa.entities.Candidates;
+import com.accion.recruitment.jpa.entities.*;
 import com.accion.recruitment.service.CandidateResponseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,6 +32,33 @@ public class CandidateResponseServiceImpl implements CandidateResponseService {
         return this.candidateResponseServiceDAO.findCandidateFinalResultByPositionIdAndCandidateId(positionId,candidateId);
     }
 
+
+    @Override
+    public List<CandidateGeneralQuestionResponse> findCandidateGeneralQuestionResponseByPositionIdAndCandidateId(Integer positionId,Integer candidateId) throws SQLException {
+        return this.candidateResponseServiceDAO.findCandidateGeneralQuestionResponseByPositionIdAndCandidateId(positionId, candidateId);
+    }
+
+
+    @Override
+    public List<CandidateTechnicalQuestionResponse>  findCandidateTechnicalQuestionResponseByPositionIdAndCandidateId(Integer positionId,Integer candidateId) throws SQLException {
+        return this.candidateResponseServiceDAO.findCandidateTechnicalQuestionResponseByPositionIdAndCandidateId(positionId, candidateId);
+    }
+
+    @Override
+    public List<CandidateVideoQuestionResponse>  findCandidateVideoQuestionResponseByPositionIdAndCandidateId(Integer positionId,Integer candidateId) throws SQLException {
+        return this.candidateResponseServiceDAO.findCandidateVideoQuestionResponseByPositionIdAndCandidateId(positionId, candidateId);
+    }
+
+    @Override
+    public List<CandidateSelfRatingResponse>  findCandidateSelfRatingResponseByPositionIdAndCandidateId(Integer positionId,Integer candidateId) throws SQLException {
+        return this.candidateResponseServiceDAO.findCandidateSelfRatingResponseByPositionIdAndCandidateId(positionId, candidateId);
+    }
+
+    @Override
+    public List<CandidateUserNotes>  findCandidateUserNotesByPositionAndCandidateId(Integer positionId,Integer candidateId) throws SQLException {
+        return this.candidateResponseServiceDAO.findCandidateUserNotesByPositionAndCandidateId(positionId, candidateId);
+
+    }
 
     @Override
     public Boolean deleteCandidateGeneralQuestionResponseByQuery(Integer positionId,Integer candidateId) throws SQLException {

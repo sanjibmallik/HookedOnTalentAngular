@@ -1,9 +1,7 @@
 package com.accion.recruitment.dao.impl;
 
 import com.accion.recruitment.dao.CandidateResponseServiceDAO;
-import com.accion.recruitment.jpa.entities.CandidateFinalResult;
-import com.accion.recruitment.jpa.entities.CandidateVideoQuestionResponse;
-import com.accion.recruitment.jpa.entities.Candidates;
+import com.accion.recruitment.jpa.entities.*;
 import com.accion.recruitment.service.CandidateResponseService;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -45,6 +43,51 @@ public class CandidateResponseServiceDAOImpl<R> implements CandidateResponseServ
         criteria.add(Restrictions.eq("candidateId", candidateId));
         criteria.add(Restrictions.eq("positionId", positionId));
         return (CandidateFinalResult) criteria.uniqueResult();
+    }
+
+    @Override
+    public List<CandidateGeneralQuestionResponse>  findCandidateGeneralQuestionResponseByPositionIdAndCandidateId(final Integer positionId,final Integer candidateId) {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(CandidateGeneralQuestionResponse.class);
+        criteria.add(Restrictions.eq("candidateId", candidateId));
+        criteria.add(Restrictions.eq("positionId", positionId));
+        return  criteria.list();
+    }
+
+    @Override
+    public List<CandidateTechnicalQuestionResponse>  findCandidateTechnicalQuestionResponseByPositionIdAndCandidateId(final Integer positionId,final Integer candidateId) {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(CandidateTechnicalQuestionResponse.class);
+        criteria.add(Restrictions.eq("candidateId", candidateId));
+        criteria.add(Restrictions.eq("positionId", positionId));
+        return  criteria.list();
+    }
+
+    @Override
+    public List<CandidateVideoQuestionResponse>  findCandidateVideoQuestionResponseByPositionIdAndCandidateId(final Integer positionId,final Integer candidateId) {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(CandidateVideoQuestionResponse.class);
+        criteria.add(Restrictions.eq("candidateId", candidateId));
+        criteria.add(Restrictions.eq("positionId", positionId));
+        return  criteria.list();
+    }
+
+    @Override
+    public List<CandidateSelfRatingResponse>  findCandidateSelfRatingResponseByPositionIdAndCandidateId(final Integer positionId,final Integer candidateId) {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(CandidateSelfRatingResponse.class);
+        criteria.add(Restrictions.eq("candidateId", candidateId));
+        criteria.add(Restrictions.eq("positionId", positionId));
+        return  criteria.list();
+    }
+
+    @Override
+    public List<CandidateUserNotes>  findCandidateUserNotesByPositionAndCandidateId(final Integer positionId,final Integer candidateId) {
+        final Session session = getSession();
+        final Criteria criteria = session.createCriteria(CandidateUserNotes.class);
+        criteria.add(Restrictions.eq("candidateId", candidateId));
+        criteria.add(Restrictions.eq("positionId", positionId));
+        return  criteria.list();
     }
 
     @Override
