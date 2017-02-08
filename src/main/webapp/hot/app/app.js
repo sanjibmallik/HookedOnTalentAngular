@@ -22,6 +22,8 @@ var app = angular.module('hot-app', [
     'hot.profileFactory',
     'hot.candidateControllers',
     'hot.candidateFactory',
+    'hot.requirementFactory',
+    'hot.requirementControllers',
     'ngTable',
     'ngImgCrop',
     'ngFileUpload',
