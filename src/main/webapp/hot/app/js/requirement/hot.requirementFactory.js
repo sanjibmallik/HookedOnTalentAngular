@@ -21,7 +21,10 @@ angular.module('hot.requirementFactory',['ui.bootstrap','ngTable'])
         }
 
         hotRequirementFactory.getAllRequirements = function(){
-            return $http.get('requirements');
+            return $http({
+                method : 'GET',
+                url : 'requirements'
+            });
 
         }
 
