@@ -10,6 +10,7 @@ hotRequirementControllers.controller('createNewRequirementCtrl',function($scope,
     hotRequirementFactory.getAllClientDetails().success(function(response){
         console.log("client details");
         console.log(response);
+        $scope.clientNames = response;
 
     }).error(function(data, status, headers, config){
 

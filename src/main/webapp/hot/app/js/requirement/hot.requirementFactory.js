@@ -10,7 +10,7 @@ angular.module('hot.requirementFactory',['ui.bootstrap','ngTable'])
         hotRequirementFactory.getAllClientDetails = function(){
            return $http({
                method : 'GET',
-               url : 'clients'
+               url : 'client/clientNames'
            });
 
         };

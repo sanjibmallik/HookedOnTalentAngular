@@ -73,6 +73,7 @@
 
 <div class="panel-heading">
     <h3 class="panel-title">Enter Requirement Details</h3>
+    {{newRequirement}}
 
 </div>
 
@@ -87,13 +88,9 @@
 
         <div class="col-sm-5">
 
-            <select class="form-control" name="">
-                <option>Accion Labs</option>
-                <option>Deloitte</option>
-                <option>Google Inc</option>
-                <option>Genco</option>
-                <option>IBM</option>
-
+            <select ng-cloak required class="form-control" name="role" ng-options="role as role for role in clientNames"
+                    ng-model="newRequirement.clientName" ng-change="update();">
+                <option value='' disabled selected>Select</option>
             </select>
 
         </div>
